@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # Return 204 for favicon requests to suppress default favicon serving and logs
+    RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+    RewriteRule ^ - [R=204,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories', function (Blueprint $table) {
+    // Create inventories table with attributes used by the app views.
+    // Columns: user_id (owner), name, qty, price, description, timestamps.
+    Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            // owner of the inventory item; nullable so unauthenticated users
+            // can create items in development/testing. on delete -> set null
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('name');
             $table->integer('qty');
-            $table->decimal('price');
+            // price stored with precision and scale
+            $table->decimal('price', 10, 2);
             $table->text('description');
             $table->timestamps();
         });
