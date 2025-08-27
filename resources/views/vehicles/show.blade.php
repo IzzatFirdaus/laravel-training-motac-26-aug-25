@@ -12,50 +12,64 @@
     @endif
 
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-semibold">Vehicle #{{ $vehicle->id }} — {{ $vehicle->name ?? 'Untitled' }}</h1>
+    <h1 class="text-2xl font-semibold">Kenderaan #{{ $vehicle->id }} — {{ $vehicle->name ?? 'Tanpa Nama' }}</h1>
 
         <div class="space-x-2">
-            <a href="{{ route('vehicles.index') }}" class="inline-block px-3 py-2 rounded bg-gray-200 hover:bg-gray-300">Back</a>
+            <a href="{{ route('vehicles.index') }}" class="inline-block px-3 py-2 rounded bg-gray-200 hover:bg-gray-300">Kembali</a>
+            <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="inline-block px-3 py-2 rounded bg-blue-200 hover:bg-blue-300">Edit</a>
+            <x-vehicle-destroy :action="route('vehicles.destroy', $vehicle->id)" :label="$vehicle->name ?? 'Vehicle'" />
         </div>
     </div>
 
     <div class="bg-white shadow rounded-lg p-5">
         <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <div>
-                <dt class="text-sm font-medium text-gray-500">Name</dt>
+                <dt class="text-sm font-medium text-gray-500">Nama</dt>
                 <dd class="mt-1 text-lg text-gray-900">{{ $vehicle->name ?? '—' }}</dd>
             </div>
 
             <div>
-                <dt class="text-sm font-medium text-gray-500">Quantity</dt>
+                <dt class="text-sm font-medium text-gray-500">Kuantiti</dt>
                 <dd class="mt-1 text-lg text-gray-900">{{ $vehicle->qty ?? 0 }}</dd>
             </div>
 
             <div>
-                <dt class="text-sm font-medium text-gray-500">Price</dt>
+                <dt class="text-sm font-medium text-gray-500">Harga</dt>
                 <dd class="mt-1 text-lg text-gray-900">{{ isset($vehicle->price) ? number_format($vehicle->price, 2) : '—' }}</dd>
             </div>
 
             <div>
-                <dt class="text-sm font-medium text-gray-500">Description</dt>
+                <dt class="text-sm font-medium text-gray-500">Keterangan</dt>
                 <dd class="mt-1 text-lg text-gray-900">{{ $vehicle->description ?? '—' }}</dd>
             </div>
 
             @if(isset($vehicle->owner) && $vehicle->owner)
                 <div>
-                    <dt class="text-sm font-medium text-gray-500">Owner</dt>
+                    <dt class="text-sm font-medium text-gray-500">Pemilik</dt>
                     <dd class="mt-1 text-lg text-blue-600">{{ $vehicle->owner->name }}</dd>
                 </div>
             @endif
 
             <div>
-                <dt class="text-sm font-medium text-gray-500">Created</dt>
-                <dd class="mt-1 text-sm text-gray-600">{{ $vehicle->created_at?->format('Y-m-d H:i') ?? '—' }}</dd>
+                <dt class="text-sm font-medium text-gray-500">Dicipta</dt>
+                <dd class="mt-1 text-sm text-gray-600">
+                    @if(!empty($vehicle->created_at))
+                        {{ \Illuminate\Support\Carbon::parse($vehicle->created_at)->format('Y-m-d H:i') }}
+                    @else
+                        —
+                    @endif
+                </dd>
             </div>
 
             <div>
-                <dt class="text-sm font-medium text-gray-500">Last updated</dt>
-                <dd class="mt-1 text-sm text-gray-600">{{ $vehicle->updated_at?->format('Y-m-d H:i') ?? '—' }}</dd>
+                <dt class="text-sm font-medium text-gray-500">Kemaskini terakhir</dt>
+                <dd class="mt-1 text-sm text-gray-600">
+                    @if(!empty($vehicle->updated_at))
+                        {{ \Illuminate\Support\Carbon::parse($vehicle->updated_at)->format('Y-m-d H:i') }}
+                    @else
+                        —
+                    @endif
+                </dd>
             </div>
         </dl>
     </div>

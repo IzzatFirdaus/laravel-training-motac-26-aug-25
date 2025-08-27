@@ -8,36 +8,37 @@
         <div class="col-12 col-md-10">
             <header class="d-flex align-items-start justify-content-between mb-3">
                 <div>
-                    <h1 class="h3">Vehicles</h1>
-                    <p class="text-muted mb-0">Inventory-style vehicle records maintained by the application.</p>
+                    <h1 class="h3">Kenderaan</h1>
+                    <p class="text-muted mb-0">Rekod kenderaan gaya inventori yang diselenggara oleh aplikasi.</p>
                 </div>
                 <div>
-                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Create vehicle</a>
+                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Cipta kenderaan</a>
                 </div>
             </header>
 
             <section aria-labelledby="vehicles-heading">
-                <h2 id="vehicles-heading" class="visually-hidden">Vehicles table</h2>
+                <h2 id="vehicles-heading" class="visually-hidden">Jadual kenderaan</h2>
 
                 @php
                     $vehiclesCount = method_exists($vehicles, 'total') ? $vehicles->total() : $vehicles->count();
                 @endphp
-                <div class="mb-2 text-muted" id="vehicles-count">Showing {{ $vehiclesCount }} vehicle{{ $vehiclesCount > 1 ? 's' : '' }}</div>
+                <div class="mb-2 text-muted" id="vehicles-count">Memaparkan {{ $vehiclesCount }} kenderaan{{ $vehiclesCount > 1 ? 's' : '' }}</div>
 
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover" aria-describedby="vehicles-count">
-                                <caption class="visually-hidden">A list of vehicles with quick actions to view details.</caption>
+                                <caption class="visually-hidden">Senarai kenderaan dengan tindakan pantas untuk lihat butiran.</caption>
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Qty</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Created</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col">Nama</th>
+                                        <th scope="col">Kuantiti</th>
+                                        <th scope="col">Harga</th>
+                                        <th scope="col">Keterangan</th>
+                                        <th scope="col">Pemilik</th>
+                                        <th scope="col">Dicipta</th>
+                                        <th scope="col">Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,20 +46,27 @@
                                         <tr>
                                             <td>{{ $vehicle->id }}</td>
                                             <td>{{ $vehicle->name }}</td>
+                                            <td>{{ $vehicle->owner_name ?? '—' }}</td>
                                             <td>{{ $vehicle->qty }}</td>
                                             <td>{{ $vehicle->price !== null ? number_format($vehicle->price, 2) : '—' }}</td>
                                             <td>{{ \Illuminate\Support\Str::limit($vehicle->description, 60) }}</td>
                                             <td>{{ optional($vehicle->created_at)->toDateString() }}</td>
                                             <td class="text-nowrap">
-                                                <a href="{{ route('vehicles.show', $vehicle) }}" class="btn btn-sm btn-outline-secondary" aria-label="View {{ $vehicle->name }}">View</a>
+                                                <x-action-buttons
+                                                    :showRoute="route('vehicles.show', $vehicle->id)"
+                                                    :editRoute="route('vehicles.edit', $vehicle->id)"
+                                                    :destroyRoute="route('vehicles.destroy', $vehicle->id)"
+                                                    :label="$vehicle->name"
+                                                    :id="$vehicle->id"
+                                                />
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
                                             <td colspan="7">
                                                 <div role="status" class="p-3 text-center">
-                                                    <p class="mb-2">No vehicles found.</p>
-                                                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Add a vehicle</a>
+                                                    <p class="mb-2">Tiada kenderaan dijumpai.</p>
+                                                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Tambah kenderaan</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -68,8 +76,8 @@
                         </div>
 
                         @if (method_exists($vehicles, 'links'))
-                            <nav class="mt-3" aria-label="Vehicles pagination">
-                                {{ $vehicles->links() }}
+                            <nav class="mt-3" aria-label="Paginasi kenderaan">
+                                {{ $vehicles->links('vendor.pagination.myds') }}
                             </nav>
                         @endif
                     </div>
