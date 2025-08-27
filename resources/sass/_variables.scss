@@ -10,11 +10,58 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // MYDS color tokens (light mode)
-$myds-primary: #2563EB; // MYDS Blue
+// Theme tokens: light and dark mode variables (MYDS tokens)
+// Expose runtime CSS variables for application-level theming.
+// Keep SASS variables as safe compile-time fallbacks for Bootstrap/Sass functions.
+:root {
+	/* Backgrounds */
+	--bg-page: #f8fafc; /* page background */
+	--bg-surface: #ffffff; /* cards, panels */
+	--bg-muted: #f3f4f6; /* subtle surfaces */
+
+	/* Text */
+	--txt-primary: #111827;
+	--txt-muted: #6b7280;
+
+	/* Borders / outlines */
+	--otl-default: rgba(0,0,0,0.08);
+
+	/* Actions */
+	--primary: #2563EB;
+	--danger: #D32F2F;
+	--success: #388E3C;
+	--warning: #FFA000;
+
+	/* Focus ring */
+	--fr: #2563EB;
+		--fr-shadow: rgba(37,99,235,0.12);
+}
+
+[data-theme="dark"] {
+	--bg-page: #0b1220;
+	--bg-surface: #071023;
+	--bg-muted: #071822;
+
+	--txt-primary: #e6eef8;
+	--txt-muted: #9ca3af;
+
+	--otl-default: rgba(255,255,255,0.06);
+
+	--primary: #3b82f6;
+	--danger: #ef4444;
+	--success: #34d399;
+	--warning: #f59e0b;
+
+	--fr: #60a5fa;
+		--fr-shadow: rgba(96,165,250,0.12);
+}
+
+// SASS fallbacks for compile-time usage (do not reference CSS vars in functions)
+$myds-primary: #2563EB; // MYDS Blue (compile-time)
 $myds-danger: #D32F2F;
 $myds-success: #388E3C;
 $myds-warning: #FFA000;
 $myds-gray-700: #374151;
 
-// Focus ring token
+// Focus ring fallback
 $myds-focus-ring: #2563EB;

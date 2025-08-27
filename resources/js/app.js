@@ -5,6 +5,10 @@ import Swal from 'sweetalert2';
 window.MYDS = window.MYDS || {};
 window.MYDS.Swal = Swal;
 
+// Small inline SVGs used for the theme toggle. Kept minimal and decorative (aria-hidden).
+var __MYDS_SVG_SUN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var __MYDS_SVG_MOON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/></svg>';
+
 window.MYDS.handleDestroy = function(btn) {
 	var title = 'Amaran';
 	var text = 'Ini hanya contoh: tindakan ini akan memadam item jika dihantar. Teruskan?';
@@ -61,5 +65,55 @@ document.addEventListener('DOMContentLoaded', function () {
 			document.body.appendChild(el);
 			setTimeout(function () { el.remove(); }, 4000);
 		}
+	}
+});
+
+// Theme toggle: persist preference in localStorage and apply data-theme attribute
+function applyTheme(theme) {
+	if (theme === 'dark') {
+		document.documentElement.setAttribute('data-theme', 'dark');
+	var icon = document.getElementById('theme-toggle-icon');
+	if (icon) icon.innerHTML = __MYDS_SVG_MOON;
+		var btn = document.getElementById('theme-toggle');
+		if (btn) btn.setAttribute('aria-pressed', 'true');
+	} else {
+		// explicitly set light to make checks deterministic
+		document.documentElement.setAttribute('data-theme', 'light');
+	var icon = document.getElementById('theme-toggle-icon');
+	if (icon) icon.innerHTML = __MYDS_SVG_SUN;
+		var btn = document.getElementById('theme-toggle');
+		if (btn) btn.setAttribute('aria-pressed', 'false');
+	}
+}
+
+// initialize theme after DOM is ready so elements exist
+document.addEventListener('DOMContentLoaded', function () {
+	var stored = null;
+	try { stored = localStorage.getItem('myds_theme'); } catch (e) { /* ignore */ }
+	var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+	var theme = stored || (prefersDark ? 'dark' : 'light');
+	applyTheme(theme === 'dark' ? 'dark' : 'light');
+
+	var toggleBtn = document.getElementById('theme-toggle');
+	if (toggleBtn) {
+		toggleBtn.addEventListener('click', function (e) {
+			var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+			var next = isDark ? 'light' : 'dark';
+			try { localStorage.setItem('myds_theme', next); } catch (err) {}
+			applyTheme(next);
+		});
+	} else {
+		// fallback: delegated click handler for older browsers or if button not found
+		document.addEventListener('click', function (e) {
+			var target = e.target;
+			if (!target) return;
+			var toggle = (target.id === 'theme-toggle') || (target.closest && target.closest('#theme-toggle'));
+			if (toggle) {
+				var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+				var next = isDark ? 'light' : 'dark';
+				try { localStorage.setItem('myds_theme', next); } catch (err) {}
+				applyTheme(next);
+			}
+		});
 	}
 });

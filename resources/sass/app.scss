@@ -1,18 +1,17 @@
-// Fonts
+// Variables (module) - must come before any CSS rules or @import statements
+@use 'variables' as *;
+
+// Bootstrap wrapper (legacy @import shim)
+@import 'bootstrap-wrapper';
+
+// Fonts (keep as a plain CSS import)
 @import url('https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500');
-
-// Variables
-@import 'variables';
-
-
-// Bootstrap
-@import 'bootstrap/scss/bootstrap';
 
 // MYDS-style focus ring utility using tokens
 .focus-ring {
-	outline: 2px solid $myds-focus-ring !important;
+	outline: 2px solid var(--fr) !important;
 	outline-offset: 2px !important;
-	box-shadow: 0 0 0 2px rgba(37,99,235,0.12) !important;
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--fr) 12%, transparent) !important;
 }
 
 // Global focus style for interactive elements
@@ -21,9 +20,9 @@ button:focus,
 input:focus,
 select:focus,
 textarea:focus {
-	outline: 2px solid $myds-focus-ring !important;
+	outline: 2px solid var(--fr) !important;
 	outline-offset: 2px !important;
-	box-shadow: 0 0 0 2px rgba(37,99,235,0.12) !important;
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--fr) 12%, transparent) !important;
 	transition: outline-color 0.2s;
 }
 
@@ -39,15 +38,103 @@ textarea:focus {
 	cursor: pointer;
 	text-decoration: none;
 }
-.myds-btn--primary{ background-color: $myds-primary; color: #fff; border: 1px solid darken($myds-primary, 6%); }
+.myds-btn--primary{
+	background-color: var(--primary);
+	color: #fff;
+	/* border uses a semi-transparent overlay so SASS doesn't try to darken a CSS var */
+	border: 1px solid rgba(0,0,0,0.1);
+}
 .myds-btn--secondary{ background-color: transparent; color: $myds-gray-700; border: 1px solid rgba(0,0,0,0.08); }
-.myds-btn--danger{ background-color: $myds-danger; color: #fff; border: 1px solid darken($myds-danger, 6%); }
+.myds-btn--danger{
+	background-color: var(--danger);
+	color: #fff;
+	border: 1px solid rgba(0,0,0,0.12);
+}
 .myds-action--danger{ color: $myds-danger !important; }
 
 // Typography defaults
 body {
-	font-family: $font-family-sans-serif;
-	background-color: $body-bg;
+		font-family: $font-family-sans-serif;
+		background-color: var(--bg-page);
+		color: var(--txt-primary);
+}
+
+/* Surface tokens */
+.card, .card-body, .bg-surface {
+	background-color: var(--bg-surface) !important;
+	color: var(--txt-primary) !important;
+}
+
+/* Muted text */
+.text-muted {
+	color: var(--txt-muted) !important;
+}
+
+/* Navbar mapping */
+.navbar, .navbar-light, .navbar-dark {
+	background-color: var(--bg-surface) !important;
+	border-bottom: 1px solid var(--otl-default);
+}
+
+/* Forms */
+input, textarea, select {
+	background-color: var(--bg-surface);
+	color: var(--txt-primary);
+	border: 1px solid var(--otl-default);
+}
+
+input::placeholder, textarea::placeholder {
+	color: var(--txt-muted);
+}
+
+/* Buttons */
+.btn {
+	transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+/* Links */
+a {
+	color: var(--primary);
+}
+
+/* Tables */
+table {
+	color: var(--txt-primary);
+}
+
+table thead th {
+	background-color: var(--bg-muted);
+	color: var(--txt-primary);
+}
+
+/* Badges / alerts */
+.badge, .alert {
+	background-color: var(--bg-surface);
+	color: var(--txt-primary);
+	border: 1px solid var(--otl-default);
+}
+
+/* Modals */
+.modal-content {
+	background-color: var(--bg-surface);
+	color: var(--txt-primary);
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+	background-color: var(--bg-surface);
+	color: var(--txt-primary);
+	border: 1px solid var(--otl-default);
+}
+
+/* Focus utilities */
+.focus-ring {
+	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
+}
+
+/* Small transition for theme swap */
+:root, [data-theme="dark"] {
+	transition: background-color 200ms ease, color 200ms ease;
 }
 
 h1,h2,h3,h4,h5,h6 {

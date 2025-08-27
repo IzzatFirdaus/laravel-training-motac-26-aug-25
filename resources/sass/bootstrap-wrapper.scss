@@ -1,0 +1,12 @@
+// bootstrap-wrapper.scss
+// A small wrapper that uses Bootstrap's SCSS partials via the module system
+// and forwards a minimal set of variables so legacy code can access them
+// from this module if necessary.
+
+// bootstrap-wrapper.scss
+// Minimal compatibility shim: import Bootstrap using the legacy @import so
+// Bootstrap's internal partials (which assume global mixins/variables) can
+// compile without module-system issues. This centralizes the import so
+// future migrations are easier.
+
+@import 'bootstrap/scss/bootstrap';
