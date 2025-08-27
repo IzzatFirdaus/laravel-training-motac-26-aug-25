@@ -36,8 +36,11 @@ Route::get('/inventories/{inventory}', [App\Http\Controllers\InventoryController
 // Route to edit a single inventory item (use conventional /{id}/edit path to avoid name collision)
 Route::get('/inventories/{inventory}/edit', [App\Http\Controllers\InventoryController::class, 'edit'])->name('inventories.edit');
 
-// Route to update an inventory item
-Route::patch('/inventories/{inventory}', [App\Http\Controllers\InventoryController::class, 'update'])->name('inventories.update');
+// Route to update an inventory item (using POST instead of PATCH for environments that prefer POST)
+Route::post('/inventories/{inventory}', [App\Http\Controllers\InventoryController::class, 'update'])->name('inventories.update');
+
+// Route to destroy an inventory item (using POST to a /destroy endpoint)
+Route::post('/inventories/{inventory}/destroy', [App\Http\Controllers\InventoryController::class, 'destroy'])->name('inventories.destroy');
 
 // Backwards compatibility: visiting /inventories/show without an id will redirect to the index
 Route::get('/inventories/show', function () {
@@ -63,8 +66,16 @@ Route::get('/vehicles/store', function () {
     return redirect()->route('vehicles.create');
 });
 
-// Vehicle detail route
-Route::get('/vehicles/{vehicle}', [App\Http\Controllers\VehicleController::class, 'show'])->name('vehicles.show');
+// Route to edit a single vehicle item (use conventional /{id}/edit path to avoid name collision)
+Route::get('/vehicles/{vehicle}/edit', [App\Http\Controllers\VehicleController::class, 'edit'])->name('vehicles.edit');
 
+// Route to update a vehicle item (using POST instead of PATCH for environments that prefer POST)
+Route::post('/vehicles/{vehicle}', [App\Http\Controllers\VehicleController::class, 'update'])->name('vehicles.update');
+
+
+// Route to destroy a vehicle (using POST to a /destroy endpoint)
+Route::post('/vehicles/{vehicle}/destroy', [App\Http\Controllers\VehicleController::class, 'destroy'])->name('vehicles.destroy');
+
+// Vehicle detail route
 Route::get('/vehicles/{vehicle}', [App\Http\Controllers\VehicleController::class, 'show'])->name('vehicles.show');
 // Add other routes below. Controller methods should be defined inside their classes, not in this file.
