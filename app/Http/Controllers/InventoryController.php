@@ -88,4 +88,46 @@ class InventoryController extends Controller
         // Return the view with the inventory data
         return view('inventories.show', compact('inventory'));
     }
+
+    public function edit(Inventory $inventory): \Illuminate\Contracts\View\View
+    {
+        // Fetch users to populate owner dropdown
+        $users = User::orderBy('name')->get(['id', 'name']);
+
+        // Return the view with the inventory data
+        return view('inventories.edit', compact('inventory', 'users'));
+    }
+
+    /**
+     * Update the specified inventory in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Inventory $inventory
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Inventory $inventory): \Illuminate\Http\RedirectResponse
+    {
+        $data = $request->validate([
+            'user_id' => ['nullable', 'exists:users,id'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'qty' => ['nullable', 'integer', 'min:0'],
+            'price' => ['nullable', 'numeric', 'min:0'],
+            'description' => ['nullable', 'string'],
+        ]);
+
+        $inventory->fill([
+            'name' => $data['name'] ?? $inventory->name,
+            'qty' => $data['qty'] ?? $inventory->qty,
+            'price' => $data['price'] ?? $inventory->price,
+            'description' => $data['description'] ?? $inventory->description,
+        ]);
+
+        if (!empty($data['user_id'])) {
+            $inventory->user_id = $data['user_id'];
+        }
+
+        $inventory->save();
+
+        return redirect()->route('inventories.show', $inventory)->with('status', 'Inventory updated.');
+    }
 }

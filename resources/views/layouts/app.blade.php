@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- Page title: individual views can set a `title` section. Default to app name. --}}
+    <title>@yield('title', config('app.name', 'second-crud'))</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -18,6 +19,12 @@
 </head>
 <body>
     <div id="app">
+    {{-- Skip to content for keyboard users --}}
+    <a href="#main-content" class="visually-hidden-focusable">Skip to content</a>
+
+    {{-- Global flash region for status messages (aria-live) --}}
+    <div id="global-flash" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -72,7 +79,15 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main id="main-content" class="py-4">
+            {{-- Display session status messages in a visible region and the aria-live container for AT --}}
+            @if(session('status'))
+                <div class="container">
+                    <div class="alert alert-success" role="status">{{ session('status') }}</div>
+                </div>
+                <script>document.getElementById('global-flash').textContent = @json(session('status'));</script>
+            @endif
+
             @yield('content')
         </main>
     </div>

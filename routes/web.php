@@ -33,9 +33,38 @@ Route::get('/inventories/store', function () {
 // Route to show a single inventory item
 Route::get('/inventories/{inventory}', [App\Http\Controllers\InventoryController::class, 'show'])->name('inventories.show');
 
+// Route to edit a single inventory item (use conventional /{id}/edit path to avoid name collision)
+Route::get('/inventories/{inventory}/edit', [App\Http\Controllers\InventoryController::class, 'edit'])->name('inventories.edit');
+
+// Route to update an inventory item
+Route::patch('/inventories/{inventory}', [App\Http\Controllers\InventoryController::class, 'update'])->name('inventories.update');
+
+// Backwards compatibility: visiting /inventories/show without an id will redirect to the index
+Route::get('/inventories/show', function () {
+    return redirect()->route('inventories.index');
+});
+
+
 // Vehicle routes
 
 // Route to list all vehicles
 Route::get('/vehicles', [App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
 
+Route::get('/vehicles/create', [App\Http\Controllers\VehicleController::class, 'create'])->name('vehicles.create');
+
+// Correct store route: use POST to create a new vehicle
+Route::post('/vehicles', [App\Http\Controllers\VehicleController::class, 'store'])->name('vehicles.store');
+// Redirect legacy path `/vehicles/show` (no id) to the vehicles index to avoid 404s
+Route::redirect('/vehicles/show', '/vehicles');
+Route::redirect('/vehicles/show/', '/vehicles');
+
+// Backwards compatibility: redirect GET /vehicles/store to the create form
+Route::get('/vehicles/store', function () {
+    return redirect()->route('vehicles.create');
+});
+
+// Vehicle detail route
+Route::get('/vehicles/{vehicle}', [App\Http\Controllers\VehicleController::class, 'show'])->name('vehicles.show');
+
+Route::get('/vehicles/{vehicle}', [App\Http\Controllers\VehicleController::class, 'show'])->name('vehicles.show');
 // Add other routes below. Controller methods should be defined inside their classes, not in this file.
