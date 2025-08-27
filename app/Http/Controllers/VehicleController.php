@@ -59,6 +59,7 @@ class VehicleController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'description' => ['nullable', 'string'],
         ]);
+
         $vehicle = Vehicle::create([
             'name' => $data['name'],
             'user_id' => $data['user_id'] ?? null,
@@ -67,7 +68,7 @@ class VehicleController extends Controller
             'description' => $data['description'] ?? null,
         ]);
 
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle created successfully.');
+        return redirect()->route('vehicles.index')->with('status', 'Kenderaan berjaya dicipta.');
     }
 
     /**

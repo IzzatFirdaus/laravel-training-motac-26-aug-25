@@ -47,7 +47,6 @@ Route::get('/inventories/show', function () {
     return redirect()->route('inventories.index');
 });
 
-
 // Vehicle routes
 
 // Route to list all vehicles

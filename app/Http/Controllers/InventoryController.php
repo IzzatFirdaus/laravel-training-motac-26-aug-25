@@ -52,35 +52,27 @@ class InventoryController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // Validate the incoming request data
         $data = $request->validate([
-            'user_id' => ['nullable', 'exists:users,id'], // Ensure user_id exists in users table
-            'name' => ['required', 'string', 'max:255'], // Name is required and must be a string
-            'qty' => ['required', 'integer', 'min:0'], // Quantity is required and must be a non-negative integer
-            'price' => ['required', 'numeric', 'min:0'], // Price is required and must be a non-negative number
-            'description' => ['nullable', 'string'], // Description is optional
+            'user_id' => ['nullable', 'exists:users,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'qty' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'description' => ['nullable', 'string'],
         ]);
-        // Prepare insert payload
-        $payload = [
+
+        if (empty($data['user_id']) && Auth::check()) {
+            $data['user_id'] = Auth::id();
+        }
+
+        $inventory = Inventory::create([
             'name' => $data['name'],
             'qty' => $data['qty'],
             'price' => $data['price'],
             'description' => $data['description'] ?? null,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
+            'user_id' => $data['user_id'] ?? null,
+        ]);
 
-        if (!empty($data['user_id'])) {
-            $payload['user_id'] = $data['user_id'];
-        } elseif (Auth::check()) {
-            $payload['user_id'] = Auth::id();
-        } else {
-            $payload['user_id'] = null;
-        }
-
-        $id = DB::table('inventories')->insertGetId($payload);
-
-        return redirect()->route('inventories.show', $id)->with('status', 'Inventory created.');
+        return redirect()->route('inventories.show', $inventory->getKey())->with('status', 'Inventori berjaya dicipta.');
     }
 
     /**

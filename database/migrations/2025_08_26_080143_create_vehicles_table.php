@@ -34,6 +34,8 @@ return new class extends Migration
             //$table->string('status')->default('available');
 
             $table->timestamps();
+            // Soft deletes column for the Vehicle model
+            $table->softDeletes();
         });
 
         // Pivot table for many-to-many between inventories and vehicles
