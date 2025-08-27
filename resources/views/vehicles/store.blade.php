@@ -27,57 +27,26 @@
 
     <!-- Form starts here. It sends data to vehicles.store route using POST method -->
     <form method="POST" action="{{ route('vehicles.store') }}">
-        @csrf  <!-- This token is required for security -->
+        @csrf
 
-        <!-- Inventory Name Input -->
-        <div style="margin-bottom: 15px;">
-            <label for="name">Name</label><br>
-            <input id="name" name="name" type="text" value="{{ old('name') }}" required style="width: 100%; padding: 8px;">
-            @error('name')
-                <div style="color: red;">{{ $message }}</div>
-            @enderror
-        </div>
+        <x-form-field name="name" label="Name" :value="old('name')" required />
 
-        <!-- Optional: Owner dropdown (if users provided) -->
         <div style="margin-bottom: 15px;">
             <label for="user_id">Owner (optional)</label><br>
-            <select id="user_id" name="user_id" style="width: 100%; padding: 8px;">
+            <select id="user_id" name="user_id" style="width: 100%; padding: 8px;" aria-describedby="user_id-error">
                 <option value="">(no owner)</option>
                 @foreach(($users ?? collect()) as $user)
                     <option value="{{ $user->id }}" @selected((string) old('user_id') === (string) $user->id)>{{ $user->name }}</option>
                 @endforeach
             </select>
-            @error('user_id')
-                <div style="color: red;">{{ $message }}</div>
-            @enderror
+            @error('user_id') <div id="user_id-error" style="color: red;">{{ $message }}</div> @enderror
         </div>
 
-        <!-- Quantity (named `qty` in the vehicles table) -->
-        <div style="margin-bottom: 15px;">
-            <label for="qty">Quantity</label><br>
-            <input id="qty" name="qty" type="number" min="0" value="{{ old('qty', 0) }}" style="width: 100%; padding: 8px;">
-            @error('qty')
-                <div style="color: red;">{{ $message }}</div>
-            @enderror
-        </div>
+        <x-form-field name="qty" type="number" label="Quantity" :value="old('qty', 0)" required />
 
-        <!-- Price Input -->
-        <div style="margin-bottom: 15px;">
-            <label for="price">Price</label><br>
-            <input id="price" name="price" type="number" step="0.01" min="0" value="{{ old('price', '0.00') }}" style="width: 100%; padding: 8px;">
-            @error('price')
-                <div style="color: red;">{{ $message }}</div>
-            @enderror
-        </div>
+        <x-form-field name="price" type="number" label="Price" :value="old('price', '0.00')" required />
 
-        <!-- Description Textarea -->
-        <div style="margin-bottom: 15px;">
-            <label for="description">Description</label><br>
-            <textarea id="description" name="description" rows="4" style="width: 100%; padding: 8px;">{{ old('description') }}</textarea>
-            @error('description')
-                <div style="color: red;">{{ $message }}</div>
-            @enderror
-        </div>
+        <x-form-field name="description" type="textarea" label="Description">{{ old('description') }}</x-form-field>
 
         <!-- Optional: Category Dropdown if categories are provided -->
         @if(isset($categories) && count($categories) > 0)

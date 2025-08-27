@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
 {
@@ -16,10 +16,14 @@ class InventoryController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        // Fetch all inventories with their associated user, ordered by latest, and paginate results
-        $inventories = Inventory::with('user')->latest()->paginate(15);
+        // Fetch inventories as plain objects (POPO) and paginate
+        $inventories = DB::table('inventories')
+            ->leftJoin('users', 'inventories.user_id', '=', 'users.id')
+            ->select('inventories.*', 'users.name as owner_name')
+            ->orderBy('inventories.created_at', 'desc')
+            ->paginate(15);
 
-        // Return the view with the inventories data
+        // Return the view with the inventories data (LengthAwarePaginator of stdClass)
         return view('inventories.index', compact('inventories'));
     }
 
@@ -30,10 +34,9 @@ class InventoryController extends Controller
      */
     public function create(): \Illuminate\Contracts\View\View
     {
-        // Fetch all users ordered by name to populate the dropdown in the form
-        $users = User::orderBy('name')->get(['id', 'name']);
+        // Fetch all users ordered by name to populate the dropdown in the form as plain objects
+        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
 
-        // Return the view with the users data
         return view('inventories.create', compact('users'));
     }
 
@@ -53,48 +56,59 @@ class InventoryController extends Controller
             'price' => ['required', 'numeric', 'min:0'], // Price is required and must be a non-negative number
             'description' => ['nullable', 'string'], // Description is optional
         ]);
+        // Prepare insert payload
+        $payload = [
+            'name' => $data['name'],
+            'qty' => $data['qty'],
+            'price' => $data['price'],
+            'description' => $data['description'] ?? null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
 
-        // Create a new inventory instance and assign validated data
-        $inventory = new Inventory();
-        $inventory->name = $data['name'];
-        $inventory->qty = $data['qty'];
-        $inventory->price = $data['price'];
-        $inventory->description = $data['description'] ?? null; // Use null if description is not provided
-
-        // Assign user_id based on the provided data or the authenticated user
         if (!empty($data['user_id'])) {
-            $inventory->user_id = $data['user_id'];
+            $payload['user_id'] = $data['user_id'];
         } elseif (Auth::check()) {
-            $inventory->user_id = Auth::id();
+            $payload['user_id'] = Auth::id();
         } else {
-            $inventory->user_id = null; // Set to null if no user is associated
+            $payload['user_id'] = null;
         }
 
-        // Save the inventory to the database
-        $inventory->save();
+        $id = DB::table('inventories')->insertGetId($payload);
 
-        // Redirect to the show page for the newly created inventory with a success message
-        return redirect()->route('inventories.show', $inventory->id)->with('status', 'Inventory created.');
+        return redirect()->route('inventories.show', $id)->with('status', 'Inventory created.');
     }
 
     /**
      * Display a single inventory item.
      *
-     * @param Inventory $inventory
+     * @param int $inventoryId
      * @return \Illuminate\Contracts\View\View
      */
-    public function show(Inventory $inventory): \Illuminate\Contracts\View\View
+    public function show($inventoryId): \Illuminate\Contracts\View\View
     {
-        // Return the view with the inventory data
+        // Fetch inventory as a POPO and attach owner info if present
+        $inventory = DB::table('inventories')->where('id', $inventoryId)->first();
+
+        if (! $inventory) {
+            abort(404);
+        }
+
+        $inventory->user = $inventory->user_id ? DB::table('users')->select('id','name')->where('id', $inventory->user_id)->first() : null;
+
         return view('inventories.show', compact('inventory'));
     }
 
-    public function edit(Inventory $inventory): \Illuminate\Contracts\View\View
+    public function edit($inventoryId): \Illuminate\Contracts\View\View
     {
         // Fetch users to populate owner dropdown
-        $users = User::orderBy('name')->get(['id', 'name']);
+        $users = DB::table('users')->select('id','name')->orderBy('name')->get();
 
-        // Return the view with the inventory data
+        $inventory = DB::table('inventories')->where('id', $inventoryId)->first();
+        if (! $inventory) {
+            abort(404);
+        }
+
         return view('inventories.edit', compact('inventory', 'users'));
     }
 
@@ -102,10 +116,10 @@ class InventoryController extends Controller
      * Update the specified inventory in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Inventory $inventory
+     * @param int $inventoryId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Inventory $inventory): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, $inventoryId): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validate([
             'user_id' => ['nullable', 'exists:users,id'],
@@ -115,19 +129,37 @@ class InventoryController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-        $inventory->fill([
-            'name' => $data['name'] ?? $inventory->name,
-            'qty' => $data['qty'] ?? $inventory->qty,
-            'price' => $data['price'] ?? $inventory->price,
-            'description' => $data['description'] ?? $inventory->description,
-        ]);
-
-        if (!empty($data['user_id'])) {
-            $inventory->user_id = $data['user_id'];
+        $existing = DB::table('inventories')->where('id', $inventoryId)->first();
+        if (! $existing) {
+            abort(404);
         }
 
-        $inventory->save();
+        $payload = [
+            'name' => $data['name'] ?? $existing->name,
+            'qty' => $data['qty'] ?? $existing->qty,
+            'price' => $data['price'] ?? $existing->price,
+            'description' => $data['description'] ?? $existing->description,
+            'updated_at' => now(),
+        ];
 
-        return redirect()->route('inventories.show', $inventory)->with('status', 'Inventory updated.');
+        if (! empty($data['user_id'])) {
+            $payload['user_id'] = $data['user_id'];
+        }
+
+        DB::table('inventories')->where('id', $inventoryId)->update($payload);
+
+        return redirect()->route('inventories.show', $inventoryId)->with('status', 'Inventory updated.');
+    }
+
+    /**
+     * Remove the specified inventory from storage.
+     *
+     * @param int $inventoryId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($inventoryId)
+    {
+        DB::table('inventories')->where('id', $inventoryId)->delete();
+        return redirect()->route('inventories.index')->with('status', 'Inventory deleted.');
     }
 }

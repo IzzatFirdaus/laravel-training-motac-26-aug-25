@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Vehicle;
+use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
@@ -12,11 +12,26 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        // query all vehicles from the table 'vehicles' using model
-        $vehicles = Vehicle::all();
+        // Query vehicles as plain objects (POPO) with owner name and paginate per MYDS guidance
+        $vehicles = DB::table('vehicles')
+            ->leftJoin('users', 'vehicles.user_id', '=', 'users.id')
+            ->select('vehicles.*', 'users.name as owner_name')
+            ->orderBy('vehicles.created_at', 'desc')
+            ->paginate(15);
 
-        // return to view with $vehicles (resources/views/vehicles/index.blade.php)
         return view('vehicles.index', compact('vehicles'));
+    }
+
+    /**
+     * Remove the specified vehicle from storage.
+     *
+     * @param int $vehicleId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($vehicleId)
+    {
+        DB::table('vehicles')->where('id', $vehicleId)->delete();
+        return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
     }
     /**
      * Show the form for creating a new vehicle.
@@ -39,7 +54,17 @@ class VehicleController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-        Vehicle::create($data);
+        $payload = [
+            'name' => $data['name'],
+            'user_id' => $data['user_id'] ?? null,
+            'qty' => $data['qty'],
+            'price' => $data['price'],
+            'description' => $data['description'] ?? null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
+        DB::table('vehicles')->insert($payload);
 
         return redirect()->route('vehicles.index')->with('success', 'Vehicle created successfully.');
     }
@@ -47,11 +72,73 @@ class VehicleController extends Controller
     /**
      * Display the specified vehicle.
      */
-    public function show(Vehicle $vehicle)
+    public function show($vehicleId)
     {
-    // Ensure owner relationship is loaded to avoid extra queries in the view
-    $vehicle->loadMissing('owner');
+        $vehicle = DB::table('vehicles')->where('id', $vehicleId)->first();
+        if (! $vehicle) {
+            abort(404);
+        }
 
-    return view('vehicles.show', compact('vehicle'));
+        $vehicle->owner = $vehicle->user_id ? DB::table('users')->select('id','name')->where('id', $vehicle->user_id)->first() : null;
+
+        return view('vehicles.show', compact('vehicle'));
+    }
+
+    /**
+     * Show the form for editing the specified vehicle.
+     *
+     * @param int $vehicleId
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function edit($vehicleId): \Illuminate\Contracts\View\View
+    {
+        // Fetch users to populate owner dropdown
+        $users = DB::table('users')->select('id','name')->orderBy('name')->get();
+
+        $vehicle = DB::table('vehicles')->where('id', $vehicleId)->first();
+        if (! $vehicle) {
+            abort(404);
+        }
+
+        return view('vehicles.edit', compact('vehicle', 'users'));
+    }
+
+    /**
+     * Update the specified vehicle in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $vehicleId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $vehicleId): \Illuminate\Http\RedirectResponse
+    {
+        $data = $request->validate([
+            'user_id' => ['nullable', 'exists:users,id'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'qty' => ['nullable', 'integer', 'min:0'],
+            'price' => ['nullable', 'numeric', 'min:0'],
+            'description' => ['nullable', 'string'],
+        ]);
+
+        $existing = DB::table('vehicles')->where('id', $vehicleId)->first();
+        if (! $existing) {
+            abort(404);
+        }
+
+        $payload = [
+            'name' => $data['name'] ?? $existing->name,
+            'qty' => $data['qty'] ?? $existing->qty,
+            'price' => $data['price'] ?? $existing->price,
+            'description' => $data['description'] ?? $existing->description,
+            'updated_at' => now(),
+        ];
+
+        if (! empty($data['user_id'])) {
+            $payload['user_id'] = $data['user_id'];
+        }
+
+        DB::table('vehicles')->where('id', $vehicleId)->update($payload);
+
+        return redirect()->route('vehicles.show', $vehicleId)->with('status', 'Vehicle updated.');
     }
 }

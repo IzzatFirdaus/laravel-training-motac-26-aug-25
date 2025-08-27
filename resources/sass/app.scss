@@ -1,8 +1,38 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500');
 
 // Variables
 @import 'variables';
 
+
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// MYDS-style focus ring utility using tokens
+.focus-ring {
+	outline: 2px solid $myds-focus-ring !important;
+	outline-offset: 2px !important;
+	box-shadow: 0 0 0 2px rgba(37,99,235,0.12) !important;
+}
+
+// Global focus style for interactive elements
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 2px solid $myds-focus-ring !important;
+	outline-offset: 2px !important;
+	box-shadow: 0 0 0 2px rgba(37,99,235,0.12) !important;
+	transition: outline-color 0.2s;
+}
+
+// Typography defaults
+body {
+	font-family: $font-family-sans-serif;
+	background-color: $body-bg;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: $font-family-heading;
+}

@@ -1,7 +1,20 @@
 // Body
+// Body
 $body-bg: #f8fafc;
 
-// Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+// MYDS font stack: prefer Poppins (headings) and Inter (body), fallback to system sans
+$font-family-heading: 'Poppins', 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$font-family-sans-serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans';
+
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+// MYDS color tokens (light mode)
+$myds-primary: #2563EB; // MYDS Blue
+$myds-danger: #D32F2F;
+$myds-success: #388E3C;
+$myds-warning: #FFA000;
+$myds-gray-700: #374151;
+
+// Focus ring token
+$myds-focus-ring: #2563EB;
