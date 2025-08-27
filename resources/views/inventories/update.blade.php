@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inventory updated — second-crud')
+@section('title', 'Inventori Dikemaskini — ' . config('app.name', 'second-crud'))
 
 @section('content')
 <div class="container">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home — ' . config('app.name', 'second-crud'))
+@section('title', 'Papan Pemuka — ' . config('app.name', 'second-crud'))
 
 @section('content')
     <main class="container py-4">
@@ -9,7 +9,7 @@
             @if (session('status'))
                 <div class="alert alert-success" role="status">{{ session('status') }}</div>
             @endif
-            <p class="mb-0 text-muted">You are logged in!</p>
+            <p class="mb-0 text-muted">Anda telah log masuk.</p>
         </header>
 
         <section aria-labelledby="home-quick-links">

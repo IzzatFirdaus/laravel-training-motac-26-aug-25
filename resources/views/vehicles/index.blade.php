@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Vehicles — second-crud')
+@section('title', 'Kenderaan — ' . config('app.name', 'second-crud'))
 
 @section('content')
 <main id="main-content" class="container" tabindex="-1">

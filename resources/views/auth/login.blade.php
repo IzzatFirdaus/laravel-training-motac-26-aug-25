@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login — second-crud')
+@section('title', 'Log Masuk — ' . config('app.name', 'second-crud'))
 
 @section('content')
 <div class="container">

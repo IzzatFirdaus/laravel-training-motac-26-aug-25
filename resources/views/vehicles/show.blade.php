@@ -1,7 +1,7 @@
 {{-- resources/views/vehicles/show.blade.php --}}
 @extends('layouts.app')
 
-@section('title', ($vehicle->name ?? 'Vehicle') . ' — ' . config('app.name', 'second-crud'))
+@section('title', ($vehicle->name ?? 'Kenderaan') . ' — ' . config('app.name', 'second-crud'))
 
 @section('content')
 <div class="container mx-auto p-6">

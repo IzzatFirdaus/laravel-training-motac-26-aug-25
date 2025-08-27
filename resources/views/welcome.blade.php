@@ -1,7 +1,7 @@
 {{-- Welcome page for the training app. Uses the app layout and sets an explicit title. --}}
 @extends('layouts.app')
 
-@section('title', 'Welcome — ' . config('app.name', 'second-crud'))
+@section('title', 'Selamat Datang — ' . config('app.name', 'second-crud'))
 
 @section('content')
 	<main class="container py-5">
