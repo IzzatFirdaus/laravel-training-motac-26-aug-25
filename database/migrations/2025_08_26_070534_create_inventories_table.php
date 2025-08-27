@@ -18,13 +18,16 @@ return new class extends Migration
             // owner of the inventory item; nullable so unauthenticated users
             // can create items in development/testing. on delete -> set null
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('name');
-            $table->integer('qty');
+            $table->string('name')->nullable();
+            $table->integer('qty')->default(0);
             // price stored with precision and scale
-            $table->decimal('price', 10, 2);
-            $table->text('description');
+            $table->decimal('price', 10, 2)->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
+
+    // Note: pivot table `inventory_vehicle` is created in the vehicles migration
     }
 
     /**

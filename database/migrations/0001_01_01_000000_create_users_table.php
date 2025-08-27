@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // Optional one-to-one link to a primary vehicle (nullable)
+            // Use unsignedBigInteger to avoid circular foreign key constraint ordering.
+            $table->unsignedBigInteger('primary_vehicle_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

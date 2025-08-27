@@ -27,6 +27,23 @@ textarea:focus {
 	transition: outline-color 0.2s;
 }
 
+// MYDS button utilities
+.myds-btn{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: .375rem .75rem;
+	border-radius: .25rem;
+	font-size: .875rem;
+	line-height: 1;
+	cursor: pointer;
+	text-decoration: none;
+}
+.myds-btn--primary{ background-color: $myds-primary; color: #fff; border: 1px solid darken($myds-primary, 6%); }
+.myds-btn--secondary{ background-color: transparent; color: $myds-gray-700; border: 1px solid rgba(0,0,0,0.08); }
+.myds-btn--danger{ background-color: $myds-danger; color: #fff; border: 1px solid darken($myds-danger, 6%); }
+.myds-action--danger{ color: $myds-danger !important; }
+
 // Typography defaults
 body {
 	font-family: $font-family-sans-serif;

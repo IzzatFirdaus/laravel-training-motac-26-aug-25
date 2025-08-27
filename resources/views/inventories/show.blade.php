@@ -13,18 +13,27 @@
                 <div class="card-body">
                     <!-- Display inventory details -->
                     <p><strong>Nama:</strong> {{ $inventory->name }}</p>
-                    <p><strong>Pemilik:</strong> {{ $inventory->user?->name ?? '' }}</p> <!-- Show owner name or a dash if none -->
-                    <p><strong>Kuantiti:</strong> {{ $inventory->qty }}</p>
-                    <p><strong>Harga:</strong> {{ number_format($inventory->price, 2) }}</p> <!-- Format price to 2 decimal places -->
+                    <p><strong>Pemilik:</strong> {{ $inventory->user?->name ?? '—' }}</p>
+                    <p><strong>Kuantiti:</strong> {{ $inventory->qty ?? 0 }}</p>
+                    <p><strong>Harga:</strong> {{ isset($inventory->price) ? number_format($inventory->price, 2) : '—' }}</p>
                     <p><strong>Keterangan:</strong></p>
                     <div>{!! nl2br(e($inventory->description)) !!}</div> <!-- Display description (preserve line breaks) -->
 
                     <div class="mt-3">
                         <!-- Navigation buttons -->
-                        <a href="{{ route('inventories.index') }}" class="btn btn-secondary">Kembali</a>
-                        <a href="{{ route('inventories.edit', $inventory->id) }}" class="btn btn-outline-primary">Edit</a>
-                        {{-- <a href="{{ route('inventories.create') }}" class="btn btn-primary">Create another</a> --}}
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('inventories.index') }}'">Kembali</button>
+                        <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{ route('inventories.edit', $inventory->id) }}'">Edit</button>
+                        <x-destroy :action="route('inventories.destroy', $inventory->id)" :label="$inventory->name ?? 'Inventory'" />
                     </div>
+                    @if(isset($inventory->vehicles) && $inventory->vehicles->count())
+                        <hr class="my-3">
+                        <h5>Kenderaan berkaitan</h5>
+                        <ul>
+                            @foreach($inventory->vehicles as $v)
+                                <li><a href="{{ route('vehicles.show', $v->id) }}">{{ $v->name ?? '—' }}</a> (ID: {{ $v->id }})</li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>

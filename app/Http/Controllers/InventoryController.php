@@ -6,24 +6,28 @@ use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class InventoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the inventories.
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(): \Illuminate\Contracts\View\View
+    public function index(): View
     {
-        // Fetch inventories as plain objects (POPO) and paginate
-        $inventories = DB::table('inventories')
-            ->leftJoin('users', 'inventories.user_id', '=', 'users.id')
-            ->select('inventories.*', 'users.name as owner_name')
-            ->orderBy('inventories.created_at', 'desc')
+        // Use Eloquent with eager-loading so views can reference relations
+        $inventories = Inventory::with('user', 'vehicles')
+            ->orderBy('created_at', 'desc')
             ->paginate(15);
 
-        // Return the view with the inventories data (LengthAwarePaginator of stdClass)
         return view('inventories.index', compact('inventories'));
     }
 
@@ -32,7 +36,7 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function create(): \Illuminate\Contracts\View\View
+    public function create(): View
     {
         // Fetch all users ordered by name to populate the dropdown in the form as plain objects
         $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
@@ -46,7 +50,7 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         // Validate the incoming request data
         $data = $request->validate([
@@ -85,31 +89,21 @@ class InventoryController extends Controller
      * @param int $inventoryId
      * @return \Illuminate\Contracts\View\View
      */
-    public function show($inventoryId): \Illuminate\Contracts\View\View
+    public function show($inventoryId): View
     {
-        // Fetch inventory as a POPO and attach owner info if present
-        $inventory = DB::table('inventories')->where('id', $inventoryId)->first();
+    $inventory = Inventory::with('user', 'vehicles')->findOrFail($inventoryId);
 
-        if (! $inventory) {
-            abort(404);
-        }
-
-        $inventory->user = $inventory->user_id ? DB::table('users')->select('id','name')->where('id', $inventory->user_id)->first() : null;
-
-        return view('inventories.show', compact('inventory'));
+    return view('inventories.show', compact('inventory'));
     }
 
-    public function edit($inventoryId): \Illuminate\Contracts\View\View
+    public function edit($inventoryId): View
     {
         // Fetch users to populate owner dropdown
-        $users = DB::table('users')->select('id','name')->orderBy('name')->get();
+    $users = DB::table('users')->select('id','name')->orderBy('name')->get();
 
-        $inventory = DB::table('inventories')->where('id', $inventoryId)->first();
-        if (! $inventory) {
-            abort(404);
-        }
+    $inventory = Inventory::findOrFail($inventoryId);
 
-        return view('inventories.edit', compact('inventory', 'users'));
+    return view('inventories.edit', compact('inventory', 'users'));
     }
 
     /**
@@ -119,7 +113,7 @@ class InventoryController extends Controller
      * @param int $inventoryId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $inventoryId): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, $inventoryId): RedirectResponse
     {
         $data = $request->validate([
             'user_id' => ['nullable', 'exists:users,id'],
@@ -129,24 +123,20 @@ class InventoryController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-        $existing = DB::table('inventories')->where('id', $inventoryId)->first();
-        if (! $existing) {
-            abort(404);
-        }
+        $inventory = Inventory::findOrFail($inventoryId);
 
-        $payload = [
-            'name' => $data['name'] ?? $existing->name,
-            'qty' => $data['qty'] ?? $existing->qty,
-            'price' => $data['price'] ?? $existing->price,
-            'description' => $data['description'] ?? $existing->description,
-            'updated_at' => now(),
-        ];
+        $inventory->fill([
+            'name' => $data['name'] ?? $inventory->name,
+            'qty' => $data['qty'] ?? $inventory->qty,
+            'price' => $data['price'] ?? $inventory->price,
+            'description' => $data['description'] ?? $inventory->description,
+        ]);
 
         if (! empty($data['user_id'])) {
-            $payload['user_id'] = $data['user_id'];
+            $inventory->user_id = $data['user_id'];
         }
 
-        DB::table('inventories')->where('id', $inventoryId)->update($payload);
+        $inventory->save();
 
         return redirect()->route('inventories.show', $inventoryId)->with('status', 'Inventory updated.');
     }
@@ -157,9 +147,11 @@ class InventoryController extends Controller
      * @param int $inventoryId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($inventoryId)
+    public function destroy($inventoryId): RedirectResponse
     {
-        DB::table('inventories')->where('id', $inventoryId)->delete();
-        return redirect()->route('inventories.index')->with('status', 'Inventory deleted.');
+    $inventory = Inventory::findOrFail($inventoryId);
+    $inventory->delete();
+
+    return redirect()->route('inventories.index')->with('status', 'Inventory deleted.');
     }
 }

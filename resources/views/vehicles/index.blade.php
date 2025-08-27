@@ -46,11 +46,11 @@
                                         <tr>
                                             <td>{{ $vehicle->id }}</td>
                                             <td>{{ $vehicle->name }}</td>
-                                            <td>{{ $vehicle->owner_name ?? '—' }}</td>
                                             <td>{{ $vehicle->qty }}</td>
                                             <td>{{ $vehicle->price !== null ? number_format($vehicle->price, 2) : '—' }}</td>
                                             <td>{{ \Illuminate\Support\Str::limit($vehicle->description, 60) }}</td>
-                                            <td>{{ optional($vehicle->created_at)->toDateString() }}</td>
+                                            <td>{{ $vehicle->owner?->name ?? '—' }}</td>
+                                            <td>{{ isset($vehicle->created_at) ? \Illuminate\Support\Carbon::parse($vehicle->created_at)->toDateString() : '—' }}</td>
                                             <td class="text-nowrap">
                                                 <x-action-buttons
                                                     :showRoute="route('vehicles.show', $vehicle->id)"
@@ -63,7 +63,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7">
+                                            <td colspan="8">
                                                 <div role="status" class="p-3 text-center">
                                                     <p class="mb-2">Tiada kenderaan dijumpai.</p>
                                                     <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Tambah kenderaan</a>

@@ -4,20 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use App\Models\Vehicle;
 
 class VehicleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of vehicles.
      */
-    public function index()
+    public function index(): View
     {
-        // Query vehicles as plain objects (POPO) with owner name and paginate per MYDS guidance
-        $vehicles = DB::table('vehicles')
-            ->leftJoin('users', 'vehicles.user_id', '=', 'users.id')
-            ->select('vehicles.*', 'users.name as owner_name')
-            ->orderBy('vehicles.created_at', 'desc')
-            ->paginate(15);
+        // Use Eloquent with eager-loading so views can reference the owner relation
+        $vehicles = Vehicle::with('owner')->orderBy('created_at', 'desc')->paginate(15);
 
         return view('vehicles.index', compact('vehicles'));
     }
@@ -28,15 +32,17 @@ class VehicleController extends Controller
      * @param int $vehicleId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($vehicleId)
+    public function destroy($vehicleId): RedirectResponse
     {
-        DB::table('vehicles')->where('id', $vehicleId)->delete();
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
+    $vehicle = Vehicle::findOrFail($vehicleId);
+    $vehicle->delete();
+
+    return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
     }
     /**
      * Show the form for creating a new vehicle.
      */
-    public function create()
+    public function create(): View
     {
         return view('vehicles.create');
     }
@@ -44,7 +50,7 @@ class VehicleController extends Controller
     /**
      * Store a newly created vehicle in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -53,18 +59,13 @@ class VehicleController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'description' => ['nullable', 'string'],
         ]);
-
-        $payload = [
+        $vehicle = Vehicle::create([
             'name' => $data['name'],
             'user_id' => $data['user_id'] ?? null,
             'qty' => $data['qty'],
             'price' => $data['price'],
             'description' => $data['description'] ?? null,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
-
-        DB::table('vehicles')->insert($payload);
+        ]);
 
         return redirect()->route('vehicles.index')->with('success', 'Vehicle created successfully.');
     }
@@ -72,16 +73,11 @@ class VehicleController extends Controller
     /**
      * Display the specified vehicle.
      */
-    public function show($vehicleId)
+    public function show($vehicleId): View
     {
-        $vehicle = DB::table('vehicles')->where('id', $vehicleId)->first();
-        if (! $vehicle) {
-            abort(404);
-        }
+    $vehicle = Vehicle::with('owner', 'inventories')->findOrFail($vehicleId);
 
-        $vehicle->owner = $vehicle->user_id ? DB::table('users')->select('id','name')->where('id', $vehicle->user_id)->first() : null;
-
-        return view('vehicles.show', compact('vehicle'));
+    return view('vehicles.show', compact('vehicle'));
     }
 
     /**
@@ -90,17 +86,14 @@ class VehicleController extends Controller
      * @param int $vehicleId
      * @return \Illuminate\Contracts\View\View
      */
-    public function edit($vehicleId): \Illuminate\Contracts\View\View
+    public function edit($vehicleId): View
     {
-        // Fetch users to populate owner dropdown
-        $users = DB::table('users')->select('id','name')->orderBy('name')->get();
+    // Fetch users to populate owner dropdown
+    $users = DB::table('users')->select('id','name')->orderBy('name')->get();
 
-        $vehicle = DB::table('vehicles')->where('id', $vehicleId)->first();
-        if (! $vehicle) {
-            abort(404);
-        }
+    $vehicle = Vehicle::findOrFail($vehicleId);
 
-        return view('vehicles.edit', compact('vehicle', 'users'));
+    return view('vehicles.edit', compact('vehicle', 'users'));
     }
 
     /**
@@ -110,7 +103,7 @@ class VehicleController extends Controller
      * @param int $vehicleId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $vehicleId): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, $vehicleId): RedirectResponse
     {
         $data = $request->validate([
             'user_id' => ['nullable', 'exists:users,id'],
@@ -120,24 +113,20 @@ class VehicleController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-        $existing = DB::table('vehicles')->where('id', $vehicleId)->first();
-        if (! $existing) {
-            abort(404);
-        }
+        $vehicle = Vehicle::findOrFail($vehicleId);
 
-        $payload = [
-            'name' => $data['name'] ?? $existing->name,
-            'qty' => $data['qty'] ?? $existing->qty,
-            'price' => $data['price'] ?? $existing->price,
-            'description' => $data['description'] ?? $existing->description,
-            'updated_at' => now(),
-        ];
+        $vehicle->fill([
+            'name' => $data['name'] ?? $vehicle->name,
+            'qty' => $data['qty'] ?? $vehicle->qty,
+            'price' => $data['price'] ?? $vehicle->price,
+            'description' => $data['description'] ?? $vehicle->description,
+        ]);
 
         if (! empty($data['user_id'])) {
-            $payload['user_id'] = $data['user_id'];
+            $vehicle->user_id = $data['user_id'];
         }
 
-        DB::table('vehicles')->where('id', $vehicleId)->update($payload);
+        $vehicle->save();
 
         return redirect()->route('vehicles.show', $vehicleId)->with('status', 'Vehicle updated.');
     }

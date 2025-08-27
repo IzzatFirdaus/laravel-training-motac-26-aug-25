@@ -35,6 +35,15 @@ return new class extends Migration
 
             $table->timestamps();
         });
+
+        // Pivot table for many-to-many between inventories and vehicles
+        Schema::create('inventory_vehicle', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('inventory_id')->constrained('inventories')->cascadeOnDelete();
+            $table->foreignId('vehicle_id')->constrained('vehicles')->cascadeOnDelete();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**

@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inventory extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -44,5 +48,27 @@ class Inventory extends Model
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
+    }
+
+    /**
+     * Inventories may be associated with many vehicles (many-to-many).
+     * Requires pivot table `inventory_vehicle` with `inventory_id` and `vehicle_id`.
+     *
+     * @return BelongsToMany<\App\Models\Vehicle>
+     */
+    public function vehicles()
+    {
+        return $this->belongsToMany(Vehicle::class, 'inventory_vehicle', 'inventory_id', 'vehicle_id')->withTimestamps();
+    }
+
+    //getter make sure title is always uppercase
+    public function getNameAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
     }
 }
