@@ -179,7 +179,7 @@ class DeletedInventoryTest extends TestCase
 
     public function test_policy_authorization_for_restore_and_force_delete(): void
     {
-    $inventory = Inventory::factory()->create(['user_id' => $this->user->getKey()]);
+        $inventory = Inventory::factory()->create(['user_id' => $this->user->getKey()]);
         $inventory->delete();
 
         // Test that only admin can restore

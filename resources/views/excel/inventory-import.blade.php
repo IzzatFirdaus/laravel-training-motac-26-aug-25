@@ -35,7 +35,7 @@
             </div>
 
             @if(session('import_failures'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger myds-alert myds-alert--danger">
                     Terdapat ralat semasa import:
                     <ul class="mb-0">
                         @foreach(session('import_failures') as $failure)
@@ -47,7 +47,7 @@
 
             @isset($failures)
                 @if($failures->isNotEmpty())
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger myds-alert myds-alert--danger">
                         Terdapat ralat semasa pratonton:
                         <ul class="mb-0">
                             @foreach($failures as $failure)
@@ -66,8 +66,8 @@
                             $columns = collect($previewRows[0] ?? [])->keys();
                         @endphp
                         @if(!empty($previewRows))
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
+                            <div class="table-responsive myds-table-responsive">
+                                <table class="table table-striped table-hover myds-table">
                                     <thead>
                                         <tr>
                                             @foreach($columns as $col)

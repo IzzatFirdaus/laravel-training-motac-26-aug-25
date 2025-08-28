@@ -29,8 +29,8 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                        <div class="table-responsive myds-table-responsive">
+                            <table class="table table-striped table-hover myds-table">
                                 <caption class="visually-hidden">Senarai permohonan; gunakan tindakan untuk lihat atau edit permohonan.</caption>
                                 <thead>
                                     <tr>
@@ -96,8 +96,8 @@
                                 @if($inventories->isEmpty())
                                     <p class="text-muted">Tiada inventori dijumpai.</p>
                                 @else
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
+                                    <div class="table-responsive myds-table-responsive">
+                                        <table class="table table-striped table-hover myds-table">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>

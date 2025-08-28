@@ -14,7 +14,7 @@
                     <div>
                         <div class="fw-bold">{{ $note->data['message'] ?? 'Pemberitahuan' }}
                             @if($isUnread)
-                                <span class="badge bg-success ms-2">Baru</span>
+                                <span class="badge bg-success ms-2 myds-badge myds-badge--success">Baru</span>
                             @endif
                         </div>
                         <div class="text-muted small">{{ $note->created_at->format('d/m/Y H:i') }}</div>

@@ -15,8 +15,8 @@
 
 			<div class="row g-3">
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('users.index') }}" aria-label="Lihat pengguna">
-						<div class="card-body">
+					<a class="card h-100 text-decoration-none text-body myds-card" href="{{ route('users.index') }}" aria-label="Lihat pengguna">
+						<div class="card-body myds-card__body">
 							<h3 class="h6">Pengguna</h3>
 							<p class="mb-0 text-muted">Lihat senarai pengguna yang didaftarkan.</p>
 						</div>
@@ -43,7 +43,7 @@
 
 				<div class="col-12 col-md-6 col-lg-4">
 					<a class="card h-100 text-decoration-none text-body" href="{{ route('inventories.index') }}" aria-label="Lihat senarai inventori">
-						<div class="card-body">
+						<div class="card-body myds-card__body">
 							<h3 class="h6">Inventori</h3>
 							<p class="mb-0 text-muted">Lihat senarai inventori (nama, kuantiti, harga) dan butiran.</p>
 						</div>
@@ -52,7 +52,7 @@
 
 				<div class="col-12 col-md-6 col-lg-4">
 					<a class="card h-100 text-decoration-none text-body" href="{{ route('inventories.create') }}" aria-label="Cipta inventori">
-						<div class="card-body">
+						<div class="card-body myds-card__body">
 							<h3 class="h6">Cipta Inventori</h3>
 							<p class="mb-0 text-muted">Buka borang cipta untuk tambah inventori baharu.</p>
 						</div>

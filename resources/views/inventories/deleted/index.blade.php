@@ -10,10 +10,10 @@
             <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm">Kembali ke Inventori</a>
         </div>
         @if (session('status'))
-            <div class="alert alert-success mt-3" role="status">{{ session('status') }}</div>
+            <div class="alert alert-success mt-3 myds-alert myds-alert--success" role="status">{{ session('status') }}</div>
         @endif
         @if (session('toast'))
-            <div class="alert alert-info mt-3" role="toast">{{ session('toast') }}</div>
+            <div class="alert alert-info mt-3 myds-alert myds-alert--info" role="toast">{{ session('toast') }}</div>
         @endif
     </header>
 
@@ -23,7 +23,7 @@
             <div class="card-body">
                 <form method="GET" action="{{ route('inventories.deleted.index') }}">
                     <div class="input-group">
-                        <input type="text" name="search" class="form-control" placeholder="Cari inventori dipadam..." value="{{ request('search') }}">
+                        <input type="text" name="search" class="form-control myds-input" placeholder="Cari inventori dipadam..." value="{{ request('search') }}">
                         <button class="myds-btn myds-btn--primary" type="submit">Cari</button>
                         @if(request('search'))
                             <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--secondary">Kosongkan</a>
@@ -35,8 +35,8 @@
 
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
+                <div class="table-responsive myds-table-responsive">
+                    <table class="table table-striped myds-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -83,7 +83,7 @@
             </div>
         </div>
     @else
-        <div class="alert alert-info">
+        <div class="alert alert-info myds-alert myds-alert--info">
             Tiada inventori yang dipadam dijumpai.
         </div>
     @endif

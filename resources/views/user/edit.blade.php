@@ -11,7 +11,7 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success">{{ session('status') }}</div>
+                        <div class="alert alert-success myds-alert myds-alert--success">{{ session('status') }}</div>
                     @endif
 
                     <form method="POST" action="{{ route('users.update', $user->id) }}">

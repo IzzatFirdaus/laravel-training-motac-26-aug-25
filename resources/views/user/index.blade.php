@@ -23,8 +23,8 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                        <div class="table-responsive myds-table-responsive">
+                            <table class="table table-striped table-hover myds-table">
                                 <caption class="visually-hidden">Senarai pengguna; gunakan tindakan untuk lihat atau edit pengguna.</caption>
                                 <thead>
                                     <tr>

@@ -36,10 +36,19 @@
                     Memaparkan {{ $inventoryCount }} item{{ $inventoryCount > 1 ? 's' : '' }}
                 </div>
 
+                <form method="GET" class="mb-3 d-flex align-items-center gap-2" aria-label="Tetapan paparan">
+                    <label for="per_page" class="form-label mb-0">Item per halaman:</label>
+                    <select id="per_page" name="per_page" class="form-control myds-select" onchange="this.form.submit()">
+                        @foreach([5,10,15,25,50,100] as $n)
+                            <option value="{{ $n }}" {{ (int) request('per_page', 5) === $n ? 'selected' : '' }}>{{ $n }}</option>
+                        @endforeach
+                    </select>
+                </form>
+
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover" aria-describedby="inventory-count">
+                        <div class="table-responsive myds-table-responsive">
+                            <table class="table table-striped table-hover myds-table" aria-describedby="inventory-count">
                                 <caption class="visually-hidden">Senarai inventori; gunakan tindakan untuk lihat atau edit item.</caption>
                                 <thead>
                                     <tr>

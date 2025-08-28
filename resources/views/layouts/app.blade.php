@@ -176,7 +176,7 @@
                     {{-- Temporarily disabled search bar
                     <form class="d-flex me-3" role="search" action="{{ route('home') }}" method="GET" aria-label="{{ __('nav.search') }}">
                         <label for="site-search" class="visually-hidden">{{ __('nav.search') }}</label>
-                        <input class="form-control me-2" type="search" id="site-search" name="q" placeholder="{{ __('nav.search_placeholder') }}" aria-label="{{ __('nav.search') }}" />
+                        <input class="form-control myds-input me-2" type="search" id="site-search" name="q" placeholder="{{ __('nav.search_placeholder') }}" aria-label="{{ __('nav.search') }}" />
                         <button class="myds-btn myds-btn--primary" type="submit">{{ __('nav.search') }}</button>
                     </form>
                     --}}
@@ -225,7 +225,7 @@
                                     {{-- Bell icon --}}
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 17H9a3 3 0 0 1-3-3V11a6 6 0 1 1 12 0v3a3 3 0 0 1-3 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     @if($unreadCount)
-                                        <span class="badge bg-danger rounded-pill position-absolute" style="top:2px; right:0; font-size:0.6rem;">{{ $unreadCount }}</span>
+                                        <span class="badge bg-danger rounded-pill position-absolute myds-badge myds-badge--danger" style="top:2px; right:0; font-size:0.6rem;">{{ $unreadCount }}</span>
                                     @endif
                                 </a>
 

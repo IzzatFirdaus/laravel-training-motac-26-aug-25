@@ -19,9 +19,9 @@
     <label for="{{ $id }}" class="form-label">{{ $label }}@if($required) <span aria-hidden="true">*</span>@endif</label>
 
     @if($type === 'textarea')
-        <textarea id="{{ $id }}" name="{{ $name }}" class="form-control {{ $hasError ? 'is-invalid' : '' }}" aria-invalid="{{ $hasError ? 'true' : 'false' }}" @if($placeholder) placeholder="{{ $placeholder }}" @endif {{ $hasError ? 'aria-describedby='.$errorId : '' }}>{{ $showValue }}</textarea>
+        <textarea id="{{ $id }}" name="{{ $name }}" class="form-control myds-textarea {{ $hasError ? 'is-invalid' : '' }}" aria-invalid="{{ $hasError ? 'true' : 'false' }}" @if($placeholder) placeholder="{{ $placeholder }}" @endif {{ $hasError ? 'aria-describedby='.$errorId : '' }}>{{ $showValue }}</textarea>
     @else
-        <input id="{{ $id }}" name="{{ $name }}" type="{{ $type }}" value="{{ $showValue }}" class="form-control {{ $hasError ? 'is-invalid' : '' }}" aria-invalid="{{ $hasError ? 'true' : 'false' }}" @if($placeholder) placeholder="{{ $placeholder }}" @endif @if($required) required @endif>
+        <input id="{{ $id }}" name="{{ $name }}" type="{{ $type }}" value="{{ $showValue }}" class="form-control myds-input {{ $hasError ? 'is-invalid' : '' }}" aria-invalid="{{ $hasError ? 'true' : 'false' }}" @if($placeholder) placeholder="{{ $placeholder }}" @endif @if($required) required @endif>
     @endif
 
     @if($hasError)

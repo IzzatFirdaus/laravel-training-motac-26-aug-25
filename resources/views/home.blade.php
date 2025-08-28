@@ -7,7 +7,7 @@
         <header class="mb-3">
                 <h1 class="h4">Papan Pemuka</h1>
             @if (session('status'))
-                <div class="alert alert-success" role="status">{{ session('status') }}</div>
+                <div class="alert alert-success myds-alert myds-alert--success" role="status">{{ session('status') }}</div>
             @endif
             <p class="mb-0 text-muted">Anda telah log masuk.</p>
         </header>

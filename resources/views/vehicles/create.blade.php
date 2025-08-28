@@ -11,7 +11,7 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success">{{ session('status') }}</div>
+                        <div class="alert alert-success myds-alert myds-alert--success">{{ session('status') }}</div>
                     @endif
 
                     <form method="POST" action="{{ route('vehicles.store') }}">
@@ -22,7 +22,7 @@
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Pemilik (pilihan)</label>
                             @if(auth()->check() && auth()->user()->hasRole('admin'))
-                                <select id="user_id" name="user_id" class="form-control" aria-describedby="user_id-error">
+                                <select id="user_id" name="user_id" class="form-control myds-select" aria-describedby="user_id-error">
                                     <option value="">(tiada pemilik)</option>
                                     @foreach(($users ?? collect()) as $user)
                                         <option value="{{ $user->id }}" {{ (string) old('user_id') === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>

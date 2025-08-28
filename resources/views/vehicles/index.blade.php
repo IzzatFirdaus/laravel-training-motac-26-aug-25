@@ -26,8 +26,8 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover" aria-describedby="vehicles-count">
+                        <div class="table-responsive myds-table-responsive">
+                            <table class="table table-hover myds-table" aria-describedby="vehicles-count">
                                 <caption class="visually-hidden">Senarai kenderaan dengan tindakan pantas untuk lihat butiran.</caption>
                                 <thead>
                                     <tr>

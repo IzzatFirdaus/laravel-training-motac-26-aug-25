@@ -34,7 +34,11 @@ class InventoryController extends Controller
 
         // Listing access is controlled by policies (viewAny) — allow all authenticated users to see the index.
 
-        $inventories = $query->paginate(15);
+    // Allow page size override via query string (training note)
+    $perPage = (int) request()->input('per_page', 5);
+    $perPage = max(1, min($perPage, 100));
+
+    $inventories = $query->paginate($perPage)->appends(['per_page' => $perPage]);
 
         return view('inventories.index', compact('inventories'));
     }
