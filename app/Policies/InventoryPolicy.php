@@ -32,8 +32,8 @@ class InventoryPolicy
      */
     public function create(User $user): bool
     {
-        // Creating inventories is an admin-level action in this application.
-        return $user->hasRole('admin');
+    // Allow any authenticated user to create their own inventory. Admins still allowed.
+    return $user !== null;
     }
 
     /**
@@ -50,8 +50,8 @@ class InventoryPolicy
      */
     public function delete(User $user, Inventory $inventory): bool
     {
-        // Only admins may delete inventories
-        return $user->id === $inventory->user_id || $user->hasRole('admin');
+    // Owner or admin may delete
+    return $user->id === $inventory->user_id || $user->hasRole('admin');
     }
 
     /**

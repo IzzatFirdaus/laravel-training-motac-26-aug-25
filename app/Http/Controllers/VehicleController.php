@@ -7,14 +7,14 @@ use App\Models\Vehicle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
     public function __construct()
     {
-    $this->middleware('auth')->except(['index', 'show']);
-    // Protect admin actions via controller middleware rather than on each route
-    $this->middleware('role:admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    // Require authentication for vehicles; per-item authorization handled by policy.
+    $this->middleware('auth');
     }
 
     /**
@@ -23,7 +23,13 @@ class VehicleController extends Controller
     public function index(): View
     {
         // Use Eloquent with eager-loading so views can reference the owner relation
-        $vehicles = Vehicle::with('owner')->orderBy('created_at', 'desc')->paginate(15);
+        $query = Vehicle::with('owner')->orderBy('created_at', 'desc');
+
+        if (\Illuminate\Support\Facades\Auth::check() && ! \Illuminate\Support\Facades\Auth::user()->hasRole('admin')) {
+            $query->where('user_id', \Illuminate\Support\Facades\Auth::id());
+        }
+
+        $vehicles = $query->paginate(15);
 
         return view('vehicles.index', compact('vehicles'));
     }
@@ -46,10 +52,12 @@ class VehicleController extends Controller
      */
     public function create(): View
     {
-        // Eagerly load users for owner assignment dropdown
-        $users = User::query()->select('id', 'name')->orderBy('name')->get();
+    $this->authorize('create', Vehicle::class);
 
-        return view('vehicles.create', compact('users'));
+    // Eagerly load users for owner assignment dropdown (admins only in UI)
+    $users = User::query()->select('id', 'name')->orderBy('name')->get();
+
+    return view('vehicles.create', compact('users'));
     }
 
     /**
@@ -57,6 +65,8 @@ class VehicleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', Vehicle::class);
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'user_id' => ['nullable', 'exists:users,id'],
@@ -65,9 +75,18 @@ class VehicleController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
+        // Only admins may set arbitrary owner. Regular users will own the vehicle they create.
+        if (! \Illuminate\Support\Facades\Auth::check()) {
+            $data['user_id'] = null;
+        } elseif (! \Illuminate\Support\Facades\Auth::user()->hasRole('admin')) {
+            $data['user_id'] = \Illuminate\Support\Facades\Auth::id();
+        } else {
+            $data['user_id'] = $data['user_id'] ?? null;
+        }
+
         $vehicle = Vehicle::create([
             'name' => $data['name'],
-            'user_id' => $data['user_id'] ?? null,
+            'user_id' => $data['user_id'],
             'qty' => $data['qty'],
             'price' => $data['price'],
             'description' => $data['description'] ?? null,
@@ -83,7 +102,9 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::with('owner', 'inventories')->findOrFail($vehicleId);
 
-        return view('vehicles.show', compact('vehicle'));
+    $this->authorize('view', $vehicle);
+
+    return view('vehicles.show', compact('vehicle'));
     }
 
     /**
@@ -97,6 +118,8 @@ class VehicleController extends Controller
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         $vehicle = Vehicle::findOrFail($vehicleId);
+
+    $this->authorize('update', $vehicle);
 
         return view('vehicles.edit', compact('vehicle', 'users'));
     }
@@ -117,6 +140,7 @@ class VehicleController extends Controller
         ]);
 
         $vehicle = Vehicle::findOrFail($vehicleId);
+        $this->authorize('update', $vehicle);
 
         $vehicle->fill([
             'name' => $data['name'] ?? $vehicle->name,
@@ -125,7 +149,8 @@ class VehicleController extends Controller
             'description' => $data['description'] ?? $vehicle->description,
         ]);
 
-        if (! empty($data['user_id'])) {
+        // Only admins may reassign ownership
+        if (! empty($data['user_id']) && \Illuminate\Support\Facades\Auth::user()->hasRole('admin')) {
             $vehicle->user_id = $data['user_id'];
         }
 

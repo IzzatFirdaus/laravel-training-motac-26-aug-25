@@ -25,13 +25,18 @@
 
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Pemilik (pilihan)</label>
-                            <select id="user_id" name="user_id" class="form-control">
-                                <option value="">(tiada pemilik)</option>
-                                @foreach(($users ?? collect()) as $user)
-                                    <option value="{{ $user->id }}" {{ (string) old('user_id', $inventory->user_id) === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('user_id') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                            @if(auth()->check() && auth()->user()->hasRole('admin'))
+                                <select id="user_id" name="user_id" class="form-control">
+                                    <option value="">(tiada pemilik)</option>
+                                    @foreach(($users ?? collect()) as $user)
+                                        <option value="{{ $user->id }}" {{ (string) old('user_id', $inventory->user_id) === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('user_id') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                            @else
+                                <input type="hidden" name="user_id" value="{{ $inventory->user_id ?? '' }}">
+                                <div class="form-control-plaintext">{{ $inventory->user?->name ?? '(tiada pemilik)' }}</div>
+                            @endif
                         </div>
 
                         <div class="mb-3">

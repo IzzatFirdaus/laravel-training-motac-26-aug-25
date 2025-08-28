@@ -21,13 +21,18 @@
 
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Pemilik (pilihan)</label>
-                            <select id="user_id" name="user_id" class="form-control" aria-describedby="user_id-error">
-                                <option value="">(tiada pemilik)</option>
-                                @foreach(($users ?? collect()) as $user)
-                                    <option value="{{ $user->id }}" {{ (string) old('user_id') === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                            @if(auth()->check() && auth()->user()->hasRole('admin'))
+                                <select id="user_id" name="user_id" class="form-control" aria-describedby="user_id-error">
+                                    <option value="">(tiada pemilik)</option>
+                                    @foreach(($users ?? collect()) as $user)
+                                        <option value="{{ $user->id }}" {{ (string) old('user_id') === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                            @else
+                                <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
+                                <div class="form-text">Anda akan menjadi pemilik item ini.</div>
+                            @endif
                         </div>
 
                         <x-form-field name="qty" type="number" label="Kuantiti" :value="old('qty', 0)" />

@@ -12,9 +12,9 @@ class UserController extends Controller
 {
     public function __construct()
     {
-    $this->middleware('auth')->except(['index', 'show']);
-    // Apply role-based restriction at the controller level so routing remains simple.
-    $this->middleware('role:admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    // Require authentication for all user routes. Admin-only actions remain protected by middleware.
+    $this->middleware('auth');
+    $this->middleware('role:admin')->only(['create', 'store', 'destroy']);
     }
 
     /**
@@ -62,8 +62,9 @@ class UserController extends Controller
     public function show($userId): View
     {
         $user = User::with('inventories', 'vehicles')->findOrFail($userId);
+    $this->authorize('view', $user);
 
-        return view('user.show', compact('user'));
+    return view('user.show', compact('user'));
     }
 
     /**
@@ -72,8 +73,9 @@ class UserController extends Controller
     public function edit($userId): View
     {
         $user = User::findOrFail($userId);
+    $this->authorize('update', $user);
 
-        return view('user.edit', compact('user'));
+    return view('user.edit', compact('user'));
     }
 
     /**
@@ -87,7 +89,9 @@ class UserController extends Controller
             'password' => ['nullable', 'string', 'confirmed', 'min:8'],
         ]);
 
-        $user = User::findOrFail($userId);
+    $user = User::findOrFail($userId);
+
+    $this->authorize('update', $user);
 
         $user->fill([
             'name' => $data['name'] ?? $user->name,
@@ -115,7 +119,9 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('toast', 'Anda tidak boleh memadam akaun sendiri.');
         }
 
-        $user->delete();
+    $this->authorize('delete', $user);
+
+    $user->delete();
 
         return redirect()->route('users.index')->with('toast', 'Pengguna dipadam.');
     }

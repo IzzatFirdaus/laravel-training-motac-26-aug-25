@@ -12,7 +12,9 @@
                     <p class="text-muted mb-0">Senarai inventori yang dipaparkan secara berhalaman dalam aplikasi.</p>
                 </div>
                 <div class="text-end">
-                    <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary">Cipta inventori</a>
+                    @can('create', App\Models\Inventory::class)
+                        <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary">Cipta inventori</a>
+                    @endcan
                 </div>
             </header>
 
@@ -67,7 +69,9 @@
                                             <td colspan="7">
                                                 <div role="status" class="p-3 text-center">
                                                     <p class="mb-2">Tiada item inventori dijumpai.</p>
-                                                    <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary">Cipta inventori pertama anda</a>
+                                                    @can('create', App\Models\Inventory::class)
+                                                        <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary">Cipta inventori pertama anda</a>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

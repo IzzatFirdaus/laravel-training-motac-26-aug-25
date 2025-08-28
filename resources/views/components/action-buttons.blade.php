@@ -10,7 +10,9 @@
 <div class="d-flex align-items-center">
     <!-- Desktop / tablet inline actions -->
     <div class="d-none d-sm-flex gap-1 align-items-center">
-    <a href="{{ $showRoute }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat {{ $label }}" data-myds="link">Lihat</a>
+    @can('view', $model)
+        <a href="{{ $showRoute }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat {{ $label }}" data-myds="link">Lihat</a>
+    @endcan
 
         @can('update', $model)
             <a href="{{ $editRoute }}" class="myds-btn myds-btn--primary ms-1 myds-btn--sm" aria-label="Edit {{ $label }}" data-myds="link">Edit</a>
@@ -26,7 +28,9 @@
 
     <!-- Mobile: stacked + overflow -->
     <div class="d-flex d-sm-none flex-column w-100 gap-2">
-    <a href="{{ $showRoute }}" class="myds-btn myds-btn--secondary myds-btn--block myds-btn--sm" style="min-height:44px;" aria-label="Lihat {{ $label }}" data-myds="link">Lihat</a>
+    @can('view', $model)
+        <a href="{{ $showRoute }}" class="myds-btn myds-btn--secondary myds-btn--block myds-btn--sm" style="min-height:44px;" aria-label="Lihat {{ $label }}" data-myds="link">Lihat</a>
+    @endcan
 
     @can('update', $model)
     <a href="{{ $editRoute }}" class="myds-btn myds-btn--primary myds-btn--block myds-btn--sm" style="min-height:44px;" aria-label="Edit {{ $label }}" data-myds="link">Edit</a>

@@ -110,7 +110,9 @@
                                 <a class="dropdown-item {{ request()->routeIs('users.index') ? 'active' : '' }}" href="{{ route('users.index') }}" role="menuitem" @if(request()->routeIs('users.index')) aria-current="page" @endif>{{ __('nav.users_browse') }}</a>
                                 @auth
                                 @if(auth()->user()->hasRole('admin'))
-                                <a class="dropdown-item" href="{{ route('users.create') }}" role="menuitem">{{ __('nav.users_add') }}</a>
+                                @can('create', App\Models\User::class)
+                                    <a class="dropdown-item" href="{{ route('users.create') }}" role="menuitem">{{ __('nav.users_add') }}</a>
+                                @endcan
                                 @endif
                                 @endauth
                                 <a class="dropdown-item" href="{{ route('users.show', 1) }}" role="menuitem">{{ __('nav.users_read') }}</a>

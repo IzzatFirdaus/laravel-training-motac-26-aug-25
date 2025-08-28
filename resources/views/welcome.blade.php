@@ -24,12 +24,21 @@
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('users.create') }}" aria-label="Create user">
-						<div class="card-body">
-							<h3 class="h6">Cipta Pengguna</h3>
-							<p class="mb-0 text-muted">Buka borang cipta akaun pengguna baharu.</p>
+					@can('create', App\Models\User::class)
+						<a class="card h-100 text-decoration-none text-body" href="{{ route('users.create') }}" aria-label="Create user">
+							<div class="card-body">
+								<h3 class="h6">Cipta Pengguna</h3>
+								<p class="mb-0 text-muted">Buka borang cipta akaun pengguna baharu.</p>
+							</div>
+						</a>
+					@else
+						<div class="card h-100 text-body">
+							<div class="card-body">
+								<h3 class="h6">Cipta Pengguna</h3>
+								<p class="mb-0 text-muted">Buka borang cipta akaun pengguna baharu.</p>
+							</div>
 						</div>
-					</a>
+					@endcan
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
@@ -119,7 +128,9 @@
 						<div class="card-body">
 							<h4 class="h6">Create</h4>
 							<p class="mb-2 text-muted">Buka borang untuk cipta pengguna baharu.</p>
-							<a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary myds-btn--sm myds-btn--outline">Cipta</a>
+							@can('create', App\Models\User::class)
+								<a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary myds-btn--sm myds-btn--outline">Cipta</a>
+							@endcan
 						</div>
 					</div>
 				</div>
@@ -129,7 +140,9 @@
 						<div class="card-body">
 							<h4 class="h6">Store (demo)</h4>
 							<p class="mb-2 text-muted">Simulasi POST store — gunakan borang Cipta untuk menghantar.</p>
-							<a href="{{ route('users.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="store" data-model="Pengguna">Store (demo)</a>
+							@can('create', App\Models\User::class)
+								<a href="{{ route('users.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="store" data-model="Pengguna">Store (demo)</a>
+							@endcan
 						</div>
 					</div>
 				</div>

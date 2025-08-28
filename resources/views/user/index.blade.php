@@ -12,7 +12,9 @@
                     <p class="text-muted mb-0">Senarai pengguna dalam sistem.</p>
                 </div>
                 <div class="text-end">
-                    <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary">Cipta pengguna</a>
+                    @can('create', App\Models\User::class)
+                        <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary">Cipta pengguna</a>
+                    @endcan
                 </div>
             </header>
 
@@ -55,7 +57,9 @@
                                             <td colspan="5">
                                                 <div role="status" class="p-3 text-center">
                                                     <p class="mb-2">Tiada pengguna dijumpai.</p>
-                                                    <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary">Cipta pengguna pertama</a>
+                                                    @can('create', App\Models\User::class)
+                                                        <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary">Cipta pengguna pertama</a>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

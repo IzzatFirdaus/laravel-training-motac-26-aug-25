@@ -13,9 +13,9 @@ class InventoryController extends Controller
 {
     public function __construct()
     {
-    $this->middleware('auth')->except(['index', 'show']);
-    // Apply role-based restriction at the controller level for admin-only actions
-    $this->middleware('role:admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    // Require authentication for all inventory pages. Per-item authorization
+    // is performed via policies so owners (and admins) can manage their own items.
+    $this->middleware('auth');
     }
 
     /**
@@ -24,9 +24,15 @@ class InventoryController extends Controller
     public function index(): View
     {
         // Use Eloquent with eager-loading so views can reference relations
-        $inventories = Inventory::with('user', 'vehicles')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
+        $query = Inventory::with('user', 'vehicles')
+            ->orderBy('created_at', 'desc');
+
+        // Admins may see all. Authenticated non-admin users should only see their own items.
+        if (Auth::check() && ! Auth::user()->hasRole('admin')) {
+            $query->where('user_id', Auth::id());
+        }
+
+        $inventories = $query->paginate(15);
 
         return view('inventories.index', compact('inventories'));
     }
@@ -36,10 +42,13 @@ class InventoryController extends Controller
      */
     public function create(): View
     {
-        // Fetch all users ordered by name to populate the dropdown in the form as plain objects
-        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
+    // Authorization: allow creation per policy (admins and regular users as permitted).
+    $this->authorize('create', Inventory::class);
 
-        return view('inventories.create', compact('users'));
+    // Fetch all users ordered by name to populate the dropdown in the form as plain objects
+    $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
+
+    return view('inventories.create', compact('users'));
     }
 
     /**
@@ -47,6 +56,8 @@ class InventoryController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+    $this->authorize('create', Inventory::class);
+
         $data = $request->validate([
             'user_id' => ['nullable', 'exists:users,id'],
             'name' => ['required', 'string', 'max:255'],
@@ -55,8 +66,15 @@ class InventoryController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-        if (empty($data['user_id']) && Auth::check()) {
+        // Only admins may set an arbitrary owner. Regular users always own the
+        // inventory they create.
+        if (! Auth::check()) {
+            $data['user_id'] = null;
+        } elseif (! Auth::user()->hasRole('admin')) {
             $data['user_id'] = Auth::id();
+        } else {
+            // Admin: allow provided user_id or null
+            $data['user_id'] = $data['user_id'] ?? null;
         }
 
         $inventory = Inventory::create([
@@ -97,6 +115,9 @@ class InventoryController extends Controller
 
         $inventory = Inventory::findOrFail($inventoryId);
 
+    // Authorize the current user may update this inventory
+    $this->authorize('update', $inventory);
+
         return view('inventories.edit', compact('inventory', 'users'));
     }
 
@@ -115,7 +136,9 @@ class InventoryController extends Controller
             'description' => ['nullable', 'string'],
         ]);
 
-        $inventory = Inventory::findOrFail($inventoryId);
+    $inventory = Inventory::findOrFail($inventoryId);
+
+    $this->authorize('update', $inventory);
 
         $inventory->fill([
             'name' => $data['name'] ?? $inventory->name,
@@ -124,7 +147,8 @@ class InventoryController extends Controller
             'description' => $data['description'] ?? $inventory->description,
         ]);
 
-        if (! empty($data['user_id'])) {
+        // Only allow admins to reassign ownership.
+        if (! empty($data['user_id']) && Auth::check() && Auth::user()->hasRole('admin')) {
             $inventory->user_id = $data['user_id'];
         }
 
@@ -141,6 +165,7 @@ class InventoryController extends Controller
     public function destroy($inventoryId): RedirectResponse
     {
         $inventory = Inventory::findOrFail($inventoryId);
+    $this->authorize('delete', $inventory);
         $inventory->delete();
 
         return redirect()->route('inventories.index')->with('toast', 'Inventory deleted.');

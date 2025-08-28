@@ -31,13 +31,18 @@
 
         <div style="margin-bottom: 15px;">
             <label for="user_id">Owner (optional)</label><br>
-            <select id="user_id" name="user_id" class="form-control" aria-describedby="user_id-error">
-                <option value="">(no owner)</option>
-                @foreach(($users ?? collect()) as $user)
-                    <option value="{{ $user->id }}" @selected((string) old('user_id') === (string) $user->id)>{{ $user->name }}</option>
-                @endforeach
-            </select>
-            @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+            @if(auth()->check() && auth()->user()->hasRole('admin'))
+                <select id="user_id" name="user_id" class="form-control" aria-describedby="user_id-error">
+                    <option value="">(no owner)</option>
+                    @foreach(($users ?? collect()) as $user)
+                        <option value="{{ $user->id }}" @selected((string) old('user_id') === (string) $user->id)>{{ $user->name }}</option>
+                    @endforeach
+                </select>
+                @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+            @else
+                <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
+                <div class="form-text">You will be the owner of this item.</div>
+            @endif
         </div>
 
         <x-form-field name="qty" type="number" label="Quantity" :value="old('qty', 0)" required />
