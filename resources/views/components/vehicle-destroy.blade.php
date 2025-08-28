@@ -1,4 +1,4 @@
-<form method="POST" action="{{ $action }}" class="d-inline vehicle-destroy-form">
+<form method="POST" action="{{ $action }}" class="d-inline" data-myds-form>
     @csrf
-    <button type="button" class="btn btn-sm btn-outline-danger ms-1 myds-btn myds-btn--danger" aria-label="Padam {{ $label }}" onclick="window.MYDS && window.MYDS.handleDestroy ? window.MYDS.handleDestroy(this) : handleDestroy(this)">Padam</button>
+    <button type="button" class="myds-btn myds-btn--danger btn btn-sm ms-1" aria-label="Padam {{ $label }}">Padam</button>
 </form>

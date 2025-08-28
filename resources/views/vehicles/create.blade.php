@@ -27,7 +27,7 @@
                                     <option value="{{ $user->id }}" @selected((string) old('user_id') === (string) $user->id)>{{ $user->name }}</option>
                                 @endforeach
                             </select>
-                            @error('user_id') <div id="user_id-error" class="text-danger">{{ $message }}</div> @enderror
+                            @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
                         </div>
 
                         <x-form-field name="qty" type="number" label="Kuantiti" :value="old('qty', 0)" required />
@@ -37,8 +37,8 @@
                         <x-form-field name="description" type="textarea" label="Keterangan">{{ old('description') }}</x-form-field>
 
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('vehicles.index') }}" class="btn btn-outline-secondary me-2" aria-label="Batal dan kembali ke senarai">Batal</a>
-                            <button type="submit" class="btn btn-primary" aria-label="Cipta kenderaan">Cipta</button>
+                            <a href="{{ route('vehicles.index') }}" class="btn btn-outline-secondary me-2 myds-btn myds-btn--secondary" aria-label="Batal dan kembali ke senarai">Batal</a>
+                            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary" aria-label="Cipta kenderaan">Cipta</button>
                         </div>
                     </form>
                 </div>

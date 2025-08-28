@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Vehicle;
 use App\Models\User;
+use App\Models\Vehicle;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Vehicle>
@@ -17,6 +17,7 @@ class VehicleFactory extends Factory
      * @var string
      */
     protected $model = Vehicle::class;
+
     /**
      * Define the model's default state.
      *
@@ -31,7 +32,7 @@ class VehicleFactory extends Factory
         $modelVariants = ['X', 'S', 'V', 'Elite', 'Pro', 'GL', 'Sport', 'Plus'];
         $baseModel = $faker->randomElement($modelVariants);
         $modelSerial = $faker->bothify('###');
-        $model = $baseModel . ' ' . $modelSerial;
+        $model = $baseModel.' '.$modelSerial;
         $year = $faker->numberBetween(2005, 2025);
 
         // More accurate Malaysian plate generator.
@@ -48,6 +49,7 @@ class VehicleFactory extends Factory
             for ($i = 0; $i < $count; $i++) {
                 $out .= $faker->randomElement($lettersPool);
             }
+
             return $out;
         };
 
@@ -59,30 +61,30 @@ class VehicleFactory extends Factory
             $prefix = 'L';
             $letters = $pickLetters($faker->numberBetween(0, 2));
         } elseif ($region === 'putrajaya') {
-            $prefix = 'F' . $pickLetters(1); // FA, FB, FC etc
+            $prefix = 'F'.$pickLetters(1); // FA, FB, FC etc
             $letters = $pickLetters($faker->numberBetween(0, 1));
         } elseif ($region === 'sarawak') {
             // Sarawak: Q + division letter (A..Y excluding I,O,Z) then optional letters
             $division = $faker->randomElement($lettersPool);
-            $prefix = 'Q' . $division;
+            $prefix = 'Q'.$division;
             $letters = $pickLetters($faker->numberBetween(0, 1));
         } elseif ($region === 'sabah') {
             // Sabah: S + division letter
             $division = $faker->randomElement($lettersPool);
-            $prefix = 'S' . $division;
+            $prefix = 'S'.$division;
             $letters = $pickLetters($faker->numberBetween(0, 1));
         } else {
             // Peninsular: single-letter prefixes commonly used
-            $penPrefixes = ['A','B','C','D','J','K','M','N','P','R','T','V','W'];
+            $penPrefixes = ['A', 'B', 'C', 'D', 'J', 'K', 'M', 'N', 'P', 'R', 'T', 'V', 'W'];
             $prefix = $faker->randomElement($penPrefixes);
             // Target total letter block length (including prefix) typically 2..3; pick remaining
-            $remaining = $faker->randomElement([1,2]);
+            $remaining = $faker->randomElement([1, 2]);
             $letters = $pickLetters($remaining);
             // If prefix is 'W' (extended series), sometimes single-letter followed by suffix later; keep simple.
         }
 
         // Compose the alpha block: prefix + letters (no spaces inside), then a space and number
-        $alpha = strtoupper($prefix . $letters);
+        $alpha = strtoupper($prefix.$letters);
         $number = $faker->numberBetween(1, 9999); // no leading zeroes
         $reg = sprintf('%s %d', $alpha, $number);
 
@@ -102,7 +104,7 @@ class VehicleFactory extends Factory
                 "Model: {$model}",
                 "Year: {$year}",
                 "Registration: {$reg}",
-                "Condition: " . $faker->randomElement(['Used', 'New', 'Certified Pre-Owned']),
+                'Condition: '.$faker->randomElement(['Used', 'New', 'Certified Pre-Owned']),
             ]),
         ];
     }

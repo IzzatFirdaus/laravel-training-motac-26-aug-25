@@ -16,13 +16,17 @@ window.MYDS.handleDestroy = function(btn) {
 	var cancelText = 'Batal';
 
 	if (window.MYDS.Swal) {
+		// derive button colours from CSS custom properties so themes are respected
+		var cs = getComputedStyle(document.documentElement);
+		var confirmColor = cs.getPropertyValue('--danger').trim() || '#d33';
+		var cancelColor = cs.getPropertyValue('--primary').trim() || '#3085d6';
 		window.MYDS.Swal.fire({
 			title: title,
 			text: text,
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#3085d6',
+			confirmButtonColor: confirmColor,
+			cancelButtonColor: cancelColor,
 			confirmButtonText: confirmText,
 			cancelButtonText: cancelText
 		}).then(function (result) {
@@ -86,6 +90,9 @@ function applyTheme(theme) {
 	}
 }
 
+// expose theme helper on the MYDS namespace
+window.MYDS.applyTheme = applyTheme;
+
 // initialize theme after DOM is ready so elements exist
 document.addEventListener('DOMContentLoaded', function () {
 	var stored = null;
@@ -116,4 +123,37 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 	}
+});
+
+// Delegated handlers for MYDS form actions and links.
+document.addEventListener('DOMContentLoaded', function () {
+	// Click delegation for destructive actions inside forms marked with data-myds-form
+	document.body.addEventListener('click', function (e) {
+		var el = e.target;
+		if (!el) return;
+		var btn = el.closest && el.closest('button, a');
+		if (!btn) return;
+		var form = btn.closest && btn.closest('form');
+		if (!form || !form.hasAttribute('data-myds-form')) return;
+
+		// Only intercept non-submit buttons intended for destructive actions.
+		var isButton = btn.tagName.toLowerCase() === 'button';
+		var isDanger = btn.classList.contains('myds-btn--danger') || btn.classList.contains('text-danger') || (btn.getAttribute('aria-label') || '').toLowerCase().includes('padam');
+
+		if (isButton && isDanger) {
+			e.preventDefault();
+			if (window.MYDS && typeof window.MYDS.handleDestroy === 'function') {
+				window.MYDS.handleDestroy(btn);
+			} else if (confirm('Ini akan memadam item. Teruskan?')) {
+				form.submit();
+			}
+		}
+	}, true);
+
+	// Optional: make links marked with data-myds="link" behave as standard navigations (no-op here, but reserved for future enhancements)
+	document.body.addEventListener('click', function (e) {
+		var link = e.target.closest && e.target.closest('[data-myds="link"]');
+		if (!link) return;
+		// allow normal navigation; this handler exists so we can later enhance link behavior (analytics, prefetch) centrally
+	}, true);
 });

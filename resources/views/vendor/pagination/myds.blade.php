@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
 <nav role="navigation" aria-label="Navigasi halaman" class="myds-pagination">
-    <ul class="pagination">
+    <ul class="pagination" role="list">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
             <li class="page-item disabled" aria-disabled="true" aria-label="Sebelumnya">

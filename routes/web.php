@@ -1,16 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 // Default route for the welcome page
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Backwards-compatibility route: allow /welcome to serve the same welcome view
+Route::get('/welcome', function () {
+    return view('welcome');
+})->name('welcome');
 
 // Authentication routes (login, register, etc.)
 Auth::routes();
@@ -97,7 +102,6 @@ Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->name
 
 // Route to update a vehicle item (using POST instead of PATCH for environments that prefer POST)
 Route::post('/vehicles/{vehicle}', [VehicleController::class, 'update'])->name('vehicles.update');
-
 
 // Route to destroy a vehicle (using POST to a /destroy endpoint)
 Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy'])->name('vehicles.destroy');

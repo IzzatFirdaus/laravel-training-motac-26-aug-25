@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-    // Create the vehicles table. This migration was adapted to also
-    // include basic inventory-like fields (name, qty, price, description)
-    // to reuse the same UI patterns as the inventories table.
+        // Create the vehicles table. This migration was adapted to also
+        // include basic inventory-like fields (name, qty, price, description)
+        // to reuse the same UI patterns as the inventories table.
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
 
@@ -29,9 +29,9 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             // Vehicle-specific fields (kept commented out)
-            //$table->string('vin')->nullable()->unique();
-            //$table->unsignedInteger('mileage')->nullable();
-            //$table->string('status')->default('available');
+            // $table->string('vin')->nullable()->unique();
+            // $table->unsignedInteger('mileage')->nullable();
+            // $table->string('status')->default('available');
 
             $table->timestamps();
             // Soft deletes column for the Vehicle model

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-    // Create inventories table with attributes used by the app views.
-    // Columns: user_id (owner), name, qty, price, description, timestamps.
+        // Create inventories table with attributes used by the app views.
+        // Columns: user_id (owner), name, qty, price, description, timestamps.
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             // owner of the inventory item; nullable so unauthenticated users
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-    // Note: pivot table `inventory_vehicle` is created in the vehicles migration
+        // Note: pivot table `inventory_vehicle` is created in the vehicles migration
     }
 
     /**

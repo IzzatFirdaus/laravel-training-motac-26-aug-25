@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -12,7 +11,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-    // Create demo users
+        // Create demo users
         \App\Models\User::factory(10)->create();
     }
 }

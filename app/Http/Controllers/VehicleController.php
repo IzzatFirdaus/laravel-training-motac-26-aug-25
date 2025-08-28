@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Vehicle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Vehicle;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
@@ -29,8 +29,7 @@ class VehicleController extends Controller
     /**
      * Remove the specified vehicle from storage.
      *
-     * @param int $vehicleId
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  int  $vehicleId
      */
     public function destroy($vehicleId): RedirectResponse
     {
@@ -39,6 +38,7 @@ class VehicleController extends Controller
 
         return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
     }
+
     /**
      * Show the form for creating a new vehicle.
      */
@@ -84,12 +84,11 @@ class VehicleController extends Controller
     /**
      * Show the form for editing the specified vehicle.
      *
-     * @param int $vehicleId
-     * @return \Illuminate\Contracts\View\View
+     * @param  int  $vehicleId
      */
     public function edit($vehicleId): View
     {
-    // Fetch users to populate owner dropdown
+        // Fetch users to populate owner dropdown
         $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
 
         $vehicle = Vehicle::findOrFail($vehicleId);
@@ -100,9 +99,7 @@ class VehicleController extends Controller
     /**
      * Update the specified vehicle in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $vehicleId
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  int  $vehicleId
      */
     public function update(Request $request, $vehicleId): RedirectResponse
     {

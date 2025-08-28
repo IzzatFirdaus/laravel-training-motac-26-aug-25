@@ -12,7 +12,7 @@
                     <p class="text-muted mb-0">Rekod kenderaan gaya inventori yang diselenggara oleh aplikasi.</p>
                 </div>
                 <div>
-                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Cipta kenderaan</a>
+                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary myds-btn myds-btn--primary">Cipta kenderaan</a>
                 </div>
             </header>
 
@@ -66,7 +66,7 @@
                                             <td colspan="8">
                                                 <div role="status" class="p-3 text-center">
                                                     <p class="mb-2">Tiada kenderaan dijumpai.</p>
-                                                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Tambah kenderaan</a>
+                                                    <a href="{{ route('vehicles.create') }}" class="btn btn-primary myds-btn myds-btn--primary">Tambah kenderaan</a>
                                                 </div>
                                             </td>
                                         </tr>

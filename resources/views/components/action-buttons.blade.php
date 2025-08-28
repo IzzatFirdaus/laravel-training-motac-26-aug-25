@@ -14,9 +14,9 @@
 
         <a href="{{ $editRoute }}" class="btn btn-sm btn-outline-primary ms-1 myds-btn myds-btn--primary" aria-label="Edit {{ $label }}" data-myds="link">Edit</a>
 
-        <form method="POST" action="{{ $destroyRoute }}" class="d-inline ms-1" onsubmit="return false;" data-myds-form>
+    <form method="POST" action="{{ $destroyRoute }}" class="d-inline ms-1" data-myds-form>
             @csrf
-            <button type="button" class="btn btn-sm btn-outline-danger myds-btn myds-btn--danger" onclick="window.MYDS.handleDestroy(this)" aria-label="Padam {{ $label }}">Padam</button>
+            <button type="button" class="btn btn-sm btn-outline-danger myds-btn myds-btn--danger" aria-label="Padam {{ $label }}">Padam</button>
         </form>
     </div>
 
@@ -32,9 +32,9 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="moreActions-{{ $id }}">
                 <li>
-                    <form method="POST" action="{{ $destroyRoute }}" class="px-3 py-1" onsubmit="return false;" data-myds-form>
+                    <form method="POST" action="{{ $destroyRoute }}" class="px-3 py-1" data-myds-form>
                         @csrf
-                        <button type="button" class="dropdown-item text-danger myds-action--danger" onclick="window.MYDS.handleDestroy(this)" aria-label="Padam {{ $label }}">Padam</button>
+                        <button type="button" class="dropdown-item myds-btn myds-btn--danger" aria-label="Padam {{ $label }}">Padam</button>
                     </form>
                 </li>
             </ul>

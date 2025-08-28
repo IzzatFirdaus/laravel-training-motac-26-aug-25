@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="second-crud">
+    <description>Project PHPCS ruleset - PSR12 but exclude Blade templates</description>
+
+    <!-- Use PSR12 as base -->
+    <rule ref="PSR12" />
+
+    <!-- Exclude Blade templates which are not pure PHP files and produce noisy warnings -->
+    <file>app</file>
+    <file>routes</file>
+    <file>database</file>
+    <file>resources/lang</file>
+
+    <exclude-pattern>resources/views/**/*.blade.php</exclude-pattern>
+
+</ruleset>

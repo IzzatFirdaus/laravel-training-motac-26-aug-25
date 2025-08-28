@@ -15,8 +15,8 @@
     <h1 class="text-2xl font-semibold">Kenderaan #{{ $vehicle->id }} — {{ $vehicle->name ?? 'Tanpa Nama' }}</h1>
 
         <div class="space-x-2">
-            <button type="button" class="inline-block px-3 py-2 rounded bg-gray-200 hover:bg-gray-300" aria-label="Kembali" onclick="window.location.href='{{ route('vehicles.index') }}'">Kembali</button>
-            <button type="button" class="inline-block px-3 py-2 rounded bg-blue-200 hover:bg-blue-300" aria-label="Edit" onclick="window.location.href='{{ route('vehicles.edit', $vehicle->id) }}'">Edit</button>
+            <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary btn btn-sm" aria-label="Kembali" data-myds="link">Kembali</a>
+            <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="myds-btn myds-btn--primary btn btn-sm" aria-label="Edit" data-myds="link">Edit</a>
             <x-vehicle-destroy :action="route('vehicles.destroy', $vehicle->id)" :label="$vehicle->name ?? 'Vehicle'" />
         </div>
     </div>

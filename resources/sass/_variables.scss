@@ -27,14 +27,14 @@ $line-height-base: 1.6;
 	--otl-default: rgba(0,0,0,0.08);
 
 	/* Actions */
-	--primary: #2563EB;
-	--danger: #D32F2F;
-	--success: #388E3C;
-	--warning: #FFA000;
+	--primary: #3A75F6; /* primary-500 */
+	--danger: #EF4444; /* danger-500 */
+	--success: #22C55E; /* success-500 */
+	--warning: #EAB308; /* warning-500 */
 
 	/* Focus ring */
-	--fr: #2563EB;
-		--fr-shadow: rgba(37,99,235,0.12);
+	--fr: #96B7FF; /* primary-300 */
+		--fr-shadow: rgba(150,183,255,0.12);
 }
 
 [data-theme="dark"] {
@@ -57,11 +57,11 @@ $line-height-base: 1.6;
 }
 
 // SASS fallbacks for compile-time usage (do not reference CSS vars in functions)
-$myds-primary: #2563EB; // MYDS Blue (compile-time)
-$myds-danger: #D32F2F;
-$myds-success: #388E3C;
-$myds-warning: #FFA000;
+$myds-primary: #3A75F6; // MYDS Blue (compile-time)
+$myds-danger: #EF4444;
+$myds-success: #22C55E;
+$myds-warning: #EAB308;
 $myds-gray-700: #374151;
 
 // Focus ring fallback
-$myds-focus-ring: #2563EB;
+$myds-focus-ring: #96B7FF;

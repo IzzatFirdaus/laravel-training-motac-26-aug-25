@@ -7,12 +7,16 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Favicon: use Laravel's standard favicon -->
+    <link rel="icon" href="https://laravel.com/img/favicon/favicon.ico" type="image/x-icon">
+
     {{-- Page title: individual views can set a `title` section. Default to app name. --}}
     <title>@yield('title', config('app.name', 'second-crud'))</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <!-- Use Poppins for headings and Inter for body (MYDS) -->
+    <link href="https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500" rel="stylesheet">
 
     <!-- Styles -->
     @vite('resources/sass/app.scss')
@@ -25,9 +29,9 @@
     {{-- Global flash region for status messages (aria-live) --}}
     <div id="global-flash" aria-live="polite" aria-atomic="true" class="sr-only">@if(session('status')){{ session('status') }}@endif</div>
 
-    <nav class="navbar navbar-expand-md bg-surface border-bottom" role="navigation" aria-label="Navigasi utama">
+    <nav class="navbar navbar-expand-md bg-surface border-bottom myds-nav" role="navigation" aria-label="Navigasi utama">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand myds-brand" href="{{ url('/') }}" aria-label="Laman utama">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,9 +51,9 @@
                                 <a class="dropdown-item" href="{{ route('inventories.show', 1) }}" role="menuitem">Baca (Read)</a>
                                 <a class="dropdown-item" href="{{ route('inventories.edit', 1) }}" role="menuitem">Ubah (Edit)</a>
                                 <div class="dropdown-divider"></div>
-                                <form method="POST" action="{{ route('inventories.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="Inventori">
+                                <form method="POST" action="{{ route('inventories.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="Inventori" data-myds-form>
                                     @csrf
-                                    <button type="submit" class="dropdown-item text-danger" role="menuitem" aria-label="Padam contoh inventori">Padam (Delete)</button>
+                                    <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam contoh inventori">Padam (Delete)</button>
                                 </form>
                             </div>
                         </li>
@@ -64,9 +68,26 @@
                                 <a class="dropdown-item" href="{{ route('vehicles.show', 1) }}" role="menuitem">Papar (Read)</a>
                                 <a class="dropdown-item" href="{{ route('vehicles.edit', 1) }}" role="menuitem">Ubah (Edit)</a>
                                 <div class="dropdown-divider"></div>
-                                <form method="POST" action="{{ route('vehicles.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="Kenderaan">
+                                <form method="POST" action="{{ route('vehicles.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="Kenderaan" data-myds-form>
                                     @csrf
-                                    <button type="submit" class="dropdown-item text-danger" role="menuitem" aria-label="Padam contoh kenderaan">Padam (Delete)</button>
+                                    <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam contoh kenderaan">Padam (Delete)</button>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navUsers" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Pengguna menu">
+                                Pengguna
+                            </a>
+                            <div class="dropdown-menu myds-dropdown" aria-labelledby="navUsers" role="menu">
+                                <a class="dropdown-item {{ request()->routeIs('users.index') ? 'active' : '' }}" href="{{ route('users.index') }}" role="menuitem" @if(request()->routeIs('users.index')) aria-current="page" @endif>Senarai (Browse)</a>
+                                <a class="dropdown-item" href="{{ route('users.create') }}" role="menuitem">Tambah (Add)</a>
+                                <a class="dropdown-item" href="{{ route('users.show', 1) }}" role="menuitem">Papar (Read)</a>
+                                <a class="dropdown-item" href="{{ route('users.edit', 1) }}" role="menuitem">Ubah (Edit)</a>
+                                <div class="dropdown-divider"></div>
+                                <form method="POST" action="{{ route('users.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="Pengguna" data-myds-form>
+                                    @csrf
+                                    <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam contoh pengguna">Padam (Delete)</button>
                                 </form>
                             </div>
                         </li>
@@ -102,13 +123,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" role="menu">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" role="menuitem"
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Log Keluar
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="px-3" role="menuitem">
                                         @csrf
+                                        <button type="submit" class="dropdown-item myds-btn myds-btn--tertiary" aria-label="Log keluar">Log Keluar</button>
                                     </form>
                                 </div>
                             </li>

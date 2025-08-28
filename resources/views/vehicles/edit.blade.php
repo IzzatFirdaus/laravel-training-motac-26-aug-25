@@ -20,7 +20,7 @@
 						<div class="mb-3">
 							<label for="name" class="form-label">Nama</label>
 							<input id="name" name="name" type="text" class="form-control" value="{{ old('name', $vehicle->name) }}">
-							@error('name') <div class="text-danger">{{ $message }}</div> @enderror
+							@error('name') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
 						</div>
 
 						<div class="mb-3">
@@ -31,30 +31,30 @@
 									<option value="{{ $user->id }}" {{ (string) old('user_id', $vehicle->user_id) === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
 								@endforeach
 							</select>
-							@error('user_id') <div class="text-danger">{{ $message }}</div> @enderror
+							@error('user_id') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
 						</div>
 
 						<div class="mb-3">
 							<label for="qty" class="form-label">Kuantiti</label>
 							<input id="qty" name="qty" type="number" min="0" class="form-control" value="{{ old('qty', $vehicle->qty ?? 0) }}">
-							@error('qty') <div class="text-danger">{{ $message }}</div> @enderror
+							@error('qty') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
 						</div>
 
 						<div class="mb-3">
 							<label for="price" class="form-label">Harga</label>
 							<input id="price" name="price" type="number" step="0.01" min="0" class="form-control" value="{{ old('price', $vehicle->price ?? '') }}">
-							@error('price') <div class="text-danger">{{ $message }}</div> @enderror
+							@error('price') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
 						</div>
 
 						<div class="mb-3">
 							<label for="description" class="form-label">Keterangan</label>
 							<textarea id="description" name="description" class="form-control">{{ old('description', $vehicle->description) }}</textarea>
-							@error('description') <div class="text-danger">{{ $message }}</div> @enderror
+							@error('description') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
 						</div>
 
 						<div class="d-flex justify-content-end">
-							<a href="{{ route('vehicles.index') }}" class="btn btn-outline-secondary me-2" aria-label="Batal dan kembali ke senarai">Batal</a>
-							<button type="submit" class="btn btn-primary" aria-label="Kemaskini kenderaan">Kemaskini</button>
+							<a href="{{ route('vehicles.index') }}" class="btn btn-outline-secondary me-2 myds-btn myds-btn--secondary" aria-label="Batal dan kembali ke senarai">Batal</a>
+							<button type="submit" class="btn btn-primary myds-btn myds-btn--primary" aria-label="Kemaskini kenderaan">Kemaskini</button>
 						</div>
 					</form>
 				</div>

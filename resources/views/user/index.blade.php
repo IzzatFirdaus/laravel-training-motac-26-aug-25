@@ -12,7 +12,7 @@
                     <p class="text-muted mb-0">Senarai pengguna dalam sistem.</p>
                 </div>
                 <div class="text-end">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">Cipta pengguna</a>
+                    <a href="{{ route('users.create') }}" class="btn btn-primary myds-btn myds-btn--primary">Cipta pengguna</a>
                 </div>
             </header>
 
@@ -55,7 +55,7 @@
                                             <td colspan="5">
                                                 <div role="status" class="p-3 text-center">
                                                     <p class="mb-2">Tiada pengguna dijumpai.</p>
-                                                    <a href="{{ route('users.create') }}" class="btn btn-primary">Cipta pengguna pertama</a>
+                                                    <a href="{{ route('users.create') }}" class="btn btn-primary myds-btn myds-btn--primary">Cipta pengguna pertama</a>
                                                 </div>
                                             </td>
                                         </tr>

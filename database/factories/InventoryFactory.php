@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Inventory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Inventory>
@@ -17,6 +17,7 @@ class InventoryFactory extends Factory
      * @var string
      */
     protected $model = Inventory::class;
+
     /**
      * Define the model's default state.
      *
@@ -31,7 +32,7 @@ class InventoryFactory extends Factory
         $categories = ['Laptop', 'Monitor', 'Keyboard', 'Mouse', 'Router', 'Switch', 'Server', 'UPS'];
         $brand = $faker->randomElement($brands);
         $category = $faker->randomElement($categories);
-        $model = $brand . ' ' . $faker->bothify('Model-###');
+        $model = $brand.' '.$faker->bothify('Model-###');
         $serial = strtoupper($faker->bothify('SN-??###'));
 
         // price ranges by category
@@ -60,9 +61,9 @@ class InventoryFactory extends Factory
                 "Model: {$model}",
                 "Category: {$category}",
                 "Serial: {$serial}",
-                "Lokasi: " . $faker->randomElement(['Pejabat KL', 'Pejabat JB', 'Gudang Kuching', 'Cawangan Penang']),
-                "Tarikh Pembelian: " . $purchaseDate->format('Y-m-d'),
-                "Tamat Waranti: " . $warrantyEnd->format('Y-m-d'),
+                'Lokasi: '.$faker->randomElement(['Pejabat KL', 'Pejabat JB', 'Gudang Kuching', 'Cawangan Penang']),
+                'Tarikh Pembelian: '.$purchaseDate->format('Y-m-d'),
+                'Tamat Waranti: '.$warrantyEnd->format('Y-m-d'),
             ]),
         ];
     }

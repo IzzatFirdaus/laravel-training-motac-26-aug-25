@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-    // Use the MYDS pagination view as the application's default pagination template.
+        // Use the MYDS pagination view as the application's default pagination template.
         Paginator::defaultView('vendor.pagination.myds');
         Paginator::defaultSimpleView('vendor.pagination.simple-myds');
     }

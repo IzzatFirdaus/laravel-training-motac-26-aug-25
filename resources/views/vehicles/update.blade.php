@@ -11,7 +11,7 @@
 					<h2 class="h5">Vehicle updated</h2>
 					<p class="mb-0">The vehicle has been updated successfully.</p>
 					<div class="mt-3">
-						<a href="{{ route('vehicles.index') }}" class="btn btn-primary">Back to vehicles</a>
+						<a href="{{ route('vehicles.index') }}" class="btn btn-primary myds-btn myds-btn--primary">Back to vehicles</a>
 					</div>
 				</div>
 			</div>

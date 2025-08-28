@@ -9,14 +9,12 @@
 
     <!-- If there is a success message, show it -->
     @if(session('success'))
-        <div style="background-color: #d4edda; padding: 10px; border: 1px solid #c3e6cb; margin-bottom: 20px;">
-            {{ session('success') }}
-        </div>
+        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
     @endif
 
     <!-- If there are any validation errors, list them here -->
     @if($errors->any())
-        <div style="background-color: #f8d7da; padding: 10px; border: 1px solid #f5c6cb; margin-bottom: 20px;">
+        <div class="alert alert-danger" role="alert">
             <ul>
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -33,13 +31,13 @@
 
         <div style="margin-bottom: 15px;">
             <label for="user_id">Owner (optional)</label><br>
-            <select id="user_id" name="user_id" style="width: 100%; padding: 8px;" aria-describedby="user_id-error">
+            <select id="user_id" name="user_id" class="form-control" aria-describedby="user_id-error">
                 <option value="">(no owner)</option>
                 @foreach(($users ?? collect()) as $user)
                     <option value="{{ $user->id }}" @selected((string) old('user_id') === (string) $user->id)>{{ $user->name }}</option>
                 @endforeach
             </select>
-            @error('user_id') <div id="user_id-error" style="color: red;">{{ $message }}</div> @enderror
+            @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
         </div>
 
         <x-form-field name="qty" type="number" label="Quantity" :value="old('qty', 0)" required />
@@ -65,9 +63,9 @@
         @endif
 
         <!-- Submit and Cancel buttons -->
-        <div style="margin-top: 20px;">
-            <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none;">Save</button>
-            <a href="{{ route('vehicles.index') }}" style="margin-left: 10px; text-decoration: none; color: #007bff;">Cancel</a>
+        <div class="d-flex justify-content-end" style="margin-top: 20px;">
+            <a href="{{ route('vehicles.index') }}" class="btn btn-secondary me-2 myds-btn myds-btn--secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary">Save</button>
         </div>
     </form>
 </div>

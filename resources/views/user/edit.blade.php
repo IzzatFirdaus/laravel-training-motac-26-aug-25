@@ -1,32 +1,32 @@
 @extends('layouts.app')
 
-@section('title', 'Sunting Pengguna — ' . config('app.name', 'second-crud'))
+@section('title', 'Ubah Pengguna — ' . config('app.name', 'second-crud'))
 
 @section('content')
-<main class="container" id="main-content" tabindex="-1">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
-            <header class="mb-3">
-                <h1 class="h3">Sunting Pengguna</h1>
-                <p class="text-muted">Kemas kini butiran pengguna.</p>
-            </header>
-
+        <div class="col-md-8">
             <div class="card">
+                <div class="card-header">Sunting Pengguna</div>
+
                 <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">{{ session('status') }}</div>
+                    @endif
+
                     <form method="POST" action="{{ route('users.update', $user->id) }}">
                         @csrf
-                        @method('PUT')
 
                         @include('user._form', ['user' => $user])
 
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary">Simpan perubahan</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-secondary">Batal</a>
+                        <div class="d-flex justify-content-end">
+                            <a href="{{ route('users.index') }}" class="btn btn-outline-secondary me-2 myds-btn myds-btn--secondary" aria-label="Batal dan kembali ke senarai">Batal</a>
+                            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary" aria-label="Kemaskini pengguna">Kemaskini</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</main>
+</div>
 @endsection

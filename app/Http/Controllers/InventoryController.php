@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 
 class InventoryController extends Controller
 {
@@ -18,8 +18,6 @@ class InventoryController extends Controller
 
     /**
      * Display a listing of the inventories.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
     public function index(): View
     {
@@ -33,8 +31,6 @@ class InventoryController extends Controller
 
     /**
      * Show the form for creating a new inventory item.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
     public function create(): View
     {
@@ -46,9 +42,6 @@ class InventoryController extends Controller
 
     /**
      * Store a newly created inventory item in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -83,8 +76,7 @@ class InventoryController extends Controller
     /**
      * Display a single inventory item.
      *
-     * @param int $inventoryId
-     * @return \Illuminate\Contracts\View\View
+     * @param  int  $inventoryId
      */
     public function show($inventoryId): View
     {
@@ -106,9 +98,7 @@ class InventoryController extends Controller
     /**
      * Update the specified inventory in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $inventoryId
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  int  $inventoryId
      */
     public function update(Request $request, $inventoryId): RedirectResponse
     {
@@ -141,8 +131,7 @@ class InventoryController extends Controller
     /**
      * Remove the specified inventory from storage.
      *
-     * @param int $inventoryId
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  int  $inventoryId
      */
     public function destroy($inventoryId): RedirectResponse
     {

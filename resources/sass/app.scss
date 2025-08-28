@@ -7,11 +7,72 @@
 // Fonts (keep as a plain CSS import)
 @import url('https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500');
 
+/*
+MYDS CSS custom properties (tokens).
+Defined here so runtime theme switching via [data-theme] can swap values.
+Fallbacks use SASS variables where available to remain compatible with the existing
+SASS architecture.
+*/
+:root {
+	/* Primitive / brand */
+	--primary: #3A75F6; /* MYDS primary (primary-500) */
+	--danger: #EF4444; /* danger-500 */
+	--success: #22C55E; /* success-500 */
+	--warning: #EAB308; /* warning-500 */
+
+	/* Background / surfaces */
+	--bg-page: #FAFAFA; /* gray-50 */
+	--bg-surface: #FFFFFF; /* white */
+	--bg-muted: #F4F4F5; /* gray-100 / washed */
+
+	/* Text */
+	--txt-primary: #18181B; /* gray-900 */
+	--txt-muted: #71717A; /* gray-500 */
+
+	/* Outlines / focus */
+	--otl-default: rgba(15,23,42,0.06);
+	/* focus ring uses primary-300 (#96B7FF) at reduced opacity */
+	--fr: rgba(150,183,255,0.4);
+	--fr-shadow: rgba(150,183,255,0.12);
+
+	/* Motion */
+	--motion-short: 200ms;
+	--motion-medium: 400ms;
+	--motion-long: 600ms;
+
+	/* Radius */
+	--radius-xs: 4px;
+	--radius-s: 6px;
+	--radius-m: 8px;
+	--radius-l: 12px;
+	--radius-xl: 14px;
+}
+
+/* Dark theme token overrides */
+[data-theme="dark"] {
+	/* In dark mode we prefer lighter accents mapped to the MYDS dark palette */
+	--primary: #6394FF; /* primary-400 mapped for dark surfaces */
+	--danger: #FF6B6B; /* danger-400/darker accent */
+	--success: #2DD4BF; /* success-400 */
+	--warning: #F59E0B; /* warning-400 */
+
+	--bg-page: #161619; /* gray-930 */
+	--bg-surface: #1D1D21; /* gray-850 */
+	--bg-muted: #27272A; /* gray-800 */
+
+	--txt-primary: #FFFFFF; /* text on dark */
+	--txt-muted: #D4D4D8; /* gray-300 */
+
+	--otl-default: rgba(255,255,255,0.04);
+	--fr: rgba(96,148,255,0.32); /* toned down primary focus for dark */
+	--fr-shadow: rgba(96,148,255,0.12);
+}
+
 // MYDS-style focus ring utility using tokens
 .focus-ring {
 	outline: 2px solid var(--fr) !important;
 	outline-offset: 2px !important;
-	box-shadow: 0 0 0 4px color-mix(in srgb, var(--fr) 12%, transparent) !important;
+	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
 }
 
 // Global focus style for interactive elements
@@ -22,7 +83,7 @@ select:focus,
 textarea:focus {
 	outline: 2px solid var(--fr) !important;
 	outline-offset: 2px !important;
-	box-shadow: 0 0 0 4px color-mix(in srgb, var(--fr) 12%, transparent) !important;
+	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
 	transition: outline-color 0.2s;
 }
 
@@ -40,17 +101,25 @@ textarea:focus {
 }
 .myds-btn--primary{
 	background-color: var(--primary);
-	color: #fff;
-	/* border uses a semi-transparent overlay so SASS doesn't try to darken a CSS var */
-	border: 1px solid rgba(0,0,0,0.1);
+	color: #ffffff;
+	border: 1px solid var(--otl-default);
 }
-.myds-btn--secondary{ background-color: transparent; color: $myds-gray-700; border: 1px solid rgba(0,0,0,0.08); }
+.myds-btn--secondary{
+	background-color: transparent;
+	color: var(--txt-primary);
+	border: 1px solid var(--otl-default);
+}
 .myds-btn--danger{
 	background-color: var(--danger);
-	color: #fff;
-	border: 1px solid rgba(0,0,0,0.12);
+	color: #ffffff;
+	border: 1px solid var(--otl-default);
 }
-.myds-action--danger{ color: $myds-danger !important; }
+.myds-btn--success{
+	background-color: var(--success);
+	color: #ffffff;
+	border: 1px solid var(--otl-default);
+}
+.myds-action--danger{ color: var(--danger) !important; }
 
 // Typography defaults
 body {
