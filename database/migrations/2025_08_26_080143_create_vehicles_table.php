@@ -14,7 +14,7 @@ return new class extends Migration
     // Create the vehicles table. This migration was adapted to also
     // include basic inventory-like fields (name, qty, price, description)
     // to reuse the same UI patterns as the inventories table.
-    Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
 
             // Link to user who owns/created the vehicle; nullable for parity

@@ -14,6 +14,7 @@ class Vehicle extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     // Allow mass assignment for these fields used by the create form.
     protected $fillable = [
         'name',
@@ -39,7 +40,12 @@ class Vehicle extends Model
      */
     public function inventories()
     {
-        return $this->belongsToMany(Inventory::class, 'inventory_vehicle', 'vehicle_id', 'inventory_id')->withTimestamps();
+        return $this->belongsToMany(
+            Inventory::class,
+            'inventory_vehicle',
+            'vehicle_id',
+            'inventory_id'
+        )->withTimestamps();
     }
 
     // No placeholder one-to-many relations defined.

@@ -77,7 +77,7 @@
 
                         @if (method_exists($inventories, 'links'))
                             <nav class="mt-3" aria-label="Paginasi inventori">
-                                {{ $inventories->links('vendor.pagination.myds') }}
+                                {{ $inventories->links() }}
                             </nav>
                         @endif
                     </div>

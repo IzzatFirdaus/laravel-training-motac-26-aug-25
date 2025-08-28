@@ -34,10 +34,10 @@ class VehicleController extends Controller
      */
     public function destroy($vehicleId): RedirectResponse
     {
-    $vehicle = Vehicle::findOrFail($vehicleId);
-    $vehicle->delete();
+        $vehicle = Vehicle::findOrFail($vehicleId);
+        $vehicle->delete();
 
-    return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
+        return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
     }
     /**
      * Show the form for creating a new vehicle.
@@ -76,9 +76,9 @@ class VehicleController extends Controller
      */
     public function show($vehicleId): View
     {
-    $vehicle = Vehicle::with('owner', 'inventories')->findOrFail($vehicleId);
+        $vehicle = Vehicle::with('owner', 'inventories')->findOrFail($vehicleId);
 
-    return view('vehicles.show', compact('vehicle'));
+        return view('vehicles.show', compact('vehicle'));
     }
 
     /**
@@ -90,11 +90,11 @@ class VehicleController extends Controller
     public function edit($vehicleId): View
     {
     // Fetch users to populate owner dropdown
-    $users = DB::table('users')->select('id','name')->orderBy('name')->get();
+        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
 
-    $vehicle = Vehicle::findOrFail($vehicleId);
+        $vehicle = Vehicle::findOrFail($vehicleId);
 
-    return view('vehicles.edit', compact('vehicle', 'users'));
+        return view('vehicles.edit', compact('vehicle', 'users'));
     }
 
     /**

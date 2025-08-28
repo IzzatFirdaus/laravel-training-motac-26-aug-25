@@ -13,7 +13,7 @@ return new class extends Migration
     {
     // Create inventories table with attributes used by the app views.
     // Columns: user_id (owner), name, qty, price, description, timestamps.
-    Schema::create('inventories', function (Blueprint $table) {
+        Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             // owner of the inventory item; nullable so unauthenticated users
             // can create items in development/testing. on delete -> set null

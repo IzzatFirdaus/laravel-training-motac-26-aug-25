@@ -72,7 +72,12 @@ class InventoryController extends Controller
             'user_id' => $data['user_id'] ?? null,
         ]);
 
-        return redirect()->route('inventories.show', $inventory->getKey())->with('status', 'Inventori berjaya dicipta.');
+        $route = redirect()->route(
+            'inventories.show',
+            $inventory->getKey()
+        );
+
+        return $route->with('status', 'Inventori berjaya dicipta.');
     }
 
     /**
@@ -83,19 +88,19 @@ class InventoryController extends Controller
      */
     public function show($inventoryId): View
     {
-    $inventory = Inventory::with('user', 'vehicles')->findOrFail($inventoryId);
+        $inventory = Inventory::with('user', 'vehicles')->findOrFail($inventoryId);
 
-    return view('inventories.show', compact('inventory'));
+        return view('inventories.show', compact('inventory'));
     }
 
     public function edit($inventoryId): View
     {
         // Fetch users to populate owner dropdown
-    $users = DB::table('users')->select('id','name')->orderBy('name')->get();
+        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
 
-    $inventory = Inventory::findOrFail($inventoryId);
+        $inventory = Inventory::findOrFail($inventoryId);
 
-    return view('inventories.edit', compact('inventory', 'users'));
+        return view('inventories.edit', compact('inventory', 'users'));
     }
 
     /**
@@ -141,9 +146,9 @@ class InventoryController extends Controller
      */
     public function destroy($inventoryId): RedirectResponse
     {
-    $inventory = Inventory::findOrFail($inventoryId);
-    $inventory->delete();
+        $inventory = Inventory::findOrFail($inventoryId);
+        $inventory->delete();
 
-    return redirect()->route('inventories.index')->with('status', 'Inventory deleted.');
+        return redirect()->route('inventories.index')->with('status', 'Inventory deleted.');
     }
 }

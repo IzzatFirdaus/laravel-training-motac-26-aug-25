@@ -35,7 +35,7 @@ class InventoryFactory extends Factory
         $serial = strtoupper($faker->bothify('SN-??###'));
 
         // price ranges by category
-        $priceRange = match($category) {
+        $priceRange = match ($category) {
             'Laptop' => [1500, 8000],
             'Monitor' => [300, 2000],
             'Keyboard' => [20, 300],

@@ -12,6 +12,7 @@ class Inventory extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     /**
      * The primary key associated with the table.
      *
@@ -58,7 +59,12 @@ class Inventory extends Model
      */
     public function vehicles()
     {
-        return $this->belongsToMany(Vehicle::class, 'inventory_vehicle', 'inventory_id', 'vehicle_id')->withTimestamps();
+        return $this->belongsToMany(
+            Vehicle::class,
+            'inventory_vehicle',
+            'inventory_id',
+            'vehicle_id'
+        )->withTimestamps();
     }
 
     //getter make sure title is always uppercase

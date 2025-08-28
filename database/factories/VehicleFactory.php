@@ -28,7 +28,10 @@ class VehicleFactory extends Factory
 
         $makes = ['Perodua', 'Proton', 'Toyota', 'Honda', 'Nissan', 'BMW', 'Mercedes-Benz', 'Mazda'];
         $make = $faker->randomElement($makes);
-        $model = $faker->randomElement(['X', 'S', 'V', 'Elite', 'Pro', 'GL', 'Sport', 'Plus']) . ' ' . $faker->bothify('###');
+        $modelVariants = ['X', 'S', 'V', 'Elite', 'Pro', 'GL', 'Sport', 'Plus'];
+        $baseModel = $faker->randomElement($modelVariants);
+        $modelSerial = $faker->bothify('###');
+        $model = $baseModel . ' ' . $modelSerial;
         $year = $faker->numberBetween(2005, 2025);
 
         // More accurate Malaysian plate generator.
@@ -83,11 +86,17 @@ class VehicleFactory extends Factory
         $number = $faker->numberBetween(1, 9999); // no leading zeroes
         $reg = sprintf('%s %d', $alpha, $number);
 
+        $name = sprintf('%s %s (%s)', $make, $model, $reg);
+
         return [
             'user_id' => User::factory(),
-            'name' => sprintf('%s %s (%s)', $make, $model, $reg),
+            'name' => $name,
             'qty' => 1,
-            'price' => $faker->randomFloat(2, 15000, 300000),
+            'price' => $faker->randomFloat(
+                2,
+                15000,
+                300000
+            ),
             'description' => implode("\n", [
                 "Make: {$make}",
                 "Model: {$model}",
