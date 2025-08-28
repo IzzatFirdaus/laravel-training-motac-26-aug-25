@@ -80,17 +80,17 @@ Route::get('/inventories/store', function () {
     return redirect()->route('inventories.create');
 });
 
-// Route to show a single inventory item
-Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->name('inventories.show');
+// Route to show a single inventory item (limit {inventory} to numeric IDs to avoid colliding with static paths)
+Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->whereNumber('inventory')->name('inventories.show');
 
 // Route to edit a single inventory item (use conventional /{id}/edit path to avoid name collision)
-Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])->name('inventories.edit');
+Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])->whereNumber('inventory')->name('inventories.edit');
 
 // Route to update an inventory item (using POST instead of PATCH for environments that prefer POST)
-Route::post('/inventories/{inventory}', [InventoryController::class, 'update'])->name('inventories.update');
+Route::post('/inventories/{inventory}', [InventoryController::class, 'update'])->whereNumber('inventory')->name('inventories.update');
 
 // Route to destroy an inventory item (using POST to a /destroy endpoint)
-Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'destroy'])->name('inventories.destroy');
+Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'destroy'])->whereNumber('inventory')->name('inventories.destroy');
 
 // Deleted Inventory routes (for soft-deleted items)
 
@@ -99,11 +99,13 @@ Route::get('/inventories/deleted', [DeletedInventoryController::class, 'index'])
 
 // Route to restore a soft-deleted inventory
 Route::post('/inventories/{inventory}/restore', [DeletedInventoryController::class, 'restore'])
+    ->whereNumber('inventory')
     ->name('inventories.restore')
     ->withTrashed();
 
 // Route to permanently delete a soft-deleted inventory
 Route::post('/inventories/{inventory}/force-delete', [DeletedInventoryController::class, 'forceDelete'])
+    ->whereNumber('inventory')
     ->name('inventories.force-delete')
     ->withTrashed();
 

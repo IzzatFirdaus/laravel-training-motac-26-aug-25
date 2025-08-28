@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inventory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class DeletedInventoryController extends Controller
@@ -12,8 +13,7 @@ class DeletedInventoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // Temporarily allow any authenticated user for testing
-        // $this->middleware('role:admin'); // Only admins can access deleted inventories
+        $this->middleware('role:admin'); // Only admins can access deleted inventories
     }
 
     /**
@@ -21,7 +21,8 @@ class DeletedInventoryController extends Controller
      */
     public function index(Request $request): View
     {
-        // Authorization is already handled by middleware('role:admin')
+        // Authorization is handled by middleware('role:admin')
+        Log::info('DeletedInventoryController@index called');
 
         $query = Inventory::onlyTrashed()->with('user');
 
@@ -33,6 +34,18 @@ class DeletedInventoryController extends Controller
         $deletedInventories = $query->paginate(10);
 
         return view('inventories.deleted.index', compact('deletedInventories'));
+    }
+
+    /**
+     * Restore the specified soft-deleted inventory.
+     */
+    public function restore(Inventory $inventory): RedirectResponse
+    {
+        $this->authorize('restore', $inventory);
+
+        $inventory->restore();
+
+        return redirect()->route('inventories.deleted.index')->with('toast', 'Inventori telah dipulihkan.');
     }
 
     /**

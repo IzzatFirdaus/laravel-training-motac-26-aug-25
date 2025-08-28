@@ -1,0 +1,28 @@
+status=200
+<!doctype html>
+<!-- Application UI content is presented in Bahasa Melayu (ms) per project requirement -->
+<html lang="ms">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="kXnItahupOMvGZhsK72IeJrnIJRCiEUwqSby8SaU">
+
+    <!-- Favicon: use Laravel's standard favicon -->
+    <link rel="icon" href="https://laravel.com/img/favicon/favicon.ico" type="image/x-icon">
+
+    
+    <title>Inventori Dipadam — second-crud</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <!-- Use Poppins for headings and Inter for body (MYDS) -->
+    <link href="https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500" rel="stylesheet">
+
+    <!-- Styles -->
+    <script type="module" src="http://[::1]:5173/@vite/client"></script><link rel="stylesheet" href="http://[::1]:5173/resources/sass/app.scss" /></head>
+<body>
+    <div id="app">
+    
+    <a hr

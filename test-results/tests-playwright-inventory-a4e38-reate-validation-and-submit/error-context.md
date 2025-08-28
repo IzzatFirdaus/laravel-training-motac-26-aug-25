@@ -1,0 +1,55 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - link "Langkau ke kandungan" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - navigation "Navigasi utama" [ref=e4]:
+    - generic [ref=e5]:
+      - link "Laman utama" [ref=e6] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000
+        - generic [ref=e7] [cursor=pointer]: second-crud
+      - generic [ref=e8]:
+        - menubar [ref=e9]:
+          - listitem [ref=e10]:
+            - button "Inventori menu" [ref=e11] [cursor=pointer]: Inventori
+          - listitem [ref=e12]:
+            - button "Kenderaan menu" [ref=e13] [cursor=pointer]: Kenderaan
+          - listitem [ref=e14]:
+            - button "Pengguna menu" [ref=e15] [cursor=pointer]: Pengguna
+          - listitem [ref=e16]:
+            - button "Permohonan menu" [ref=e17] [cursor=pointer]: Permohonan
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - button "Togol mod terang/gelap" [ref=e20] [cursor=pointer]:
+              - img [ref=e22] [cursor=pointer]
+              - generic [ref=e25] [cursor=pointer]: Togol mod terang/gelap
+          - listitem [ref=e26]:
+            - button "Pemberitahuan" [ref=e27] [cursor=pointer]:
+              - img [ref=e28] [cursor=pointer]
+          - listitem [ref=e31]:
+            - button "Menu pengguna" [ref=e32] [cursor=pointer]: InvTester 1756378669318
+  - main [ref=e33]:
+    - generic [ref=e37]:
+      - generic [ref=e38]: Cipta Inventori
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: Nama
+          - combobox "Nama" [ref=e43]
+        - generic [ref=e45]:
+          - generic [ref=e46]: Pemilik (pilihan)
+          - generic [ref=e47]: Anda akan menjadi pemilik item ini.
+        - generic [ref=e48]:
+          - generic [ref=e49]: Kuantiti
+          - spinbutton "Kuantiti" [ref=e50]: "0"
+        - generic [ref=e51]:
+          - generic [ref=e52]: Harga
+          - spinbutton "Harga" [ref=e53]
+        - generic [ref=e54]:
+          - generic [ref=e55]: Keterangan
+          - textbox "Keterangan" [ref=e56]
+        - generic [ref=e57]:
+          - link "Batal" [ref=e58] [cursor=pointer]:
+            - /url: http://127.0.0.1:8000/inventories
+          - button "Cipta" [ref=e59] [cursor=pointer]
+```

@@ -9,9 +9,6 @@
             <h1 class="h4 mb-0">Inventori Dipadam</h1>
             <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm">Kembali ke Inventori</a>
         </div>
-        <div class="alert alert-warning mt-2">
-            <small><strong>Nota:</strong> Halaman ini sedang dalam mod ujian - semua pengguna yang log masuk boleh akses. Untuk penggunaan tetap, hanya admin yang boleh akses.</small>
-        </div>
         @if (session('status'))
             <div class="alert alert-success mt-3" role="status">{{ session('status') }}</div>
         @endif
@@ -21,6 +18,21 @@
     </header>
 
     @if($deletedInventories->count() > 0)
+        <!-- Search form -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <form method="GET" action="{{ route('inventories.deleted.index') }}">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Cari inventori dipadam..." value="{{ request('search') }}">
+                        <button class="myds-btn myds-btn--primary" type="submit">Cari</button>
+                        @if(request('search'))
+                            <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--secondary">Kosongkan</a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">

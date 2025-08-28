@@ -3,8 +3,15 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * Base test case for the application.
+ * Ensures the Laravel application is bootstrapped for Feature tests.
+ */
 abstract class TestCase extends BaseTestCase
 {
-    //
+    use CreatesApplication;
+
+    // RefreshDatabase is used in individual tests as needed.
 }
