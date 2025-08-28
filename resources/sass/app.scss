@@ -28,6 +28,7 @@ SASS architecture.
 	/* Text */
 	--txt-primary: #18181B; /* gray-900 */
 	--txt-muted: #71717A; /* gray-500 */
+	--txt-disabled: #52525B; /* gray-600 per MYDS text disabled (light) */
 
 	/* Outlines / focus */
 	--otl-default: rgba(15,23,42,0.06);
@@ -62,10 +63,12 @@ SASS architecture.
 
 	--txt-primary: #FFFFFF; /* text on dark */
 	--txt-muted: #D4D4D8; /* gray-300 */
+	--txt-disabled: #A1A1AA; /* gray-400 per MYDS text disabled (dark) */
 
 	--otl-default: rgba(255,255,255,0.04);
-	--fr: rgba(96,148,255,0.32); /* toned down primary focus for dark */
-	--fr-shadow: rgba(96,148,255,0.12);
+	/* Focus ring per MYDS: primary-700 at 40% */
+	--fr: rgba(29,78,216,0.4);
+	--fr-shadow: rgba(29,78,216,0.12);
 }
 
 // MYDS-style focus ring utility using tokens
@@ -75,16 +78,49 @@ SASS architecture.
 	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
 }
 
-// Global focus style for interactive elements
-a:focus,
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
+// Global focus style for interactive elements (use :focus-visible)
+// Apply to most interactive and tabbable controls, including ARIA roles.
+:is(
+	a[href],
+	button,
+	[role="button"],
+	input,
+	select,
+	textarea,
+	.btn,
+	.myds-btn,
+	.nav-link,
+	.dropdown-item,
+	.list-group-item-action,
+	.page-link,
+	[role="menuitem"],
+	[role="radio"],
+	[role="checkbox"],
+	[tabindex]:not([tabindex="-1"])
+):focus-visible {
 	outline: 2px solid var(--fr) !important;
 	outline-offset: 2px !important;
 	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
-	transition: outline-color 0.2s;
+	transition: outline-color var(--motion-short);
+}
+
+// Hover affordance: show a subtle ring on hover for most interactive elements
+:is(
+	a[href],
+	button,
+	[role="button"],
+	[role="link"],
+	.btn,
+	.myds-btn,
+	.nav-link,
+	.dropdown-item,
+	.list-group-item-action,
+	.page-link,
+	input,
+	select,
+	textarea
+):not(:disabled):not([aria-disabled="true"]):not([readonly]):hover {
+	box-shadow: 0 0 0 2px var(--fr-shadow);
 }
 
 // MYDS button utilities
@@ -98,6 +134,7 @@ textarea:focus {
 	line-height: 1;
 	cursor: pointer;
 	text-decoration: none;
+	transition: background-color var(--motion-short) ease, color var(--motion-short) ease, box-shadow var(--motion-short) ease, border-color var(--motion-short) ease;
 }
 .myds-btn--primary{
 	background-color: var(--primary);
@@ -120,6 +157,31 @@ textarea:focus {
 	border: 1px solid var(--otl-default);
 }
 .myds-action--danger{ color: var(--danger) !important; }
+
+/* Tertiary button (link-styled button) */
+.myds-btn--tertiary{
+	background-color: transparent;
+	color: var(--primary);
+	border: 1px solid transparent;
+	padding: 0.25rem 0.25rem; /* tighter like a link */
+}
+.myds-btn--tertiary:hover{ text-decoration: underline; }
+
+/* Nav / Brand helpers */
+.myds-nav{ background-color: var(--bg-surface); border-bottom: 1px solid var(--otl-default); }
+.myds-brand{ color: var(--txt-primary); font-weight: 600; }
+.myds-brand:hover{ color: var(--primary); text-decoration: none; }
+
+/* Header search alignment */
+.navbar form[role="search"] input[type="search"]{
+	min-width: 200px;
+}
+.navbar .nav-link { color: var(--txt-primary); }
+.navbar .nav-link:hover { color: var(--primary); }
+
+/* Article container per MYDS (max 640px) */
+.myds-article{ max-width: 640px; margin-left: auto; margin-right: auto; }
+.myds-media-wide{ max-width: 740px; margin-left: auto; margin-right: auto; }
 
 // Typography defaults
 body {
@@ -196,8 +258,32 @@ table thead th {
 	border: 1px solid var(--otl-default);
 }
 
+/* Dropdown item text colour per MYDS (use txt-primary; disabled uses txt-disabled).
+   Do not override items that are styled as myds-btn (e.g., destructive actions). */
+.dropdown-menu .dropdown-item:not(.myds-btn) {
+	color: var(--txt-primary) !important;
+}
+.dropdown-menu .dropdown-item:not(.myds-btn):hover,
+.dropdown-menu .dropdown-item:not(.myds-btn):focus {
+	color: var(--txt-primary) !important;
+	background-color: var(--bg-muted) !important; /* washed */
+}
+.dropdown-menu .dropdown-item:not(.myds-btn).active,
+.dropdown-menu .dropdown-item:not(.myds-btn):active {
+	color: var(--txt-primary) !important;
+	background-color: var(--bg-muted) !important;
+}
+.dropdown-menu .dropdown-item.disabled,
+.dropdown-menu .dropdown-item:disabled {
+	color: var(--txt-disabled) !important;
+	pointer-events: none;
+	opacity: 0.8;
+}
+
 /* Focus utilities */
 .focus-ring {
+	outline: 2px solid var(--fr) !important;
+	outline-offset: 2px !important;
 	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
 }
 

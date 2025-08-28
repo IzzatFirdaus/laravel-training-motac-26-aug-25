@@ -156,4 +156,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (!link) return;
 		// allow normal navigation; this handler exists so we can later enhance link behavior (analytics, prefetch) centrally
 	}, true);
+
+	// Search keyboard shortcuts disabled (no search bar rendered)
 });

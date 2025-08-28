@@ -27,17 +27,15 @@
     <a href="{{ $editRoute }}" class="btn btn-sm btn-block btn-primary myds-btn myds-btn--primary" style="min-height:44px;" aria-label="Edit {{ $label }}" data-myds="link">Edit</a>
 
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="moreActions-{{ $id }}" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="moreActions-{{ $id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Lagi tindakan">
                 Lagi
             </button>
-            <ul class="dropdown-menu" aria-labelledby="moreActions-{{ $id }}">
-                <li>
-                    <form method="POST" action="{{ $destroyRoute }}" class="px-3 py-1" data-myds-form>
-                        @csrf
-                        <button type="button" class="dropdown-item myds-btn myds-btn--danger" aria-label="Padam {{ $label }}">Padam</button>
-                    </form>
-                </li>
-            </ul>
+            <div class="dropdown-menu myds-dropdown" aria-labelledby="moreActions-{{ $id }}" role="menu">
+                <form method="POST" action="{{ $destroyRoute }}" class="px-3 py-1" data-myds-form>
+                    @csrf
+                    <button type="button" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam {{ $label }}">Padam</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -23,6 +23,17 @@ Auth::routes();
 // Route for the home page after login
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+// Locale switcher for header language toggle
+Route::get('/locale/{locale}', function (string $locale) {
+    $allowed = ['en', 'ms'];
+    if (! in_array($locale, $allowed, true)) {
+        $locale = config('app.locale');
+    }
+    session(['locale' => $locale]);
+
+    return back();
+})->name('locale.switch');
+
 // User routes
 
 // Route to list all users

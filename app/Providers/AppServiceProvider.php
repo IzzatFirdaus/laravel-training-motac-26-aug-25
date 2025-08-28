@@ -23,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
         // Use the MYDS pagination view as the application's default pagination template.
         Paginator::defaultView('vendor.pagination.myds');
         Paginator::defaultSimpleView('vendor.pagination.simple-myds');
+
+        // Enforce Malay (BM) for frontend UI content. Keep code in English.
+        // Toggle is hidden; ignore any previous session overrides.
+        app()->setLocale('ms');
     }
 }
