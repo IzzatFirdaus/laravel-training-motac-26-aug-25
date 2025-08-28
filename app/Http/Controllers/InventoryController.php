@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use App\Mail\InventoryCreated;
+use App\Notifications\StoreInventoryNotification;
 
 class InventoryController extends Controller
 {
@@ -87,6 +89,11 @@ class InventoryController extends Controller
     // Queue mailable to notify the owner (or fallback configured address)
     $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
     Mail::to($recipient)->queue(new InventoryCreated($inventory));
+
+    // Also create a notification record and send notification (mail + database)
+    // This uses the StoreInventoryNotification class. If there is an owning user,
+    // notify that user; otherwise route a notification to the configured fallback email.
+    $this->notifyInventoryCreated($inventory, $recipient);
 
         $route = redirect()->route(
             'inventories.show',
@@ -172,5 +179,42 @@ class InventoryController extends Controller
         $inventory->delete();
 
         return redirect()->route('inventories.index')->with('toast', 'Inventory deleted.');
+    }
+
+    /**
+     * Notify interested parties that an inventory was created.
+     */
+    private function notifyInventoryCreated(Inventory $inventory, ?string $fallbackEmail = null): void
+    {
+        // If the inventory has an associated user, notify them (database + mail)
+        if ($inventory->user) {
+            $inventory->user->notify(new StoreInventoryNotification($inventory));
+            return;
+        }
+
+        // No owner on the inventory: send mail to fallback address if provided
+        $email = $fallbackEmail ?? config('mail.from.address', null);
+        if ($email) {
+            Notification::route('mail', $email)->notify(new StoreInventoryNotification($inventory));
+        }
+    }
+
+    /**
+     * API: trigger mail notification for an inventory and return JSON.
+     *
+     * This is the handler for the route POST /api/mail/inventories/{inventory}/notify
+     */
+    public function notifyMail($inventoryId)
+    {
+        $inventory = Inventory::with('user')->findOrFail($inventoryId);
+
+        if ($inventory->user) {
+            $inventory->user->notify(new StoreInventoryNotification($inventory));
+        } else {
+            $fallback = config('mail.from.address');
+            Notification::route('mail', $fallback)->notify(new StoreInventoryNotification($inventory));
+        }
+
+        return response()->json(['ok' => true]);
     }
 }

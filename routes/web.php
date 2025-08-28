@@ -141,6 +141,8 @@ Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy']
 
 // Vehicle detail route
 Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->name('vehicles.show');
+// JSON endpoint: return vehicles belonging to an inventory (for dynamic selects)
+Route::get('/inventories/{inventory}/vehicles', [VehicleController::class, 'byInventory'])->name('inventories.vehicles');
 // Add other routes below. Controller methods should be defined inside their classes, not in this file.
 
 // Excel: Inventory export/import/preview
@@ -174,6 +176,13 @@ Route::post('/applications/{application}/destroy', [ApplicationController::class
 // API routes
 // Simple API POST endpoint for demo clients
 Route::post('/api/posts', [APIPostController::class, 'store'])->name('api.posts.store');
+
+// Mail route: trigger notification email for an inventory (API)
+Route::post('/api/mail/inventories/{inventory}/notify', [InventoryController::class, 'notifyMail'])->name('api.mail.inventories.notify');
+
+// Notifications: index and detail (mark-as-read)
+Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications.index');
+Route::get('/notifications/{notification}', [App\Http\Controllers\NotificationsController::class, 'show'])->name('notifications.show');
 
 // External posts listing (consumes jsonplaceholder.typicode.com)
 Route::get('/posts', [APIPostController::class, 'index'])->name('posts.index');

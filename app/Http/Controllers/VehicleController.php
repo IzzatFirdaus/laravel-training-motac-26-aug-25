@@ -112,6 +112,24 @@ class VehicleController extends Controller
     }
 
     /**
+     * Return JSON list of vehicles for a given inventory id.
+     * This is used by client-side code to populate dynamic selects.
+     */
+    public function byInventory($inventoryId)
+    {
+        // Eager-load minimal fields and guard with auth middleware
+        $vehicles = Vehicle::query()
+            ->whereHas('inventories', function ($q) use ($inventoryId) {
+                $q->where('inventories.id', $inventoryId);
+            })
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+
+        return response()->json($vehicles);
+    }
+
+    /**
      * Show the form for editing the specified vehicle.
      *
      * @param  int  $vehicleId

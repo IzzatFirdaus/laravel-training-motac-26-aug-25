@@ -214,6 +214,51 @@
                                 </button>
                             </li>
 
+                            @auth
+                            {{-- Notifications dropdown (MYDS style) --}}
+                            <li class="nav-item dropdown me-2">
+                                @php
+                                    $unread = auth()->user()->unreadNotifications ?? collect();
+                                    $unreadCount = $unread->count();
+                                @endphp
+                                <a id="navNotifications" class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Pemberitahuan">
+                                    {{-- Bell icon --}}
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 17H9a3 3 0 0 1-3-3V11a6 6 0 1 1 12 0v3a3 3 0 0 1-3 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    @if($unreadCount)
+                                        <span class="badge bg-danger rounded-pill position-absolute" style="top:2px; right:0; font-size:0.6rem;">{{ $unreadCount }}</span>
+                                    @endif
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end myds-dropdown py-0" aria-labelledby="navNotifications" role="menu" style="min-width:320px;">
+                                    <div class="px-3 py-2 border-bottom">
+                                        <strong>Pemberitahuan</strong>
+                                        <span class="text-muted small d-block">{{ $unreadCount }} belum dibaca</span>
+                                    </div>
+
+                                    @if($unreadCount === 0)
+                                        <div class="px-3 py-3 text-muted">Tiada pemberitahuan</div>
+                                    @else
+                                        <div class="list-group list-group-flush">
+                                            @foreach($unread->take(10) as $note)
+                                                <a href="{{ url('/notifications/'.$note->id) }}" class="list-group-item list-group-item-action d-flex align-items-start">
+                                                    <div class="me-2">
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 22s1.5-1 4-1 4-1 4-5V9a8 8 0 1 0-16 0v7c0 4 2.5 5 4 5s4 1 4 1z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                                    </div>
+                                                    <div class="flex-fill">
+                                                        <div class="small fw-semibold">{{ $note->data['message'] ?? '—' }}</div>
+                                                        <div class="small text-muted">{{ optional($note->created_at)->format('d/m/Y H:i') }}</div>
+                                                    </div>
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    <div class="dropdown-divider m-0"></div>
+                                    <a class="dropdown-item text-center py-2" href="{{ url('/notifications') }}">Lihat semua pemberitahuan</a>
+                                </div>
+                            </li>
+                            @endauth
+
                             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre aria-label="Menu pengguna">
                                     {{ Auth::user()->name }}
