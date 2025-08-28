@@ -11,7 +11,7 @@
     .brand { display:block; font-weight:700; color:#0b5fff; font-size:18px; margin-bottom:12px; }
     .card { background:#ffffff; border:1px solid #e6eef8; border-radius:8px; padding:18px; }
     .muted { color:#6b7280; font-size:14px; }
-    .btn { display:inline-block; padding:8px 14px; background:#0b5fff; color:#fff; border-radius:6px; text-decoration:none; }
+  .myds-btn { display:inline-block; padding:8px 14px; background:#0b5fff; color:#fff; border-radius:6px; text-decoration:none; }
     .meta { font-size:13px; color:#374151; }
   </style>
 </head>
@@ -33,7 +33,7 @@
       @endif
 
       <p style="margin-top:18px;">
-        <a class="btn" href="{{ url('/inventories/' . $inventory->getKey()) }}">Lihat Inventori</a>
+  <a class="myds-btn" href="{{ url('/inventories/' . $inventory->getKey()) }}">Lihat Inventori</a>
       </p>
     </div>
 

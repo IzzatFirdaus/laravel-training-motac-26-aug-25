@@ -20,7 +20,7 @@
                         <div class="text-muted small">{{ $note->created_at->format('d/m/Y H:i') }}</div>
                     </div>
                     <div>
-                        <a href="{{ route('notifications.show', $note->id) }}" class="btn btn-sm btn-primary">Lihat</a>
+                        <a href="{{ route('notifications.show', $note->id) }}" class="myds-btn myds-btn--primary myds-btn--sm">Lihat</a>
                     </div>
                 </li>
             @endforeach

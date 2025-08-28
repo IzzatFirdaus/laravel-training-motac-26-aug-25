@@ -11,9 +11,15 @@ class DeletedInventoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    private User $admin;
+    /**
+     * @var \App\Models\User
+     */
+    protected $admin;
 
-    private User $user;
+    /**
+     * @var \App\Models\User
+     */
+    protected $user;
 
     protected function setUp(): void
     {
@@ -173,7 +179,7 @@ class DeletedInventoryTest extends TestCase
 
     public function test_policy_authorization_for_restore_and_force_delete(): void
     {
-        $inventory = Inventory::factory()->create(['user_id' => $this->user->id]);
+    $inventory = Inventory::factory()->create(['user_id' => $this->user->getKey()]);
         $inventory->delete();
 
         // Test that only admin can restore
