@@ -44,6 +44,10 @@
                                 <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary myds-btn--sm myds-btn--outline">Cipta</a>
                                 <a href="{{ route('inventories.show', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Lihat</a>
                                 <a href="{{ route('inventories.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Edit</a>
+                                @auth
+                                    <a href="{{ route('excel.inventory.form') }}" class="myds-btn myds-btn--tertiary myds-btn--sm">Import (Excel)</a>
+                                    <a href="{{ route('excel.inventory.export') }}" class="myds-btn myds-btn--tertiary myds-btn--sm myds-btn--outline">Muat Turun Templat</a>
+                                @endauth
                             </div>
                         </div>
                     </div>

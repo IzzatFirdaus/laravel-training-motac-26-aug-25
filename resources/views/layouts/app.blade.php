@@ -62,6 +62,10 @@
                                 @endif
                                 @endauth
                                 <div class="dropdown-divider"></div>
+                                <div class="px-3 py-2 text-muted small">Excel</div>
+                                <a class="dropdown-item" href="{{ route('excel.inventory.form') }}" role="menuitem">Import Inventori</a>
+                                <a class="dropdown-item" href="{{ route('excel.inventory.export') }}" role="menuitem">Muat Turun Templat</a>
+                                <div class="dropdown-divider"></div>
                                 @auth
                                 @if(auth()->user()->hasRole('admin'))
                                 <form method="POST" action="{{ route('inventories.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.inventory') }}" data-myds-form>

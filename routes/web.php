@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\UserController;
@@ -120,3 +121,9 @@ Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy']
 // Vehicle detail route
 Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->name('vehicles.show');
 // Add other routes below. Controller methods should be defined inside their classes, not in this file.
+
+// Excel: Inventory export/import/preview
+Route::get('/excel/inventories/export', [ExcelController::class, 'exportInventory'])->name('excel.inventory.export');
+Route::get('/excel/inventories/import', [ExcelController::class, 'importInventoryForm'])->name('excel.inventory.form');
+Route::post('/excel/inventories/preview', [ExcelController::class, 'previewInventory'])->name('excel.inventory.preview');
+Route::post('/excel/inventories/import', [ExcelController::class, 'importInventory'])->name('excel.inventory.import');

@@ -11,9 +11,12 @@
                     <h1 class="h3">Inventori</h1>
                     <p class="text-muted mb-0">Senarai inventori yang dipaparkan secara berhalaman dalam aplikasi.</p>
                 </div>
-                <div class="text-end">
+                <div class="text-end d-flex gap-2 align-items-center justify-content-end">
                     @can('create', App\Models\Inventory::class)
                         <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary">Cipta inventori</a>
+                    @endcan
+                    @can('viewAny', App\Models\Inventory::class)
+                        <a href="{{ route('excel.inventory.form') }}" class="myds-btn myds-btn--secondary">Import/Export</a>
                     @endcan
                 </div>
             </header>

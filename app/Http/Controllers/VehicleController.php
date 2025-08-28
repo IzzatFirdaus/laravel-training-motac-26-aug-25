@@ -7,14 +7,15 @@ use App\Models\Vehicle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
     public function __construct()
     {
-    // Require authentication for vehicles; per-item authorization handled by policy.
-    $this->middleware('auth');
+        // Require authentication for vehicles; per-item authorization handled by policy.
+        $this->middleware('auth');
+        // Creating vehicles is admin-only per project tests/requirements
+        $this->middleware('role:admin')->only(['create', 'store']);
     }
 
     /**
@@ -25,7 +26,7 @@ class VehicleController extends Controller
         // Use Eloquent with eager-loading so views can reference the owner relation
         $query = Vehicle::with('owner')->orderBy('created_at', 'desc');
 
-    // Allow any authenticated user to view the listing; per-item policies restrict actions like view/update/delete.
+        // Allow any authenticated user to view the listing; per-item policies restrict actions like view/update/delete.
 
         $vehicles = $query->paginate(15);
 
@@ -39,12 +40,12 @@ class VehicleController extends Controller
      */
     public function destroy($vehicleId): RedirectResponse
     {
-    $vehicle = Vehicle::findOrFail($vehicleId);
+        $vehicle = Vehicle::findOrFail($vehicleId);
 
-    // Authorize deletion via policy (owner or admin)
-    $this->authorize('delete', $vehicle);
+        // Authorize deletion via policy (owner or admin)
+        $this->authorize('delete', $vehicle);
 
-    $vehicle->delete();
+        $vehicle->delete();
 
         return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
     }
@@ -54,12 +55,12 @@ class VehicleController extends Controller
      */
     public function create(): View
     {
-    $this->authorize('create', Vehicle::class);
+        $this->authorize('create', Vehicle::class);
 
-    // Eagerly load users for owner assignment dropdown (admins only in UI)
-    $users = User::query()->select('id', 'name')->orderBy('name')->get();
+        // Eagerly load users for owner assignment dropdown (admins only in UI)
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-    return view('vehicles.create', compact('users'));
+        return view('vehicles.create', compact('users'));
     }
 
     /**
@@ -104,9 +105,9 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::with('owner', 'inventories')->findOrFail($vehicleId);
 
-    $this->authorize('view', $vehicle);
+        $this->authorize('view', $vehicle);
 
-    return view('vehicles.show', compact('vehicle'));
+        return view('vehicles.show', compact('vehicle'));
     }
 
     /**
@@ -121,7 +122,7 @@ class VehicleController extends Controller
 
         $vehicle = Vehicle::findOrFail($vehicleId);
 
-    $this->authorize('update', $vehicle);
+        $this->authorize('update', $vehicle);
 
         return view('vehicles.edit', compact('vehicle', 'users'));
     }
