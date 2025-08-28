@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreAPIPostRequest;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
 class APIPostController extends Controller
@@ -21,10 +20,9 @@ class APIPostController extends Controller
 
         $posts = $response->json();
 
-    // Render the Blade file by absolute path to avoid view discovery issues in some analyzers.
-    return view()->file(resource_path('views/posts/index.blade.php'), ['posts' => $posts]);
+        // Render the Blade file by absolute path to avoid view discovery issues in some analyzers.
+        return view()->file(resource_path('views/posts/index.blade.php'), ['posts' => $posts]);
     }
-
 
     /**
      * Store a simple JSON payload for demonstration.

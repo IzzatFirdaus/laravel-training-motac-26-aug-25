@@ -12,6 +12,7 @@ class DeletedInventoryTest extends TestCase
     use RefreshDatabase;
 
     private User $admin;
+
     private User $user;
 
     protected function setUp(): void
@@ -81,7 +82,7 @@ class DeletedInventoryTest extends TestCase
 
         $this->assertDatabaseHas('inventories', [
             'id' => $inventory->id,
-            'deleted_at' => null
+            'deleted_at' => null,
         ]);
     }
 

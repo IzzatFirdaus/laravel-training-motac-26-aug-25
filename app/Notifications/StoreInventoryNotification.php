@@ -2,11 +2,11 @@
 
 namespace App\Notifications;
 
+use App\Models\Inventory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Inventory;
 
 class StoreInventoryNotification extends Notification implements ShouldQueue
 {
@@ -38,13 +38,14 @@ class StoreInventoryNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $inv = $this->inventory;
+
         return (new MailMessage)
-            ->subject('Inventori dicipta: ' . ($inv->name ?? '—'))
+            ->subject('Inventori dicipta: '.($inv->name ?? '—'))
             ->greeting('Makluman')
-            ->line('Inventori "' . ($inv->name ?? '—') . '" telah dicipta.')
-            ->line('ID: ' . ($inv->getKey() ?? '—'))
+            ->line('Inventori "'.($inv->name ?? '—').'" telah dicipta.')
+            ->line('ID: '.($inv->getKey() ?? '—'))
             ->action('Lihat inventori', route('inventories.show', $inv->getKey()))
-            ->line('Tarikh: ' . now()->format('d/m/Y H:i'))
+            ->line('Tarikh: '.now()->format('d/m/Y H:i'))
             ->line('Terima kasih.');
     }
 

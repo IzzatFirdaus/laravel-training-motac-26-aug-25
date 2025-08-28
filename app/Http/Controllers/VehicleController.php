@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Requests\UpdateVehicleRequest;
 use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreVehicleRequest;
-use App\Http\Requests\UpdateVehicleRequest;
 use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
@@ -50,7 +49,7 @@ class VehicleController extends Controller
 
         $vehicle->delete();
 
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
+        return redirect()->route('vehicles.index')->with('success', 'Kenderaan berjaya dipadam.');
     }
 
     /**
@@ -167,6 +166,6 @@ class VehicleController extends Controller
 
         $vehicle->save();
 
-        return redirect()->route('vehicles.show', $vehicleId)->with('status', 'Vehicle updated.');
+        return redirect()->route('vehicles.show', $vehicleId)->with('status', 'Kenderaan dikemaskini.');
     }
 }

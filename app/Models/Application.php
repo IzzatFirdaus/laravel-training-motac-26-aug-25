@@ -14,13 +14,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Inventory;
-use App\Models\User;
 
 class Application extends Model
 {
     /** @use HasFactory<\Database\Factories\ApplicationFactory> */
     use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,9 +27,9 @@ class Application extends Model
      */
     protected $fillable = [
         'name',
-    'description',
-    'inventory_id',
-    'user_id',
+        'description',
+        'inventory_id',
+        'user_id',
     ];
 
     /**

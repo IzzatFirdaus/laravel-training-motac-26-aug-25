@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\InventoryExport;
+use App\Http\Requests\ImportInventoryRequest;
+use App\Http\Requests\PreviewInventoryImportRequest;
 use App\Imports\InventoryImport;
 use App\Models\Inventory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use App\Http\Requests\PreviewInventoryImportRequest;
-use App\Http\Requests\ImportInventoryRequest;
 use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Facades\Excel;
 

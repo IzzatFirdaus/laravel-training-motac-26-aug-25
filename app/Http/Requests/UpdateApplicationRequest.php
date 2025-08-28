@@ -11,8 +11,8 @@ class UpdateApplicationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-    // Allow for now; controller still authorizes using policies.
-    return true;
+        // Allow for now; controller still authorizes using policies.
+        return true;
     }
 
     /**

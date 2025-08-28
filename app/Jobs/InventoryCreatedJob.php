@@ -2,13 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Mail\InventoryCreated as InventoryCreatedMailable;
 use App\Models\Inventory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\InventoryCreated as InventoryCreatedMailable;
 
 class InventoryCreatedJob implements ShouldQueue
 {
@@ -16,8 +16,6 @@ class InventoryCreatedJob implements ShouldQueue
 
     /**
      * For static analysis: the inventory instance serialized into the job.
-     *
-     * @var \App\Models\Inventory
      */
     public Inventory $inventory;
 
@@ -44,7 +42,7 @@ class InventoryCreatedJob implements ShouldQueue
 
         $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
 
-    // Use the mailable and queue it so delivery is handled by the mail queue worker.
-    Mail::to($recipient)->queue(new InventoryCreatedMailable($inventory));
+        // Use the mailable and queue it so delivery is handled by the mail queue worker.
+        Mail::to($recipient)->queue(new InventoryCreatedMailable($inventory));
     }
 }

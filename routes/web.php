@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\APIPostController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DeletedInventoryController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\APIPostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -133,16 +133,16 @@ Route::get('/vehicles/store', function () {
 });
 
 // Route to edit a single vehicle item (use conventional /{id}/edit path to avoid name collision)
-Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->name('vehicles.edit');
+Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->whereNumber('vehicle')->name('vehicles.edit');
 
 // Route to update a vehicle item (using POST instead of PATCH for environments that prefer POST)
-Route::post('/vehicles/{vehicle}', [VehicleController::class, 'update'])->name('vehicles.update');
+Route::post('/vehicles/{vehicle}', [VehicleController::class, 'update'])->whereNumber('vehicle')->name('vehicles.update');
 
 // Route to destroy a vehicle (using POST to a /destroy endpoint)
-Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy'])->name('vehicles.destroy');
+Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy'])->whereNumber('vehicle')->name('vehicles.destroy');
 
 // Vehicle detail route
-Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->name('vehicles.show');
+Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->whereNumber('vehicle')->name('vehicles.show');
 // JSON endpoint: return vehicles belonging to an inventory (for dynamic selects)
 Route::get('/inventories/{inventory}/vehicles', [VehicleController::class, 'byInventory'])->name('inventories.vehicles');
 // Add other routes below. Controller methods should be defined inside their classes, not in this file.

@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function __construct()
     {
-    // Require authentication for all user routes. Admin-only actions remain protected by middleware.
-    $this->middleware('auth');
-    $this->middleware('role:admin')->only(['create', 'store', 'destroy']);
+        // Require authentication for all user routes. Admin-only actions remain protected by middleware.
+        $this->middleware('auth');
+        $this->middleware('role:admin')->only(['create', 'store', 'destroy']);
     }
 
     /**
@@ -60,9 +60,9 @@ class UserController extends Controller
     public function show($userId): View
     {
         $user = User::with('inventories', 'vehicles')->findOrFail($userId);
-    $this->authorize('view', $user);
+        $this->authorize('view', $user);
 
-    return view('user.show', compact('user'));
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -71,9 +71,9 @@ class UserController extends Controller
     public function edit($userId): View
     {
         $user = User::findOrFail($userId);
-    $this->authorize('update', $user);
+        $this->authorize('update', $user);
 
-    return view('user.edit', compact('user'));
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -83,9 +83,9 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-    $user = User::findOrFail($userId);
+        $user = User::findOrFail($userId);
 
-    $this->authorize('update', $user);
+        $this->authorize('update', $user);
 
         $user->fill([
             'name' => $data['name'] ?? $user->name,
@@ -113,9 +113,9 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('toast', 'Anda tidak boleh memadam akaun sendiri.');
         }
 
-    $this->authorize('delete', $user);
+        $this->authorize('delete', $user);
 
-    $user->delete();
+        $user->delete();
 
         return redirect()->route('users.index')->with('toast', 'Pengguna dipadam.');
     }

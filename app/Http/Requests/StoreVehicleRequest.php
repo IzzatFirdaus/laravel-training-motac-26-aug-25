@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Vehicle;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Vehicle;
 
 class StoreVehicleRequest extends FormRequest
 {
@@ -21,6 +21,16 @@ class StoreVehicleRequest extends FormRequest
             'qty' => ['required', 'integer', 'min:0'],
             'price' => ['required', 'numeric', 'min:0'],
             'description' => ['nullable', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Sila masukkan nama kenderaan.',
+            'qty.required' => 'Sila masukkan kuantiti.',
+            'price.required' => 'Sila masukkan harga.',
+            'user_id.exists' => 'Pemilik tidak sah.',
         ];
     }
 }

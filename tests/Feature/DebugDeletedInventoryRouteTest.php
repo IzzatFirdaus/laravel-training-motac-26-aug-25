@@ -17,7 +17,7 @@ class DebugDeletedInventoryRouteTest extends TestCase
         $response = $this->actingAs($admin)->get('/inventories/deleted');
 
         // Dump status and content for debugging; in CI this will still assert
-        file_put_contents(__DIR__.'/debug_deleted_route.txt', "status=".$response->getStatusCode()."\n".substr($response->getContent(), 0, 1000));
+        file_put_contents(__DIR__.'/debug_deleted_route.txt', 'status='.$response->getStatusCode()."\n".substr($response->getContent(), 0, 1000));
 
         $this->assertNotEquals(404, $response->getStatusCode());
     }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Application;
 use App\Models\Inventory;
 use App\Models\User;
-use App\Http\Requests\StoreApplicationRequest;
-use App\Http\Requests\UpdateApplicationRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class ApplicationController extends Controller
 
         $applications = Application::query()
             ->when($q, function ($query, $q) {
-                $like = '%' . $q . '%';
+                $like = '%'.$q.'%';
                 $query->where('name', 'like', $like)
                     ->orWhere('description', 'like', $like);
             })
@@ -40,7 +40,7 @@ class ApplicationController extends Controller
         // Also search inventories using the same query term so the view can show related inventory matches.
         $inventories = Inventory::query()
             ->when($q, function ($query, $q) {
-                $like = '%' . $q . '%';
+                $like = '%'.$q.'%';
                 $query->where('name', 'like', $like)
                     ->orWhere('description', 'like', $like);
             })
@@ -58,11 +58,11 @@ class ApplicationController extends Controller
     {
         $this->authorize('create', Application::class);
 
-    // Provide a small list of inventories and users to optionally associate with the application.
-    $inventories = Inventory::query()->select('id', 'name')->orderBy('name')->limit(200)->get();
-    $users = User::query()->select('id', 'name')->orderBy('name')->get();
+        // Provide a small list of inventories and users to optionally associate with the application.
+        $inventories = Inventory::query()->select('id', 'name')->orderBy('name')->limit(200)->get();
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-    return view('application.create', compact('inventories', 'users'));
+        return view('application.create', compact('inventories', 'users'));
     }
 
     /**
@@ -126,7 +126,7 @@ class ApplicationController extends Controller
         $application->fill($data);
         $application->save();
 
-    return redirect()->route('applications.show', $application->getKey())->with('toast', 'Permohonan dikemaskini.');
+        return redirect()->route('applications.show', $application->getKey())->with('toast', 'Permohonan dikemaskini.');
     }
 
     /**

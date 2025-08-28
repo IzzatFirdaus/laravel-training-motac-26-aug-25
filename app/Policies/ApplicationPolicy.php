@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Application;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ApplicationPolicy
 {
@@ -13,8 +12,8 @@ class ApplicationPolicy
      */
     public function viewAny(User $user): bool
     {
-    // Any authenticated user can view the listing
-    return true;
+        // Any authenticated user can view the listing
+        return true;
     }
 
     /**
@@ -22,8 +21,8 @@ class ApplicationPolicy
      */
     public function view(User $user, Application $application): bool
     {
-    // Any authenticated user can view an application
-    return true;
+        // Any authenticated user can view an application
+        return true;
     }
 
     /**
@@ -31,8 +30,8 @@ class ApplicationPolicy
      */
     public function create(User $user): bool
     {
-    // Only admin users may create applications via the UI
-    return $user->hasRole('admin');
+        // Only admin users may create applications via the UI
+        return $user->hasRole('admin');
     }
 
     /**
@@ -40,8 +39,8 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application): bool
     {
-    // Only admin users may update applications for now
-    return $user->hasRole('admin');
+        // Only admin users may update applications for now
+        return $user->hasRole('admin');
     }
 
     /**
@@ -49,8 +48,8 @@ class ApplicationPolicy
      */
     public function delete(User $user, Application $application): bool
     {
-    // Only admin users may delete
-    return $user->hasRole('admin');
+        // Only admin users may delete
+        return $user->hasRole('admin');
     }
 
     /**

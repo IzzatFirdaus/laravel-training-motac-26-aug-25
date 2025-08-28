@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
+use App\Mail\InventoryCreated;
+use App\Models\Inventory;
+use App\Notifications\StoreInventoryNotification;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use App\Mail\InventoryCreated;
-use App\Notifications\StoreInventoryNotification;
 
 class InventoryController extends Controller
 {
     public function __construct()
     {
-    // Require authentication for all inventory pages. Per-item authorization
-    // is performed via policies so owners (and admins) can manage their own items.
-    $this->middleware('auth');
+        // Require authentication for all inventory pages. Per-item authorization
+        // is performed via policies so owners (and admins) can manage their own items.
+        $this->middleware('auth');
     }
 
     /**
@@ -33,7 +32,7 @@ class InventoryController extends Controller
         $query = Inventory::with('user', 'vehicles')
             ->orderBy('created_at', 'desc');
 
-    // Listing access is controlled by policies (viewAny) — allow all authenticated users to see the index.
+        // Listing access is controlled by policies (viewAny) — allow all authenticated users to see the index.
 
         $inventories = $query->paginate(15);
 
@@ -45,13 +44,13 @@ class InventoryController extends Controller
      */
     public function create(): View
     {
-    // Authorization: allow creation per policy (admins and regular users as permitted).
-    $this->authorize('create', Inventory::class);
+        // Authorization: allow creation per policy (admins and regular users as permitted).
+        $this->authorize('create', Inventory::class);
 
-    // Fetch all users ordered by name to populate the dropdown in the form as plain objects
-    $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
+        // Fetch all users ordered by name to populate the dropdown in the form as plain objects
+        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
 
-    return view('inventories.create', compact('users'));
+        return view('inventories.create', compact('users'));
     }
 
     /**
@@ -59,7 +58,7 @@ class InventoryController extends Controller
      */
     public function store(StoreInventoryRequest $request): RedirectResponse
     {
-    $this->authorize('create', Inventory::class);
+        $this->authorize('create', Inventory::class);
         $data = $request->validated();
 
         // Only admins may set an arbitrary owner. Regular users always own the
@@ -81,14 +80,14 @@ class InventoryController extends Controller
             'user_id' => $data['user_id'] ?? null,
         ]);
 
-    // Queue mailable to notify the owner (or fallback configured address)
-    $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
-    Mail::to($recipient)->queue(new InventoryCreated($inventory));
+        // Queue mailable to notify the owner (or fallback configured address)
+        $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
+        Mail::to($recipient)->queue(new InventoryCreated($inventory));
 
-    // Also create a notification record and send notification (mail + database)
-    // This uses the StoreInventoryNotification class. If there is an owning user,
-    // notify that user; otherwise route a notification to the configured fallback email.
-    $this->notifyInventoryCreated($inventory, $recipient);
+        // Also create a notification record and send notification (mail + database)
+        // This uses the StoreInventoryNotification class. If there is an owning user,
+        // notify that user; otherwise route a notification to the configured fallback email.
+        $this->notifyInventoryCreated($inventory, $recipient);
 
         $route = redirect()->route(
             'inventories.show',
@@ -107,10 +106,10 @@ class InventoryController extends Controller
     {
         $inventory = Inventory::with('user', 'vehicles')->findOrFail($inventoryId);
 
-    // Authorize that the current user can view this inventory
-    $this->authorize('view', $inventory);
+        // Authorize that the current user can view this inventory
+        $this->authorize('view', $inventory);
 
-    return view('inventories.show', compact('inventory'));
+        return view('inventories.show', compact('inventory'));
     }
 
     public function edit($inventoryId): View
@@ -120,8 +119,8 @@ class InventoryController extends Controller
 
         $inventory = Inventory::findOrFail($inventoryId);
 
-    // Authorize the current user may update this inventory
-    $this->authorize('update', $inventory);
+        // Authorize the current user may update this inventory
+        $this->authorize('update', $inventory);
 
         return view('inventories.edit', compact('inventory', 'users'));
     }
@@ -135,9 +134,9 @@ class InventoryController extends Controller
     {
         $data = $request->validated();
 
-    $inventory = Inventory::findOrFail($inventoryId);
+        $inventory = Inventory::findOrFail($inventoryId);
 
-    $this->authorize('update', $inventory);
+        $this->authorize('update', $inventory);
 
         $inventory->fill([
             'name' => $data['name'] ?? $inventory->name,
@@ -164,7 +163,7 @@ class InventoryController extends Controller
     public function destroy($inventoryId): RedirectResponse
     {
         $inventory = Inventory::findOrFail($inventoryId);
-    $this->authorize('delete', $inventory);
+        $this->authorize('delete', $inventory);
         $inventory->delete();
 
         return redirect()->route('inventories.index')->with('toast', 'Inventory deleted.');
@@ -178,6 +177,7 @@ class InventoryController extends Controller
         // If the inventory has an associated user, notify them (database + mail)
         if ($inventory->user) {
             $inventory->user->notify(new StoreInventoryNotification($inventory));
+
             return;
         }
 

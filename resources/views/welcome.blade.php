@@ -15,7 +15,7 @@
 
 			<div class="row g-3">
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('users.index') }}" aria-label="View users">
+					<a class="card h-100 text-decoration-none text-body" href="{{ route('users.index') }}" aria-label="Lihat pengguna">
 						<div class="card-body">
 							<h3 class="h6">Pengguna</h3>
 							<p class="mb-0 text-muted">Lihat senarai pengguna yang didaftarkan.</p>
@@ -25,7 +25,7 @@
 
 				<div class="col-12 col-md-6 col-lg-4">
 					@can('create', App\Models\User::class)
-						<a class="card h-100 text-decoration-none text-body" href="{{ route('users.create') }}" aria-label="Create user">
+						<a class="card h-100 text-decoration-none text-body" href="{{ route('users.create') }}" aria-label="Cipta pengguna">
 							<div class="card-body">
 								<h3 class="h6">Cipta Pengguna</h3>
 								<p class="mb-0 text-muted">Buka borang cipta akaun pengguna baharu.</p>
@@ -42,7 +42,7 @@
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('inventories.index') }}" aria-label="View inventories list">
+					<a class="card h-100 text-decoration-none text-body" href="{{ route('inventories.index') }}" aria-label="Lihat senarai inventori">
 						<div class="card-body">
 							<h3 class="h6">Inventori</h3>
 							<p class="mb-0 text-muted">Lihat senarai inventori (nama, kuantiti, harga) dan butiran.</p>
@@ -51,7 +51,7 @@
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('inventories.create') }}" aria-label="Create inventory">
+					<a class="card h-100 text-decoration-none text-body" href="{{ route('inventories.create') }}" aria-label="Cipta inventori">
 						<div class="card-body">
 							<h3 class="h6">Cipta Inventori</h3>
 							<p class="mb-0 text-muted">Buka borang cipta untuk tambah inventori baharu.</p>
@@ -60,7 +60,7 @@
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('vehicles.index') }}" aria-label="View vehicles list">
+					<a class="card h-100 text-decoration-none text-body" href="{{ route('vehicles.index') }}" aria-label="Lihat senarai kenderaan">
 						<div class="card-body">
 							<h3 class="h6">Kenderaan</h3>
 							<p class="mb-0 text-muted">Lihat senarai kenderaan dan perincian inventori berkaitan.</p>
@@ -69,7 +69,7 @@
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('vehicles.create') }}" aria-label="Create vehicle">
+					<a class="card h-100 text-decoration-none text-body" href="{{ route('vehicles.create') }}" aria-label="Cipta kenderaan">
 						<div class="card-body">
 							<h3 class="h6">Cipta Kenderaan</h3>
 							<p class="mb-0 text-muted">Buka borang cipta untuk tambah kenderaan baharu.</p>
@@ -78,7 +78,7 @@
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('login') }}" aria-label="Login">
+					<a class="card h-100 text-decoration-none text-body" href="{{ route('login') }}" aria-label="Log masuk">
 						<div class="card-body">
 							<h3 class="h6">Log Masuk / Daftar</h3>
 							<p class="mb-0 text-muted">Log masuk untuk akses halaman berautentikasi atau daftar akaun baharu.</p>
@@ -87,7 +87,7 @@
 				</div>
 
 				<div class="col-12 col-md-6 col-lg-4">
-					<a class="card h-100 text-decoration-none text-body" href="{{ route('home') }}" aria-label="Home">
+					<a class="card h-100 text-decoration-none text-body" href="{{ route('home') }}" aria-label="Laman utama">
 						<div class="card-body">
 							<h3 class="h6">Laman Utama</h3>
 							<p class="mb-0 text-muted">Halaman utama pengguna selepas log masuk.</p>
