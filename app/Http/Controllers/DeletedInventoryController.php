@@ -24,16 +24,18 @@ class DeletedInventoryController extends Controller
         // Authorization is handled by middleware('role:admin')
         Log::info('DeletedInventoryController@index called');
 
-        $query = Inventory::onlyTrashed()->with('user');
+        $query = Inventory::onlyTrashed()->with('user')
+            ->search($request->string('search'))
+            ->ownedBy($request->input('owner_id'));
 
-        // Optional search by name
-        if ($request->has('search') && ! empty($request->search)) {
-            $query->where('name', 'like', '%'.$request->search.'%');
-        }
+        $perPage = (int) $request->input('per_page', 10);
+        $perPage = max(1, min($perPage, 100));
 
-        $deletedInventories = $query->paginate(10);
+        $deletedInventories = $query->paginate($perPage)->appends($request->only(['search', 'per_page', 'owner_id']));
 
-        return view('inventories.deleted.index', compact('deletedInventories'));
+        $users = \App\Models\User::query()->select('id', 'name')->orderBy('name')->get();
+
+        return view('inventories.deleted.index', compact('deletedInventories', 'users'));
     }
 
     /**

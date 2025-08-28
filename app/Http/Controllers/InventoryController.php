@@ -34,13 +34,19 @@ class InventoryController extends Controller
 
         // Listing access is controlled by policies (viewAny) — allow all authenticated users to see the index.
 
-    // Allow page size override via query string (training note)
-    $perPage = (int) request()->input('per_page', 5);
-    $perPage = max(1, min($perPage, 100));
+        // Allow page size override via query string (training note)
+        $perPage = (int) request()->input('per_page', 5);
+        $perPage = max(1, min($perPage, 100));
+        // Optional search across name/description and owner filter
+        $query->search(request()->string('search'))
+            ->ownedBy(request()->input('owner_id'));
 
-    $inventories = $query->paginate($perPage)->appends(['per_page' => $perPage]);
+        $inventories = $query->paginate($perPage)->appends(request()->only(['search', 'per_page', 'owner_id']));
 
-        return view('inventories.index', compact('inventories'));
+        // Provide owners list for filter UI
+        $users = \App\Models\User::query()->select('id', 'name')->orderBy('name')->get();
+
+        return view('inventories.index', compact('inventories', 'users'));
     }
 
     /**

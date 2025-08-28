@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,9 +24,22 @@ class Vehicle extends Model
     ];
 
     /**
+     * Casts for numeric columns.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'qty' => 'integer',
+            'price' => 'decimal:2',
+        ];
+    }
+
+    /**
      * Owner relationship: a vehicle belongs to a user (optional)
      */
-    public function owner()
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -35,7 +50,7 @@ class Vehicle extends Model
      *
      * @return BelongsToMany<\App\Models\Inventory>
      */
-    public function inventories()
+    public function inventories(): BelongsToMany
     {
         return $this->belongsToMany(
             Inventory::class,
@@ -45,5 +60,33 @@ class Vehicle extends Model
         )->withTimestamps();
     }
 
-    // No placeholder one-to-many relations defined.
+    /**
+     * Local scope: filter by search term across name and description.
+     */
+    public function scopeSearch(Builder $query, ?string $term): Builder
+    {
+        $q = trim((string) $term);
+        if ($q === '') {
+            return $query;
+        }
+
+        $like = '%'.strtolower($q).'%';
+
+        return $query->where(function (Builder $qbuilder) use ($like): void {
+            $qbuilder->whereRaw('LOWER(name) LIKE ?', [$like])
+                ->orWhereRaw('LOWER(COALESCE(description, \'\')) LIKE ?', [$like]);
+        });
+    }
+
+    /**
+     * Local scope: filter vehicles owned by a specific user id.
+     */
+    public function scopeOwnedBy(Builder $query, int|string|null $userId): Builder
+    {
+        if ($userId === null || $userId === '') {
+            return $query;
+        }
+
+        return $query->where('user_id', (int) $userId);
+    }
 }

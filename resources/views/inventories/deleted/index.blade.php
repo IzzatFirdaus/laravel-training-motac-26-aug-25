@@ -21,14 +21,22 @@
         <!-- Search form -->
         <div class="card mb-3">
             <div class="card-body">
-                <form method="GET" action="{{ route('inventories.deleted.index') }}">
-                    <div class="input-group">
-                        <input type="text" name="search" class="form-control myds-input" placeholder="Cari inventori dipadam..." value="{{ request('search') }}">
-                        <button class="myds-btn myds-btn--primary" type="submit">Cari</button>
-                        @if(request('search'))
-                            <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--secondary">Kosongkan</a>
-                        @endif
-                    </div>
+                <form method="GET" action="{{ route('inventories.deleted.index') }}" class="d-flex gap-2 flex-wrap align-items-center">
+                    <label for="search" class="form-label mb-0">Cari:</label>
+                    <input id="search" type="text" name="search" class="form-control myds-input" placeholder="Cari inventori dipadam..." value="{{ request('search') }}">
+                    <label for="owner_id" class="form-label mb-0">Pemilik:</label>
+                    <select id="owner_id" name="owner_id" class="form-control myds-select">
+                        <option value="">(semua)</option>
+                        @isset($users)
+                            @foreach($users as $u)
+                                <option value="{{ $u->id }}" {{ (string) request('owner_id') === (string) $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
+                            @endforeach
+                        @endisset
+                    </select>
+                    <button class="myds-btn myds-btn--primary" type="submit">Tapis</button>
+                    @if(request('search') || request('owner_id'))
+                        <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--secondary">Kosongkan</a>
+                    @endif
                 </form>
             </div>
         </div>

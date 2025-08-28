@@ -36,13 +36,25 @@
                     Memaparkan {{ $inventoryCount }} item{{ $inventoryCount > 1 ? 's' : '' }}
                 </div>
 
-                <form method="GET" class="mb-3 d-flex align-items-center gap-2" aria-label="Tetapan paparan">
-                    <label for="per_page" class="form-label mb-0">Item per halaman:</label>
+                <form method="GET" class="mb-3 d-flex align-items-center gap-2 flex-wrap" aria-label="Tetapan paparan dan carian">
+                    <label for="search" class="form-label mb-0">Cari:</label>
+                    <input id="search" name="search" class="form-control myds-input" value="{{ request('search','') }}" placeholder="Nama atau keterangan" />
+                    <label for="owner_id" class="form-label mb-0">Pemilik:</label>
+                    <select id="owner_id" name="owner_id" class="form-control myds-select">
+                        <option value="">(semua)</option>
+                        @isset($users)
+                            @foreach($users as $u)
+                                <option value="{{ $u->id }}" {{ (string) request('owner_id') === (string) $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
+                            @endforeach
+                        @endisset
+                    </select>
+                    <label for="per_page" class="form-label mb-0">Item/halaman:</label>
                     <select id="per_page" name="per_page" class="form-control myds-select" onchange="this.form.submit()">
                         @foreach([5,10,15,25,50,100] as $n)
                             <option value="{{ $n }}" {{ (int) request('per_page', 5) === $n ? 'selected' : '' }}>{{ $n }}</option>
                         @endforeach
                     </select>
+                    <button type="submit" class="myds-btn myds-btn--primary">Tapis</button>
                 </form>
 
                 <div class="card">

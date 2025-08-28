@@ -26,13 +26,20 @@ class VehicleController extends Controller
     public function index(): View
     {
         // Use Eloquent with eager-loading so views can reference the owner relation
-        $query = Vehicle::with('owner')->orderBy('created_at', 'desc');
+        $query = Vehicle::with('owner')
+            ->orderBy('created_at', 'desc')
+            ->search(request()->string('search'))
+            ->ownedBy(request()->input('owner_id'));
 
         // Allow any authenticated user to view the listing; per-item policies restrict actions like view/update/delete.
 
-        $vehicles = $query->paginate(15);
+        $perPage = (int) request()->input('per_page', 10);
+        $perPage = max(1, min($perPage, 100));
+        $vehicles = $query->paginate($perPage)->appends(request()->only(['search', 'per_page', 'owner_id']));
 
-        return view('vehicles.index', compact('vehicles'));
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
+
+        return view('vehicles.index', compact('vehicles', 'users'));
     }
 
     /**

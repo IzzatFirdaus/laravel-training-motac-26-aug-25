@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
@@ -38,17 +40,20 @@ class Inventory extends Model implements AuditableContract
     /**
      * The attributes that should be cast to native types.
      *
-     * @return array<string,string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'qty' => 'integer',
-        'price' => 'decimal:2',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'qty' => 'integer',
+            'price' => 'decimal:2',
+        ];
+    }
 
     /**
      * Inventory belongs to a user (owner).
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class);
     }
@@ -59,7 +64,7 @@ class Inventory extends Model implements AuditableContract
      *
      * @return BelongsToMany<\App\Models\Vehicle>
      */
-    public function vehicles()
+    public function vehicles(): BelongsToMany
     {
         return $this->belongsToMany(
             Vehicle::class,
@@ -70,13 +75,43 @@ class Inventory extends Model implements AuditableContract
     }
 
     // getter make sure title is always uppercase
-    public function getNameAttribute($value)
+    public function getNameAttribute(string $value): string
     {
         return strtoupper($value);
     }
 
-    public function setNameAttribute($value)
+    public function setNameAttribute(string $value): void
     {
         $this->attributes['name'] = strtoupper($value);
+    }
+
+    /**
+     * Local scope: filter by search term across name and description.
+     */
+    public function scopeSearch(Builder $query, ?string $term): Builder
+    {
+        $q = trim((string) $term);
+        if ($q === '') {
+            return $query;
+        }
+
+        $like = '%'.strtolower($q).'%';
+
+        return $query->where(function (Builder $qbuilder) use ($like): void {
+            $qbuilder->whereRaw('LOWER(name) LIKE ?', [$like])
+                ->orWhereRaw('LOWER(COALESCE(description, \'\')) LIKE ?', [$like]);
+        });
+    }
+
+    /**
+     * Local scope: filter inventories owned by a specific user id.
+     */
+    public function scopeOwnedBy(Builder $query, int|string|null $userId): Builder
+    {
+        if ($userId === null || $userId === '') {
+            return $query;
+        }
+
+        return $query->where('user_id', (int) $userId);
     }
 }
