@@ -8,13 +8,13 @@ class UserPolicy
 {
     public function viewAny(User $user): bool
     {
-    // Allow any authenticated user to view the users list; actions are further restricted by other policy methods.
-    return $user !== null;
+        // Allow any authenticated user to view the users list; actions are further restricted by other policy methods.
+        return $user !== null;
     }
 
     public function view(User $user, User $model): bool
     {
-        return $user->id === $model->id || $user->hasRole('admin');
+        return $user->is($model) || $user->hasRole('admin');
     }
 
     public function create(User $user): bool
@@ -26,7 +26,7 @@ class UserPolicy
     public function update(User $user, User $model): bool
     {
         // Users may update their own profile; admins may update any.
-        return $user->id === $model->id || $user->hasRole('admin');
+        return $user->is($model) || $user->hasRole('admin');
     }
 
     public function delete(User $user, User $model): bool

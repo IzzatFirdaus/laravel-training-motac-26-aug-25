@@ -13,7 +13,7 @@
                 </div>
                 <div>
                     @can('update', $user)
-                        <a href="{{ route('users.edit', $user->id) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Sunting</a>
+                        <a href="{{ route('users.edit', $user->id) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Edit</a>
                     @endcan
                 </div>
             </header>

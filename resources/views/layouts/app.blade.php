@@ -67,6 +67,11 @@
                                 <a class="dropdown-item" href="{{ route('excel.inventory.export') }}" role="menuitem">Muat Turun Templat</a>
                                 <div class="dropdown-divider"></div>
                                 @auth
+                                    @if(auth()->user()->hasRole('admin'))
+                                        <a class="dropdown-item" href="{{ route('inventories.deleted.index') }}" role="menuitem">Inventori Dipadam</a>
+                                    @endif
+                                @endauth
+                                @auth
                                 @if(auth()->user()->hasRole('admin'))
                                 <form method="POST" action="{{ route('inventories.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.inventory') }}" data-myds-form>
                                     @csrf
@@ -131,6 +136,35 @@
                                 <form method="POST" action="{{ route('users.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.users') }}" data-myds-form>
                                     @csrf
                                     <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="{{ __('nav.users_delete') }}">{{ __('nav.users_delete') }}</button>
+                                </form>
+                                @endif
+                                @endauth
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navApplications" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Permohonan menu">
+                                Permohonan
+                            </a>
+                            <div class="dropdown-menu myds-dropdown" aria-labelledby="navApplications" role="menu">
+                                <a class="dropdown-item {{ request()->routeIs('applications.index') ? 'active' : '' }}" href="{{ route('applications.index') }}" role="menuitem" @if(request()->routeIs('applications.index')) aria-current="page" @endif>Semak Permohonan</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
+                                    <a class="dropdown-item" href="{{ route('applications.create') }}" role="menuitem">Cipta Permohonan</a>
+                                @endif
+                                @endauth
+                                <a class="dropdown-item" href="{{ route('applications.show', 1) }}" role="menuitem">Lihat Permohonan</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
+                                    <a class="dropdown-item" href="{{ route('applications.edit', 1) }}" role="menuitem">Edit Permohonan</a>
+                                @endif
+                                @endauth
+                                <div class="dropdown-divider"></div>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
+                                <form method="POST" action="{{ route('applications.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="Permohonan" data-myds-form>
+                                    @csrf
+                                    <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam Permohonan">Padam Permohonan</button>
                                 </form>
                                 @endif
                                 @endauth

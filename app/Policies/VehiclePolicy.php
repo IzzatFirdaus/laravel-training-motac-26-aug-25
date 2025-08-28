@@ -9,13 +9,13 @@ class VehiclePolicy
 {
     public function viewAny(User $user): bool
     {
-    // Allow any authenticated user to view the listing; per-item policies restrict actions.
-    return $user !== null;
+        // Allow any authenticated user to view the listing; per-item policies restrict actions.
+        return $user !== null;
     }
 
     public function view(User $user, Vehicle $vehicle): bool
     {
-        return $user->id === $vehicle->user_id || $user->hasRole('admin');
+        return $user->is($vehicle->owner) || $user->hasRole('admin');
     }
 
     public function create(User $user): bool
@@ -26,12 +26,12 @@ class VehiclePolicy
 
     public function update(User $user, Vehicle $vehicle): bool
     {
-        return $user->id === $vehicle->user_id || $user->hasRole('admin');
+        return $user->is($vehicle->owner) || $user->hasRole('admin');
     }
 
     public function delete(User $user, Vehicle $vehicle): bool
     {
-        return $user->id === $vehicle->user_id || $user->hasRole('admin');
+        return $user->is($vehicle->owner) || $user->hasRole('admin');
     }
 
     public function restore(User $user, Vehicle $vehicle): bool

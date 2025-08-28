@@ -151,7 +151,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<h4 class="h6">Edit</h4>
-							<p class="mb-2 text-muted">Buka borang sunting untuk pengguna contoh (ID = 1).</p>
+							<p class="mb-2 text-muted">Buka borang edit untuk pengguna contoh (ID = 1).</p>
 							<a href="{{ route('users.edit', 1) }}" class="myds-btn myds-btn--primary myds-btn--sm">Edit</a>
 						</div>
 					</div>
@@ -161,7 +161,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<h4 class="h6">Update (demo)</h4>
-							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Sunting untuk POST.</p>
+							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Edit untuk POST.</p>
 							<a href="{{ route('users.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="update" data-model="Pengguna">Update (demo)</a>
 						</div>
 					</div>
@@ -215,7 +215,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<h4 class="h6">Edit</h4>
-							<p class="mb-2 text-muted">Buka borang sunting untuk item contoh (ID = 1).</p>
+							<p class="mb-2 text-muted">Buka borang edit untuk item contoh (ID = 1).</p>
 							<a href="{{ route('inventories.edit', 1) }}" class="myds-btn myds-btn--primary myds-btn--sm">Edit</a>
 						</div>
 					</div>
@@ -225,7 +225,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<h4 class="h6">Update (demo)</h4>
-							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Sunting untuk POST.</p>
+							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Edit untuk POST.</p>
 							<a href="{{ route('inventories.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="update" data-model="Inventori">Update (demo)</a>
 						</div>
 					</div>
@@ -279,7 +279,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<h4 class="h6">Edit</h4>
-							<p class="mb-2 text-muted">Buka borang sunting untuk kenderaan contoh (ID = 1).</p>
+							<p class="mb-2 text-muted">Buka borang edit untuk kenderaan contoh (ID = 1).</p>
 							<a href="{{ route('vehicles.edit', 1) }}" class="myds-btn myds-btn--primary myds-btn--sm">Edit</a>
 						</div>
 					</div>
@@ -289,7 +289,7 @@
 					<div class="card h-100">
 						<div class="card-body">
 							<h4 class="h6">Update (demo)</h4>
-							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Sunting untuk POST.</p>
+							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Edit untuk POST.</p>
 							<a href="{{ route('vehicles.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="update" data-model="Kenderaan">Update (demo)</a>
 						</div>
 					</div>

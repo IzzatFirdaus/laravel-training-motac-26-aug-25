@@ -125,4 +125,23 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('toast', 'Pengguna dipadam.');
     }
+
+    /**
+     * JSON search endpoint used by client-side autocomplete/select widgets.
+     */
+    public function search(Request $request)
+    {
+        $q = $request->query('q', '');
+
+        $users = User::query()
+            ->select('id', 'name')
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where('name', 'like', "%{$q}%");
+            })
+            ->orderBy('name')
+            ->limit(20)
+            ->get();
+
+        return response()->json($users);
+    }
 }

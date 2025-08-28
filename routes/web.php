@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\DeletedInventoryController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,9 @@ Route::get('/locale/{locale}', function (string $locale) {
 
 // Route to list all users
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+// JSON endpoint: search users by q for autocomplete/select lists
+Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
 
 // Route to show the form for creating a new user
 Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
@@ -86,6 +91,21 @@ Route::post('/inventories/{inventory}', [InventoryController::class, 'update'])-
 // Route to destroy an inventory item (using POST to a /destroy endpoint)
 Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'destroy'])->name('inventories.destroy');
 
+// Deleted Inventory routes (for soft-deleted items)
+
+// Route to list all soft-deleted inventories
+Route::get('/inventories/deleted', [DeletedInventoryController::class, 'index'])->name('inventories.deleted.index');
+
+// Route to restore a soft-deleted inventory
+Route::post('/inventories/{inventory}/restore', [DeletedInventoryController::class, 'restore'])
+    ->name('inventories.restore')
+    ->withTrashed();
+
+// Route to permanently delete a soft-deleted inventory
+Route::post('/inventories/{inventory}/force-delete', [DeletedInventoryController::class, 'forceDelete'])
+    ->name('inventories.force-delete')
+    ->withTrashed();
+
 // Backwards compatibility: visiting /inventories/show without an id will redirect to the index
 Route::get('/inventories/show', function () {
     return redirect()->route('inventories.index');
@@ -127,3 +147,25 @@ Route::get('/excel/inventories/export', [ExcelController::class, 'exportInventor
 Route::get('/excel/inventories/import', [ExcelController::class, 'importInventoryForm'])->name('excel.inventory.form');
 Route::post('/excel/inventories/preview', [ExcelController::class, 'previewInventory'])->name('excel.inventory.preview');
 Route::post('/excel/inventories/import', [ExcelController::class, 'importInventory'])->name('excel.inventory.import');
+
+// Application routes
+// List all applications
+Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
+
+// Show form to create a new application
+Route::get('/applications/create', [ApplicationController::class, 'create'])->name('applications.create');
+
+// Store a new application
+Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+
+// Show single application
+Route::get('/applications/{application}', [ApplicationController::class, 'show'])->name('applications.show');
+
+// Edit application
+Route::get('/applications/{application}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
+
+// Update application (using POST to match project convention)
+Route::post('/applications/{application}', [ApplicationController::class, 'update'])->name('applications.update');
+
+// Destroy application (using POST to a /destroy endpoint)
+Route::post('/applications/{application}/destroy', [ApplicationController::class, 'destroy'])->name('applications.destroy');

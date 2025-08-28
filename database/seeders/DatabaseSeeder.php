@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             VehicleSeeder::class,
             InventorySeeder::class,
+            ApplicationSeeder::class,
         ]);
     }
 }

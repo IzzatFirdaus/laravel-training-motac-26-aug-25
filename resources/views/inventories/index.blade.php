@@ -18,6 +18,11 @@
                     @can('viewAny', App\Models\Inventory::class)
                         <a href="{{ route('excel.inventory.form') }}" class="myds-btn myds-btn--secondary">Import/Export</a>
                     @endcan
+                    @auth
+                        @if(auth()->user()->hasRole('admin'))
+                            <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--tertiary">Inventori Dipadam</a>
+                        @endif
+                    @endauth
                 </div>
             </header>
 
@@ -35,7 +40,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" aria-describedby="inventory-count">
-                                <caption class="visually-hidden">Senarai inventori; gunakan tindakan untuk lihat atau sunting item.</caption>
+                                <caption class="visually-hidden">Senarai inventori; gunakan tindakan untuk lihat atau edit item.</caption>
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>

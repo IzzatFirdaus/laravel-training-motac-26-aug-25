@@ -19,6 +19,11 @@
 
                         <x-form-field name="name" label="Nama" :value="old('name')" />
 
+                        {{-- Users autocomplete helper: clicking name input will fetch users and allow quick selection --}}
+                        <div id="users-autocomplete" class="position-relative mt-2" style="max-width:420px;">
+                            <ul id="users-list" class="list-group" style="display:none; position:absolute; z-index:2000; width:100%;"></ul>
+                        </div>
+
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Pemilik (pilihan)</label>
                             @if(auth()->check() && auth()->user()->hasRole('admin'))
@@ -53,3 +58,82 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const nameInput = document.querySelector('#name');
+    const usersList = document.querySelector('#users-list');
+    const usersWrapper = document.querySelector('#users-autocomplete');
+    const ownerSelect = document.querySelector('#user_id');
+
+    if (! nameInput || ! usersList) return;
+
+    async function fetchUsers(q = '') {
+        const url = new URL('{{ route('users.search') }}', window.location.origin);
+        if (q) url.searchParams.set('q', q);
+        const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+        if (! res.ok) return [];
+        return await res.json();
+    }
+
+    function renderUsers(items) {
+        usersList.innerHTML = '';
+        if (! items.length) { usersList.style.display = 'none'; return; }
+        items.forEach(u => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item list-group-item-action';
+            li.textContent = u.name;
+            li.dataset.userId = u.id;
+            li.addEventListener('click', function () {
+                // If admin select exists, set it; otherwise set hidden input
+                if (ownerSelect) {
+                    const opt = Array.from(ownerSelect.options).find(o => o.value === String(u.id));
+                    if (opt) {
+                        ownerSelect.value = u.id;
+                    } else {
+                        // Append option and select
+                        const newOpt = document.createElement('option');
+                        newOpt.value = u.id; newOpt.text = u.name; newOpt.selected = true;
+                        ownerSelect.appendChild(newOpt);
+                    }
+                } else {
+                    let hidden = document.querySelector('input[name="user_id"]');
+                    if (! hidden) {
+                        hidden = document.createElement('input');
+                        hidden.type = 'hidden';
+                        hidden.name = 'user_id';
+                        document.querySelector('form').appendChild(hidden);
+                    }
+                    hidden.value = u.id;
+                }
+
+                // optionally set the name input to include owner hint
+                nameInput.value = nameInput.value + ' — ' + u.name;
+                usersList.style.display = 'none';
+            });
+            usersList.appendChild(li);
+        });
+        usersList.style.display = 'block';
+    }
+
+    nameInput.addEventListener('focus', async function () {
+        const q = nameInput.value.trim();
+        const users = await fetchUsers(q);
+        renderUsers(users);
+    });
+
+    nameInput.addEventListener('input', async function () {
+        const q = nameInput.value.trim();
+        const users = await fetchUsers(q);
+        renderUsers(users);
+    });
+
+    document.addEventListener('click', function (ev) {
+        if (! usersWrapper.contains(ev.target) && ev.target !== nameInput) {
+            usersList.style.display = 'none';
+        }
+    });
+});
+</script>
+@endpush

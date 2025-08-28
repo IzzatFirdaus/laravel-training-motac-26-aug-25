@@ -4,19 +4,18 @@ namespace App\Policies;
 
 use App\Models\Inventory;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class InventoryPolicy
 {
     /**
      * Determine whether the user can view any inventories.
      *
-      * Admins and authenticated users may browse inventories; per-item policies still restrict view/update/delete.
+     * Admins and authenticated users may browse inventories; per-item policies still restrict view/update/delete.
      */
     public function viewAny(User $user): bool
     {
-          // Allow any authenticated user to view the index/listing.
-          return $user !== null;
+        // Allow any authenticated user to view the index/listing.
+        return $user !== null;
     }
 
     /**
@@ -25,7 +24,7 @@ class InventoryPolicy
     public function view(User $user, Inventory $inventory): bool
     {
         // Owner or admin may view
-        return $user->id === $inventory->user_id || $user->hasRole('admin');
+        return $user->is($inventory->user) || $user->hasRole('admin');
     }
 
     /**
@@ -33,8 +32,8 @@ class InventoryPolicy
      */
     public function create(User $user): bool
     {
-    // Allow any authenticated user to create their own inventory. Admins still allowed.
-    return $user !== null;
+        // Allow any authenticated user to create their own inventory. Admins still allowed.
+        return $user !== null;
     }
 
     /**
@@ -43,7 +42,7 @@ class InventoryPolicy
     public function update(User $user, Inventory $inventory): bool
     {
         // Allow owner or admin to update
-        return $user->id === $inventory->user_id || $user->hasRole('admin');
+        return $user->is($inventory->user) || $user->hasRole('admin');
     }
 
     /**
@@ -51,8 +50,8 @@ class InventoryPolicy
      */
     public function delete(User $user, Inventory $inventory): bool
     {
-    // Owner or admin may delete
-    return $user->id === $inventory->user_id || $user->hasRole('admin');
+        // Owner or admin may delete
+        return $user->is($inventory->user) || $user->hasRole('admin');
     }
 
     /**

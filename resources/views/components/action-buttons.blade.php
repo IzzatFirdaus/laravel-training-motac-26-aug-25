@@ -4,7 +4,9 @@
     'destroyRoute',
     'label' => '',
     'id' => null,
-    'model' => ''
+    'model' => '',
+    // extraItems: array of [ 'label' => string, 'route' => url-string, 'ability' => optional ability to check ]
+    'extraItems' => [],
 ])
 
 <div class="d-flex align-items-center">
@@ -24,6 +26,21 @@
                 <button type="button" class="myds-btn myds-btn--danger myds-btn--sm" aria-label="Padam {{ $label }}">Padam</button>
             </form>
         @endcan
+        @if(!empty($extraItems))
+            <div class="dropdown ms-1">
+                <button class="myds-btn myds-btn--outline myds-btn--sm dropdown-toggle" type="button" id="moreExtra-{{ $id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lagi</button>
+                <div class="dropdown-menu myds-dropdown" aria-labelledby="moreExtra-{{ $id }}" role="menu">
+                    @foreach($extraItems as $item)
+                        @php
+                            $can = $item['ability'] ?? null;
+                        @endphp
+                        @if(is_null($can) || (isset($model) && auth()->user() && auth()->user()->can($can, $model)))
+                            <a class="dropdown-item" href="{{ $item['route'] }}" role="menuitem">{{ $item['label'] }}</a>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </div>
 
     <!-- Mobile: stacked + overflow -->
@@ -47,6 +64,18 @@
                         <button type="button" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam {{ $label }}">Padam</button>
                     </form>
                 @endcan
+
+                @if(!empty($extraItems))
+                    <div class="dropdown-divider"></div>
+                    @foreach($extraItems as $item)
+                        @php
+                            $can = $item['ability'] ?? null;
+                        @endphp
+                        @if(is_null($can) || (isset($model) && auth()->user() && auth()->user()->can($can, $model)))
+                            <a class="dropdown-item" href="{{ $item['route'] }}" role="menuitem">{{ $item['label'] }}</a>
+                        @endif
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>

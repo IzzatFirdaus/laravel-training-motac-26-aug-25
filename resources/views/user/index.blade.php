@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <caption class="visually-hidden">Senarai pengguna; gunakan tindakan untuk lihat atau sunting pengguna.</caption>
+                                <caption class="visually-hidden">Senarai pengguna; gunakan tindakan untuk lihat atau edit pengguna.</caption>
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
