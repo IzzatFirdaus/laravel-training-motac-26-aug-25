@@ -7,6 +7,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\APIPostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -169,3 +170,10 @@ Route::post('/applications/{application}', [ApplicationController::class, 'updat
 
 // Destroy application (using POST to a /destroy endpoint)
 Route::post('/applications/{application}/destroy', [ApplicationController::class, 'destroy'])->name('applications.destroy');
+
+// API routes
+// Simple API POST endpoint for demo clients
+Route::post('/api/posts', [APIPostController::class, 'store'])->name('api.posts.store');
+
+// External posts listing (consumes jsonplaceholder.typicode.com)
+Route::get('/posts', [APIPostController::class, 'index'])->name('posts.index');

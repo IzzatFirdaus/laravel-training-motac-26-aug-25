@@ -2,9 +2,20 @@
 
 namespace App\Models;
 
+/**
+ * Application model properties for static analysis / IDEs.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property int|null $inventory_id
+ * @property int|null $user_id
+ */
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Inventory;
+use App\Models\User;
 
 class Application extends Model
 {
@@ -19,6 +30,7 @@ class Application extends Model
         'name',
     'description',
     'inventory_id',
+    'user_id',
     ];
 
     /**
@@ -36,5 +48,13 @@ class Application extends Model
     public function inventory()
     {
         return $this->belongsTo(Inventory::class, 'inventory_id');
+    }
+
+    /**
+     * Optional owner (user) of the application.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

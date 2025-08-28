@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\Inventory;
+use App\Models\User;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
 use Illuminate\Contracts\View\View;
@@ -57,10 +58,11 @@ class ApplicationController extends Controller
     {
         $this->authorize('create', Application::class);
 
-    // Provide a small list of inventories to optionally associate with the application.
+    // Provide a small list of inventories and users to optionally associate with the application.
     $inventories = Inventory::query()->select('id', 'name')->orderBy('name')->limit(200)->get();
+    $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-    return view('application.create', compact('inventories'));
+    return view('application.create', compact('inventories', 'users'));
     }
 
     /**
@@ -72,10 +74,21 @@ class ApplicationController extends Controller
 
         $data = $request->validated();
 
+        // Allow admins to set an explicit owner; otherwise default to creator when available.
+        $userId = null;
+        if (Auth::check()) {
+            if (Auth::user()->hasRole('admin')) {
+                $userId = $data['user_id'] ?? null;
+            } else {
+                $userId = Auth::id();
+            }
+        }
+
         $application = Application::create([
             'name' => $data['name'],
             'description' => $data['description'] ?? null,
             'inventory_id' => $data['inventory_id'] ?? null,
+            'user_id' => $userId,
         ]);
 
         return redirect()->route('applications.index')->with('toast', 'Permohonan berjaya dicipta.');
@@ -113,7 +126,7 @@ class ApplicationController extends Controller
         $application->fill($data);
         $application->save();
 
-        return redirect()->route('applications.show', $application->id)->with('toast', 'Permohonan dikemaskini.');
+    return redirect()->route('applications.show', $application->getKey())->with('toast', 'Permohonan dikemaskini.');
     }
 
     /**

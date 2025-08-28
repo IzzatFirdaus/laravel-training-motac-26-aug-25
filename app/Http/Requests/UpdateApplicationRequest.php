@@ -27,6 +27,7 @@ class UpdateApplicationRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'inventory_id' => ['nullable', 'exists:inventories,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
         ];
     }
 }
