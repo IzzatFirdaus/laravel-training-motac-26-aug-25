@@ -61,6 +61,16 @@
                             @error('description') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
                         </div>
 
+                        <div class="mb-3">
+                            <label for="vehicle_ids" class="form-label">Pilih Kenderaan (pilihan)</label>
+                            <select id="vehicle_ids" name="vehicle_ids[]" class="form-control myds-select" multiple size="5">
+                                @foreach($inventory->vehicles ?? collect() as $v)
+                                    <option value="{{ $v->id }}" selected>{{ $v->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('vehicle_ids') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                        </div>
+
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary me-2">Batal</a>
                             <button type="submit" class="myds-btn myds-btn--primary">Kemaskini</button>
@@ -145,6 +155,30 @@ document.addEventListener('DOMContentLoaded', function () {
             usersList.style.display = 'none';
         }
     });
+    // Populate vehicles multiselect on load if edit context has inventory id
+    (async function initVehicleMulti() {
+        const vehicleSelect = document.querySelector('#vehicle_ids');
+        if (! vehicleSelect) return;
+        // inventory id embedded in URL or via hidden field
+        const match = window.location.pathname.match(/\/inventories\/(\d+)/);
+        if (! match) return;
+        const invId = match[1];
+        try {
+            const res = await fetch('/inventories/' + invId + '/vehicles', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (! res.ok) return;
+            const items = await res.json();
+            // merge existing selected options without duplicating
+            const existing = Array.from(vehicleSelect.options).map(o => String(o.value));
+            items.forEach(v => {
+                if (! existing.includes(String(v.id))) {
+                    const opt = document.createElement('option');
+                    opt.value = v.id; opt.text = v.name; vehicleSelect.appendChild(opt);
+                }
+            });
+        } catch (e) {
+            // ignore
+        }
+    })();
 });
 </script>
 @endpush

@@ -49,6 +49,14 @@
 
                         <x-form-field name="description" type="textarea" label="Keterangan">{{ old('description') }}</x-form-field>
 
+                        <div class="mb-3">
+                            <label for="vehicle_ids" class="form-label">Pilih Kenderaan (pilihan)</label>
+                            <select id="vehicle_ids" name="vehicle_ids[]" class="form-control myds-select" multiple size="5">
+                                {{-- Options populated dynamically based on selected inventory context --}}
+                            </select>
+                            @error('vehicle_ids') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                        </div>
+
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary me-2">Batal</a>
                             <button type="submit" class="myds-btn myds-btn--primary">Cipta</button>

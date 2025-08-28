@@ -53,6 +53,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicles');
+    // Drop pivot table first to avoid foreign key constraint issues.
+    Schema::dropIfExists('inventory_vehicle');
+    Schema::dropIfExists('vehicles');
     }
 };

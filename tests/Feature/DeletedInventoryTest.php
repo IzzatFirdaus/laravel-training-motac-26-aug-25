@@ -131,9 +131,9 @@ class DeletedInventoryTest extends TestCase
     public function test_search_functionality_in_deleted_inventories(): void
     {
         // Create inventories with different names
-        $inventory1 = Inventory::factory()->create(['name' => 'Laptop Dell']);
-        $inventory2 = Inventory::factory()->create(['name' => 'Mouse Logitech']);
-        $inventory3 = Inventory::factory()->create(['name' => 'Keyboard Gaming']);
+    $inventory1 = Inventory::factory()->create(['name' => 'Laptop Dell', 'description' => '']);
+    $inventory2 = Inventory::factory()->create(['name' => 'Mouse Logitech', 'description' => '']);
+    $inventory3 = Inventory::factory()->create(['name' => 'Keyboard Gaming', 'description' => '']);
 
         // Delete all inventories
         $inventory1->delete();

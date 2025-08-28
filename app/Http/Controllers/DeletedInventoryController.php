@@ -28,6 +28,8 @@ class DeletedInventoryController extends Controller
             ->search($request->string('search'))
             ->ownedBy($request->input('owner_id'));
 
+    // NOTE: debugging logging was here earlier and has been removed.
+
         $perPage = (int) $request->input('per_page', 10);
         $perPage = max(1, min($perPage, 100));
 

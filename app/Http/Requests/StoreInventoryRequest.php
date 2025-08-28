@@ -22,6 +22,8 @@ class StoreInventoryRequest extends FormRequest
             'qty' => ['required', 'integer', 'min:0'],
             'price' => ['required', 'numeric', 'min:0'],
             'description' => ['nullable', 'string'],
+            'vehicle_ids' => ['nullable', 'array'],
+            'vehicle_ids.*' => ['integer', 'exists:vehicles,id'],
         ];
     }
 

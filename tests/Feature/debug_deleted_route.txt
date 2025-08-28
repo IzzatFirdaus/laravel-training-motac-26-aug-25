@@ -7,7 +7,7 @@ status=200
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="fH0sfDfdHe58JUx5DaHCouyYEcA0Cwh57bnzOOV7">
+    <meta name="csrf-token" content="LU2jJ8rVIMGF4O7Cuvt29RGtpMsv8pt5rriIkoiC">
 
     <!-- Favicon: use Laravel's standard favicon -->
     <link rel="icon" href="https://laravel.com/img/favicon/favicon.ico" type="image/x-icon">

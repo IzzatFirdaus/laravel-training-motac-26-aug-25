@@ -21,6 +21,8 @@ class UpdateInventoryRequest extends FormRequest
             'qty' => ['nullable', 'integer', 'min:0'],
             'price' => ['nullable', 'numeric', 'min:0'],
             'description' => ['nullable', 'string'],
+            'vehicle_ids' => ['nullable', 'array'],
+            'vehicle_ids.*' => ['integer', 'exists:vehicles,id'],
         ];
     }
 

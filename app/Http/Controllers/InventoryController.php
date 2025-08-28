@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
-use App\Mail\InventoryCreated;
+use App\Jobs\InventoryCreatedJob;
 use App\Models\Inventory;
 use App\Notifications\StoreInventoryNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 
 class InventoryController extends Controller
@@ -57,8 +56,8 @@ class InventoryController extends Controller
         // Authorization: allow creation per policy (admins and regular users as permitted).
         $this->authorize('create', Inventory::class);
 
-        // Fetch all users ordered by name to populate the dropdown in the form as plain objects
-        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
+    // Fetch all users ordered by name to populate the dropdown in the form using Eloquent
+    $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         return view('inventories.create', compact('users'));
     }
@@ -90,9 +89,14 @@ class InventoryController extends Controller
             'user_id' => $data['user_id'] ?? null,
         ]);
 
-        // Queue mailable to notify the owner (or fallback configured address)
+        // Attach any selected vehicles (many-to-many). Use array values or empty array.
+        if (! empty($data['vehicle_ids']) && is_array($data['vehicle_ids'])) {
+            $inventory->vehicles()->sync(array_values($data['vehicle_ids']));
+        }
+
+        // Dispatch a job to send the inventory-created mail (keeps controller lightweight)
         $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
-        Mail::to($recipient)->queue(new InventoryCreated($inventory));
+        InventoryCreatedJob::dispatch($inventory);
 
         // Also create a notification record and send notification (mail + database)
         // This uses the StoreInventoryNotification class. If there is an owning user,
@@ -124,8 +128,8 @@ class InventoryController extends Controller
 
     public function edit($inventoryId): View
     {
-        // Fetch users to populate owner dropdown
-        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
+    // Fetch users to populate owner dropdown
+    $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         $inventory = Inventory::findOrFail($inventoryId);
 
@@ -161,6 +165,11 @@ class InventoryController extends Controller
         }
 
         $inventory->save();
+
+        // Sync related vehicles if provided
+        if (! empty($data['vehicle_ids']) && is_array($data['vehicle_ids'])) {
+            $inventory->vehicles()->sync(array_values($data['vehicle_ids']));
+        }
 
         return redirect()->route('inventories.show', $inventoryId)->with('toast', 'Inventory updated.');
     }
