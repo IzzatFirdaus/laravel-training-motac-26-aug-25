@@ -21,8 +21,8 @@
 
                     <div class="mt-3">
                         <!-- Navigation buttons -->
-                            <a href="{{ route('inventories.index') }}" class="btn btn-secondary myds-btn myds-btn--secondary" data-myds="link">Kembali</a>
-                            <a href="{{ route('inventories.edit', $inventory->id) }}" class="btn btn-outline-primary myds-btn myds-btn--primary" data-myds="link">Edit</a>
+                            <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary" data-myds="link">Kembali</a>
+                            <a href="{{ route('inventories.edit', $inventory->id) }}" class="myds-btn myds-btn--primary myds-btn--outline" data-myds="link">Edit</a>
                         <x-destroy :action="route('inventories.destroy', $inventory->id)" :label="$inventory->name ?? 'Inventory'" />
                     </div>
                     @if(isset($inventory->vehicles) && $inventory->vehicles->count())

@@ -12,7 +12,7 @@
                     <p class="text-muted mb-0">Butiran pengguna.</p>
                 </div>
                 <div>
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-secondary myds-btn myds-btn--secondary">Sunting</a>
+                    <a href="{{ route('users.edit', $user->id) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Sunting</a>
                 </div>
             </header>
 

@@ -19,8 +19,8 @@
                         @include('user._form', ['user' => null])
 
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary">Simpan</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-secondary myds-btn myds-btn--secondary">Batal</a>
+                            <button type="submit" class="myds-btn myds-btn--primary">Simpan</button>
+                            <a href="{{ route('users.index') }}" class="myds-btn myds-btn--secondary">Batal</a>
                         </div>
                     </form>
                 </div>

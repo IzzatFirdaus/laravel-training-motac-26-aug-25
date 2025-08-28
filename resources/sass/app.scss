@@ -14,6 +14,9 @@ Fallbacks use SASS variables where available to remain compatible with the exist
 SASS architecture.
 */
 :root {
+	/* Font tokens (MYDS) */
+	--font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	--font-heading: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 	/* Primitive / brand */
 	--primary: #3A75F6; /* MYDS primary (primary-500) */
 	--danger: #EF4444; /* danger-500 */
@@ -47,6 +50,11 @@ SASS architecture.
 	--radius-m: 8px;
 	--radius-l: 12px;
 	--radius-xl: 14px;
+
+	/* MYDS token aliases for text/background/outlines */
+	--txt-on-primary: #ffffff;
+	--otl-primary: rgba(58,117,246,0.12);
+	--bg-primary-surface: var(--primary);
 }
 
 /* Dark theme token overrides */
@@ -138,13 +146,13 @@ SASS architecture.
 }
 .myds-btn--primary{
 	background-color: var(--primary);
-	color: #ffffff;
+	color: var(--txt-on-primary);
 	border: 1px solid var(--otl-default);
 }
 .myds-btn--secondary{
 	background-color: transparent;
 	color: var(--txt-primary);
-	border: 1px solid var(--otl-default);
+	border: 1px solid var(--otl-primary);
 }
 .myds-btn--danger{
 	background-color: var(--danger);
@@ -167,6 +175,26 @@ SASS architecture.
 }
 .myds-btn--tertiary:hover{ text-decoration: underline; }
 
+/* View button consistency tweaks used in index tables */
+.btn-outline-secondary.myds-btn--secondary {
+	padding: .35rem .6rem;
+	min-height: 38px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: .5rem;
+}
+
+/* Mobile stacked buttons should expand full width and maintain readable tap targets */
+@media (max-width: 576px) {
+	.btn-block.myds-btn--secondary {
+		display: block !important;
+		width: 100% !important;
+		min-height: 44px !important;
+		padding: .5rem .75rem !important;
+	}
+}
+
 /* Nav / Brand helpers */
 .myds-nav{ background-color: var(--bg-surface); border-bottom: 1px solid var(--otl-default); }
 .myds-brand{ color: var(--txt-primary); font-weight: 600; }
@@ -179,13 +207,25 @@ SASS architecture.
 .navbar .nav-link { color: var(--txt-primary); }
 .navbar .nav-link:hover { color: var(--primary); }
 
+/* Dropdown toggle caret/icon visibility tuned for dark and light modes */
+.nav-link.dropdown-toggle::after {
+	color: var(--txt-primary);
+	margin-left: .25rem;
+}
+
+/* Active nav item uses primary and a subtle underline per MYDS */
+.navbar .nav-link.active, .navbar .nav-link[aria-current="page"] {
+	color: var(--primary);
+	text-decoration: underline;
+}
+
 /* Article container per MYDS (max 640px) */
 .myds-article{ max-width: 640px; margin-left: auto; margin-right: auto; }
 .myds-media-wide{ max-width: 740px; margin-left: auto; margin-right: auto; }
 
 // Typography defaults
 body {
-		font-family: $font-family-sans-serif;
+		font-family: var(--font-body);
 		background-color: var(--bg-page);
 		color: var(--txt-primary);
 }
@@ -221,6 +261,84 @@ input::placeholder, textarea::placeholder {
 /* Buttons */
 .btn {
 	transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+	/* Ensure default bootstrap buttons respect MYDS tokens */
+	background-color: transparent;
+	color: var(--txt-primary);
+	border-radius: var(--radius-s);
+	border: 1px solid var(--otl-default);
+}
+
+/* Primary / secondary / danger / success mapping for Bootstrap classes */
+.btn-primary, .btn.btn-primary {
+	background-color: var(--primary) !important;
+	color: var(--txt-on-primary) !important;
+	border-color: var(--otl-primary);
+	box-shadow: none;
+}
+.btn-outline-primary {
+	background-color: transparent !important;
+	color: var(--primary) !important;
+	border: 1px solid var(--otl-primary) !important;
+}
+.btn-secondary, .btn.btn-secondary {
+	background-color: transparent !important;
+	color: var(--txt-primary) !important;
+	border: 1px solid var(--otl-primary) !important;
+}
+.btn-outline-secondary {
+	background-color: transparent !important;
+	color: var(--txt-primary) !important;
+	border: 1px solid var(--otl-primary) !important;
+}
+.btn-danger, .btn.btn-danger, .btn-outline-danger {
+	background-color: var(--danger) !important;
+	color: #fff !important;
+	border: 1px solid rgba(0,0,0,0.08) !important;
+}
+.btn-success {
+	background-color: var(--success) !important;
+	color: #fff !important;
+	border: 1px solid rgba(0,0,0,0.04) !important;
+}
+
+/* Small / block sizing consistent with MYDS tap targets */
+.btn-sm {
+	padding: .35rem .6rem;
+	font-size: .8125rem;
+}
+.btn-block, .btn.w-100 {
+	display: block !important;
+	width: 100% !important;
+}
+
+/* Link styled buttons map to MYDS tertiary */
+.btn-link, .btn.btn-link, .myds-btn--tertiary {
+	background: transparent !important;
+	border: none !important;
+	color: var(--primary) !important;
+	padding: 0 !important;
+}
+
+/* Ensure outline styles still show focus ring using MYDS tokens */
+.btn:focus-visible, .btn:focus {
+	outline: 2px solid var(--fr) !important;
+	outline-offset: 2px !important;
+	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
+}
+
+/* MYDS utility variants so views can use myds-* classes exclusively */
+.myds-btn--sm {
+	padding: .35rem .6rem;
+	font-size: .8125rem;
+}
+.myds-btn--block {
+	display: block !important;
+	width: 100% !important;
+}
+.myds-btn--outline {
+	background-color: transparent !important;
+	color: var(--primary) !important;
+	border: 1px solid var(--otl-primary) !important;
 }
 
 /* Links */
@@ -293,5 +411,16 @@ table thead th {
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family: $font-family-heading;
+	font-family: var(--font-heading);
+	font-weight: 600;
+}
+
+/* Slightly larger tap targets for MYDS buttons */
+.myds-btn { border-radius: var(--radius-s); padding: .5rem .875rem; }
+
+/* Ensure dropdown items receive focus-visible styles in all browsers */
+.dropdown-menu .dropdown-item:focus-visible {
+	outline: 2px solid var(--fr) !important;
+	outline-offset: 2px !important;
+	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
 }

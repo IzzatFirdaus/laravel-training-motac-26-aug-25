@@ -23,7 +23,8 @@ class VehiclesCreateShowsUsersTest extends TestCase
 
         // Assert: each user's name is present in the response
         foreach ($users as $user) {
-            $response->assertSee($user->name, escape: false);
+            // Blade escapes HTML entities (e.g. apostrophes), so use default escaping
+            $response->assertSee($user->name);
         }
     }
 }

@@ -64,8 +64,8 @@
 
         <!-- Submit and Cancel buttons -->
         <div class="d-flex justify-content-end" style="margin-top: 20px;">
-            <a href="{{ route('vehicles.index') }}" class="btn btn-secondary me-2 myds-btn myds-btn--secondary">Cancel</a>
-            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary">Save</button>
+            <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary me-2">Cancel</a>
+            <button type="submit" class="myds-btn myds-btn--primary">Save</button>
         </div>
     </form>
 </div>

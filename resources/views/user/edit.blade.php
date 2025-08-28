@@ -20,8 +20,8 @@
                         @include('user._form', ['user' => $user])
 
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('users.index') }}" class="btn btn-outline-secondary me-2 myds-btn myds-btn--secondary" aria-label="Batal dan kembali ke senarai">Batal</a>
-                            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary" aria-label="Kemaskini pengguna">Kemaskini</button>
+                            <a href="{{ route('users.index') }}" class="myds-btn myds-btn--secondary me-2" aria-label="Batal dan kembali ke senarai">Batal</a>
+                            <button type="submit" class="myds-btn myds-btn--primary" aria-label="Kemaskini pengguna">Kemaskini</button>
                         </div>
                     </form>
                 </div>

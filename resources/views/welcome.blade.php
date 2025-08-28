@@ -99,7 +99,7 @@
 						<div class="card-body">
 							<h4 class="h6">Index</h4>
 							<p class="mb-2 text-muted">Lihat senarai pengguna yang didaftarkan.</p>
-							<a href="{{ route('users.index') }}" class="btn btn-sm btn-primary myds-btn myds-btn--primary">Senarai</a>
+							<a href="{{ route('users.index') }}" class="myds-btn myds-btn--primary myds-btn--sm">Senarai</a>
 						</div>
 					</div>
 				</div>
@@ -109,7 +109,7 @@
 						<div class="card-body">
 							<h4 class="h6">Show</h4>
 							<p class="mb-2 text-muted">Lihat butiran pengguna contoh (ID = 1).</p>
-							<a href="{{ route('users.show', 1) }}" class="btn btn-sm btn-outline-success myds-btn myds-btn--success">Lihat</a>
+							<a href="{{ route('users.show', 1) }}" class="myds-btn myds-btn--success myds-btn--sm myds-btn--outline">Lihat</a>
 						</div>
 					</div>
 				</div>
@@ -119,7 +119,7 @@
 						<div class="card-body">
 							<h4 class="h6">Create</h4>
 							<p class="mb-2 text-muted">Buka borang untuk cipta pengguna baharu.</p>
-							<a href="{{ route('users.create') }}" class="btn btn-sm btn-outline-primary myds-btn myds-btn--primary">Cipta</a>
+							<a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary myds-btn--sm myds-btn--outline">Cipta</a>
 						</div>
 					</div>
 				</div>
@@ -129,7 +129,7 @@
 						<div class="card-body">
 							<h4 class="h6">Store (demo)</h4>
 							<p class="mb-2 text-muted">Simulasi POST store — gunakan borang Cipta untuk menghantar.</p>
-							<a href="{{ route('users.create') }}" class="btn btn-sm btn-outline-secondary myds-btn myds-btn--secondary" data-demo="store" data-model="Pengguna">Store (demo)</a>
+							<a href="{{ route('users.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="store" data-model="Pengguna">Store (demo)</a>
 						</div>
 					</div>
 				</div>
@@ -139,7 +139,7 @@
 						<div class="card-body">
 							<h4 class="h6">Edit</h4>
 							<p class="mb-2 text-muted">Buka borang sunting untuk pengguna contoh (ID = 1).</p>
-							<a href="{{ route('users.edit', 1) }}" class="btn btn-sm btn-outline-primary myds-btn myds-btn--primary">Edit</a>
+							<a href="{{ route('users.edit', 1) }}" class="myds-btn myds-btn--primary myds-btn--sm">Edit</a>
 						</div>
 					</div>
 				</div>
@@ -149,7 +149,7 @@
 						<div class="card-body">
 							<h4 class="h6">Update (demo)</h4>
 							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Sunting untuk POST.</p>
-							<a href="{{ route('users.edit', 1) }}" class="btn btn-sm btn-outline-secondary myds-btn myds-btn--secondary" data-demo="update" data-model="Pengguna">Update (demo)</a>
+							<a href="{{ route('users.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="update" data-model="Pengguna">Update (demo)</a>
 						</div>
 					</div>
 				</div>
@@ -163,7 +163,7 @@
 						<div class="card-body">
 							<h4 class="h6">Index</h4>
 							<p class="mb-2 text-muted">Lihat senarai inventori (nama, kuantiti, harga) dan butiran.</p>
-							<a href="{{ route('inventories.index') }}" class="btn btn-sm btn-primary myds-btn myds-btn--primary">Senarai</a>
+							<a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary myds-btn--sm">Senarai</a>
 						</div>
 					</div>
 				</div>
@@ -173,7 +173,7 @@
 						<div class="card-body">
 							<h4 class="h6">Show</h4>
 							<p class="mb-2 text-muted">Lihat butiran item contoh (ID = 1).</p>
-							<a href="{{ route('inventories.show', 1) }}" class="btn btn-sm btn-outline-success myds-btn myds-btn--success">Lihat</a>
+							<a href="{{ route('inventories.show', 1) }}" class="myds-btn myds-btn--success myds-btn--sm myds-btn--outline">Lihat</a>
 						</div>
 					</div>
 				</div>
@@ -183,7 +183,7 @@
 						<div class="card-body">
 							<h4 class="h6">Create</h4>
 							<p class="mb-2 text-muted">Buka borang untuk cipta inventori baharu.</p>
-							<a href="{{ route('inventories.create') }}" class="btn btn-sm btn-outline-primary myds-btn myds-btn--primary">Cipta</a>
+							<a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary myds-btn--sm">Cipta</a>
 						</div>
 					</div>
 				</div>
@@ -193,7 +193,7 @@
 						<div class="card-body">
 							<h4 class="h6">Store (demo)</h4>
 							<p class="mb-2 text-muted">Simulasi POST store — gunakan borang Cipta untuk menghantar.</p>
-							<a href="{{ route('inventories.create') }}" class="btn btn-sm btn-outline-secondary myds-btn myds-btn--secondary" data-demo="store" data-model="Inventori">Store (demo)</a>
+							<a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="store" data-model="Inventori">Store (demo)</a>
 						</div>
 					</div>
 				</div>
@@ -203,7 +203,7 @@
 						<div class="card-body">
 							<h4 class="h6">Edit</h4>
 							<p class="mb-2 text-muted">Buka borang sunting untuk item contoh (ID = 1).</p>
-							<a href="{{ route('inventories.edit', 1) }}" class="btn btn-sm btn-outline-primary myds-btn myds-btn--primary">Edit</a>
+							<a href="{{ route('inventories.edit', 1) }}" class="myds-btn myds-btn--primary myds-btn--sm">Edit</a>
 						</div>
 					</div>
 				</div>
@@ -213,7 +213,7 @@
 						<div class="card-body">
 							<h4 class="h6">Update (demo)</h4>
 							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Sunting untuk POST.</p>
-							<a href="{{ route('inventories.edit', 1) }}" class="btn btn-sm btn-outline-secondary myds-btn myds-btn--secondary" data-demo="update" data-model="Inventori">Update (demo)</a>
+							<a href="{{ route('inventories.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="update" data-model="Inventori">Update (demo)</a>
 						</div>
 					</div>
 				</div>
@@ -227,7 +227,7 @@
 						<div class="card-body">
 							<h4 class="h6">Index</h4>
 							<p class="mb-2 text-muted">Lihat senarai kenderaan (nama, kuantiti, harga) dan butiran.</p>
-							<a href="{{ route('vehicles.index') }}" class="btn btn-sm btn-primary myds-btn myds-btn--primary">Senarai</a>
+							<a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--primary myds-btn--sm">Senarai</a>
 						</div>
 					</div>
 				</div>
@@ -237,7 +237,7 @@
 						<div class="card-body">
 							<h4 class="h6">Show</h4>
 							<p class="mb-2 text-muted">Lihat butiran kenderaan contoh (ID = 1).</p>
-							<a href="{{ route('vehicles.show', 1) }}" class="btn btn-sm btn-outline-success myds-btn myds-btn--success">Lihat</a>
+							<a href="{{ route('vehicles.show', 1) }}" class="myds-btn myds-btn--success myds-btn--sm myds-btn--outline">Lihat</a>
 						</div>
 					</div>
 				</div>
@@ -247,7 +247,7 @@
 						<div class="card-body">
 							<h4 class="h6">Create</h4>
 							<p class="mb-2 text-muted">Buka borang untuk cipta kenderaan baharu.</p>
-							<a href="{{ route('vehicles.create') }}" class="btn btn-sm btn-outline-primary myds-btn myds-btn--primary">Cipta</a>
+							<a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary myds-btn--sm">Cipta</a>
 						</div>
 					</div>
 				</div>
@@ -257,7 +257,7 @@
 						<div class="card-body">
 							<h4 class="h6">Store (demo)</h4>
 							<p class="mb-2 text-muted">Simulasi POST store — gunakan borang Cipta untuk menghantar.</p>
-							<a href="{{ route('vehicles.create') }}" class="btn btn-sm btn-outline-secondary myds-btn myds-btn--secondary" data-demo="store" data-model="Kenderaan">Store (demo)</a>
+							<a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="store" data-model="Kenderaan">Store (demo)</a>
 						</div>
 					</div>
 				</div>
@@ -267,7 +267,7 @@
 						<div class="card-body">
 							<h4 class="h6">Edit</h4>
 							<p class="mb-2 text-muted">Buka borang sunting untuk kenderaan contoh (ID = 1).</p>
-							<a href="{{ route('vehicles.edit', 1) }}" class="btn btn-sm btn-outline-primary myds-btn myds-btn--primary">Edit</a>
+							<a href="{{ route('vehicles.edit', 1) }}" class="myds-btn myds-btn--primary myds-btn--sm">Edit</a>
 						</div>
 					</div>
 				</div>
@@ -277,7 +277,7 @@
 						<div class="card-body">
 							<h4 class="h6">Update (demo)</h4>
 							<p class="mb-2 text-muted">Simulasi tindakan kemaskini; gunakan borang Sunting untuk POST.</p>
-							<a href="{{ route('vehicles.edit', 1) }}" class="btn btn-sm btn-outline-secondary myds-btn myds-btn--secondary" data-demo="update" data-model="Kenderaan">Update (demo)</a>
+							<a href="{{ route('vehicles.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm" data-demo="update" data-model="Kenderaan">Update (demo)</a>
 						</div>
 					</div>
 				</div>

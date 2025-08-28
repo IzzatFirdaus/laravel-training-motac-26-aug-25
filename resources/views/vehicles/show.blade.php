@@ -23,8 +23,8 @@
                     <div>{!! nl2br(e($vehicle->description)) !!}</div>
 
                     <div class="mt-3">
-                        <a href="{{ route('vehicles.index') }}" class="btn btn-secondary myds-btn myds-btn--secondary" data-myds="link">Kembali</a>
-                        <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-outline-primary myds-btn myds-btn--primary" data-myds="link">Edit</a>
+                        <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary" data-myds="link">Kembali</a>
+                        <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="myds-btn myds-btn--primary myds-btn--outline" data-myds="link">Edit</a>
                         <x-destroy :action="route('vehicles.destroy', $vehicle->id)" :label="$vehicle->name ?? 'Kenderaan'" />
                     </div>
 

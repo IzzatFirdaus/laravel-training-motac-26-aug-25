@@ -40,10 +40,10 @@
                                 <strong class="h3">{{ $inventoriesCount }}</strong>
                             </div>
                             <div class="d-flex flex-wrap gap-2">
-                                <a href="{{ route('inventories.index') }}" class="btn btn-primary myds-btn myds-btn--primary">Senarai</a>
-                                <a href="{{ route('inventories.create') }}" class="btn btn-outline-primary myds-btn myds-btn--primary">Cipta</a>
-                                <a href="{{ route('inventories.show', 1) }}" class="btn btn-outline-secondary myds-btn myds-btn--secondary">Lihat</a>
-                                <a href="{{ route('inventories.edit', 1) }}" class="btn btn-outline-secondary myds-btn myds-btn--secondary">Edit</a>
+                                <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary myds-btn--sm">Senarai</a>
+                                <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary myds-btn--sm myds-btn--outline">Cipta</a>
+                                <a href="{{ route('inventories.show', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Lihat</a>
+                                <a href="{{ route('inventories.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Edit</a>
                             </div>
                         </div>
                     </div>
@@ -58,10 +58,10 @@
                                 <strong class="h3">{{ $vehiclesCount }}</strong>
                             </div>
                             <div class="d-flex flex-wrap gap-2">
-                                <a href="{{ route('vehicles.index') }}" class="btn btn-primary myds-btn myds-btn--primary">Senarai</a>
-                                <a href="{{ route('vehicles.create') }}" class="btn btn-outline-primary myds-btn myds-btn--primary">Cipta</a>
-                                <a href="{{ route('vehicles.show', 1) }}" class="btn btn-outline-secondary myds-btn myds-btn--secondary">Lihat</a>
-                                <a href="{{ route('vehicles.edit', 1) }}" class="btn btn-outline-secondary myds-btn myds-btn--secondary">Edit</a>
+                                <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--primary myds-btn--sm">Senarai</a>
+                                <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary myds-btn--sm myds-btn--outline">Cipta</a>
+                                <a href="{{ route('vehicles.show', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Lihat</a>
+                                <a href="{{ route('vehicles.edit', 1) }}" class="myds-btn myds-btn--secondary myds-btn--sm myds-btn--outline">Edit</a>
                             </div>
                         </div>
                     </div>
@@ -74,8 +74,8 @@
                                             <h5 class="card-title">Contoh / Demo</h5>
                                             <p class="text-muted mb-2">Sekiranya anda ingin melihat contoh tindakan (Edit/Show/Destroy), gunakan halaman Welcome.</p>
                                             <div class="d-flex gap-2">
-                                                <a href="{{ url('/') }}" class="btn btn-outline-primary myds-btn myds-btn--primary">Pergi ke Contoh</a>
-                                                <a href="{{ url('/') }}#examples-heading" class="btn btn-outline-secondary myds-btn myds-btn--secondary">Pergi ke Contoh (khas)</a>
+                                                <a href="{{ url('/') }}" class="myds-btn myds-btn--primary myds-btn--outline">Pergi ke Contoh</a>
+                                                <a href="{{ url('/') }}#examples-heading" class="myds-btn myds-btn--secondary myds-btn--outline">Pergi ke Contoh (khas)</a>
                                             </div>
                                         </div>
                                     </div>

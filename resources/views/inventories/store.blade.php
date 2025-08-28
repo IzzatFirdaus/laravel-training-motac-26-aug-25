@@ -37,8 +37,8 @@
                         <x-form-field name="description" type="textarea" label="Description">{{ old('description') }}</x-form-field>
 
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('inventories.index') }}" class="btn btn-secondary me-2 myds-btn myds-btn--secondary">Cancel</a>
-                            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary">Create</button>
+                            <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary me-2">Cancel</a>
+                            <button type="submit" class="myds-btn myds-btn--primary">Create</button>
                         </div>
                     </form>
                 </div>

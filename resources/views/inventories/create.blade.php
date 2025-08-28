@@ -37,8 +37,8 @@
                         <x-form-field name="description" type="textarea" label="Keterangan">{{ old('description') }}</x-form-field>
 
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('inventories.index') }}" class="btn btn-secondary me-2 myds-btn myds-btn--secondary">Batal</a>
-                            <button type="submit" class="btn btn-primary myds-btn myds-btn--primary">Cipta</button>
+                            <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary me-2">Batal</a>
+                            <button type="submit" class="myds-btn myds-btn--primary">Cipta</button>
                         </div>
                     </form>
                 </div>

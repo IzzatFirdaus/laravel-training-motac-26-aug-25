@@ -12,7 +12,7 @@
                     <p class="text-muted mb-0">Senarai inventori yang dipaparkan secara berhalaman dalam aplikasi.</p>
                 </div>
                 <div class="text-end">
-                    <a href="{{ route('inventories.create') }}" class="btn btn-primary myds-btn myds-btn--primary">Cipta inventori</a>
+                    <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary">Cipta inventori</a>
                 </div>
             </header>
 
@@ -58,6 +58,7 @@
                                                     :destroyRoute="route('inventories.destroy', $inventory->id)"
                                                     :label="$inventory->name"
                                                     :id="$inventory->id"
+                                                    :model="$inventory"
                                                 />
                                             </td>
                                         </tr>
@@ -66,7 +67,7 @@
                                             <td colspan="7">
                                                 <div role="status" class="p-3 text-center">
                                                     <p class="mb-2">Tiada item inventori dijumpai.</p>
-                                                    <a href="{{ route('inventories.create') }}" class="btn btn-primary myds-btn myds-btn--primary">Cipta inventori pertama anda</a>
+                                                    <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary">Cipta inventori pertama anda</a>
                                                 </div>
                                             </td>
                                         </tr>

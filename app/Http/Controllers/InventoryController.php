@@ -84,7 +84,10 @@ class InventoryController extends Controller
     {
         $inventory = Inventory::with('user', 'vehicles')->findOrFail($inventoryId);
 
-        return view('inventories.show', compact('inventory'));
+    // Authorize that the current user can view this inventory
+    $this->authorize('view', $inventory);
+
+    return view('inventories.show', compact('inventory'));
     }
 
     public function edit($inventoryId): View

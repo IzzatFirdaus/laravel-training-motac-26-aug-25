@@ -3,8 +3,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "vite"
+    "build": "vite build",
+    "dev": "vite",
+    "lint:myds": "node tools/check-myds.cjs"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",

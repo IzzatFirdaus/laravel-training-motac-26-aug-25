@@ -10,9 +10,9 @@
 				<div class="card-body">
 					<h2 class="h5">Inventory updated</h2>
 					<p class="mb-0">The inventory item has been updated successfully.</p>
-					<div class="mt-3">
-						<a href="{{ route('inventories.index') }}" class="btn btn-primary myds-btn myds-btn--primary">Back to inventories</a>
-					</div>
+						<div class="mt-3">
+							<a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary">Back to inventories</a>
+						</div>
 				</div>
 			</div>
 		</div>
