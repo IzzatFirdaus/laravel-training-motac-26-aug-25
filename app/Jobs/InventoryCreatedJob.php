@@ -44,7 +44,7 @@ class InventoryCreatedJob implements ShouldQueue
 
         $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
 
-        // Use the mailable so the app's templates are used consistently.
-        Mail::to($recipient)->send(new InventoryCreatedMailable($inventory));
+    // Use the mailable and queue it so delivery is handled by the mail queue worker.
+    Mail::to($recipient)->queue(new InventoryCreatedMailable($inventory));
     }
 }

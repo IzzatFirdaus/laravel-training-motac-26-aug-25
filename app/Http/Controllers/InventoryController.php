@@ -8,8 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-// Mail/mailable not needed here; job will handle notification
-use App\Jobs\InventoryCreatedJob;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InventoryCreated;
 
 class InventoryController extends Controller
 {
@@ -84,8 +84,9 @@ class InventoryController extends Controller
             'user_id' => $data['user_id'] ?? null,
         ]);
 
-    // Dispatch a job to notify the owner (job will handle recipient/fallback)
-    InventoryCreatedJob::dispatch($inventory);
+    // Queue mailable to notify the owner (or fallback configured address)
+    $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
+    Mail::to($recipient)->queue(new InventoryCreated($inventory));
 
         $route = redirect()->route(
             'inventories.show',
