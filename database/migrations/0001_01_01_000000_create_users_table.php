@@ -17,10 +17,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // Role field (default 'user') added inline so a single migration defines the full users schema.
+            $table->string('role', 32)->default('user')->after('password');
             // Optional one-to-one link to a primary vehicle (nullable)
             // Use unsignedBigInteger to avoid circular foreign key constraint ordering.
             $table->unsignedBigInteger('primary_vehicle_id')->nullable();
             $table->rememberToken();
+            // Soft deletes column included so the users table supports trashed records.
+            $table->softDeletes();
             $table->timestamps();
         });
 

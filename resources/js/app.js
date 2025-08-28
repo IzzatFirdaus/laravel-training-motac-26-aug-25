@@ -41,34 +41,21 @@ window.MYDS.handleDestroy = function(btn) {
 	}
 };
 
-// Helper to display a global flash message from a server-side rendered data attribute
+// SweetAlert toast for Users/Inventories via #global-toast data attribute
 document.addEventListener('DOMContentLoaded', function () {
-	var flash = document.getElementById('global-flash');
-	if (flash && flash.textContent && flash.textContent.trim().length) {
-		var msg = flash.textContent.trim();
-		if (window.MYDS.Swal && typeof window.MYDS.Swal.fire === 'function') {
-			window.MYDS.Swal.fire({
-				toast: true,
-				position: 'top-end',
-				showConfirmButton: false,
-				timer: 4000,
-				icon: 'success',
-				title: msg
-			});
-		} else {
-			// fallback: small alert
-			var el = document.createElement('div');
-			el.textContent = msg;
-			el.style.position = 'fixed';
-			el.style.top = '1rem';
-			el.style.right = '1rem';
-			el.style.background = 'rgba(0,0,0,0.85)';
-			el.style.color = 'white';
-			el.style.padding = '0.5rem 0.75rem';
-			el.style.borderRadius = '0.25rem';
-			document.body.appendChild(el);
-			setTimeout(function () { el.remove(); }, 4000);
-		}
+	var toast = document.getElementById('global-toast');
+	if (!toast) return;
+	var msg = (toast.getAttribute('data-toast') || '').trim();
+	if (!msg) return;
+	if (window.MYDS.Swal && typeof window.MYDS.Swal.fire === 'function') {
+		window.MYDS.Swal.fire({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 4000,
+			icon: 'success',
+			title: msg
+		});
 	}
 });
 

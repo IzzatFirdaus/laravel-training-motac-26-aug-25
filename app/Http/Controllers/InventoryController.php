@@ -13,7 +13,9 @@ class InventoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+    $this->middleware('auth')->except(['index', 'show']);
+    // Apply role-based restriction at the controller level for admin-only actions
+    $this->middleware('role:admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     /**
@@ -70,7 +72,7 @@ class InventoryController extends Controller
             $inventory->getKey()
         );
 
-        return $route->with('status', 'Inventori berjaya dicipta.');
+        return $route->with('toast', 'Inventori berjaya dicipta.');
     }
 
     /**
@@ -125,7 +127,7 @@ class InventoryController extends Controller
 
         $inventory->save();
 
-        return redirect()->route('inventories.show', $inventoryId)->with('status', 'Inventory updated.');
+        return redirect()->route('inventories.show', $inventoryId)->with('toast', 'Inventory updated.');
     }
 
     /**
@@ -138,6 +140,6 @@ class InventoryController extends Controller
         $inventory = Inventory::findOrFail($inventoryId);
         $inventory->delete();
 
-        return redirect()->route('inventories.index')->with('status', 'Inventory deleted.');
+        return redirect()->route('inventories.index')->with('toast', 'Inventory deleted.');
     }
 }

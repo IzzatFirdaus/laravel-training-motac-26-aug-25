@@ -7,7 +7,7 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card">
-				<div class="card-header">Sunting Kenderaan</div>
+				<div class="card-header">Sunting Inventori</div>
 
 				<div class="card-body">
 					@if (session('status'))
@@ -53,8 +53,8 @@
 						</div>
 
 						<div class="d-flex justify-content-end">
-							<a href="{{ route('vehicles.index') }}" class="btn btn-outline-secondary me-2 myds-btn myds-btn--secondary" aria-label="Batal dan kembali ke senarai">Batal</a>
-							<button type="submit" class="btn btn-primary myds-btn myds-btn--primary" aria-label="Kemaskini kenderaan">Kemaskini</button>
+							<a href="{{ route('vehicles.index') }}" class="btn btn-secondary me-2 myds-btn myds-btn--secondary">Batal</a>
+							<button type="submit" class="btn btn-primary myds-btn myds-btn--primary">Kemaskini</button>
 						</div>
 					</form>
 				</div>

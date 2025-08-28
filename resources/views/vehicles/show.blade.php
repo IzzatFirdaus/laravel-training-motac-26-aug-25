@@ -1,90 +1,45 @@
-{{-- resources/views/vehicles/show.blade.php --}}
 @extends('layouts.app')
 
-@section('title', ($vehicle->name ?? 'Kenderaan') . ' — ' . config('app.name', 'second-crud'))
+@section('title', 'Butiran Kenderaan — ' . config('app.name', 'second-crud'))
 
 @section('content')
-<div class="container mx-auto p-6">
-    @if(session('success'))
-        <div class="mb-4 rounded bg-green-100 border border-green-200 text-green-800 px-4 py-2">
-            {{ session('success') }}
-        </div>
-    @endif
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Kenderaan #{{ $vehicle->id }}</div>
 
-    <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-semibold">Kenderaan #{{ $vehicle->id }} — {{ $vehicle->name ?? 'Tanpa Nama' }}</h1>
+                <div class="card-body">
+                    @if(session('status'))
+                        <div class="alert alert-success">{{ session('status') }}</div>
+                    @endif
 
-        <div class="space-x-2">
-            <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary btn btn-sm" aria-label="Kembali" data-myds="link">Kembali</a>
-            <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="myds-btn myds-btn--primary btn btn-sm" aria-label="Edit" data-myds="link">Edit</a>
-            <x-vehicle-destroy :action="route('vehicles.destroy', $vehicle->id)" :label="$vehicle->name ?? 'Vehicle'" />
-        </div>
-    </div>
+                    <p><strong>Nama:</strong> {{ $vehicle->name ?? '—' }}</p>
+                    <p><strong>Pemilik:</strong> {{ $vehicle->owner?->name ?? '—' }}</p>
+                    <p><strong>Kuantiti:</strong> {{ $vehicle->qty ?? 0 }}</p>
+                    <p><strong>Harga:</strong> {{ isset($vehicle->price) ? number_format($vehicle->price, 2) : '—' }}</p>
 
-    <div class="bg-white shadow rounded-lg p-5">
-        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-            <div>
-                <dt class="text-sm font-medium text-gray-500">Nama</dt>
-                <dd class="mt-1 text-lg text-gray-900">{{ $vehicle->name ?? '—' }}</dd>
-            </div>
+                    <p><strong>Keterangan:</strong></p>
+                    <div>{!! nl2br(e($vehicle->description)) !!}</div>
 
-            <div>
-                <dt class="text-sm font-medium text-gray-500">Kuantiti</dt>
-                <dd class="mt-1 text-lg text-gray-900">{{ $vehicle->qty ?? 0 }}</dd>
-            </div>
+                    <div class="mt-3">
+                        <a href="{{ route('vehicles.index') }}" class="btn btn-secondary myds-btn myds-btn--secondary" data-myds="link">Kembali</a>
+                        <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="btn btn-outline-primary myds-btn myds-btn--primary" data-myds="link">Edit</a>
+                        <x-destroy :action="route('vehicles.destroy', $vehicle->id)" :label="$vehicle->name ?? 'Kenderaan'" />
+                    </div>
 
-            <div>
-                <dt class="text-sm font-medium text-gray-500">Harga</dt>
-                <dd class="mt-1 text-lg text-gray-900">{{ isset($vehicle->price) ? number_format($vehicle->price, 2) : '—' }}</dd>
-            </div>
-
-            <div>
-                <dt class="text-sm font-medium text-gray-500">Keterangan</dt>
-                <dd class="mt-1 text-lg text-gray-900">{{ $vehicle->description ?? '—' }}</dd>
-            </div>
-
-            @if(isset($vehicle->owner) && $vehicle->owner)
-                <div>
-                    <dt class="text-sm font-medium text-gray-500">Pemilik</dt>
-                    <dd class="mt-1 text-lg text-blue-600">{{ $vehicle->owner->name }}</dd>
-                </div>
-            @endif
-
-            @if(isset($vehicle->inventories) && $vehicle->inventories->count())
-                <div class="sm:col-span-2">
-                    <dt class="text-sm font-medium text-gray-500">Inventori berkaitan</dt>
-                    <dd class="mt-1 text-lg text-gray-900">
+                    @if(isset($vehicle->inventories) && $vehicle->inventories->count())
+                        <hr class="my-3">
+                        <h5>Inventori berkaitan</h5>
                         <ul>
                             @foreach($vehicle->inventories as $inv)
                                 <li><a href="{{ route('inventories.show', $inv->id) }}">{{ $inv->name ?? '—' }}</a> (ID: {{ $inv->id }})</li>
                             @endforeach
                         </ul>
-                    </dd>
+                    @endif
                 </div>
-            @endif
-
-            <div>
-                <dt class="text-sm font-medium text-gray-500">Dicipta</dt>
-                <dd class="mt-1 text-sm text-gray-600">
-                    @if(!empty($vehicle->created_at))
-                        {{ \Illuminate\Support\Carbon::parse($vehicle->created_at)->format('Y-m-d H:i') }}
-                    @else
-                        —
-                    @endif
-                </dd>
             </div>
-
-            <div>
-                <dt class="text-sm font-medium text-gray-500">Kemaskini terakhir</dt>
-                <dd class="mt-1 text-sm text-gray-600">
-                    @if(!empty($vehicle->updated_at))
-                        {{ \Illuminate\Support\Carbon::parse($vehicle->updated_at)->format('Y-m-d H:i') }}
-                    @else
-                        —
-                    @endif
-                </dd>
-            </div>
-        </dl>
+        </div>
     </div>
 </div>
 @endsection

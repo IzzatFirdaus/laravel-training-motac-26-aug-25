@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+    $this->middleware('auth')->except(['index', 'show']);
+    // Protect admin actions via controller middleware rather than on each route
+    $this->middleware('role:admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     /**
@@ -44,7 +46,10 @@ class VehicleController extends Controller
      */
     public function create(): View
     {
-        return view('vehicles.create');
+        // Eagerly load users for owner assignment dropdown
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
+
+        return view('vehicles.create', compact('users'));
     }
 
     /**
@@ -89,7 +94,7 @@ class VehicleController extends Controller
     public function edit($vehicleId): View
     {
         // Fetch users to populate owner dropdown
-        $users = DB::table('users')->select('id', 'name')->orderBy('name')->get();
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         $vehicle = Vehicle::findOrFail($vehicleId);
 

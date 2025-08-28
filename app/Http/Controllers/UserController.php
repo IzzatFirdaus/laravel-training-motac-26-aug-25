@@ -12,7 +12,9 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+    $this->middleware('auth')->except(['index', 'show']);
+    // Apply role-based restriction at the controller level so routing remains simple.
+    $this->middleware('role:admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     /**
@@ -51,7 +53,7 @@ class UserController extends Controller
             'password' => $data['password'],
         ]);
 
-        return redirect()->route('users.index')->with('status', 'Pengguna berjaya dicipta.');
+        return redirect()->route('users.index')->with('toast', 'Pengguna berjaya dicipta.');
     }
 
     /**
@@ -98,7 +100,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.show', $userId)->with('status', 'Pengguna dikemaskini.');
+        return redirect()->route('users.show', $userId)->with('toast', 'Pengguna dikemaskini.');
     }
 
     /**
@@ -110,11 +112,11 @@ class UserController extends Controller
 
         // Prevent a user from deleting themselves via the UI
         if (Auth::check() && Auth::id() === $user->getKey()) {
-            return redirect()->route('users.index')->with('status', 'Anda tidak boleh memadam akaun sendiri.');
+            return redirect()->route('users.index')->with('toast', 'Anda tidak boleh memadam akaun sendiri.');
         }
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('status', 'Pengguna dipadam.');
+        return redirect()->route('users.index')->with('toast', 'Pengguna dipadam.');
     }
 }

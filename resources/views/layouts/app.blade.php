@@ -26,8 +26,9 @@
     {{-- Skip to content for keyboard users --}}
     <a href="#main-content" class="visually-hidden-focusable">Langkau ke kandungan</a>
 
-    {{-- Global flash region for status messages (aria-live) --}}
+    {{-- Vehicles: live region for status messages (aria-live). Users/Inventories use toast. --}}
     <div id="global-flash" aria-live="polite" aria-atomic="true" class="sr-only">@if(session('status')){{ session('status') }}@endif</div>
+    <div id="global-toast" data-toast="@if(session('toast')){{ session('toast') }}@endif" class="sr-only"></div>
 
     <nav class="navbar navbar-expand-md bg-surface border-bottom myds-nav" role="navigation" aria-label="Navigasi utama">
             <div class="container">
@@ -48,14 +49,26 @@
                             </a>
                             <div class="dropdown-menu myds-dropdown" aria-labelledby="navInventories" role="menu">
                                 <a class="dropdown-item {{ request()->routeIs('inventories.index') ? 'active' : '' }}" href="{{ route('inventories.index') }}" role="menuitem" @if(request()->routeIs('inventories.index')) aria-current="page" @endif>{{ __('nav.inventory_browse') }}</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <a class="dropdown-item" href="{{ route('inventories.create') }}" role="menuitem">{{ __('nav.inventory_add') }}</a>
+                                @endif
+                                @endauth
                                 <a class="dropdown-item" href="{{ route('inventories.show', 1) }}" role="menuitem">{{ __('nav.inventory_read') }}</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <a class="dropdown-item" href="{{ route('inventories.edit', 1) }}" role="menuitem">{{ __('nav.inventory_edit') }}</a>
+                                @endif
+                                @endauth
                                 <div class="dropdown-divider"></div>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <form method="POST" action="{{ route('inventories.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.inventory') }}" data-myds-form>
                                     @csrf
                                     <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="{{ __('nav.inventory_delete') }}">{{ __('nav.inventory_delete') }}</button>
                                 </form>
+                                @endif
+                                @endauth
                             </div>
                         </li>
 
@@ -65,14 +78,26 @@
                             </a>
                             <div class="dropdown-menu myds-dropdown" aria-labelledby="navVehicles" role="menu">
                                 <a class="dropdown-item {{ request()->routeIs('vehicles.index') ? 'active' : '' }}" href="{{ route('vehicles.index') }}" role="menuitem" @if(request()->routeIs('vehicles.index')) aria-current="page" @endif>{{ __('nav.vehicles_browse') }}</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <a class="dropdown-item" href="{{ route('vehicles.create') }}" role="menuitem">{{ __('nav.vehicles_add') }}</a>
+                                @endif
+                                @endauth
                                 <a class="dropdown-item" href="{{ route('vehicles.show', 1) }}" role="menuitem">{{ __('nav.vehicles_read') }}</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <a class="dropdown-item" href="{{ route('vehicles.edit', 1) }}" role="menuitem">{{ __('nav.vehicles_edit') }}</a>
+                                @endif
+                                @endauth
                                 <div class="dropdown-divider"></div>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <form method="POST" action="{{ route('vehicles.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.vehicles') }}" data-myds-form>
                                     @csrf
                                     <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="{{ __('nav.vehicles_delete') }}">{{ __('nav.vehicles_delete') }}</button>
                                 </form>
+                                @endif
+                                @endauth
                             </div>
                         </li>
 
@@ -82,14 +107,26 @@
                             </a>
                             <div class="dropdown-menu myds-dropdown" aria-labelledby="navUsers" role="menu">
                                 <a class="dropdown-item {{ request()->routeIs('users.index') ? 'active' : '' }}" href="{{ route('users.index') }}" role="menuitem" @if(request()->routeIs('users.index')) aria-current="page" @endif>{{ __('nav.users_browse') }}</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <a class="dropdown-item" href="{{ route('users.create') }}" role="menuitem">{{ __('nav.users_add') }}</a>
+                                @endif
+                                @endauth
                                 <a class="dropdown-item" href="{{ route('users.show', 1) }}" role="menuitem">{{ __('nav.users_read') }}</a>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <a class="dropdown-item" href="{{ route('users.edit', 1) }}" role="menuitem">{{ __('nav.users_edit') }}</a>
+                                @endif
+                                @endauth
                                 <div class="dropdown-divider"></div>
+                                @auth
+                                @if(auth()->user()->hasRole('admin'))
                                 <form method="POST" action="{{ route('users.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.users') }}" data-myds-form>
                                     @csrf
                                     <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="{{ __('nav.users_delete') }}">{{ __('nav.users_delete') }}</button>
                                 </form>
+                                @endif
+                                @endauth
                             </div>
                         </li>
                     </ul>
@@ -155,13 +192,6 @@
         </nav>
 
         <main id="main-content" class="py-4">
-            {{-- Paparkan mesej status sesi dalam kawasan yang boleh dilihat dan aria-live untuk AT --}}
-            @if(session('status'))
-                <div class="container">
-                    <div class="alert alert-success" role="status">{{ session('status') }}</div>
-                </div>
-            @endif
-
             @yield('content')
         </main>
     </div>
