@@ -21,9 +21,10 @@
                             <label for="name" class="form-label">Nama</label>
                             <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $inventory->name) }}">
                             @error('name') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
-                            <div id="users-autocomplete" class="position-relative mt-2" style="max-width:420px;">
-                                <ul id="users-list" class="list-group" style="display:none; position:absolute; z-index:2000; width:100%;"></ul>
-                            </div>
+                                <div id="users-autocomplete" class="position-relative mt-2" style="max-width:420px;" data-search-url="{{ route('users.search') }}">
+                                <ul id="users-list" class="list-group" role="listbox" aria-label="Cadangan pengguna" style="display:none; position:absolute; z-index:2000; width:100%;"></ul>
+                                <div id="users-list-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+                                </div>
                         </div>
 
                         <div class="mb-3">

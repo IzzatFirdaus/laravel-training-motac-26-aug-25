@@ -6,6 +6,8 @@ use App\Models\Inventory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreInventoryRequest;
+use App\Http\Requests\UpdateInventoryRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -55,17 +57,10 @@ class InventoryController extends Controller
     /**
      * Store a newly created inventory item in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreInventoryRequest $request): RedirectResponse
     {
     $this->authorize('create', Inventory::class);
-
-        $data = $request->validate([
-            'user_id' => ['nullable', 'exists:users,id'],
-            'name' => ['required', 'string', 'max:255'],
-            'qty' => ['required', 'integer', 'min:0'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
-        ]);
+        $data = $request->validated();
 
         // Only admins may set an arbitrary owner. Regular users always own the
         // inventory they create.
@@ -136,15 +131,9 @@ class InventoryController extends Controller
      *
      * @param  int  $inventoryId
      */
-    public function update(Request $request, $inventoryId): RedirectResponse
+    public function update(UpdateInventoryRequest $request, $inventoryId): RedirectResponse
     {
-        $data = $request->validate([
-            'user_id' => ['nullable', 'exists:users,id'],
-            'name' => ['nullable', 'string', 'max:255'],
-            'qty' => ['nullable', 'integer', 'min:0'],
-            'price' => ['nullable', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
-        ]);
+        $data = $request->validated();
 
     $inventory = Inventory::findOrFail($inventoryId);
 

@@ -20,8 +20,10 @@
                         <x-form-field name="name" label="Nama" :value="old('name')" />
 
                         {{-- Users autocomplete helper: clicking name input will fetch users and allow quick selection --}}
-                        <div id="users-autocomplete" class="position-relative mt-2" style="max-width:420px;">
-                            <ul id="users-list" class="list-group" style="display:none; position:absolute; z-index:2000; width:100%;"></ul>
+                        <div id="users-autocomplete" class="position-relative mt-2" style="max-width:420px;" data-search-url="{{ route('users.search') }}">
+                            {{-- Autocomplete list: role=listbox with aria-controls and aria-expanded on the input --}}
+                            <ul id="users-list" class="list-group" role="listbox" aria-label="Cadangan pengguna" style="display:none; position:absolute; z-index:2000; width:100%;"></ul>
+                            <div id="users-list-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
                         </div>
 
                         <div class="mb-3">

@@ -1,5 +1,6 @@
 import './bootstrap';
 import Swal from 'sweetalert2';
+import enhanceUsersAutocomplete from './users-autocomplete';
 
 // Namespace under window.MYDS to avoid polluting global scope
 window.MYDS = window.MYDS || {};
@@ -128,4 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	}, true);
 
 	// Search keyboard shortcuts intentionally disabled (no search bar rendered)
+
+	// Initialize users autocomplete enhancement if present
+	try {
+		enhanceUsersAutocomplete('#users-autocomplete');
+	} catch (err) {
+		// non-fatal
+	}
 });

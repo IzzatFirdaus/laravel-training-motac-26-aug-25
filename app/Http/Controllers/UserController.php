@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -38,13 +40,9 @@ class UserController extends Controller
     /**
      * Store a newly created user in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'confirmed', 'min:8'],
-        ]);
+        $data = $request->validated();
 
         // The User model has a password cast to 'hashed', so assign directly.
         $user = User::create([
@@ -81,13 +79,9 @@ class UserController extends Controller
     /**
      * Update the specified user in storage.
      */
-    public function update(Request $request, $userId): RedirectResponse
+    public function update(UpdateUserRequest $request, $userId): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255', "unique:users,email,{$userId}"],
-            'password' => ['nullable', 'string', 'confirmed', 'min:8'],
-        ]);
+        $data = $request->validated();
 
     $user = User::findOrFail($userId);
 

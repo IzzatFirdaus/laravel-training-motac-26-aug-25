@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAPIPostRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
@@ -28,12 +29,9 @@ class APIPostController extends Controller
     /**
      * Store a simple JSON payload for demonstration.
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreAPIPostRequest $request): JsonResponse
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'body' => ['nullable', 'string'],
-        ]);
+        $data = $request->validated();
 
         // In a real app you would persist this. For now return the validated payload.
         return response()->json(['status' => 'ok', 'data' => $data], 201);

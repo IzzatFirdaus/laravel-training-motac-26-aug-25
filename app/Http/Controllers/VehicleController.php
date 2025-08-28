@@ -7,6 +7,8 @@ use App\Models\Vehicle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Requests\UpdateVehicleRequest;
 use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
@@ -67,17 +69,10 @@ class VehicleController extends Controller
     /**
      * Store a newly created vehicle in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreVehicleRequest $request): RedirectResponse
     {
         $this->authorize('create', Vehicle::class);
-
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'user_id' => ['nullable', 'exists:users,id'],
-            'qty' => ['required', 'integer', 'min:0'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
-        ]);
+        $data = $request->validated();
 
         // Only admins may set arbitrary owner. Regular users will own the vehicle they create.
         if (! Auth::check()) {
@@ -151,15 +146,9 @@ class VehicleController extends Controller
      *
      * @param  int  $vehicleId
      */
-    public function update(Request $request, $vehicleId): RedirectResponse
+    public function update(UpdateVehicleRequest $request, $vehicleId): RedirectResponse
     {
-        $data = $request->validate([
-            'user_id' => ['nullable', 'exists:users,id'],
-            'name' => ['nullable', 'string', 'max:255'],
-            'qty' => ['nullable', 'integer', 'min:0'],
-            'price' => ['nullable', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
-        ]);
+        $data = $request->validated();
 
         $vehicle = Vehicle::findOrFail($vehicleId);
         $this->authorize('update', $vehicle);

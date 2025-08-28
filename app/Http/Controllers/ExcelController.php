@@ -8,6 +8,8 @@ use App\Models\Inventory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Requests\PreviewInventoryImportRequest;
+use App\Http\Requests\ImportInventoryRequest;
 use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -40,13 +42,10 @@ class ExcelController extends Controller
     }
 
     /** Parse uploaded file and show preview of rows and validation failures; no DB writes. */
-    public function previewInventory(Request $request): View
+    public function previewInventory(PreviewInventoryImportRequest $request): View
     {
         $this->authorize('viewAny', Inventory::class);
-
-        $data = $request->validate([
-            'file' => ['required', 'file', 'mimes:xlsx,csv,txt'],
-        ]);
+        $data = $request->validated();
 
         $import = new InventoryImport(null, previewOnly: true);
         $import->import($data['file']);
@@ -58,13 +57,10 @@ class ExcelController extends Controller
     }
 
     /** Perform import: validate and insert rows into DB. */
-    public function importInventory(Request $request): RedirectResponse
+    public function importInventory(ImportInventoryRequest $request): RedirectResponse
     {
         $this->authorize('create', Inventory::class);
-
-        $data = $request->validate([
-            'file' => ['required', 'file', 'mimes:xlsx,csv,txt'],
-        ]);
+        $data = $request->validated();
 
         $import = new InventoryImport;
         $import->import($data['file']);

@@ -281,6 +281,17 @@
             @yield('content')
         </main>
     </div>
+    {{-- Accessible fallback confirmation region for non-JS or non-SweetAlert environments. JS uses SweetAlert; this container is available if a progressive enhancement is needed. --}}
+    <div id="myds-confirm" aria-hidden="true" style="display:none;">
+        <div role="dialog" aria-modal="true" aria-labelledby="myds-confirm-title" id="myds-confirm-dialog">
+            <h2 id="myds-confirm-title" class="visually-hidden">Sahkan tindakan</h2>
+            <p id="myds-confirm-message" class="visually-hidden">Anda pasti mahu meneruskan tindakan ini?</p>
+            <div class="myds-confirm-actions visually-hidden">
+                <button type="button" id="myds-confirm-yes">Ya</button>
+                <button type="button" id="myds-confirm-no">Batal</button>
+            </div>
+        </div>
+    </div>
     <!-- Scripts (separate include to avoid bundling into one head entry) -->
     @vite('resources/js/app.js')
     @stack('scripts')
