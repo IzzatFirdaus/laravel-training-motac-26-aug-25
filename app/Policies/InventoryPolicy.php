@@ -11,11 +11,12 @@ class InventoryPolicy
     /**
      * Determine whether the user can view any inventories.
      *
-     * Admins may browse all inventories; regular users may only browse their own via controller filters.
+      * Admins and authenticated users may browse inventories; per-item policies still restrict view/update/delete.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin');
+          // Allow any authenticated user to view the index/listing.
+          return $user !== null;
     }
 
     /**

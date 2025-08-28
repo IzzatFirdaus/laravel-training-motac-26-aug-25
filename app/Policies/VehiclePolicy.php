@@ -9,8 +9,8 @@ class VehiclePolicy
 {
     public function viewAny(User $user): bool
     {
-        // Admins may view all; others will be filtered by controller.
-        return $user->hasRole('admin');
+    // Allow any authenticated user to view the listing; per-item policies restrict actions.
+    return $user !== null;
     }
 
     public function view(User $user, Vehicle $vehicle): bool

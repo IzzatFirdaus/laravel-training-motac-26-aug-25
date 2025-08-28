@@ -25,9 +25,7 @@ class VehicleController extends Controller
         // Use Eloquent with eager-loading so views can reference the owner relation
         $query = Vehicle::with('owner')->orderBy('created_at', 'desc');
 
-        if (\Illuminate\Support\Facades\Auth::check() && ! \Illuminate\Support\Facades\Auth::user()->hasRole('admin')) {
-            $query->where('user_id', \Illuminate\Support\Facades\Auth::id());
-        }
+    // Allow any authenticated user to view the listing; per-item policies restrict actions like view/update/delete.
 
         $vehicles = $query->paginate(15);
 
@@ -41,8 +39,12 @@ class VehicleController extends Controller
      */
     public function destroy($vehicleId): RedirectResponse
     {
-        $vehicle = Vehicle::findOrFail($vehicleId);
-        $vehicle->delete();
+    $vehicle = Vehicle::findOrFail($vehicleId);
+
+    // Authorize deletion via policy (owner or admin)
+    $this->authorize('delete', $vehicle);
+
+    $vehicle->delete();
 
         return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted.');
     }

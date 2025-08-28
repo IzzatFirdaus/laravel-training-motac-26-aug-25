@@ -53,6 +53,7 @@
                                             <td>{{ isset($vehicle->created_at) ? \Illuminate\Support\Carbon::parse($vehicle->created_at)->toDateString() : '—' }}</td>
                                             <td class="text-nowrap">
                                                 <x-action-buttons
+                                                    :model="$vehicle"
                                                     :showRoute="route('vehicles.show', $vehicle->id)"
                                                     :editRoute="route('vehicles.edit', $vehicle->id)"
                                                     :destroyRoute="route('vehicles.destroy', $vehicle->id)"

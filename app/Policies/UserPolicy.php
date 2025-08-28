@@ -8,7 +8,8 @@ class UserPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('admin');
+    // Allow any authenticated user to view the users list; actions are further restricted by other policy methods.
+    return $user !== null;
     }
 
     public function view(User $user, User $model): bool

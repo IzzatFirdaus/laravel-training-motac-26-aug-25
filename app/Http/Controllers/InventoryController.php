@@ -27,10 +27,7 @@ class InventoryController extends Controller
         $query = Inventory::with('user', 'vehicles')
             ->orderBy('created_at', 'desc');
 
-        // Admins may see all. Authenticated non-admin users should only see their own items.
-        if (Auth::check() && ! Auth::user()->hasRole('admin')) {
-            $query->where('user_id', Auth::id());
-        }
+    // Listing access is controlled by policies (viewAny) — allow all authenticated users to see the index.
 
         $inventories = $query->paginate(15);
 

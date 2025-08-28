@@ -44,6 +44,7 @@
                                             <td>{{ $user->created_at?->format('Y-m-d') ?? '—' }}</td>
                                             <td class="text-nowrap">
                                                 <x-action-buttons
+                                                    :model="$user"
                                                     :showRoute="route('users.show', $user->id)"
                                                     :editRoute="route('users.edit', $user->id)"
                                                     :destroyRoute="route('users.destroy', $user->id)"
