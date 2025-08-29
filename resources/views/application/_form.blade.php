@@ -1,76 +1,106 @@
 <div class="row g-3">
     <div class="col-12">
-        <label for="name" class="form-label">Nama</label>
-        <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $application->name ?? '') }}" required maxlength="255">
+        <label for="name" class="form-label font-heading">Nama <span class="text-danger" aria-hidden="true">*</span></label>
+        <input
+            id="name"
+            name="name"
+            type="text"
+            class="form-control myds-input @error('name') is-invalid @enderror"
+            value="{{ old('name', $application->name ?? '') }}"
+            required
+            maxlength="255"
+            aria-required="true"
+            aria-invalid="{{ $errors->has('name') ? 'true' : 'false' }}"
+            @if($errors->has('name')) aria-describedby="name-error" @endif
+        >
         @error('name')
-            <div class="invalid-feedback">{{ $message }}</div>
+            <div id="name-error" class="invalid-feedback" role="alert">{{ $message }}</div>
         @enderror
-        <div id="users-autocomplete" class="position-relative mt-2" style="max-width:420px;">
-            <ul id="users-list" class="list-group" style="display:none; position:absolute; z-index:2000; width:100%;"></ul>
+
+        <div id="users-autocomplete" class="position-relative mt-2 autocomplete-wrapper" aria-hidden="false">
+            <ul id="users-list" class="list-group autocomplete-list" role="listbox" aria-label="Cadangan pengguna" style="display:none"></ul>
         </div>
     </div>
 
     <div class="col-12">
         <label for="description" class="form-label">Keterangan</label>
-        <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description', $application->description ?? '') }}</textarea>
+        <textarea
+            id="description"
+            name="description"
+            class="form-control myds-input @error('description') is-invalid @enderror"
+            aria-invalid="{{ $errors->has('description') ? 'true' : 'false' }}"
+            @if($errors->has('description')) aria-describedby="description-error" @endif
+        >{{ old('description', $application->description ?? '') }}</textarea>
         @error('description')
-            <div class="invalid-feedback">{{ $message }}</div>
+            <div id="description-error" class="invalid-feedback" role="alert">{{ $message }}</div>
         @enderror
     </div>
 
-        <div class="col-12">
-            <label for="inventory_id" class="form-label">Inventori</label>
-            <select id="inventory_id" name="inventory_id" class="form-control @error('inventory_id') is-invalid @enderror">
-                <option value="">(tiada)</option>
-                @foreach(($inventories ?? collect()) as $inv)
-                    <option value="{{ $inv->id }}" {{ (string) old('inventory_id', $application->inventory_id ?? '') === (string) $inv->id ? 'selected' : '' }}>{{ $inv->name }}</option>
+    <div class="col-12">
+        <label for="inventory_id" class="form-label">Inventori</label>
+        <select
+            id="inventory_id"
+            name="inventory_id"
+            class="form-control myds-input @error('inventory_id') is-invalid @enderror"
+            aria-invalid="{{ $errors->has('inventory_id') ? 'true' : 'false' }}"
+            @if($errors->has('inventory_id')) aria-describedby="inventory-error" @endif
+        >
+            <option value="">{{ __('(tiada)') }}</option>
+            @foreach(($inventories ?? collect()) as $inv)
+                <option value="{{ $inv->id }}" {{ (string) old('inventory_id', $application->inventory_id ?? '') === (string) $inv->id ? 'selected' : '' }}>
+                    {{ $inv->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('inventory_id')
+            <div id="inventory-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-12">
+        <label for="vehicle_id" class="form-label">Kenderaan</label>
+        <select
+            id="vehicle_id"
+            name="vehicle_id"
+            class="form-control myds-input @error('vehicle_id') is-invalid @enderror"
+            aria-invalid="{{ $errors->has('vehicle_id') ? 'true' : 'false' }}"
+            @if($errors->has('vehicle_id')) aria-describedby="vehicle-error" @endif
+        >
+            <option value="">{{ __('(tiada)') }}</option>
+            {{-- Options will be populated dynamically based on selected inventory --}}
+            @if(isset($application) && $application->vehicle_id && $application->inventory)
+                @foreach($application->inventory->vehicles ?? collect() as $v)
+                    <option value="{{ $v->id }}" {{ (string) old('vehicle_id', $application->vehicle_id ?? '') === (string) $v->id ? 'selected' : '' }}>
+                        {{ $v->name }}
+                    </option>
                 @endforeach
-            </select>
-            @error('inventory_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="col-12">
-            <label for="vehicle_id" class="form-label">Kenderaan</label>
-            <select id="vehicle_id" name="vehicle_id" class="form-control @error('vehicle_id') is-invalid @enderror">
-                <option value="">(tiada)</option>
-                {{-- Options will be populated dynamically based on selected inventory --}}
-                @if(isset($application) && $application->vehicle_id && $application->inventory)
-                    @foreach($application->inventory->vehicles ?? collect() as $v)
-                        <option value="{{ $v->id }}" {{ (string) old('vehicle_id', $application->vehicle_id ?? '') === (string) $v->id ? 'selected' : '' }}>{{ $v->name }}</option>
-                    @endforeach
-                @endif
-            </select>
-            @error('vehicle_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-        {{-- Pemilik (owner) field: show a select for admins, otherwise set current user as hidden owner --}}
-        <!--
-            <div class="col-12">
-                <label for="user_id" class="form-label">Pemilik</label>
+            @endif
+        </select>
+        @error('vehicle_id')
+            <div id="vehicle-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+        @enderror
+    </div>
 
-                {{-- If the user is authenticated and has the "admin" role, show a dropdown to choose the owner --}}
-                //@if(auth()->check() && auth()->user()->hasRole('admin'))
-                <select id="user_id" name="user_id" class="form-control @error('user_id') is-invalid ///@enderror">
-                {{-- Allow no selection --}}
-                <option value="">(tiada)</option>
+    {{-- Pemilik (owner) field: show a select for admins, otherwise set current user as hidden owner --}}
+    {{-- Kept commented but cleaned and accessible if enabled --}}
+    {{--
+    <div class="col-12">
+        <label for="user_id" class="form-label">Pemilik</label>
 
-                {{-- List available users as options; preserve old input or model value for selection --}}
+        @if(auth()->check() && auth()->user()->hasRole('admin'))
+            <select id="user_id" name="user_id" class="form-control myds-input @error('user_id') is-invalid @enderror" aria-describedby="{{ $errors->has('user_id') ? 'user-error' : '' }}">
+                <option value="">{{ __('(tiada)') }}</option>
                 @foreach(($users ?? collect()) as $u)
-                <option value="{{ $u->id }}" {{ (string) old('user_id', $application->user_id ?? '') === (string) $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
+                    <option value="{{ $u->id }}" {{ (string) old('user_id', $application->user_id ?? '') === (string) $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
                 @endforeach
-                </select>
-
-                {{-- Validation feedback for user_id --}}
-                @error('user_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                @else
-                {{-- For non-admins: set the current authenticated user as the owner using a hidden input --}}
-                <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-                <div class="form-text">Anda akan menjadi pemilik permohonan ini.</div>
-                @endif
-            </div>
-        -->
+            </select>
+            @error('user_id') <div id="user-error" class="invalid-feedback" role="alert">{{ $message }}</div> @enderror
+        @else
+            <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
+            <div class="form-text">Anda akan menjadi pemilik permohonan ini.</div>
+        @endif
+    </div>
+    --}}
 </div>
 
 @push('scripts')
@@ -83,50 +113,102 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (! nameInput || ! usersList) return;
 
+    /**
+     * Fetch matching users from server (Ajax)
+     * Returns array of { id, name }
+     */
     async function fetchUsers(q = '') {
         const url = new URL('{{ route('users.search') }}', window.location.origin);
         if (q) url.searchParams.set('q', q);
-        const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-        if (! res.ok) return [];
-        return await res.json();
+        try {
+            const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (! res.ok) return [];
+            return await res.json();
+        } catch (err) {
+            return [];
+        }
     }
 
+    /**
+     * Render list of user suggestions as listbox options
+     * Ensures keyboard accessibility (Enter selects, ArrowUp/Down moves)
+     */
     function renderUsers(items) {
         usersList.innerHTML = '';
-        if (! items.length) { usersList.style.display = 'none'; return; }
-        items.forEach(u => {
+        usersList.style.display = 'none';
+        if (! Array.isArray(items) || items.length === 0) return;
+
+        items.forEach((u, idx) => {
             const li = document.createElement('li');
             li.className = 'list-group-item list-group-item-action';
+            li.setAttribute('role', 'option');
+            li.setAttribute('tabindex', '0');
             li.textContent = u.name;
             li.dataset.userId = u.id;
+            // click handler selects user
             li.addEventListener('click', function () {
-                if (ownerSelect) {
-                    const opt = Array.from(ownerSelect.options).find(o => o.value === String(u.id));
-                    if (opt) {
-                        ownerSelect.value = u.id;
-                    } else {
-                        const newOpt = document.createElement('option');
-                        newOpt.value = u.id; newOpt.text = u.name; newOpt.selected = true;
-                        ownerSelect.appendChild(newOpt);
-                    }
-                } else {
-                    let hidden = document.querySelector('input[name="user_id"]');
-                    if (! hidden) {
-                        hidden = document.createElement('input');
-                        hidden.type = 'hidden';
-                        hidden.name = 'user_id';
-                        document.querySelector('form').appendChild(hidden);
-                    }
-                    hidden.value = u.id;
+                selectUser(u);
+            });
+            // keyboard handler (Enter or Space)
+            li.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    selectUser(u);
                 }
-
-                // Indicate owner in the Nama input without replacing it
-                nameInput.value = (nameInput.value || '') + ' — ' + u.name;
-                usersList.style.display = 'none';
+                // handle arrow navigation
+                if (ev.key === 'ArrowDown') {
+                    ev.preventDefault();
+                    const next = li.nextElementSibling;
+                    if (next) next.focus();
+                }
+                if (ev.key === 'ArrowUp') {
+                    ev.preventDefault();
+                    const prev = li.previousElementSibling;
+                    if (prev) prev.focus();
+                }
             });
             usersList.appendChild(li);
         });
+
+        // mark container visible to assistive tech
         usersList.style.display = 'block';
+        usersList.setAttribute('aria-hidden', 'false');
+        usersList.firstElementChild && usersList.firstElementChild.focus();
+    }
+
+    /**
+     * When a user suggestion is selected: set hidden owner or select option,
+     * annotate name field for clarity, and hide the suggestion list.
+     */
+    function selectUser(u) {
+        if (! u) return;
+
+        if (ownerSelect) {
+            const opt = Array.from(ownerSelect.options).find(o => o.value === String(u.id));
+            if (opt) {
+                ownerSelect.value = u.id;
+            } else {
+                const newOpt = document.createElement('option');
+                newOpt.value = u.id;
+                newOpt.text = u.name;
+                newOpt.selected = true;
+                ownerSelect.appendChild(newOpt);
+            }
+        } else {
+            let hidden = document.querySelector('input[name="user_id"]');
+            if (! hidden) {
+                hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = 'user_id';
+                document.querySelector('form').appendChild(hidden);
+            }
+            hidden.value = u.id;
+        }
+
+        // Append owner hint to the name input (keeping original user text)
+        nameInput.value = (nameInput.value || '').replace(/\s*—\s*.*$/, '') + ' — ' + u.name;
+        usersList.style.display = 'none';
+        usersList.setAttribute('aria-hidden', 'true');
     }
 
     nameInput.addEventListener('focus', async function () {
@@ -137,13 +219,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     nameInput.addEventListener('input', async function () {
         const q = nameInput.value.trim();
+        if (! q) {
+            usersList.style.display = 'none';
+            return;
+        }
         const users = await fetchUsers(q);
         renderUsers(users);
     });
 
+    // close suggestions when clicking outside
     document.addEventListener('click', function (ev) {
         if (! usersWrapper.contains(ev.target) && ev.target !== nameInput) {
             usersList.style.display = 'none';
+            usersList.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    // close on escape
+    document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape') {
+            usersList.style.display = 'none';
+            usersList.setAttribute('aria-hidden', 'true');
+            nameInput.focus();
         }
     });
 
@@ -153,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function fetchVehiclesForInventory(inventoryId) {
         if (! inventoryId) return [];
-        const url = new URL('{{ url('/') }}');
+        const url = new URL('{{ url('/') }}', window.location.origin);
         url.pathname = '/inventories/' + inventoryId + '/vehicles';
         try {
             const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
@@ -166,19 +263,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function populateVehicleSelect(items) {
         if (! vehicleSelect) return;
-        // clear existing non-empty options
-        const selectedVal = vehicleSelect.value || '';
+        const previousVal = vehicleSelect.value || '';
         vehicleSelect.innerHTML = '';
         const empty = document.createElement('option');
         empty.value = '';
-        empty.text = '(tiada)';
+        empty.text = '{{ __('(tiada)') }}';
         vehicleSelect.appendChild(empty);
 
-        items.forEach(v => {
+        (items || []).forEach(v => {
             const opt = document.createElement('option');
             opt.value = v.id;
             opt.text = v.name;
-            if (String(selectedVal) === String(v.id) || String('{{ old('vehicle_id', $application->vehicle_id ?? '') }}') === String(v.id)) {
+            if (String(previousVal) === String(v.id) || String('{{ old('vehicle_id', $application->vehicle_id ?? '') }}') === String(v.id)) {
                 opt.selected = true;
             }
             vehicleSelect.appendChild(opt);

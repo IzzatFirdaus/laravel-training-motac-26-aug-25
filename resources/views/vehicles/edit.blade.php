@@ -3,7 +3,7 @@
 @section('title', 'Ubah Kenderaan — ' . config('app.name', 'second-crud'))
 
 @section('content')
-<div class="container">
+<div class="myds-container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card">
@@ -58,7 +58,7 @@
 						</div>
 
 						<div class="d-flex justify-content-end">
-							<a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary me-2">Batal</a>
+							<a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary mr-2">Batal</a>
 							<button type="submit" class="myds-btn myds-btn--primary">Kemaskini</button>
 						</div>
 					</form>

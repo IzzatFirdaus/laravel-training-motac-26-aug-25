@@ -4,7 +4,7 @@
 
 @section('content')
 <main id="main-content" class="myds-container py-4" role="main">
-    <div class="desktop:col-span-8 tablet:col-span-8 mobile:col-span-4 mx-auto" style="max-width:760px;">
+    <div class="desktop:col-span-8 tablet:col-span-8 mobile:col-span-4 mx-auto content-maxwidth-lg">
         <header class="mb-3">
             <h1 class="myds-heading-md font-heading font-semibold">Kenderaan #{{ $vehicle->id }}</h1>
             <p class="myds-body-sm text-muted">Butiran penuh kenderaan yang direkodkan</p>

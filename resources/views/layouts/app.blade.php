@@ -41,12 +41,12 @@
         <nav class="navbar navbar-expand-md myds-nav" role="navigation" aria-label="Navigasi utama">
             <div class="myds-container">
                 <a class="navbar-brand myds-brand d-flex align-items-center" href="{{ url('/') }}" aria-label="Laman utama {{ config('app.name') }}">
-                    {{-- Malaysian Government Logo placeholder --}}
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Coat_of_arms_of_Malaysia.svg/50px-Coat_of_arms_of_Malaysia.svg.png"
-                         alt="Jata Negara Malaysia"
-                         width="32"
-                         height="32"
-                         class="me-2">
+                {{-- Malaysian Government Logo: use local asset for offline and compliance --}}
+                <img src="{{ asset('images/gov-logo.png') }}"
+                    alt="{{ config('app.name') }} logo"
+                    width="32"
+                    height="32"
+                    class="me-2" />
                     <span class="font-heading font-semibold">{{ config('app.name', 'Sistem Kerajaan') }}</span>
                 </a>
 
@@ -256,11 +256,11 @@
                                     {{-- Bell icon --}}
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 17H9a3 3 0 0 1-3-3V11a6 6 0 1 1 12 0v3a3 3 0 0 1-3 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     @if($unreadCount)
-                                        <span class="badge bg-danger rounded-pill position-absolute myds-badge myds-badge--danger" style="top:2px; right:0; font-size:0.6rem;">{{ $unreadCount }}</span>
+                                        <span class="badge bg-danger rounded-pill position-absolute myds-badge myds-badge--danger notification-count-badge">{{ $unreadCount }}</span>
                                     @endif
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end myds-dropdown py-0" aria-labelledby="navNotifications" role="menu" style="min-width:320px;">
+                                <div class="dropdown-menu dropdown-menu-end myds-dropdown py-0 notifications-menu" aria-labelledby="navNotifications" role="menu">
                                     <div class="px-3 py-2 border-bottom">
                                         <strong>Pemberitahuan</strong>
                                         <span class="text-muted small d-block">{{ $unreadCount }} belum dibaca</span>
@@ -322,11 +322,11 @@
                 {{-- Footer content spans full width on mobile, 6 columns on tablet, 8 columns on desktop --}}
                 <div class="mobile:col-span-4 tablet:col-span-6 desktop:col-span-8">
                     <div class="d-flex align-items-center mb-3">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Coat_of_arms_of_Malaysia.svg/40px-Coat_of_arms_of_Malaysia.svg.png"
-                             alt="Jata Negara Malaysia"
+                        <img src="{{ asset('images/gov-logo.png') }}"
+                             alt="{{ config('app.name') }} logo"
                              width="24"
                              height="24"
-                             class="me-2">
+                             class="me-2" />
                         <span class="font-heading font-semibold">{{ config('app.name', 'Sistem Kerajaan') }}</span>
                     </div>
                     <p class="text-muted small mb-3">
@@ -358,7 +358,7 @@
     </footer>
 </div>
     {{-- Accessible fallback confirmation region for non-JS or non-SweetAlert environments. JS uses SweetAlert; this container is available if a progressive enhancement is needed. --}}
-    <div id="myds-confirm" aria-hidden="true" style="display:none;">
+    <div id="myds-confirm" aria-hidden="true" class="visually-hidden">
         <div role="dialog" aria-modal="true" aria-labelledby="myds-confirm-title" id="myds-confirm-dialog">
             <h2 id="myds-confirm-title" class="visually-hidden">Sahkan tindakan</h2>
             <p id="myds-confirm-message" class="visually-hidden">Anda pasti mahu meneruskan tindakan ini?</p>

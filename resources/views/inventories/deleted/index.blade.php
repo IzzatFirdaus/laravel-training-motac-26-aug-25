@@ -1,99 +1,136 @@
 @extends('layouts.app')
 
-@section('title', 'Inventori Dipadam — ' . config('app.name', 'second-crud'))
+@section('title', 'Inventori Dipadam — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<main class="container py-4">
-    <header class="mb-4">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 class="h4 mb-0">Inventori Dipadam</h1>
-            <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm">Kembali ke Inventori</a>
-        </div>
-        @if (session('status'))
-            <div class="alert alert-success mt-3 myds-alert myds-alert--success" role="status">{{ session('status') }}</div>
-        @endif
-        @if (session('toast'))
-            <div class="alert alert-info mt-3 myds-alert myds-alert--info" role="toast">{{ session('toast') }}</div>
-        @endif
-    </header>
-
-    @if($deletedInventories->count() > 0)
-        <!-- Search form -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <form method="GET" action="{{ route('inventories.deleted.index') }}" class="d-flex gap-2 flex-wrap align-items-center">
-                    <label for="search" class="form-label mb-0">Cari:</label>
-                    <input id="search" type="text" name="search" class="form-control myds-input" placeholder="Cari inventori dipadam..." value="{{ request('search') }}">
-                    <label for="owner_id" class="form-label mb-0">Pemilik:</label>
-                    <select id="owner_id" name="owner_id" class="form-control myds-select">
-                        <option value="">(semua)</option>
-                        @isset($users)
-                            @foreach($users as $u)
-                                <option value="{{ $u->id }}" {{ (string) request('owner_id') === (string) $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
-                            @endforeach
-                        @endisset
-                    </select>
-                    <button class="myds-btn myds-btn--primary" type="submit">Tapis</button>
-                    @if(request('search') || request('owner_id'))
-                        <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--secondary">Kosongkan</a>
-                    @endif
-                </form>
+<main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="page-heading">
+    <div class="mx-auto content-maxwidth-xl">
+        <header class="mb-4 d-flex flex-column flex-md-row align-items-start justify-content-between" role="banner">
+            <div>
+                <h1 id="page-heading" class="myds-heading-md font-heading mb-1">Inventori Dipadam</h1>
+                <p class="myds-body-sm text-muted mb-0">Senarai item inventori yang telah dipadamkan. Anda boleh memulihkan atau memadam secara kekal berdasarkan kebenaran anda.</p>
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive myds-table-responsive">
-                    <table class="table table-striped myds-table">
+            <div class="mt-3 mt-md-0">
+                <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary" aria-label="Kembali ke Inventori">Kembali ke Inventori</a>
+            </div>
+        </header>
+
+        {{-- Flash messages (MYDS alerts) --}}
+        @if (session('status'))
+            <div class="myds-alert myds-alert--success mb-3" role="status" aria-live="polite">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if (session('toast'))
+            <div class="myds-alert myds-alert--info mb-3" role="status" aria-live="polite">
+                {{ session('toast') }}
+            </div>
+        @endif
+
+        @if($deletedInventories->count() > 0)
+            {{-- Filter / Search --}}
+            <section aria-labelledby="search-heading" class="bg-surface border rounded p-3 mb-3">
+                <h2 id="search-heading" class="sr-only">Carian dan Penapis</h2>
+
+                <form method="GET" action="{{ route('inventories.deleted.index') }}" class="d-flex flex-column flex-md-row gap-3 align-items-end" role="search" aria-label="Carian inventori dipadam">
+                    <div class="flex-grow-1">
+                        <label for="search" class="form-label myds-body-sm">Cari</label>
+                        <input id="search" name="search" type="search" value="{{ request('search') }}" class="myds-input" placeholder="{{ __('Cari mengikut nama atau kod') }}" aria-label="Carian inventori">
+                    </div>
+
+                    <div style="min-width:220px;">
+                        <label for="owner_id" class="form-label myds-body-sm">Pemilik</label>
+                        <select id="owner_id" name="owner_id" class="myds-input" aria-label="Penapis pemilik">
+                            <option value="">{{ __('(semua)') }}</option>
+                            @isset($users)
+                                @foreach($users as $u)
+                                    <option value="{{ $u->id }}" {{ (string) request('owner_id') === (string) $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
+                                @endforeach
+                            @endisset
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="myds-btn myds-btn--primary">Tapis</button>
+                        @if(request('search') || request('owner_id'))
+                            <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--tertiary">Kosongkan</a>
+                        @endif
+                    </div>
+                </form>
+            </section>
+
+            {{-- Table --}}
+            <section aria-labelledby="table-heading" class="bg-surface border rounded p-3">
+                <h2 id="table-heading" class="sr-only">Jadual inventori dipadam</h2>
+
+                <div class="myds-table-responsive" role="region" aria-live="polite" aria-atomic="true">
+                    <table class="myds-table" role="table" aria-describedby="inventories-count">
+                        <caption class="sr-only">Senarai inventori yang dipadam; tindakan tersedia: pulihkan, padam kekal.</caption>
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nama</th>
-                                <th>Kuantiti</th>
-                                <th>Harga</th>
-                                <th>Pemilik</th>
-                                <th>Dipadam Pada</th>
-                                <th>Tindakan</th>
+                                <th scope="col" class="myds-body-sm text-muted">ID</th>
+                                <th scope="col" class="myds-body-sm text-muted">Nama</th>
+                                <th scope="col" class="myds-body-sm text-muted">Kuantiti</th>
+                                <th scope="col" class="myds-body-sm text-muted">Harga</th>
+                                <th scope="col" class="myds-body-sm text-muted">Pemilik</th>
+                                <th scope="col" class="myds-body-sm text-muted">Dipadam Pada</th>
+                                <th scope="col" class="myds-body-sm text-muted">Tindakan</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($deletedInventories as $inventory)
                                 <tr>
-                                    <td>{{ $inventory->id }}</td>
-                                    <td>{{ $inventory->name }}</td>
-                                    <td>{{ $inventory->qty }}</td>
-                                    <td>RM {{ number_format($inventory->price, 2) }}</td>
-                                    <td>{{ $inventory->user->name ?? 'Tidak diketahui' }}</td>
-                                    <td>{{ $inventory->deleted_at->format('d/m/Y H:i') }}</td>
-                                    <td>
-                                        @can('restore', $inventory)
-                                            <form method="POST" action="{{ route('inventories.restore', $inventory) }}" class="d-inline">
-                                                @csrf
-                                                <button type="submit" class="myds-btn myds-btn--primary myds-btn--sm" onclick="return confirm('Adakah anda pasti mahu memulihkan inventori ini?')">Pulihkan</button>
-                                            </form>
-                                        @endcan
-                                        @can('forceDelete', $inventory)
-                                            <form method="POST" action="{{ route('inventories.force-delete', $inventory) }}" class="d-inline ms-2">
-                                                @csrf
-                                                <button type="submit" class="myds-btn myds-btn--danger myds-btn--sm" onclick="return confirm('Adakah anda pasti mahu memadam inventori ini secara kekal? Tindakan ini tidak boleh dibuat asal.')">Padam Kekal</button>
-                                            </form>
-                                        @endcan
+                                    <td class="myds-body-sm text-muted">{{ $inventory->id }}</td>
+                                    <td class="myds-body-md">{{ $inventory->name }}</td>
+                                    <td class="myds-body-sm">{{ $inventory->qty }}</td>
+                                    <td class="myds-body-sm">RM {{ number_format($inventory->price ?? 0, 2) }}</td>
+                                    <td class="myds-body-sm text-muted">{{ optional($inventory->user)->name ?? 'Tidak diketahui' }}</td>
+                                    <td class="myds-body-sm text-muted">{{ optional($inventory->deleted_at)->format('d/m/Y H:i') ?? '—' }}</td>
+                                    <td class="text-nowrap">
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            @can('restore', $inventory)
+                                                <form method="POST" action="{{ route('inventories.restore', $inventory) }}" class="d-inline" data-myds-form data-model="Inventori {{ $inventory->id }}">
+                                                    @csrf
+                                                    <button type="submit" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Pulihkan inventori {{ $inventory->id }}">
+                                                        Pulihkan
+                                                    </button>
+                                                </form>
+                                            @endcan
+
+                                            @can('forceDelete', $inventory)
+                                                <form method="POST" action="{{ route('inventories.force-delete', $inventory) }}" class="d-inline" data-myds-form data-model="Inventori {{ $inventory->id }}">
+                                                    @csrf
+                                                    <button type="submit" class="myds-btn myds-btn--danger myds-btn--sm" aria-label="Padam kekal inventori {{ $inventory->id }}">
+                                                        Padam Kekal
+                                                    </button>
+                                                </form>
+                                            @endcan
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div id="inventories-count" class="myds-body-xs text-muted mt-2">
+                        Memaparkan {{ $deletedInventories->count() }} daripada {{ $deletedInventories->total() ?? $deletedInventories->count() }} inventori dipadam.
+                    </div>
                 </div>
 
-                <div class="d-flex justify-content-center mt-4">
-                    {{ $deletedInventories->links() }}
-                </div>
+                {{-- Pagination --}}
+                @if(method_exists($deletedInventories, 'links'))
+                    <nav class="mt-4 d-flex justify-content-center" role="navigation" aria-label="Paginasi inventori dipadam">
+                        {{ $deletedInventories->links() }}
+                    </nav>
+                @endif
+            </section>
+        @else
+            <div class="myds-alert myds-alert--info" role="status" aria-live="polite">
+                Tiada inventori yang dipadam dijumpai.
             </div>
-        </div>
-    @else
-        <div class="alert alert-info myds-alert myds-alert--info">
-            Tiada inventori yang dipadam dijumpai.
-        </div>
-    @endif
+        @endif
+    </div>
 </main>
 @endsection

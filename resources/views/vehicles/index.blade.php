@@ -54,7 +54,7 @@
                            name="search"
                            class="myds-input"
                            value="{{ request('search','') }}"
-                           placeholder="Nama atau keterangan"
+                           placeholder="{{ __('placeholders.name_or_description') }}"
                            aria-describedby="search-help" />
                     <div id="search-help" class="myds-body-xs text-muted mt-1">Cari mengikut nama atau keterangan kenderaan</div>
                 </div>

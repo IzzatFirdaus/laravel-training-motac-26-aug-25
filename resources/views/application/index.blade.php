@@ -3,11 +3,11 @@
 @section('title', 'Permohonan — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<main id="main-content" class="myds-container py-4" role="main">
-    <div class="desktop:col-span-8 tablet:col-span-8 mobile:col-span-4 mx-auto" style="max-width:920px;">
+<main id="main-content" class="myds-container py-4" role="main" tabindex="-1">
+    <div class="mx-auto content-maxwidth-xl">
         <header class="d-flex align-items-start justify-content-between mb-3">
             <div>
-                <h1 class="myds-heading-md font-heading font-semibold">Permohonan</h1>
+                <h1 class="myds-heading-md font-heading">Permohonan</h1>
                 <p class="myds-body-sm text-muted mb-0">Senarai permohonan dalam sistem.</p>
             </div>
             <div class="text-end">
@@ -18,19 +18,19 @@
         </header>
 
         <div class="mb-3">
-            <form method="GET" action="{{ route('applications.index') }}" class="d-flex gap-2 align-items-center" role="search">
-                <input name="q" class="myds-input" placeholder="Cari permohonan" value="{{ old('q', $q ?? '') }}" aria-label="Cari permohonan">
+            <form method="GET" action="{{ route('applications.index') }}" class="d-flex gap-2 align-items-center" role="search" aria-label="Carian permohonan">
+                <input name="q" class="myds-input" placeholder="{{ __('placeholders.application_search') }}" value="{{ old('q', $q ?? '') }}" aria-label="{{ __('placeholders.application_search') }}">
                 <button class="myds-btn myds-btn--secondary" type="submit">Cari</button>
             </form>
         </div>
 
         <section aria-labelledby="applications-heading">
-            <h2 id="applications-heading" class="visually-hidden">Jadual permohonan</h2>
+            <h2 id="applications-heading" class="sr-only">Jadual permohonan</h2>
 
-            <div class="bg-surface border rounded-m p-3 mb-3">
-                <div class="myds-table-responsive">
+            <div class="bg-surface border rounded p-3 mb-3">
+                <div class="myds-table-responsive" role="region" aria-live="polite" aria-atomic="true">
                     <table class="myds-table" aria-describedby="applications-count">
-                        <caption class="visually-hidden">Senarai permohonan; gunakan tindakan untuk lihat atau edit permohonan.</caption>
+                        <caption class="sr-only">Senarai permohonan; gunakan tindakan untuk lihat atau edit permohonan.</caption>
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -83,13 +83,13 @@
             </div>
 
             @if(!empty($q))
-                <div class="bg-surface border rounded-m p-3 mt-4">
+                <div class="bg-surface border rounded p-3 mt-4">
                     <h3 class="myds-heading-sm">Keputusan carian untuk "{{ e($q) }}" — Inventori</h3>
                     @if($inventories->isEmpty())
                         <p class="myds-body-sm text-muted">Tiada inventori dijumpai.</p>
                     @else
                         <div class="myds-table-responsive">
-                            <table class="myds-table">
+                            <table class="myds-table" aria-describedby="inventories-count">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

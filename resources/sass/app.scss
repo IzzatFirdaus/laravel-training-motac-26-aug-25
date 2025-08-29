@@ -1,5 +1,7 @@
 // Variables (module) - must come before any CSS rules or @import statements
 @use 'variables' as *;
+// MYDS token partial (exported CSS custom properties)
+@use 'myds-variables' as *;
 // Bootstrap wrapper (module-based)
 @use 'bootstrap-wrapper';
 
@@ -87,6 +89,56 @@ SASS architecture.
 	outline-offset: 2px !important;
 	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
 }
+
+/* Utilities added to replace inline styles found in templates */
+.hero-heading-size {
+	font-size: 2.5rem;
+}
+
+.content-maxwidth {
+	max-width: 600px;
+}
+.content-maxwidth-lg {
+	max-width: 760px;
+}
+.content-maxwidth-xl {
+	max-width: 920px;
+}
+
+.icon-circle {
+	width: 60px;
+	height: 60px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.notification-count-badge {
+	top: 2px;
+	right: 0;
+	font-size: 0.6rem;
+}
+
+.notifications-menu {
+	min-width: 320px;
+}
+
+.autocomplete-wrapper { max-width: 420px; }
+.autocomplete-list { display: none; position: absolute; z-index: 2000; width: 100%; }
+
+.flex-grow-1 { flex: 1; }
+.fixed-width-180 { width: 180px; }
+
+/* Small spacing utilities */
+.mt-0 { margin-top: 0 !important; }
+.mt-3 { margin-top: 12px !important; }
+.mb-0 { margin-bottom: 0 !important; }
+
+/* Cursor utilities */
+.cursor-not-allowed { cursor: not-allowed !important; }
+
+/* When JS wants to show autocomplete results it removes 'display:none' inline state; ensure visible state class exists */
+.autocomplete-list.show { display: block !important; }
 
 // Global focus style for interactive elements (use :focus-visible)
 // Apply to most interactive and tabbable controls, including ARIA roles.

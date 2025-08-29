@@ -3,7 +3,7 @@
 @section('title', 'Mencipta Pengguna — ' . config('app.name', 'second-crud'))
 
 @section('content')
-<main class="container" id="main-content" tabindex="-1">
+<main class="myds-container" id="main-content" tabindex="-1">
 	<div class="row justify-content-center">
 		<div class="col-12 col-md-8">
 			<div class="card">

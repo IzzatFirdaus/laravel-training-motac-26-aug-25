@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'welcome_title' => 'Welcome — :app',
+    'welcome_heading' => 'Welcome to :app',
+    'welcome_description' => 'Inventory and vehicle management system built following the MyGOVEA principles and Malaysia Government Design System (MYDS).',
+    'cta_start' => 'Get Started',
+    'login' => 'Log In',
+    'view_inventory' => 'View Inventories',
+    'view_vehicle' => 'View Vehicles',
+    'view_user' => 'View Users',
+    'view_applications' => 'View Applications',
+    'create_inventory' => 'Create Inventory',
+    'create_inventory_full' => 'Create New Inventory',
+    'create_inventory_first' => 'Create First Inventory',
+    'register_vehicle' => 'Register Vehicle',
+    'import_export' => 'Import/Export',
+    'features_heading' => 'System Features',
+    'features_sub' => 'This system is developed following citizen-centric principles and MYDS standards',
+    'principles_heading' => 'MyGOVEA Principles',
+    'principles_sub' => 'This system is built based on MyGOVEA design principles',
+    'quick_actions' => 'Quick Actions',
+    'create_inventory_button' => 'Create Inventory',
+    'create_vehicle_button' => 'Register Vehicle',
+    'import_export_button' => 'Import/Export',
+    'new_inventory_created' => 'New inventory created',
+    'view_inventory_button' => 'View Inventory',
+];

@@ -3,7 +3,7 @@
 @section('title', 'Posts — ' . config('app.name'))
 
 @section('content')
-<main id="main-content" class="container" tabindex="-1">
+<main id="main-content" class="myds-container" tabindex="-1">
     <div class="row justify-content-center">
         <div class="col-12 col-md-10">
             <header class="d-flex align-items-start justify-content-between mb-3">

@@ -3,7 +3,7 @@
 @section('title', 'Kenderaan Dikemaskini — ' . config('app.name', 'second-crud'))
 
 @section('content')
-<div class="container">
+<div class="myds-container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card">

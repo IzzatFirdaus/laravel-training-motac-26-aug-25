@@ -79,7 +79,7 @@
                            name="name"
                            class="myds-input @error('name') is-invalid border-danger @enderror"
                            value="{{ old('name') }}"
-                           placeholder="Contoh: Honda Civic 1.5 TC-P"
+                           placeholder="{{ __('placeholders.example_vehicle') }}"
                            aria-describedby="name-help @error('name') name-error @enderror"
                            aria-required="true"
                            maxlength="255"
@@ -121,7 +121,7 @@
                         </div>
                     @else
                         <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-                        <div class="myds-input bg-muted" style="cursor: not-allowed;">
+                        <div class="myds-input bg-muted cursor-not-allowed">
                             {{ auth()->user()->name ?? 'Pengguna Semasa' }}
                         </div>
                         <div id="user_id-help" class="myds-body-xs text-muted mt-1">
@@ -152,7 +152,7 @@
                            class="myds-input @error('qty') is-invalid border-danger @enderror"
                            value="{{ old('qty', 1) }}"
                            min="1"
-                           placeholder="1"
+                           placeholder="{{ __('placeholders.example_quantity') }}"
                            aria-describedby="qty-help @error('qty') qty-error @enderror"
                            aria-required="true"
                            required>
@@ -185,7 +185,7 @@
                                value="{{ old('price') }}"
                                step="0.01"
                                min="0"
-                               placeholder="0.00"
+                               placeholder="{{ __('placeholders.example_price') }}"
                                aria-describedby="price-help @error('price') price-error @enderror">
                     </div>
                     <div id="price-help" class="myds-body-xs text-muted mt-1">
@@ -212,7 +212,7 @@
                               name="description"
                               class="myds-input @error('description') is-invalid border-danger @enderror"
                               rows="4"
-                              placeholder="Tambahan maklumat tentang kenderaan..."
+                              placeholder="{{ __('placeholders.extra_vehicle_info') }}"
                               aria-describedby="description-help @error('description') description-error @enderror"
                               maxlength="1000">{{ old('description') }}</textarea>
                     <div id="description-help" class="myds-body-xs text-muted mt-1">

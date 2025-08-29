@@ -1,21 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Inventori Dikemaskini — ' . config('app.name', 'second-crud'))
+@section('title', 'Inventori Dikemaskini — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-8">
-			<div class="card">
-				<div class="card-body">
-					<h2 class="h5">Inventory updated</h2>
-					<p class="mb-0">The inventory item has been updated successfully.</p>
-						<div class="mt-3">
-							<a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary">Back to inventories</a>
-						</div>
-				</div>
-			</div>
-		</div>
-	</div>
- </div>
+<main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="status-title">
+  <div class="mx-auto content-maxwidth-lg">
+    <div class="bg-surface border rounded p-4 shadow-sm">
+      <h2 id="status-title" class="myds-heading-sm font-heading mb-2">Inventori dikemaskini</h2>
+      <p class="myds-body-sm mb-0">Item inventori telah berjaya dikemaskini.</p>
+
+      <div class="mt-3">
+        <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary">Kembali ke senarai inventori</a>
+      </div>
+    </div>
+  </div>
+</main>
 @endsection

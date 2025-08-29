@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="myds-container">
     <h1>Pemberitahuan</h1>
 
     @if($notifications->isEmpty())
