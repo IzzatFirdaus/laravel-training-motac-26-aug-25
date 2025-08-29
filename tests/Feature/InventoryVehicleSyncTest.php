@@ -30,8 +30,8 @@ class InventoryVehicleSyncTest extends TestCase
 
         $response->assertStatus(302);
 
-    $inventory = Inventory::where('name', strtoupper('Inventory with vehicles'))->first();
-    $this->assertNotNull($inventory, 'Inventory was not created; response: ' . $response->getContent());
+        $inventory = Inventory::where('name', strtoupper('Inventory with vehicles'))->first();
+        $this->assertNotNull($inventory, 'Inventory was not created; response: '.$response->getContent());
 
         $this->assertDatabaseHas('inventory_vehicle', [
             'inventory_id' => $inventory->getKey(),

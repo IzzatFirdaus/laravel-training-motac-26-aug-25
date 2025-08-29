@@ -18,6 +18,8 @@ class StoreInventoryRequest extends FormRequest
     {
         return [
             'user_id' => ['nullable', 'exists:users,id'],
+            'warehouse_id' => ['nullable', 'exists:warehouses,id'],
+            'shelf_id' => ['nullable', 'exists:shelves,id'],
             'name' => ['required', 'string', 'max:255'],
             'qty' => ['required', 'integer', 'min:0'],
             'price' => ['required', 'numeric', 'min:0'],
@@ -33,6 +35,22 @@ class StoreInventoryRequest extends FormRequest
             'name.required' => 'Sila masukkan nama inventori.',
             'qty.required' => 'Sila masukkan kuantiti.',
             'price.required' => 'Sila masukkan harga.',
+            'warehouse_id.exists' => 'Gudang tidak sah.',
+            'shelf_id.exists' => 'Rak tidak sah.',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $wid = $this->input('warehouse_id');
+            $sid = $this->input('shelf_id');
+            if ($wid && $sid) {
+                $shelf = \App\Models\Shelf::find($sid);
+                if (! $shelf || (string) $shelf->warehouse_id !== (string) $wid) {
+                    $validator->errors()->add('shelf_id', 'Rak yang dipilih bukan sebahagian daripada gudang yang dipilih.');
+                }
+            }
+        });
     }
 }

@@ -6,20 +6,21 @@ use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
 use App\Jobs\InventoryCreatedJob;
 use App\Models\Inventory;
+use App\Models\User;
+use App\Models\Warehouse;
 use App\Notifications\StoreInventoryNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 
 class InventoryController extends Controller
 {
     public function __construct()
     {
-        // Require authentication for all inventory pages. Per-item authorization
-        // is performed via policies so owners (and admins) can manage their own items.
-        $this->middleware('auth');
+    // Require authentication for inventory pages, but allow public access to
+    // lightweight JSON endpoints used by dynamic selects and the navbar.
+    $this->middleware('auth')->except(['warehouses', 'shelvesByWarehouse']);
     }
 
     /**
@@ -56,8 +57,8 @@ class InventoryController extends Controller
         // Authorization: allow creation per policy (admins and regular users as permitted).
         $this->authorize('create', Inventory::class);
 
-    // Fetch all users ordered by name to populate the dropdown in the form using Eloquent
-    $users = User::query()->select('id', 'name')->orderBy('name')->get();
+        // Fetch all users ordered by name to populate the dropdown in the form using Eloquent
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         return view('inventories.create', compact('users'));
     }
@@ -128,8 +129,8 @@ class InventoryController extends Controller
 
     public function edit($inventoryId): View
     {
-    // Fetch users to populate owner dropdown
-    $users = User::query()->select('id', 'name')->orderBy('name')->get();
+        // Fetch users to populate owner dropdown
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         $inventory = Inventory::findOrFail($inventoryId);
 
@@ -224,5 +225,33 @@ class InventoryController extends Controller
         }
 
         return response()->json(['ok' => true]);
+    }
+
+    /**
+     * Return all warehouses as JSON for dynamic selects.
+     */
+    public function warehouses()
+    {
+        $warehouses = Warehouse::query()->select('id', 'name')->orderBy('name')->get();
+
+        return response()->json($warehouses);
+    }
+
+    /**
+     * Return shelves for a given warehouse as JSON.
+     * Used by the front-end dynamic dropdown when selecting a warehouse.
+     */
+    public function shelvesByWarehouse($warehouse)
+    {
+        // Accept either a Warehouse model (route model binding) or an id.
+        if ($warehouse instanceof Warehouse) {
+            $w = $warehouse;
+        } else {
+            $w = Warehouse::findOrFail($warehouse);
+        }
+
+        $shelves = $w->shelves()->select('id', 'shelf_number')->orderBy('shelf_number')->get();
+
+        return response()->json($shelves);
     }
 }

@@ -57,6 +57,24 @@
                             @error('vehicle_ids') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
                         </div>
 
+                        <div class="mb-3">
+                            <label for="warehouse_id" class="form-label">Gudang</label>
+                            <select id="warehouse_id" name="warehouse_id" class="form-control myds-select">
+                                <option value="">(Pilih gudang)</option>
+                                {{-- Options will be populated by JS on page load --}}
+                            </select>
+                            @error('warehouse_id') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="shelf_id" class="form-label">Rak</label>
+                            <select id="shelf_id" name="shelf_id" class="form-control myds-select">
+                                <option value="">(Pilih rak)</option>
+                                {{-- Populated when warehouse is selected --}}
+                            </select>
+                            @error('shelf_id') <div class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                        </div>
+
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary me-2">Batal</a>
                             <button type="submit" class="myds-btn myds-btn--primary">Cipta</button>
@@ -144,6 +162,63 @@ document.addEventListener('DOMContentLoaded', function () {
             usersList.style.display = 'none';
         }
     });
+
+    // Dynamic warehouse -> shelf selects
+    (function warehouseShelfInit() {
+        const warehouseSelect = document.querySelector('#warehouse_id');
+        const shelfSelect = document.querySelector('#shelf_id');
+
+        if (! warehouseSelect || ! shelfSelect) return;
+
+        async function fetchWarehouses() {
+            const res = await fetch('{{ url('/warehouses') }}', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (! res.ok) return [];
+            return await res.json();
+        }
+
+        async function fetchShelves(warehouseId) {
+            if (! warehouseId) return [];
+            const res = await fetch('/warehouses/' + warehouseId + '/shelves', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (! res.ok) return [];
+            return await res.json();
+        }
+
+        function populateSelect(select, items, selectedValue = null) {
+            select.innerHTML = '';
+            const empty = document.createElement('option');
+            empty.value = '';
+            empty.textContent = '(Pilih)';
+            select.appendChild(empty);
+            items.forEach(it => {
+                const opt = document.createElement('option');
+                opt.value = it.id;
+                opt.textContent = it.name || it.shelf_number || it.id;
+                if (selectedValue && String(selectedValue) === String(it.id)) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
+
+        (async function init() {
+            // Populate warehouses
+            const warehouses = await fetchWarehouses();
+            const oldWarehouse = '{{ old('warehouse_id', '') }}';
+            populateSelect(warehouseSelect, warehouses, oldWarehouse || null);
+
+            // If there is an old warehouse value (validation) or none, attempt to load shelves
+            const initialWarehouse = oldWarehouse || '';
+            if (initialWarehouse) {
+                const shelves = await fetchShelves(initialWarehouse);
+                const oldShelf = '{{ old('shelf_id', '') }}';
+                populateSelect(shelfSelect, shelves, oldShelf || null);
+            }
+        })();
+
+        warehouseSelect.addEventListener('change', async function () {
+            const wid = this.value;
+            const shelves = await fetchShelves(wid);
+            populateSelect(shelfSelect, shelves, null);
+        });
+    })();
 });
 </script>
 @endpush

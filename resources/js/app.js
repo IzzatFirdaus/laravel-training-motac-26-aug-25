@@ -121,6 +121,31 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}, true);
 
+	// Intercept submit events on forms marked with data-myds-form so that
+	// submit buttons (type=submit) still show the confirmation dialog.
+	document.body.addEventListener('submit', (e) => {
+		const form = e.target;
+		if (!form || !form.hasAttribute || !form.hasAttribute('data-myds-form')) return;
+
+		// find the submitter button (modern browsers support e.submitter)
+		let submitter = e.submitter;
+		if (!submitter) {
+			// fallback: try to find a button with type=submit that has focus or is inside the form
+			submitter = form.querySelector('button[type="submit"], input[type="submit"]');
+		}
+
+		const aria = (submitter && submitter.getAttribute('aria-label') || '').toLowerCase();
+		const isDanger = submitter && (submitter.classList.contains('myds-btn--danger') || aria.includes('padam'));
+		if (!isDanger) return; // allow normal submits for non-destructive forms
+
+		e.preventDefault();
+		if (window.MYDS && typeof window.MYDS.handleDestroy === 'function') {
+			window.MYDS.handleDestroy(submitter);
+		} else if (confirm('Ini akan memadam item. Teruskan?')) {
+			form.submit();
+		}
+	}, true);
+
 	// Reserved hook for links with data-myds="link" (no-op for now)
 	document.body.addEventListener('click', (e) => {
 		const link = e.target.closest && e.target.closest('[data-myds="link"]');

@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             VehicleSeeder::class,
             InventorySeeder::class,
             ApplicationSeeder::class,
+            \Database\Seeders\WarehouseSeeder::class,
+            \Database\Seeders\ShelfSeeder::class,
         ]);
     }
 }

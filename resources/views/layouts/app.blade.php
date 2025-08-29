@@ -170,6 +170,18 @@
                                 @endauth
                             </div>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navWarehouses" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Gudang menu">
+                                Gudang
+                            </a>
+                            <div id="warehousesMenu" class="dropdown-menu myds-dropdown" aria-labelledby="navWarehouses" role="menu">
+                                <div class="dropdown-header">Gudang & Rak</div>
+                                <div id="warehouses-list"></div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('inventories.create') }}">Cipta Inventori</a>
+                            </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar: search, language toggle, auth -->
@@ -295,5 +307,54 @@
     <!-- Scripts (separate include to avoid bundling into one head entry) -->
     @vite('resources/js/app.js')
     @stack('scripts')
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.querySelector('#warehouses-list');
+        if (! container) return;
+
+        async function fetchWarehouses() {
+            const res = await fetch('{{ url('/warehouses') }}', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (! res.ok) return [];
+            return await res.json();
+        }
+
+        async function fetchShelves(warehouseId) {
+            const res = await fetch('/warehouses/' + warehouseId + '/shelves', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (! res.ok) return [];
+            return await res.json();
+        }
+
+        (async function init() {
+            const warehouses = await fetchWarehouses();
+            container.innerHTML = '';
+            for (const w of warehouses) {
+                const header = document.createElement('div');
+                header.className = 'dropdown-header small text-muted';
+                header.textContent = w.name;
+                container.appendChild(header);
+
+                const shelves = await fetchShelves(w.id);
+                if (shelves.length === 0) {
+                    const none = document.createElement('div');
+                    none.className = 'dropdown-item disabled small text-muted';
+                    none.textContent = '(Tiada rak)';
+                    container.appendChild(none);
+                } else {
+                    for (const s of shelves) {
+                        const a = document.createElement('a');
+                        a.className = 'dropdown-item ps-4';
+                        a.href = '{{ route('inventories.create') }}' + '?warehouse_id=' + encodeURIComponent(w.id) + '&shelf_id=' + encodeURIComponent(s.id);
+                        a.textContent = s.shelf_number;
+                        container.appendChild(a);
+                    }
+                }
+
+                const divider = document.createElement('div');
+                divider.className = 'dropdown-divider m-0';
+                container.appendChild(divider);
+            }
+        })();
+    });
+    </script>
 </body>
 </html>

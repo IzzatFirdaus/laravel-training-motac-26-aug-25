@@ -17,6 +17,8 @@ class UpdateInventoryRequest extends FormRequest
     {
         return [
             'user_id' => ['nullable', 'exists:users,id'],
+            'warehouse_id' => ['nullable', 'exists:warehouses,id'],
+            'shelf_id' => ['nullable', 'exists:shelves,id'],
             'name' => ['nullable', 'string', 'max:255'],
             'qty' => ['nullable', 'integer', 'min:0'],
             'price' => ['nullable', 'numeric', 'min:0'],
@@ -29,5 +31,19 @@ class UpdateInventoryRequest extends FormRequest
     public function messages(): array
     {
         return [];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $wid = $this->input('warehouse_id');
+            $sid = $this->input('shelf_id');
+            if ($wid && $sid) {
+                $shelf = \App\Models\Shelf::find($sid);
+                if (! $shelf || (string) $shelf->warehouse_id !== (string) $wid) {
+                    $validator->errors()->add('shelf_id', 'Rak yang dipilih bukan sebahagian daripada gudang yang dipilih.');
+                }
+            }
+        });
     }
 }

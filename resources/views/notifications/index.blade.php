@@ -10,7 +10,7 @@
         <ul class="list-group">
             @foreach($notifications as $note)
                 @php $isUnread = is_null($note->read_at); @endphp
-                <li class="list-group-item d-flex justify-content-between align-items-start {{ $isUnread ? 'bg-light border-primary' : '' }}">
+                <li class="list-group-item d-flex justify-content-between align-items-start {{ $isUnread ? 'notification-unread bg-light border-primary' : '' }}">
                     <div>
                         <div class="fw-bold">{{ $note->data['message'] ?? 'Pemberitahuan' }}
                             @if($isUnread)

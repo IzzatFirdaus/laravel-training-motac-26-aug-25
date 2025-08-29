@@ -145,6 +145,10 @@ Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy']
 Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->whereNumber('vehicle')->name('vehicles.show');
 // JSON endpoint: return vehicles belonging to an inventory (for dynamic selects)
 Route::get('/inventories/{inventory}/vehicles', [VehicleController::class, 'byInventory'])->name('inventories.vehicles');
+// JSON endpoint: return shelves for a warehouse (dynamic dropdown)
+Route::get('/warehouses/{warehouse}/shelves', [InventoryController::class, 'shelvesByWarehouse'])->name('warehouses.shelves');
+// JSON endpoint: return warehouses for dynamic selects
+Route::get('/warehouses', [InventoryController::class, 'warehouses'])->name('warehouses.index');
 // Add other routes below. Controller methods should be defined inside their classes, not in this file.
 
 // Excel: Inventory export/import/preview

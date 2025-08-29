@@ -23,7 +23,7 @@
         @can('delete', $model)
             <form method="POST" action="{{ $destroyRoute }}" class="d-inline ms-1" data-myds-form>
                 @csrf
-                <button type="button" class="myds-btn myds-btn--danger myds-btn--sm" aria-label="Padam {{ $label }}">Padam</button>
+                <button type="submit" class="myds-btn myds-btn--danger myds-btn--sm" aria-label="Padam {{ $label }}">Padam</button>
             </form>
         @endcan
         @if(!empty($extraItems))
@@ -61,7 +61,7 @@
                 @can('delete', $model)
                     <form method="POST" action="{{ $destroyRoute }}" class="px-3 py-1" data-myds-form>
                         @csrf
-                        <button type="button" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam {{ $label }}">Padam</button>
+                        <button type="submit" class="dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam {{ $label }}">Padam</button>
                     </form>
                 @endcan
 
