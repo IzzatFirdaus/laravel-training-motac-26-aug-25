@@ -176,8 +176,8 @@
                                 Gudang
                             </a>
                             <div id="warehousesMenu" class="dropdown-menu myds-dropdown" aria-labelledby="navWarehouses" role="menu">
-                                <div class="dropdown-header">Gudang & Rak</div>
-                                <div id="warehouses-list"></div>
+                                <div class="px-3 py-2 text-muted small">Gudang & Rak</div>
+                                <div id="warehouses-list" class="px-2"></div>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('inventories.create') }}">Cipta Inventori</a>
                             </div>
@@ -328,21 +328,22 @@
             const warehouses = await fetchWarehouses();
             container.innerHTML = '';
             for (const w of warehouses) {
-                const header = document.createElement('div');
-                header.className = 'dropdown-header small text-muted';
+                // warehouse header
+                const header = document.createElement('h6');
+                header.className = 'dropdown-header';
                 header.textContent = w.name;
                 container.appendChild(header);
 
                 const shelves = await fetchShelves(w.id);
                 if (shelves.length === 0) {
                     const none = document.createElement('div');
-                    none.className = 'dropdown-item disabled small text-muted';
+                    none.className = 'dropdown-item text-muted small';
                     none.textContent = '(Tiada rak)';
                     container.appendChild(none);
                 } else {
                     for (const s of shelves) {
                         const a = document.createElement('a');
-                        a.className = 'dropdown-item ps-4';
+                        a.className = 'dropdown-item';
                         a.href = '{{ route('inventories.create') }}' + '?warehouse_id=' + encodeURIComponent(w.id) + '&shelf_id=' + encodeURIComponent(s.id);
                         a.textContent = s.shelf_number;
                         container.appendChild(a);
@@ -350,7 +351,7 @@
                 }
 
                 const divider = document.createElement('div');
-                divider.className = 'dropdown-divider m-0';
+                divider.className = 'dropdown-divider';
                 container.appendChild(divider);
             }
         })();
