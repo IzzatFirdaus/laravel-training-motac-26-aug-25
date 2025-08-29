@@ -1,53 +1,221 @@
 @extends('layouts.app')
 
-@section('title', 'Cipta Inventori — ' . config('app.name', 'second-crud'))
+@section('title', 'Cipta Inventori — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Cipta Inventori</div>
+<main id="main-content" class="myds-container py-4" role="main">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success myds-alert myds-alert--success">{{ session('status') }}</div>
-                    @endif
+{{-- MYDS Breadcrumb Navigation --}}
+<nav aria-label="Breadcrumb" class="mb-4">
+    <ol class="d-flex list-unstyled text-muted myds-body-sm">
+        <li><a href="{{ route('inventories.index') }}" class="text-primary text-decoration-none hover:text-decoration-underline">Inventori</a></li>
+        <li class="mx-2" aria-hidden="true">/</li>
+        <li aria-current="page" class="text-muted">Cipta Baharu</li>
+    </ol>
+</nav>
 
-                    <form method="POST" action="{{ route('inventories.store') }}">
-                        @csrf
+{{-- Page Header (MyGOVEA clear display principles) --}}
+<header class="mb-6">
+    <h1 class="myds-heading-md font-heading font-semibold mb-3">Cipta Inventori Baharu</h1>
+    <div class="myds-body-md text-muted">
+        <p class="mb-2">
+            Isi maklumat di bawah untuk menambah item inventori baharu ke dalam sistem.
+            Medan bertanda bintang (*) adalah <strong>wajib diisi</strong>.
+        </p>
+        <p class="myds-body-sm text-muted mb-0">
+            <em lang="en">Fill in the information below to add a new inventory item to the system.</em>
+        </p>
+    </div>
+</header>
 
-                        <x-form-field name="name" label="Nama" :value="old('name')" />
+{{-- Form Container with MYDS Grid --}}
+<div class="myds-grid myds-grid-desktop myds-grid-tablet myds-grid-mobile">
+    <div class="mobile:col-span-4 tablet:col-span-8 desktop:col-span-8">
 
-                        {{-- Users autocomplete helper: clicking name input will fetch users and allow quick selection --}}
-                        <div id="users-autocomplete" class="position-relative mt-2" style="max-width:420px;" data-search-url="{{ route('users.search') }}">
-                            {{-- Autocomplete list: role=listbox with aria-controls and aria-expanded on the input --}}
-                            <ul id="users-list" class="list-group" role="listbox" aria-label="Cadangan pengguna" style="display:none; position:absolute; z-index:2000; width:100%;"></ul>
-                            <div id="users-list-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+        {{-- Status Message --}}
+        @if (session('status'))
+            <div class="alert alert-success d-flex align-items-start mb-4" role="alert">
+                <svg width="20" height="20" class="me-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div>
+                    <h4 class="alert-heading myds-body-md font-medium">Berjaya</h4>
+                    <p class="mb-0 myds-body-sm">{{ session('status') }}</p>
+                </div>
+            </div>
+        @endif
+
+        {{-- Main Form Card --}}
+        <div class="bg-surface border rounded-m p-4 shadow-sm">
+            <form method="POST" action="{{ route('inventories.store') }}" novalidate aria-labelledby="form-title">
+                @csrf
+
+                <h2 id="form-title" class="sr-only">Borang Cipta Inventori Baharu</h2>
+
+                {{-- Required Fields Notice --}}
+                <div class="bg-muted border-l-4 border-primary p-3 mb-4">
+                    <div class="d-flex align-items-start">
+                        <svg width="16" height="16" class="me-2 mt-0.5 text-primary flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <div>
+                            <p class="myds-body-sm font-medium mb-1">Panduan Pengisian Borang</p>
+                            <p class="myds-body-sm text-muted mb-0">
+                                Pastikan semua medan wajib (*) telah diisi dengan lengkap dan tepat sebelum menyerahkan borang.
+                            </p>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="mb-3">
-                            <label for="user_id" class="form-label">Pemilik (pilihan)</label>
-                            @if(auth()->check() && auth()->user()->hasRole('admin'))
-                                <select id="user_id" name="user_id" class="form-control myds-select" aria-describedby="user_id-error">
-                                    <option value="">(tiada pemilik)</option>
-                                    @foreach(($users ?? collect()) as $user)
-                                        <option value="{{ $user->id }}" {{ (string) old('user_id') === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
-                            @else
-                                {{-- Non-admins cannot assign owner; set hidden field to current user (if any) --}}
-                                <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-                                <div class="form-text">Anda akan menjadi pemilik item ini.</div>
-                            @endif
+                {{-- Name Field (MYDS Input Component) --}}
+                <div class="mb-4">
+                    <label for="name" class="form-label myds-body-sm font-medium d-block mb-2">
+                        Nama Item
+                        <span class="text-danger ms-1" aria-label="medan wajib">*</span>
+                    </label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           class="myds-input @error('name') is-invalid border-danger @enderror"
+                           value="{{ old('name') }}"
+                           placeholder="Contoh: Komputer Desktop HP EliteDesk 800"
+                           aria-describedby="name-help @error('name') name-error @enderror"
+                           aria-required="true"
+                           maxlength="255"
+                           required>
+                    <div id="name-help" class="myds-body-xs text-muted mt-1">
+                        Masukkan nama lengkap dan deskriptif untuk item inventori (maksimum 255 aksara)
+                    </div>
+                    @error('name')
+                        <div id="name-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
+                            <svg width="14" height="14" class="me-1 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
+                                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span>{{ $message }}</span>
                         </div>
+                    @enderror
+                </div>
+                </div>
 
-                        <x-form-field name="qty" type="number" label="Kuantiti" :value="old('qty', 0)" />
+                {{-- Quantity Field --}}
+                <div class="mb-3">
+                    <label for="qty" class="form-label font-medium">
+                        Kuantiti <span class="text-danger" aria-label="wajib">*</span>
+                    </label>
+                    <input type="number"
+                           id="qty"
+                           name="qty"
+                           class="myds-input @error('qty') is-invalid @enderror"
+                           value="{{ old('qty', 1) }}"
+                           min="0"
+                           placeholder="0"
+                           aria-describedby="qty-help @error('qty') qty-error @enderror"
+                           required>
+                    <div id="qty-help" class="form-text text-muted">
+                        Masukkan bilangan unit item
+                    </div>
+                    @error('qty')
+                        <div id="qty-error" class="text-danger small mt-1" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-                        <x-form-field name="price" type="number" label="Harga" :value="old('price', '')" />
+                {{-- Price Field --}}
+                <div class="mb-3">
+                    <label for="price" class="form-label font-medium">Harga (RM)</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-muted border-end-0">RM</span>
+                        <input type="number"
+                               id="price"
+                               name="price"
+                               class="myds-input border-start-0 @error('price') is-invalid @enderror"
+                               value="{{ old('price') }}"
+                               step="0.01"
+                               min="0"
+                               placeholder="0.00"
+                               aria-describedby="price-help @error('price') price-error @enderror">
+                    </div>
+                    <div id="price-help" class="form-text text-muted">
+                        Masukkan harga per unit dalam Ringgit Malaysia (opsional)
+                    </div>
+                    @error('price')
+                        <div id="price-error" class="text-danger small mt-1" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-                        <x-form-field name="description" type="textarea" label="Keterangan">{{ old('description') }}</x-form-field>
+                {{-- Description Field --}}
+                <div class="mb-4">
+                    <label for="description" class="form-label font-medium">Keterangan</label>
+                    <textarea id="description"
+                              name="description"
+                              class="myds-input @error('description') is-invalid @enderror"
+                              rows="4"
+                              placeholder="Masukkan keterangan tambahan tentang item ini..."
+                              aria-describedby="description-help @error('description') description-error @enderror">{{ old('description') }}</textarea>
+                    <div id="description-help" class="form-text text-muted">
+                        Berikan maklumat tambahan seperti model, spesifikasi, atau nota khas
+                    </div>
+                    @error('description')
+                        <div id="description-error" class="text-danger small mt-1" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                {{-- Form Actions --}}
+                <div class="d-flex gap-2 justify-content-end">
+                    <a href="{{ route('inventories.index') }}"
+                       class="myds-btn myds-btn--secondary"
+                       aria-label="Batal dan kembali ke senarai inventori">
+                        Batal
+                    </a>
+                    <button type="submit"
+                            class="myds-btn myds-btn--primary"
+                            aria-label="Simpan inventori baharu">
+                        <svg width="16" height="16" class="me-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="17,21 17,13 7,13 7,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="7,3 7,8 15,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Simpan Inventori
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- MYDS Help Panel --}}
+    <div class="mobile:col-span-4 tablet:col-span-8 desktop:col-span-4">
+        <div class="bg-muted p-4 rounded">
+            <h2 class="font-heading font-semibold h6 mb-3">Panduan Pengisian</h2>
+            <div class="small text-muted">
+                <div class="mb-3">
+                    <strong class="text-primary">Nama Item</strong>
+                    <p>Gunakan nama yang jelas dan mudah dicari. Contoh: "Komputer Desktop HP ProDesk 400 G7"</p>
+                </div>
+                <div class="mb-3">
+                    <strong class="text-primary">Kuantiti</strong>
+                    <p>Masukkan bilangan unit yang sebenar ada dalam stok</p>
+                </div>
+                <div class="mb-3">
+                    <strong class="text-primary">Harga</strong>
+                    <p>Harga per unit untuk tujuan inventori dan pelaporan</p>
+                </div>
+                <div>
+                    <strong class="text-primary">Keterangan</strong>
+                    <p>Maklumat tambahan seperti nombor siri, model, atau nota khas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
 
                         <div class="mb-3">
                             <label for="vehicle_ids" class="form-label">Pilih Kenderaan (pilihan)</label>

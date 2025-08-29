@@ -1,6 +1,6 @@
 <!doctype html>
-<!-- Application UI content is presented in Bahasa Melayu (ms) per project requirement -->
-<html lang="ms">
+<!-- Application UI content is presented in Bahasa Melayu (ms) per MyGOVEA requirement -->
+<html lang="ms" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,41 +8,60 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Favicon: use Laravel's standard favicon -->
+    <!-- Security Headers for government compliance -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Favicon: Malaysia Government standard -->
     <link rel="icon" href="https://laravel.com/img/favicon/favicon.ico" type="image/x-icon">
 
     {{-- Page title: individual views can set a `title` section. Default to app name. --}}
-    <title>@yield('title', config('app.name', 'second-crud'))</title>
+    <title>@yield('title', config('app.name', 'Sistem Kerajaan Malaysia'))</title>
 
-    <!-- Fonts -->
+    <!-- Fonts: MYDS Typography System -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <!-- Use Poppins for headings and Inter for body (MYDS) -->
+    <!-- Use Poppins for headings and Inter for body text per MYDS guidelines -->
     <link href="https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500" rel="stylesheet">
 
-    <!-- Styles -->
-    @vite('resources/sass/app.scss')
+    <!-- Styles: MYDS + Bootstrap hybrid approach -->
+    @vite(['resources/css/app.css', 'resources/sass/app.scss'])
 </head>
-<body>
+<body class="theme-transition">
     <div id="app">
-    {{-- Skip to content for keyboard users --}}
-    <a href="#main-content" class="visually-hidden-focusable">Langkau ke kandungan</a>
+    {{-- Accessibility: Skip to content link for keyboard users (MyGOVEA principle) --}}
+    <a href="#main-content" class="skip-link">Langkau ke kandungan utama</a>
 
-    {{-- Vehicles: live region for status messages (aria-live). Users/Inventories use toast. --}}
+    {{-- Live region for status messages (ARIA accessibility) --}}
     <div id="global-flash" aria-live="polite" aria-atomic="true" class="sr-only">@if(session('status')){{ session('status') }}@endif</div>
     <div id="global-toast" data-toast="@if(session('toast')){{ session('toast') }}@endif" class="sr-only"></div>
 
-    <nav class="navbar navbar-expand-md bg-surface border-bottom myds-nav" role="navigation" aria-label="Navigasi utama">
-            <div class="container">
-                <a class="navbar-brand myds-brand d-flex align-items-center" href="{{ url('/') }}" aria-label="Laman utama">
-                    {{-- Optional: place agency logo here --}}
-                    <span class="ms-0">{{ config('app.name', 'Laravel') }}</span>
+    {{-- MYDS Navigation Header --}}
+    <header role="banner">
+        <nav class="navbar navbar-expand-md myds-nav" role="navigation" aria-label="Navigasi utama">
+            <div class="myds-container">
+                <a class="navbar-brand myds-brand d-flex align-items-center" href="{{ url('/') }}" aria-label="Laman utama {{ config('app.name') }}">
+                    {{-- Malaysian Government Logo placeholder --}}
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Coat_of_arms_of_Malaysia.svg/50px-Coat_of_arms_of_Malaysia.svg.png"
+                         alt="Jata Negara Malaysia"
+                         width="32"
+                         height="32"
+                         class="me-2">
+                    <span class="font-heading font-semibold">{{ config('app.name', 'Sistem Kerajaan') }}</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Togol menu navigasi">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar: MYDS primary navigation groups -->
+                    <!-- Left Side: Primary navigation (MyGOVEA citizen-centric approach) -->
                     <ul class="navbar-nav me-auto" role="menubar">
                         <li class="nav-item dropdown">
                             <a id="navInventories" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="{{ __('nav.inventory') }} menu">
@@ -287,12 +306,57 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+    </header>
 
-        <main id="main-content" class="py-4">
+    {{-- Main content area with MYDS container --}}
+    <main id="main-content" class="py-4" role="main">
+        <div class="myds-container">
             @yield('content')
-        </main>
-    </div>
+        </div>
+    </main>
+
+    {{-- MYDS Footer following MyGOVEA guidelines --}}
+    <footer class="bg-surface border-top py-4 mt-5" role="contentinfo">
+        <div class="myds-container">
+            <div class="myds-grid myds-grid-desktop myds-grid-tablet myds-grid-mobile">
+                {{-- Footer content spans full width on mobile, 6 columns on tablet, 8 columns on desktop --}}
+                <div class="mobile:col-span-4 tablet:col-span-6 desktop:col-span-8">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Coat_of_arms_of_Malaysia.svg/40px-Coat_of_arms_of_Malaysia.svg.png"
+                             alt="Jata Negara Malaysia"
+                             width="24"
+                             height="24"
+                             class="me-2">
+                        <span class="font-heading font-semibold">{{ config('app.name', 'Sistem Kerajaan') }}</span>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Sistem pengurusan inventori dan kenderaan Kerajaan Malaysia.
+                        Dibangunkan mengikut prinsip MyGOVEA dan MYDS.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 mb-3">
+                        <a href="#" class="text-muted small">Dasar Privasi</a>
+                        <a href="#" class="text-muted small">Terma Penggunaan</a>
+                        <a href="#" class="text-muted small">Hubungi Kami</a>
+                        <a href="#" class="text-muted small">Bantuan</a>
+                    </div>
+                    <p class="text-muted small mb-0">
+                        © {{ date('Y') }} Kerajaan Malaysia. Hak cipta terpelihara.
+                    </p>
+                </div>
+                {{-- Contact information on the right --}}
+                <div class="mobile:col-span-4 tablet:col-span-2 desktop:col-span-4">
+                    <h6 class="font-heading font-semibold mb-2">Hubungi Kami</h6>
+                    <div class="text-muted small">
+                        <p class="mb-1">Jabatan Digital Negara</p>
+                        <p class="mb-1">Putrajaya, Malaysia</p>
+                        <p class="mb-1">Tel: 03-8000 8000</p>
+                        <p class="mb-0">E-mel: info@jdn.gov.my</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
     {{-- Accessible fallback confirmation region for non-JS or non-SweetAlert environments. JS uses SweetAlert; this container is available if a progressive enhancement is needed. --}}
     <div id="myds-confirm" aria-hidden="true" style="display:none;">
         <div role="dialog" aria-modal="true" aria-labelledby="myds-confirm-title" id="myds-confirm-dialog">

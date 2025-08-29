@@ -1,11 +1,10 @@
 // Variables (module) - must come before any CSS rules or @import statements
 @use 'variables' as *;
+// Bootstrap wrapper (module-based)
+@use 'bootstrap-wrapper';
 
 /* Import MYDS full stylesheet so token variables and base styles are available */
 @import "@govtechmy/myds-style/full.css";
-
-// Bootstrap wrapper (legacy @import shim)
-@import 'bootstrap-wrapper';
 
 // Fonts (keep as a plain CSS import)
 @import url('https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500');

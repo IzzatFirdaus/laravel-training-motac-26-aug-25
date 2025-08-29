@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Warehouse;
 use App\Models\Shelf;
+use App\Models\Warehouse;
+use Illuminate\Database\Seeder;
 
 class ShelfSeeder extends Seeder
 {

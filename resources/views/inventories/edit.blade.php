@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.main')
 
 @section('title', 'Ubah Inventori — ' . config('app.name', 'second-crud'))
 

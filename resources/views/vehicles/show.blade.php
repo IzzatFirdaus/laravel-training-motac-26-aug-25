@@ -1,45 +1,53 @@
 @extends('layouts.app')
 
-@section('title', 'Butiran Kenderaan — ' . config('app.name', 'second-crud'))
+@section('title', 'Butiran Kenderaan — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Kenderaan #{{ $vehicle->id }}</div>
+<main id="main-content" class="myds-container py-4" role="main">
+    <div class="desktop:col-span-8 tablet:col-span-8 mobile:col-span-4 mx-auto" style="max-width:760px;">
+        <header class="mb-3">
+            <h1 class="myds-heading-md font-heading font-semibold">Kenderaan #{{ $vehicle->id }}</h1>
+            <p class="myds-body-sm text-muted">Butiran penuh kenderaan yang direkodkan</p>
+        </header>
 
-                <div class="card-body">
-                    @if(session('status'))
-                        <div class="alert alert-success myds-alert myds-alert--success">{{ session('status') }}</div>
-                    @endif
+        <div class="bg-surface border rounded-m p-4 shadow-sm">
+            @if(session('status'))
+                <div class="myds-alert myds-alert--success mb-3" role="status">{{ session('status') }}</div>
+            @endif
 
-                    <p><strong>Nama:</strong> {{ $vehicle->name ?? '—' }}</p>
-                    <p><strong>Pemilik:</strong> {{ $vehicle->owner?->name ?? '—' }}</p>
-                    <p><strong>Kuantiti:</strong> {{ $vehicle->qty ?? 0 }}</p>
-                    <p><strong>Harga:</strong> {{ isset($vehicle->price) ? number_format($vehicle->price, 2) : '—' }}</p>
+            <dl class="row g-3">
+                <dt class="col-4 myds-body-sm text-muted">Nama</dt>
+                <dd class="col-8 myds-body-md">{{ $vehicle->name ?? '—' }}</dd>
 
-                    <p><strong>Keterangan:</strong></p>
-                    <div>{!! nl2br(e($vehicle->description)) !!}</div>
+                <dt class="col-4 myds-body-sm text-muted">Pemilik</dt>
+                <dd class="col-8 myds-body-md">{{ $vehicle->owner?->name ?? '—' }}</dd>
 
-                    <div class="mt-3">
-                        <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary" data-myds="link">Kembali</a>
-                        <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="myds-btn myds-btn--primary myds-btn--outline" data-myds="link">Edit</a>
-                        <x-destroy :action="route('vehicles.destroy', $vehicle->id)" :label="$vehicle->name ?? 'Kenderaan'" />
-                    </div>
+                <dt class="col-4 myds-body-sm text-muted">Kuantiti</dt>
+                <dd class="col-8 myds-body-md">{{ $vehicle->qty ?? 0 }}</dd>
 
-                    @if(isset($vehicle->inventories) && $vehicle->inventories->count())
-                        <hr class="my-3">
-                        <h5>Inventori berkaitan</h5>
-                        <ul>
-                            @foreach($vehicle->inventories as $inv)
-                                <li><a href="{{ route('inventories.show', $inv->id) }}">{{ $inv->name ?? '—' }}</a> (ID: {{ $inv->id }})</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
+                <dt class="col-4 myds-body-sm text-muted">Harga</dt>
+                <dd class="col-8 myds-body-md">{{ isset($vehicle->price) ? 'RM '.number_format($vehicle->price, 2) : '—' }}</dd>
+
+                <dt class="col-12 myds-body-sm text-muted">Keterangan</dt>
+                <dd class="col-12 myds-body-md">{!! nl2br(e($vehicle->description)) !!}</dd>
+            </dl>
+
+            <div class="mt-4 d-flex gap-2">
+                <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary" aria-label="Kembali ke senarai kenderaan">Kembali</a>
+                <a href="{{ route('vehicles.edit', $vehicle->id) }}" class="myds-btn myds-btn--primary myds-btn--outline">Edit</a>
+                <x-destroy :action="route('vehicles.destroy', $vehicle->id)" :label="$vehicle->name ?? 'Kenderaan'" />
             </div>
+
+            @if(isset($vehicle->inventories) && $vehicle->inventories->count())
+                <hr class="my-3">
+                <h3 class="myds-heading-sm">Inventori berkaitan</h3>
+                <ul class="myds-list myds-list--bare">
+                    @foreach($vehicle->inventories as $inv)
+                        <li><a href="{{ route('inventories.show', $inv->id) }}">{{ $inv->name ?? '—' }}</a> <span class="text-muted">(ID: {{ $inv->id }})</span></li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
-</div>
+</main>
 @endsection

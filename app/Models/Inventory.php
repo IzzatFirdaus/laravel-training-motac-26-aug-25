@@ -30,9 +30,9 @@ class Inventory extends Model implements AuditableContract
      * @var array<int, string>
      */
     protected $fillable = [
-    'user_id',
-    'warehouse_id',
-    'shelf_id',
+        'user_id',
+        'warehouse_id',
+        'shelf_id',
         'name',
         'qty',
         'price',

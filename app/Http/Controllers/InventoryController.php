@@ -18,9 +18,9 @@ class InventoryController extends Controller
 {
     public function __construct()
     {
-    // Require authentication for inventory pages, but allow public access to
-    // lightweight JSON endpoints used by dynamic selects and the navbar.
-    $this->middleware('auth')->except(['warehouses', 'shelvesByWarehouse']);
+        // Require authentication for inventory pages, but allow public access to
+        // lightweight JSON endpoints used by dynamic selects and the navbar.
+        $this->middleware('auth')->except(['warehouses', 'shelvesByWarehouse']);
     }
 
     /**
@@ -29,7 +29,7 @@ class InventoryController extends Controller
     public function index(): View
     {
         // Use Eloquent with eager-loading so views can reference relations
-    $query = Inventory::with('user', 'vehicles', 'warehouse', 'shelf')
+        $query = Inventory::with('user', 'vehicles', 'warehouse', 'shelf')
             ->orderBy('created_at', 'desc');
 
         // Listing access is controlled by policies (viewAny) — allow all authenticated users to see the index.
@@ -44,7 +44,7 @@ class InventoryController extends Controller
         $inventories = $query->paginate($perPage)->appends(request()->only(['search', 'per_page', 'owner_id']));
 
         // Provide owners list for filter UI
-        $users = \App\Models\User::query()->select('id', 'name')->orderBy('name')->get();
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         return view('inventories.index', compact('inventories', 'users'));
     }
@@ -121,7 +121,7 @@ class InventoryController extends Controller
      */
     public function show($inventoryId): View
     {
-    $inventory = Inventory::with('user', 'vehicles', 'warehouse', 'shelf')->findOrFail($inventoryId);
+        $inventory = Inventory::with('user', 'vehicles', 'warehouse', 'shelf')->findOrFail($inventoryId);
 
         // Authorize that the current user can view this inventory
         $this->authorize('view', $inventory);

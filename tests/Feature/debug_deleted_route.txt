@@ -1,28 +1,26 @@
 status=200
 <!doctype html>
-<!-- Application UI content is presented in Bahasa Melayu (ms) per project requirement -->
-<html lang="ms">
+<!-- Application UI content is presented in Bahasa Melayu (ms) per MyGOVEA requirement -->
+<html lang="ms" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="hfJ5tOizq7zfmj2rjxKRjRZX5eLBGmVJHSpYS6h9">
+    <meta name="csrf-token" content="3kLc7u2SO1eYzB6AruOYsoQKr8YmRMUwdhO0CIiy">
 
-    <!-- Favicon: use Laravel's standard favicon -->
+    <!-- Security Headers for government compliance -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Favicon: Malaysia Government standard -->
     <link rel="icon" href="https://laravel.com/img/favicon/favicon.ico" type="image/x-icon">
 
     
     <title>Inventori Dipadam — second-crud</title>
 
-    <!-- Fonts -->
+    <!-- Fonts: MYDS Typography System -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <!-- Use Poppins for headings and Inter for body (MYDS) -->
-    <link href="https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500" rel="stylesheet">
-
-    <!-- Styles -->
-    <script type="module" src="http://[::1]:5174/@vite/client"></script><link rel="stylesheet" href="http://[::1]:5174/resources/sass/app.scss" /></head>
-<body>
-    <div id="app">
-    
-    <a hr
+    <!-- Use Poppins for headings and Inter for body text per MYDS guidelines -->
+    <link href="ht

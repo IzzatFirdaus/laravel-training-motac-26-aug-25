@@ -1,51 +1,50 @@
 @extends('layouts.app')
 
-@section('title', 'Sahkan Kata Laluan — ' . config('app.name', 'second-crud'))
+@section('title', 'Sahkan Kata Laluan — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+<main id="main-content" class="myds-container myds-container--page-centered" role="main">
+    <div class="myds-auth-card">
+        <div class="myds-auth-card__header">
+            <h1 class="myds-auth-card__title">
+                {{ __('Sahkan Kata Laluan') }}
+            </h1>
+            <p class="myds-auth-card__subtitle">
+                {{ __('Sila sahkan kata laluan anda sebelum meneruskan.') }}
+            </p>
+        </div>
 
-                <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
+        <div class="myds-auth-card__body">
+            <form method="POST" action="{{ route('password.confirm') }}" class="myds-form">
+                @csrf
 
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="myds-btn myds-btn--primary">
-                                    {{ __('Confirm Password') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="myds-btn myds-btn--tertiary p-0 m-0 align-baseline" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                {{-- Password --}}
+                <div class="myds-form__group">
+                    <label for="password" class="myds-form__label">{{ __('Kata Laluan') }}</label>
+                    <input id="password" type="password" class="myds-form__input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    @error('password')
+                        <span class="myds-form__error-message" role="alert">
+                            {{ $message }}
+                        </span>
+                    @enderror
                 </div>
-            </div>
+
+                {{-- Submit Button & Forgot Password Link --}}
+                <div class="myds-form__group">
+                    <button type="submit" class="myds-btn myds-btn--primary myds-btn--full-width">
+                        {{ __('Sahkan Kata Laluan') }}
+                    </button>
+                </div>
+
+                @if (Route::has('password.request'))
+                    <div class="text-center mt-4">
+                        <a class="myds-link" href="{{ route('password.request') }}">
+                            {{ __('Lupa Kata Laluan Anda?') }}
+                        </a>
+                    </div>
+                @endif
+            </form>
         </div>
     </div>
-</div>
+</main>
 @endsection

@@ -1,79 +1,84 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar — ' . config('app.name', 'second-crud'))
+@section('title', 'Daftar Akaun — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<main id="main-content" class="myds-container myds-container--page-centered" role="main">
+    <div class="myds-auth-card">
+        <div class="myds-auth-card__header">
+            <h1 class="myds-auth-card__title">
+                {{ __('Daftar Akaun Baru') }}
+            </h1>
+            <p class="myds-auth-card__subtitle">
+                {{ __('Sila lengkapkan maklumat di bawah untuk mendaftar.') }}
+            </p>
+        </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+        <div class="myds-auth-card__body">
+            <form method="POST" action="{{ route('register') }}" class="myds-form">
+                @csrf
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="myds-btn myds-btn--primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                {{-- Name --}}
+                <div class="myds-form__group">
+                    <label for="name" class="myds-form__label">{{ __('Nama Penuh') }}</label>
+                    <input id="name" type="text" class="myds-form__input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
+                           aria-describedby="name-help">
+                    <small id="name-help" class="myds-form__help">Sila masukkan nama seperti dalam kad pengenalan.</small>
+                    @error('name')
+                        <span class="myds-form__error-message" role="alert">
+                            {{ $message }}
+                        </span>
+                    @enderror
                 </div>
-            </div>
+
+                {{-- Email Address --}}
+                <div class="myds-form__group">
+                    <label for="email" class="myds-form__label">{{ __('Alamat E-mel') }}</label>
+                    <input id="email" type="email" class="myds-form__input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"
+                           aria-describedby="email-help-register">
+                    <small id="email-help-register" class="myds-form__help">E-mel ini akan digunakan untuk pengesahan.</small>
+                    @error('email')
+                        <span class="myds-form__error-message" role="alert">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+
+                {{-- Password --}}
+                <div class="myds-form__group">
+                    <label for="password" class="myds-form__label">{{ __('Kata Laluan') }}</label>
+                    <input id="password" type="password" class="myds-form__input @error('password') is-invalid @enderror" name="password" required autocomplete="new-password"
+                           aria-describedby="password-help">
+                    <small id="password-help" class="myds-form__help">Minimum 8 aksara dengan gabungan huruf dan nombor.</small>
+                    @error('password')
+                        <span class="myds-form__error-message" role="alert">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+
+                {{-- Confirm Password --}}
+                <div class="myds-form__group">
+                    <label for="password-confirm" class="myds-form__label">{{ __('Sahkan Kata Laluan') }}</label>
+                    <input id="password-confirm" type="password" class="myds-form__input" name="password_confirmation" required autocomplete="new-password">
+                </div>
+
+                {{-- Submit Button --}}
+                <div class="myds-form__group">
+                    <button type="submit" class="myds-btn myds-btn--primary myds-btn--full-width">
+                        {{ __('Daftar') }}
+                    </button>
+                </div>
+
+                {{-- Link to Login --}}
+                <div class="text-center mt-4">
+                    <p class="myds-body-sm text-muted">
+                        {{ __('Sudah mempunyai akaun?') }}
+                        <a href="{{ route('login') }}" class="myds-link">{{ __('Log masuk di sini') }}</a>
+                    </p>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+</main>
 @endsection
