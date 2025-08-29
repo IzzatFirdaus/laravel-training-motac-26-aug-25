@@ -11,7 +11,7 @@ return new class extends Migration
         if (Schema::hasTable('warehouses')) {
             return;
         }
-        Schema::create('warehouses', function (Blueprint $table) {
+        Schema::create('warehouses', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->timestamps();

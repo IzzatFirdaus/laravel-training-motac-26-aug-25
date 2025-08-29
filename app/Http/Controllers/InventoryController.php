@@ -29,7 +29,7 @@ class InventoryController extends Controller
     public function index(): View
     {
         // Use Eloquent with eager-loading so views can reference relations
-        $query = Inventory::with('user', 'vehicles')
+    $query = Inventory::with('user', 'vehicles', 'warehouse', 'shelf')
             ->orderBy('created_at', 'desc');
 
         // Listing access is controlled by policies (viewAny) — allow all authenticated users to see the index.
@@ -88,6 +88,8 @@ class InventoryController extends Controller
             'price' => $data['price'],
             'description' => $data['description'] ?? null,
             'user_id' => $data['user_id'] ?? null,
+            'warehouse_id' => $data['warehouse_id'] ?? null,
+            'shelf_id' => $data['shelf_id'] ?? null,
         ]);
 
         // Attach any selected vehicles (many-to-many). Use array values or empty array.
@@ -119,7 +121,7 @@ class InventoryController extends Controller
      */
     public function show($inventoryId): View
     {
-        $inventory = Inventory::with('user', 'vehicles')->findOrFail($inventoryId);
+    $inventory = Inventory::with('user', 'vehicles', 'warehouse', 'shelf')->findOrFail($inventoryId);
 
         // Authorize that the current user can view this inventory
         $this->authorize('view', $inventory);
@@ -158,6 +160,8 @@ class InventoryController extends Controller
             'qty' => $data['qty'] ?? $inventory->qty,
             'price' => $data['price'] ?? $inventory->price,
             'description' => $data['description'] ?? $inventory->description,
+            'warehouse_id' => $data['warehouse_id'] ?? $inventory->warehouse_id,
+            'shelf_id' => $data['shelf_id'] ?? $inventory->shelf_id,
         ]);
 
         // Only allow admins to reassign ownership.

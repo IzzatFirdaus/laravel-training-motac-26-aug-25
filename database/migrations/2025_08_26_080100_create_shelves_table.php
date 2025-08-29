@@ -8,18 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasTable('warehouses')) {
+        if (Schema::hasTable('shelves')) {
             return;
         }
-        Schema::create('warehouses', function (Blueprint $table) {
+        Schema::create('shelves', function (Blueprint $table): void {
             $table->id();
-            $table->string('name');
+            $table->foreignId('warehouse_id')->constrained()->cascadeOnDelete();
+            $table->string('shelf_number');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('warehouses');
+        Schema::dropIfExists('shelves');
     }
 };

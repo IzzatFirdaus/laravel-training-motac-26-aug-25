@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             // Role field (default 'user') added inline so a single migration defines the full users schema.
-            $table->string('role', 32)->default('user')->after('password');
+            $table->string('role', 32)->default('user');
             // Optional one-to-one link to a primary vehicle (nullable)
             // Use unsignedBigInteger to avoid circular foreign key constraint ordering.
             $table->unsignedBigInteger('primary_vehicle_id')->nullable();

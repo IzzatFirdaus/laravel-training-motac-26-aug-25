@@ -18,6 +18,9 @@ return new class extends Migration
             // owner of the inventory item; nullable so unauthenticated users
             // can create items in development/testing. on delete -> set null
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            // optional warehouse & shelf placement
+            $table->foreignId('warehouse_id')->nullable()->constrained('warehouses')->nullOnDelete();
+            $table->foreignId('shelf_id')->nullable()->constrained('shelves')->nullOnDelete();
             $table->string('name')->nullable();
             $table->integer('qty')->default(0);
             // price stored with precision and scale

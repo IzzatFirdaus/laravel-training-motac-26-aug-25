@@ -30,7 +30,9 @@ class Inventory extends Model implements AuditableContract
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
+    'user_id',
+    'warehouse_id',
+    'shelf_id',
         'name',
         'qty',
         'price',
@@ -56,6 +58,22 @@ class Inventory extends Model implements AuditableContract
     public function user(): BelongsTo
     {
         return $this->belongsTo(\App\Models\User::class);
+    }
+
+    /**
+     * Inventory belongs to a warehouse (optional).
+     */
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
+
+    /**
+     * Inventory belongs to a shelf (optional).
+     */
+    public function shelf(): BelongsTo
+    {
+        return $this->belongsTo(Shelf::class);
     }
 
     /**

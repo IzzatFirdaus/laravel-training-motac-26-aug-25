@@ -7,7 +7,7 @@ status=200
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="LU2jJ8rVIMGF4O7Cuvt29RGtpMsv8pt5rriIkoiC">
+    <meta name="csrf-token" content="hfJ5tOizq7zfmj2rjxKRjRZX5eLBGmVJHSpYS6h9">
 
     <!-- Favicon: use Laravel's standard favicon -->
     <link rel="icon" href="https://laravel.com/img/favicon/favicon.ico" type="image/x-icon">
@@ -21,7 +21,7 @@ status=200
     <link href="https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500" rel="stylesheet">
 
     <!-- Styles -->
-    <script type="module" src="http://[::1]:5173/@vite/client"></script><link rel="stylesheet" href="http://[::1]:5173/resources/sass/app.scss" /></head>
+    <script type="module" src="http://[::1]:5174/@vite/client"></script><link rel="stylesheet" href="http://[::1]:5174/resources/sass/app.scss" /></head>
 <body>
     <div id="app">
     
