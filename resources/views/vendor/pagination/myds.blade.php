@@ -1,7 +1,7 @@
 @if ($paginator->hasPages())
 <nav role="navigation" aria-label="Navigasi halaman" class="myds-pagination">
     <div class="d-flex justify-content-between align-items-center">
-        <div class="myds-body-sm text-muted">
+        <div class="myds-body-sm myds-text--muted">
             Memaparkan {{ $paginator->firstItem() ?? 0 }} hingga {{ $paginator->lastItem() ?? 0 }} daripada {{ $paginator->total() }} rekod
         </div>
 
@@ -28,7 +28,7 @@
                 {{-- "Three Dots" Separator --}}
                 @if (is_string($element))
                     <li aria-disabled="true">
-                        <span class="d-flex align-items-center px-2 myds-body-sm text-muted">{{ $element }}</span>
+                        <span class="d-flex align-items-center px-2 myds-body-sm myds-text--muted">{{ $element }}</span>
                     </li>
                 @endif
 

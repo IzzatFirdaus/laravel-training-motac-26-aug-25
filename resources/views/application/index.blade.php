@@ -8,7 +8,7 @@
         <header class="d-flex align-items-start justify-content-between mb-3">
             <div>
                 <h1 class="myds-heading-md font-heading">Permohonan</h1>
-                <p class="myds-body-sm text-muted mb-0">Senarai permohonan dalam sistem.</p>
+                <p class="myds-body-sm myds-text--muted mb-0">Senarai permohonan dalam sistem.</p>
             </div>
             <div class="text-end">
                 @can('create', App\Models\Application::class)
@@ -42,9 +42,9 @@
                         <tbody>
                             @forelse ($applications as $application)
                                 <tr>
-                                    <td class="myds-body-sm text-muted">{{ $application->id }}</td>
+                                    <td class="myds-body-sm myds-text--muted">{{ $application->id }}</td>
                                     <td class="myds-body-sm">{{ $application->name ?? '—' }}</td>
-                                    <td class="myds-body-sm text-muted">{{ $application->created_at?->format('Y-m-d') ?? '—' }}</td>
+                                    <td class="myds-body-sm myds-text--muted">{{ $application->created_at?->format('Y-m-d') ?? '—' }}</td>
                                     <td class="text-nowrap">
                                         <x-action-buttons
                                             :model="$application"
@@ -86,7 +86,7 @@
                 <div class="bg-surface border rounded p-3 mt-4">
                     <h3 class="myds-heading-sm">Keputusan carian untuk "{{ e($q) }}" — Inventori</h3>
                     @if($inventories->isEmpty())
-                        <p class="myds-body-sm text-muted">Tiada inventori dijumpai.</p>
+                        <p class="myds-body-sm myds-text--muted">Tiada inventori dijumpai.</p>
                     @else
                         <div class="myds-table-responsive">
                             <table class="myds-table" aria-describedby="inventories-count">
@@ -101,9 +101,9 @@
                                 <tbody>
                                     @foreach($inventories as $inv)
                                         <tr>
-                                            <td class="myds-body-sm text-muted">{{ $inv->id }}</td>
+                                            <td class="myds-body-sm myds-text--muted">{{ $inv->id }}</td>
                                             <td class="myds-body-sm">{{ $inv->name }}</td>
-                                            <td class="myds-body-sm text-muted">{{ $inv->created_at?->format('Y-m-d') ?? '—' }}</td>
+                                            <td class="myds-body-sm myds-text--muted">{{ $inv->created_at?->format('Y-m-d') ?? '—' }}</td>
                                             <td class="text-nowrap">
                                                 <x-action-buttons
                                                     :model="$inv"

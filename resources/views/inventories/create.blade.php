@@ -7,22 +7,22 @@
 
 {{-- MYDS Breadcrumb Navigation --}}
 <nav aria-label="Breadcrumb" class="mb-4">
-    <ol class="d-flex list-unstyled text-muted myds-body-sm">
+    <ol class="d-flex list-unstyled myds-text--muted myds-body-sm">
         <li><a href="{{ route('inventories.index') }}" class="text-primary text-decoration-none hover:text-decoration-underline">Inventori</a></li>
         <li class="mx-2" aria-hidden="true">/</li>
-        <li aria-current="page" class="text-muted">Cipta Baharu</li>
+        <li aria-current="page" class="myds-text--muted">Cipta Baharu</li>
     </ol>
 </nav>
 
 {{-- Page Header (MyGOVEA clear display principles) --}}
 <header class="mb-6">
     <h1 class="myds-heading-md font-heading font-semibold mb-3">Cipta Inventori Baharu</h1>
-    <div class="myds-body-md text-muted">
+    <div class="myds-body-md myds-text--muted">
         <p class="mb-2">
             Isi maklumat di bawah untuk menambah item inventori baharu ke dalam sistem.
             Medan bertanda bintang (*) adalah <strong>wajib diisi</strong>.
         </p>
-        <p class="myds-body-sm text-muted mb-0">
+        <p class="myds-body-sm myds-text--muted mb-0">
             <em lang="en">Fill in the information below to add a new inventory item to the system.</em>
         </p>
     </div>
@@ -68,7 +68,7 @@
                 <div class="mb-4">
                     <label for="name" class="form-label myds-body-sm font-medium d-block mb-2">
                         Nama Item
-                        <span class="text-danger ms-1" aria-label="medan wajib">*</span>
+                        <span class="myds-text--danger ms-1" aria-label="medan wajib">*</span>
                     </label>
                     <input type="text"
                            id="name"
@@ -80,11 +80,11 @@
                            aria-required="true"
                            maxlength="255"
                            required>
-                    <div id="name-help" class="myds-body-xs text-muted mt-1">
+                    <div id="name-help" class="myds-body-xs myds-text--muted mt-1">
                         Masukkan nama lengkap dan deskriptif untuk item inventori (maksimum 255 aksara)
                     </div>
                     @error('name')
-                        <div id="name-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
+                        <div id="name-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert">
                             <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
@@ -95,7 +95,7 @@
                 {{-- Quantity Field --}}
                 <div class="mb-3">
                     <label for="qty" class="form-label font-medium">
-                        Kuantiti <span class="text-danger" aria-label="wajib">*</span>
+                        Kuantiti <span class="myds-text--danger" aria-label="wajib">*</span>
                     </label>
                     <input type="number"
                            id="qty"
@@ -106,11 +106,11 @@
                            placeholder="{{ __('placeholders.example_quantity') }}"
                            aria-describedby="qty-help @error('qty') qty-error @enderror"
                            required>
-                    <div id="qty-help" class="form-text text-muted">
+                    <div id="qty-help" class="form-text myds-text--muted">
                         Masukkan bilangan unit item
                     </div>
                     @error('qty')
-                        <div id="qty-error" class="text-danger small mt-1" role="alert">
+                        <div id="qty-error" class="myds-text--danger small mt-1" role="alert">
                             {{ $message }}
                         </div>
                     @enderror
@@ -131,11 +131,11 @@
                                placeholder="{{ __('placeholders.example_price') }}"
                                aria-describedby="price-help @error('price') price-error @enderror">
                     </div>
-                    <div id="price-help" class="form-text text-muted">
-                        Masukkan harga per unit dalam Ringgit Malaysia (opsional)
+                    <div id="price-help" class="form-text myds-text--muted">
+                        Masukkan harga per unit dalam Ringgit Malaysia
                     </div>
                     @error('price')
-                        <div id="price-error" class="text-danger small mt-1" role="alert">
+                        <div id="price-error" class="myds-text--danger small mt-1" role="alert">
                             {{ $message }}
                         </div>
                     @enderror
@@ -150,11 +150,11 @@
                               rows="4"
                               placeholder="{{ __('placeholders.example_description') }}"
                               aria-describedby="description-help @error('description') description-error @enderror">{{ old('description') }}</textarea>
-                    <div id="description-help" class="form-text text-muted">
+                    <div id="description-help" class="form-text myds-text--muted">
                         Berikan maklumat tambahan seperti model, spesifikasi, atau nota khas
                     </div>
                     @error('description')
-                        <div id="description-error" class="text-danger small mt-1" role="alert">
+                        <div id="description-error" class="myds-text--danger small mt-1" role="alert">
                             {{ $message }}
                         </div>
                     @enderror
@@ -180,7 +180,7 @@
     <div class="mobile:col-span-4 tablet:col-span-8 desktop:col-span-4">
         <div class="bg-muted p-4 rounded">
             <h2 class="font-heading font-semibold h6 mb-3">Panduan Pengisian</h2>
-            <div class="small text-muted">
+            <div class="small myds-text--muted">
                 <div class="mb-3">
                     <strong class="text-primary">Nama Item</strong>
                     <p>Gunakan nama yang jelas dan mudah dicari. Contoh: "Komputer Desktop HP ProDesk 400 G7"</p>

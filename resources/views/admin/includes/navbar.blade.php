@@ -9,7 +9,7 @@
       </a>
 
       {{-- optional small site tagline --}}
-      <span class="text-muted hidden md:inline-block">Perkhidmatan Digital Kerajaan</span>
+      <span class="myds-text--muted hidden md:inline-block">Perkhidmatan Digital Kerajaan</span>
     </div>
 
     <div class="flex items-center gap-2">

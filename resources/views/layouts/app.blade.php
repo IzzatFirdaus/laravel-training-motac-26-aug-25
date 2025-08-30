@@ -265,7 +265,7 @@
                                        data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Pemberitahuan">
                                         <i class="bi bi-bell" aria-hidden="true"></i>
                                         @if($unreadCount)
-                                            <span class="myds-badge myds-badge--danger rounded-pill position-absolute notification-count-badge" aria-hidden="true">{{ $unreadCount }}</span>
+                                            <span class="myds-badge myds-badge--danger rounded-pill position-absolute top-0 start-100 translate-middle" aria-hidden="true">{{ $unreadCount }}</span>
                                             <span class="visually-hidden">{{ $unreadCount }} pemberitahuan belum dibaca</span>
                                         @endif
                                     </a>

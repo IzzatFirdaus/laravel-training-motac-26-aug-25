@@ -19,7 +19,7 @@
     <label for="{{ $id }}" class="form-label font-heading">
         {{ $labelText }}
         @if($required)
-            <span aria-hidden="true" class="text-danger">*</span>
+            <span aria-hidden="true" class="myds-text--danger">*</span>
             <span class="sr-only"> (wajib diisi)</span>
         @endif
     </label>

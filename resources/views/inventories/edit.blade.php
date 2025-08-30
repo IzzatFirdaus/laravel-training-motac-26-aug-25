@@ -7,17 +7,17 @@
 
 {{-- Breadcrumb --}}
 <nav aria-label="Breadcrumb" class="mb-4">
-    <ol class="d-flex list-unstyled text-muted myds-body-sm">
+    <ol class="d-flex list-unstyled myds-text--muted myds-body-sm">
         <li><a href="{{ route('inventories.index') }}" class="text-primary text-decoration-none hover:text-decoration-underline">Inventori</a></li>
         <li class="mx-2" aria-hidden="true">/</li>
-        <li aria-current="page" class="text-muted">Ubah</li>
+        <li aria-current="page" class="myds-text--muted">Ubah</li>
     </ol>
 </nav>
 
 {{-- Page Header --}}
 <header class="mb-6">
     <h1 id="inventory-edit-heading" class="myds-heading-md font-heading font-semibold mb-3">Ubah Inventori</h1>
-    <div class="myds-body-md text-muted">
+    <div class="myds-body-md myds-text--muted">
         <p class="mb-2">Kemas kini maklumat item inventori yang sedia ada. Medan bertanda bintang (*) adalah wajib diisi.</p>
     </div>
 </header>
@@ -97,7 +97,7 @@
                             <span class="myds-input-group__addon">RM</span>
                             <input id="price" name="price" type="number" step="0.01" min="0" class="myds-input @error('price') myds-input--error @enderror" value="{{ old('price', $inventory->price ?? '') }}" aria-describedby="price-help @error('price') price-error @enderror">
                         </div>
-                        <div id="price-help" class="myds-help-text">Masukkan harga per unit dalam Ringgit Malaysia (opsional)</div>
+                        <div id="price-help" class="myds-help-text">Masukkan harga per unit dalam Ringgit Malaysia</div>
                         @error('price') <div id="price-error" class="myds-text--danger myds-body-xs mt-1" role="alert">{{ $message }}</div> @enderror
                     </div>
 
@@ -169,7 +169,7 @@
                     </div>
                     <div class="mb-3">
                         <strong class="myds-text--primary">Harga</strong>
-                        <p class="mb-1">Harga per unit untuk tujuan inventori dan pelaporan (opsional).</p>
+                        <p class="mb-1">Harga per unit untuk tujuan inventori dan pelaporan.</p>
                     </div>
                     <div>
                         <strong class="myds-text--primary">Keterangan</strong>

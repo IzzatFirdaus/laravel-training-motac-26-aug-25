@@ -7,7 +7,7 @@
     <div class="mx-auto content-maxwidth-lg">
         <header class="mb-3">
             <h1 class="myds-heading-md font-heading">Cipta Permohonan</h1>
-            <p class="myds-body-sm text-muted">Isikan maklumat permohonan baru.</p>
+            <p class="myds-body-sm myds-text--muted">Isikan maklumat permohonan baru.</p>
         </header>
 
         <div class="bg-surface border rounded p-4 shadow-sm">

@@ -8,15 +8,15 @@
         <div class="col-12 col-md-8">
             <header class="mb-3">
                 <h1 class="h3">Cipta Kenderaan</h1>
-                <p class="text-muted mb-0">Isikan maklumat kenderaan baharu.</p>
+                <p class="myds-text--muted mb-0">Isikan maklumat kenderaan baharu.</p>
             </header>
 
             @if(session('success'))
-                <div class="alert alert-success myds-alert myds-alert--success" role="alert">{{ session('success') }}</div>
+                <div class="myds-alert myds-alert--success" role="alert">{{ session('success') }}</div>
             @endif
 
             @if($errors->any())
-                <div class="alert alert-danger myds-alert myds-alert--danger" role="alert">
+                <div class="myds-alert myds-alert--danger" role="alert">
                     <ul class="mb-0">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -35,13 +35,13 @@
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Pemilik (pilihan)</label>
                             @if(auth()->check() && auth()->user()->hasRole('admin'))
-                                <select id="user_id" name="user_id" class="form-control myds-select" aria-describedby="user_id-error">
+                                <select id="user_id" name="user_id" class="myds-input" aria-describedby="user_id-error">
                                     <option value="">(tiada pemilik)</option>
                                     @foreach(($users ?? collect()) as $user)
                                         <option value="{{ $user->id }}" @selected((string) old('user_id') === (string) $user->id)>{{ $user->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('user_id') <div id="user_id-error" class="text-danger myds-action--danger">{{ $message }}</div> @enderror
+                                @error('user_id') <div id="user_id-error" class="myds-text--danger">{{ $message }}</div> @enderror
                             @else
                                 <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
                                 <div class="form-text">Anda akan menjadi pemilik item ini.</div>
@@ -57,14 +57,14 @@
                         @if(isset($categories) && count($categories) > 0)
                             <div class="mb-3">
                                 <label for="category_id" class="form-label">Kategori</label>
-                                <select id="category_id" name="category_id" class="form-control myds-select" aria-describedby="category_id-error">
+                                <select id="category_id" name="category_id" class="myds-input" aria-describedby="category_id-error">
                                     <option value="">— Pilih kategori —</option>
                                     @foreach($categories as $id => $label)
                                         <option value="{{ $id }}" @selected(old('category_id') == $id)>{{ $label }}</option>
                                     @endforeach
                                 </select>
                                 @error('category_id')
-                                    <div id="category_id-error" class="text-danger myds-action--danger">{{ $message }}</div>
+                                    <div id="category_id-error" class="myds-text--danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         @endif

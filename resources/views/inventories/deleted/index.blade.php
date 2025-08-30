@@ -8,7 +8,7 @@
         <header class="mb-4 d-flex flex-column flex-md-row align-items-start justify-content-between" role="banner">
             <div>
                 <h1 id="page-heading" class="myds-heading-md font-heading mb-1">Inventori Dipadam</h1>
-                <p class="myds-body-sm text-muted mb-0">Senarai item inventori yang telah dipadamkan. Anda boleh memulihkan atau memadam secara kekal berdasarkan kebenaran anda.</p>
+                <p class="myds-body-sm myds-text--muted mb-0">Senarai item inventori yang telah dipadamkan. Anda boleh memulihkan atau memadam secara kekal berdasarkan kebenaran anda.</p>
             </div>
 
             <div class="mt-3 mt-md-0">
@@ -70,24 +70,24 @@
                         <caption class="sr-only">Senarai inventori yang dipadam; tindakan tersedia: pulihkan, padam kekal.</caption>
                         <thead>
                             <tr>
-                                <th scope="col" class="myds-body-sm text-muted">ID</th>
-                                <th scope="col" class="myds-body-sm text-muted">Nama</th>
-                                <th scope="col" class="myds-body-sm text-muted">Kuantiti</th>
-                                <th scope="col" class="myds-body-sm text-muted">Harga</th>
-                                <th scope="col" class="myds-body-sm text-muted">Pemilik</th>
-                                <th scope="col" class="myds-body-sm text-muted">Dipadam Pada</th>
-                                <th scope="col" class="myds-body-sm text-muted">Tindakan</th>
+                                <th scope="col" class="myds-body-sm myds-text--muted">ID</th>
+                                <th scope="col" class="myds-body-sm myds-text--muted">Nama</th>
+                                <th scope="col" class="myds-body-sm myds-text--muted">Kuantiti</th>
+                                <th scope="col" class="myds-body-sm myds-text--muted">Harga</th>
+                                <th scope="col" class="myds-body-sm myds-text--muted">Pemilik</th>
+                                <th scope="col" class="myds-body-sm myds-text--muted">Dipadam Pada</th>
+                                <th scope="col" class="myds-body-sm myds-text--muted">Tindakan</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($deletedInventories as $inventory)
                                 <tr>
-                                    <td class="myds-body-sm text-muted">{{ $inventory->id }}</td>
+                                    <td class="myds-body-sm myds-text--muted">{{ $inventory->id }}</td>
                                     <td class="myds-body-md">{{ $inventory->name }}</td>
                                     <td class="myds-body-sm">{{ $inventory->qty }}</td>
                                     <td class="myds-body-sm">RM {{ number_format($inventory->price ?? 0, 2) }}</td>
-                                    <td class="myds-body-sm text-muted">{{ optional($inventory->user)->name ?? 'Tidak diketahui' }}</td>
-                                    <td class="myds-body-sm text-muted">{{ optional($inventory->deleted_at)->format('d/m/Y H:i') ?? '—' }}</td>
+                                    <td class="myds-body-sm myds-text--muted">{{ optional($inventory->user)->name ?? 'Tidak diketahui' }}</td>
+                                    <td class="myds-body-sm myds-text--muted">{{ optional($inventory->deleted_at)->format('d/m/Y H:i') ?? '—' }}</td>
                                     <td class="text-nowrap">
                                         <div class="d-flex flex-wrap gap-2 align-items-center">
                                             @can('restore', $inventory)
@@ -114,7 +114,7 @@
                         </tbody>
                     </table>
 
-                    <div id="inventories-count" class="myds-body-xs text-muted mt-2">
+                    <div id="inventories-count" class="myds-body-xs myds-text--muted mt-2">
                         Memaparkan {{ $deletedInventories->count() }} daripada {{ $deletedInventories->total() ?? $deletedInventories->count() }} inventori dipadam.
                     </div>
                 </div>

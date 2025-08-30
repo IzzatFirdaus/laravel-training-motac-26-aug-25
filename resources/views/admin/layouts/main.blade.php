@@ -18,9 +18,9 @@
       <div class="myds-container py-2 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <span class="myds-badge myds-badge--primary">Beta</span>
-          <div class="text-muted">Perkhidmatan ini berada dalam fasa Beta. <a href="/feedback" class="text-primary underline">Beri maklum balas</a></div>
+          <div class="myds-text--muted">Perkhidmatan ini berada dalam fasa Beta. <a href="/feedback" class="text-primary underline">Beri maklum balas</a></div>
         </div>
-        <div class="text-muted small">Terkini: {{ \Carbon\Carbon::now()->format('j M Y') }}</div>
+        <div class="myds-text--muted small">Terkini: {{ \Carbon\Carbon::now()->format('j M Y') }}</div>
       </div>
     </div>
 

@@ -8,7 +8,7 @@
         <header class="mb-3 d-flex justify-content-between align-items-start">
             <div>
                 <h1 class="myds-heading-md font-heading">{{ $application->name ?? 'Permohonan' }}</h1>
-                <p class="myds-body-sm text-muted mb-0">Butiran permohonan.</p>
+                <p class="myds-body-sm myds-text--muted mb-0">Butiran permohonan.</p>
             </div>
             <div class="text-end">
                 @can('update', $application)
@@ -20,16 +20,16 @@
         <section>
             <div class="bg-surface border rounded p-4 shadow-sm">
                 <dl class="row g-3">
-                    <dt class="col-4 myds-body-sm text-muted">ID</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">ID</dt>
                     <dd class="col-8 myds-body-md">{{ $application->id }}</dd>
 
-                    <dt class="col-4 myds-body-sm text-muted">Nama</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">Nama</dt>
                     <dd class="col-8 myds-body-md">{{ $application->name ?? '—' }}</dd>
 
-                    <dt class="col-4 myds-body-sm text-muted">Dicipta</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">Dicipta</dt>
                     <dd class="col-8 myds-body-md">{{ $application->created_at?->format('Y-m-d') ?? '—' }}</dd>
 
-                    <dt class="col-4 myds-body-sm text-muted">Keterangan</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">Keterangan</dt>
                     <dd class="col-8 myds-body-md">{{ $application->description ?? '—' }}</dd>
                 </dl>
 

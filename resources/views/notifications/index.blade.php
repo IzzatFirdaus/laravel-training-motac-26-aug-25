@@ -6,17 +6,17 @@
 <main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="notifications-heading">
     <header class="mb-4">
         <h1 id="notifications-heading" class="myds-heading-md font-heading font-semibold">Pemberitahuan</h1>
-        <p class="myds-body-sm text-muted mb-0">Semua pemberitahuan terkini ditunjukkan di sini. Gunakan butang "Lihat" untuk membuka butiran penuh.</p>
+        <p class="myds-body-sm myds-text--muted mb-0">Semua pemberitahuan terkini ditunjukkan di sini. Gunakan butang "Lihat" untuk membuka butiran penuh.</p>
     </header>
 
     @if($notifications->isEmpty())
         <div class="bg-surface border rounded p-4 text-center">
-            <svg width="48" height="48" class="mb-3 mx-auto d-block text-muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <svg width="48" height="48" class="mb-3 mx-auto d-block myds-text--muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 2a7 7 0 0 0-7 7v4l-1 2h16l-1-2v-4a7 7 0 0 0-7-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <h2 class="myds-heading-sm font-semibold">Tiada pemberitahuan</h2>
-            <p class="text-muted myds-body-sm">Anda tidak mempunyai pemberitahuan yang belum dibaca pada masa ini.</p>
+            <p class="myds-text--muted myds-body-sm">Anda tidak mempunyai pemberitahuan yang belum dibaca pada masa ini.</p>
         </div>
     @else
         <ul class="myds-list myds-list--plain" role="list" aria-label="Senarai pemberitahuan">
@@ -42,9 +42,9 @@
                                         {{ \Illuminate\Support\Str::limit($message, 120) }}
                                     </div>
                                     @if($note->data['meta'] ?? false)
-                                        <div class="myds-body-xs text-muted">{{ \Illuminate\Support\Str::limit(data_get($note->data, 'meta'), 120) }}</div>
+                                        <div class="myds-body-xs myds-text--muted">{{ \Illuminate\Support\Str::limit(data_get($note->data, 'meta'), 120) }}</div>
                                     @endif
-                                    <div class="text-muted myds-body-xs mt-1">
+                                    <div class="myds-text--muted myds-body-xs mt-1">
                                         <time datetime="{{ $created?->toIso8601String() ?? now()->toIso8601String() }}">
                                             {{ $created ? $created->format('d/m/Y H:i') : '-' }}
                                         </time>

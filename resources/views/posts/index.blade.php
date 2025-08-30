@@ -6,7 +6,7 @@
 <main id="main-content" class="myds-container py-6" role="main" tabindex="-1" aria-labelledby="posts-heading">
     <header class="mb-4">
         <h1 id="posts-heading" class="myds-heading-md font-heading font-semibold">Pos</h1>
-        <p class="myds-body-sm text-muted mb-0">
+        <p class="myds-body-sm myds-text--muted mb-0">
             Pos luaran yang diambil daripada jsonplaceholder.typicode.com — dipaparkan untuk tujuan demonstrasi dan ujian API.
         </p>
     </header>
@@ -24,13 +24,13 @@
 
                 @if(empty($postsList) || count($postsList) === 0)
                     <div class="bg-washed p-4 text-center">
-                        <svg width="48" height="48" class="mb-3 mx-auto d-block text-muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <svg width="48" height="48" class="mb-3 mx-auto d-block myds-text--muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M8 7V4a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
 
                         <h3 class="myds-heading-sm font-semibold mb-1">Tiada pos ditemui</h3>
-                        <p class="text-muted myds-body-sm mb-0">Tiada maklumat pos tersedia pada masa ini. Sila cuba lagi kemudian.</p>
+                        <p class="myds-text--muted myds-body-sm mb-0">Tiada maklumat pos tersedia pada masa ini. Sila cuba lagi kemudian.</p>
                     </div>
                 @else
                     <ul class="myds-list myds-list--stacked" role="list" aria-label="Senarai pos luaran">
@@ -52,12 +52,12 @@
                                         </h3>
 
                                         @if(!empty($excerpt))
-                                            <p class="myds-body-sm text-muted mb-2">{{ e($excerpt) }}</p>
+                                            <p class="myds-body-sm myds-text--muted mb-2">{{ e($excerpt) }}</p>
                                         @endif
 
                                         {{-- meta info: optional userId or fallback --}}
                                         @if(data_get($post, 'userId'))
-                                            <div class="myds-body-xs text-muted">Pengarang ID: {{ e(data_get($post, 'userId')) }}</div>
+                                            <div class="myds-body-xs myds-text--muted">Pengarang ID: {{ e(data_get($post, 'userId')) }}</div>
                                         @endif
                                     </div>
 

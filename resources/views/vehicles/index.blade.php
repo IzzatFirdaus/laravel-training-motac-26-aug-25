@@ -7,7 +7,7 @@
     <header class="mb-6 d-flex flex-column flex-md-row align-items-md-start justify-content-md-between gap-4">
         <div>
             <h1 id="vehicles-heading" class="myds-heading-md font-heading font-semibold mb-2">Kenderaan</h1>
-            <p class="myds-body-md text-muted mb-0">Rekod kenderaan yang diselenggara oleh sistem inventori kerajaan.</p>
+            <p class="myds-body-md myds-text--muted mb-0">Rekod kenderaan yang diselenggara oleh sistem inventori kerajaan.</p>
         </div>
 
         @can('create', App\Models\Vehicle::class)
@@ -26,7 +26,7 @@
         @php
             $vehiclesCount = method_exists($vehicles, 'total') ? $vehicles->total() : (is_countable($vehicles) ? count($vehicles) : 0);
         @endphp
-        <div id="vehicles-count" class="myds-body-sm text-muted mb-4" role="status">Memaparkan {{ $vehiclesCount }} kenderaan</div>
+        <div id="vehicles-count" class="myds-body-sm myds-text--muted mb-4" role="status">Memaparkan {{ $vehiclesCount }} kenderaan</div>
 
         {{-- Filters --}}
         <form method="GET" class="myds-card mb-4" aria-labelledby="filters-heading" novalidate>
@@ -36,7 +36,7 @@
                     <div class="mobile:col-span-4 tablet:col-span-3 desktop:col-span-3">
                         <label for="search" class="myds-label d-block mb-2">Cari Kenderaan</label>
                         <input id="search" name="search" class="myds-input" value="{{ request('search','') }}" placeholder="Nama atau keterangan" aria-describedby="search-help" />
-                        <div id="search-help" class="myds-body-xs text-muted mt-1">Cari mengikut nama atau keterangan.</div>
+                        <div id="search-help" class="myds-body-xs myds-text--muted mt-1">Cari mengikut nama atau keterangan.</div>
                     </div>
 
                     <div class="mobile:col-span-4 tablet:col-span-2 desktop:col-span-3">
@@ -49,7 +49,7 @@
                                 @endforeach
                             @endisset
                         </select>
-                        <div id="owner-help" class="myds-body-xs text-muted mt-1">Tapis mengikut pemilik kenderaan.</div>
+                        <div id="owner-help" class="myds-body-xs myds-text--muted mt-1">Tapis mengikut pemilik kenderaan.</div>
                     </div>
 
                     <div class="mobile:col-span-4 tablet:col-span-2 desktop:col-span-2">
@@ -59,7 +59,7 @@
                                 <option value="{{ $n }}" {{ (int) request('per_page', 10) === $n ? 'selected' : '' }}>{{ $n }}</option>
                             @endforeach
                         </select>
-                        <div id="per-page-help" class="myds-body-xs text-muted mt-1">Bilangan item dipaparkan setiap halaman.</div>
+                        <div id="per-page-help" class="myds-body-xs myds-text--muted mt-1">Bilangan item dipaparkan setiap halaman.</div>
                     </div>
 
                     <div class="mobile:col-span-4 tablet:col-span-1 desktop:col-span-4 d-flex align-items-end">
@@ -96,13 +96,13 @@
                     <tbody>
                         @forelse ($vehicles as $vehicle)
                             <tr>
-                                <td class="myds-body-sm text-muted">{{ $vehicle->id }}</td>
+                                <td class="myds-body-sm myds-text--muted">{{ $vehicle->id }}</td>
                                 <td class="myds-body-sm font-medium">{{ $vehicle->name }}</td>
                                 <td class="myds-body-sm">{{ $vehicle->qty }}</td>
                                 <td class="myds-body-sm">{{ $vehicle->price !== null ? number_format($vehicle->price, 2) : '—' }}</td>
-                                <td class="myds-body-sm text-muted">{{ \Illuminate\Support\Str::limit($vehicle->description, 60) }}</td>
+                                <td class="myds-body-sm myds-text--muted">{{ \Illuminate\Support\Str::limit($vehicle->description, 60) }}</td>
                                 <td class="myds-body-sm">{{ $vehicle->owner?->name ?? '—' }}</td>
-                                <td class="myds-body-sm text-muted">
+                                <td class="myds-body-sm myds-text--muted">
                                     <time datetime="{{ isset($vehicle->created_at) ? \Illuminate\Support\Carbon::parse($vehicle->created_at)->toIso8601String() : now()->toIso8601String() }}">
                                         {{ isset($vehicle->created_at) ? \Illuminate\Support\Carbon::parse($vehicle->created_at)->format('d/m/Y') : '—' }}
                                     </time>
@@ -122,9 +122,9 @@
                             <tr>
                                 <td colspan="8" class="text-center py-6">
                                     <div role="status" class="p-4">
-                                        <i class="bi bi-inboxes fs-1 mx-auto d-block mb-3 text-muted" aria-hidden="true"></i>
+                                        <i class="bi bi-inboxes fs-1 mx-auto d-block mb-3 myds-text--muted" aria-hidden="true"></i>
                                         <h3 class="myds-heading-xs font-heading font-medium mb-2">Tiada Kenderaan Dijumpai</h3>
-                                        <p class="myds-body-sm text-muted mb-3">Belum ada kenderaan didaftarkan atau tiada keputusan yang sepadan.</p>
+                                        <p class="myds-body-sm myds-text--muted mb-3">Belum ada kenderaan didaftarkan atau tiada keputusan yang sepadan.</p>
                                         @can('create', App\Models\Vehicle::class)
                                             <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta Kenderaan">
                                                 <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>Cipta Kenderaan Pertama

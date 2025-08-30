@@ -6,7 +6,7 @@
 <main id="main-content" class="myds-container py-6" role="main" tabindex="-1" aria-labelledby="page-heading">
     <header class="mb-4">
         <h1 id="page-heading" class="myds-heading-md font-heading font-semibold">Cipta Pengguna</h1>
-        <p class="myds-body-sm text-muted mb-0">Isikan maklumat pengguna baru. Semua medan yang bertanda * mesti diisi.</p>
+                <p class="myds-body-sm myds-text--muted mb-0">Tambah pengguna baru ke dalam sistem</p>
     </header>
 
     <section aria-labelledby="create-user-form">

@@ -12,7 +12,7 @@
         <div class="myds-card">
             <div class="myds-card__body">
                 <p role="status">Perubahan pengguna telah disimpan. Anda akan dialihkan semula ke senarai pengguna dalam beberapa saat.</p>
-                <p class="myds-body-sm text-muted">Jika pengalihan tidak berlaku, <a href="{{ route('users.index') }}">klik di sini</a>.</p>
+                <p class="myds-body-sm myds-text--muted">Jika pengalihan tidak berlaku, <a href="{{ route('users.index') }}">klik di sini</a>.</p>
             </div>
         </div>
     </section>

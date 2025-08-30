@@ -10,17 +10,17 @@
       {{-- Error summary --}}
       <div class="text-center mb-6" role="region" aria-describedby="error-description">
         <div class="mb-4" aria-hidden="true">
-          <i class="bi bi-x-octagon text-danger" style="font-size:80px;"></i>
+          <i class="bi bi-x-octagon myds-text--danger" style="font-size:80px;"></i>
         </div>
 
-        <h1 id="error-title" class="myds-heading-md font-heading font-semibold text-danger mb-2">500</h1>
+        <h1 id="error-title" class="myds-heading-md font-heading font-semibold myds-text--danger mb-2">500</h1>
         <h2 class="myds-heading-sm font-heading mb-2">Ralat Pelayan</h2>
 
-        <p id="error-description" class="myds-body-md text-muted mb-4">
+        <p id="error-description" class="myds-body-md myds-text--muted mb-4">
           Maaf, berlaku masalah teknikal pada pelayan kami. Pasukan teknikal telah dimaklumkan dan sedang menyelesaikan masalah ini.
         </p>
 
-        <p class="myds-body-sm text-muted mb-4" lang="en">
+        <p class="myds-body-sm myds-text--muted mb-4" lang="en">
           <em>Sorry, there is a technical issue with our server. Our technical team has been notified.</em>
         </p>
       </div>
@@ -54,7 +54,7 @@
 
           <div>
             <h4 class="myds-body-md font-medium mb-1">Status Sistem</h4>
-            <p class="myds-body-sm mb-0 text-muted">Sistem sedang mengalami gangguan sementara. Kami mohon maaf atas kesulitan ini.</p>
+            <p class="myds-body-sm mb-0 myds-text--muted">Sistem sedang mengalami gangguan sementara. Kami mohon maaf atas kesulitan ini.</p>
           </div>
         </div>
       </div>
@@ -80,16 +80,14 @@
       {{-- Technical info (for transparency) --}}
       <div class="mt-6 p-4 bg-muted rounded" role="contentinfo" aria-label="Maklumat teknikal ringkas">
         <h4 class="myds-heading-xs font-heading font-medium mb-2">Bantuan Teknikal</h4>
-        <p class="myds-body-sm text-muted mb-3">Jika masalah berterusan, sila hubungi pasukan sokongan teknikal kami dan sertakan maklumat berikut.</p>
+        <p class="myds-body-sm myds-text--muted mb-3">Jika masalah berterusan, sila hubungi pasukan sokongan teknikal kami dan sertakan maklumat berikut.</p>
 
-        <div class="d-flex flex-wrap gap-3">
-          <div class="text-muted"><strong>Kod Ralat:</strong> <span class="myds-body-sm">500</span></div>
-          <div class="text-muted"><strong>Masa:</strong> <span class="myds-body-sm">{{ now()->format('d/m/Y H:i:s') }}</span></div>
-          <div class="text-muted"><strong>Rujukan:</strong> <span class="myds-body-sm">{{ substr(md5(now()->timestamp), 0, 8) }}</span></div>
-          <div class="text-muted"><strong>URL:</strong> <span class="myds-body-sm">{{ request()->fullUrl() }}</span></div>
-        </div>
-
-        <div class="mt-3">
+        <div class="bg-muted p-3 rounded myds-body-xs">
+          <div class="myds-text--muted"><strong>Kod Ralat:</strong> <span class="myds-body-sm">500</span></div>
+          <div class="myds-text--muted"><strong>Masa:</strong> <span class="myds-body-sm">{{ now()->format('d/m/Y H:i:s') }}</span></div>
+          <div class="myds-text--muted"><strong>Rujukan:</strong> <span class="myds-body-sm">{{ substr(md5(now()->timestamp), 0, 8) }}</span></div>
+          <div class="myds-text--muted"><strong>URL:</strong> <span class="myds-body-sm">{{ request()->fullUrl() }}</span></div>
+        </div>        <div class="mt-3">
           @if(config('app.support_email'))
             <a href="mailto:{{ config('app.support_email') }}?subject=Support%20request%20(500)%20{{ urlencode(request()->path()) }}" class="myds-btn myds-btn--secondary" aria-label="Hubungi sokongan">Hubungi Sokongan</a>
           @endif

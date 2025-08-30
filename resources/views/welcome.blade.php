@@ -41,7 +41,7 @@
     <section aria-labelledby="features-heading" class="mb-5">
         <div class="text-center mb-4">
             <h2 id="features-heading" class="font-heading font-semibold myds-heading-md mb-2">Ciri-ciri Utama Sistem</h2>
-            <p class="myds-body-sm text-muted mb-0">Sistem ini dibangunkan mengikut prinsip berpaksikan rakyat dan standard MYDS.</p>
+            <p class="myds-body-sm myds-text--muted mb-0">Sistem ini dibangunkan mengikut prinsip berpaksikan rakyat dan standard MYDS.</p>
         </div>
 
         <div class="myds-grid myds-grid-desktop myds-grid-tablet myds-grid-mobile gap-4">
@@ -54,7 +54,7 @@
                             </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Pengurusan Inventori</h3>
-                            <p class="text-muted small mb-2">Urus inventori kerajaan dengan sistem yang mudah dan sistematik.</p>
+                            <p class="myds-text--muted small mb-2">Urus inventori kerajaan dengan sistem yang mudah dan sistematik.</p>
                             <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat inventori">Lihat Inventori</a>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                             </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Pengurusan Kenderaan</h3>
-                            <p class="text-muted small mb-2">Pantau dan urus kenderaan kerajaan dengan komprehensif.</p>
+                            <p class="myds-text--muted small mb-2">Pantau dan urus kenderaan kerajaan dengan komprehensif.</p>
                             <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat kenderaan">Lihat Kenderaan</a>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                             </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Pengurusan Pengguna</h3>
-                            <p class="text-muted small mb-2">Urus akaun pengguna dan akses sistem dengan selamat.</p>
+                            <p class="myds-text--muted small mb-2">Urus akaun pengguna dan akses sistem dengan selamat.</p>
                             <a href="{{ route('users.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat pengguna">Lihat Pengguna</a>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                             </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Permohonan</h3>
-                            <p class="text-muted small mb-2">Proses dan urus permohonan rasmi dengan sistematik.</p>
+                            <p class="myds-text--muted small mb-2">Proses dan urus permohonan rasmi dengan sistematik.</p>
                             <a href="{{ route('applications.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat permohonan">Lihat Permohonan</a>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
     <section aria-labelledby="principles-heading" class="mb-5">
         <div class="text-center mb-4">
             <h2 id="principles-heading" class="font-heading font-semibold myds-heading-md mb-2">Prinsip MyGOVEA</h2>
-            <p class="myds-body-sm text-muted mb-0">Sistem ini dibangunkan berdasarkan prinsip reka bentuk MyGOVEA.</p>
+            <p class="myds-body-sm myds-text--muted mb-0">Sistem ini dibangunkan berdasarkan prinsip reka bentuk MyGOVEA.</p>
         </div>
 
         <div class="myds-grid myds-grid-desktop myds-grid-tablet myds-grid-mobile gap-3">
@@ -124,7 +124,7 @@
                     <i class="bi bi-people" aria-hidden="true" style="font-size:24px"></i>
                 </div>
                 <h3 class="font-heading font-semibold h6 mb-1">Berpaksikan Rakyat</h3>
-                <p class="text-muted small mb-0">Mengutamakan keperluan pengguna sebagai fokus utama.</p>
+                <p class="myds-text--muted small mb-0">Mengutamakan keperluan pengguna sebagai fokus utama.</p>
             </div>
 
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-4 text-center p-3">
@@ -132,7 +132,7 @@
                     <i class="bi bi-graph-up" aria-hidden="true" style="font-size:24px"></i>
                 </div>
                 <h3 class="font-heading font-semibold h6 mb-1">Berpacukan Data</h3>
-                <p class="text-muted small mb-0">Menggunakan data dengan efisien untuk keputusan yang tepat.</p>
+                <p class="myds-text--muted small mb-0">Menggunakan data dengan efisien untuk keputusan yang tepat.</p>
             </div>
 
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-4 text-center p-3">
@@ -140,7 +140,7 @@
                     <i class="bi bi-sliders" aria-hidden="true" style="font-size:24px"></i>
                 </div>
                 <h3 class="font-heading font-semibold h6 mb-1">Antara Muka Minimalis</h3>
-                <p class="text-muted small mb-0">Reka bentuk yang mudah difahami dan digunakan.</p>
+                <p class="myds-text--muted small mb-0">Reka bentuk yang mudah difahami dan digunakan.</p>
             </div>
         </div>
     </section>

@@ -7,22 +7,22 @@
 
 {{-- MYDS Breadcrumb Navigation --}}
 <nav aria-label="Breadcrumb" class="mb-4">
-    <ol class="d-flex list-unstyled text-muted myds-body-sm">
+    <ol class="d-flex list-unstyled myds-text--muted myds-body-sm">
         <li><a href="{{ route('vehicles.index') }}" class="text-primary text-decoration-none hover:text-decoration-underline">Kenderaan</a></li>
         <li class="mx-2" aria-hidden="true">/</li>
-        <li aria-current="page" class="text-muted">Cipta Baharu</li>
+        <li aria-current="page" class="myds-text--muted">Cipta Baharu</li>
     </ol>
 </nav>
 
 {{-- Page Header (MyGOVEA clear display principles) --}}
 <header class="mb-6">
     <h1 id="page-heading" class="myds-heading-md font-heading font-semibold mb-3">Cipta Kenderaan Baharu</h1>
-    <div class="myds-body-md text-muted">
+    <div class="myds-body-md myds-text--muted">
         <p class="mb-2">
             Isi maklumat di bawah untuk menambah kenderaan baharu ke dalam sistem inventori.
             Medan bertanda bintang (*) adalah <strong>wajib diisi</strong>.
         </p>
-        <p class="myds-body-sm text-muted mb-0">
+        <p class="myds-body-sm myds-text--muted mb-0">
             <em lang="en">Fill in the information below to add a new vehicle to the inventory system.</em>
         </p>
     </div>
@@ -56,7 +56,7 @@
                         <i class="bi bi-info-circle me-2 mt-0.5 text-primary flex-shrink-0" aria-hidden="true"></i>
                         <div>
                             <p class="myds-body-sm font-medium mb-1">Panduan Pengisian Borang</p>
-                            <p class="myds-body-sm text-muted mb-0">
+                            <p class="myds-body-sm myds-text--muted mb-0">
                                 Pastikan semua medan wajib (*) telah diisi dengan lengkap dan tepat sebelum menyerahkan borang.
                             </p>
                         </div>
@@ -67,7 +67,7 @@
                 <div class="mb-4">
                     <label for="name" class="form-label myds-body-sm font-medium d-block mb-2">
                         Nama Kenderaan
-                        <span class="text-danger ms-1" aria-hidden="true">*</span>
+                        <span class="myds-text--danger ms-1" aria-hidden="true">*</span>
                         <span class="sr-only"> medan wajib</span>
                     </label>
                     <input type="text"
@@ -79,11 +79,11 @@
                            aria-required="true"
                            maxlength="255"
                            required>
-                    <div id="name-help" class="myds-body-xs text-muted mt-1">
+                    <div id="name-help" class="myds-body-xs myds-text--muted mt-1">
                         Masukkan nama lengkap dan deskriptif untuk kenderaan (maksimum 255 aksara)
                     </div>
                     @error('name')
-                        <div id="name-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
+                        <div id="name-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert">
                             <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
@@ -107,20 +107,20 @@
                                 </option>
                             @endforeach
                         </select>
-                        <div id="user_id-help" class="myds-body-xs text-muted mt-1">
-                            Pilih pengguna yang akan menjadi pemilik kenderaan ini (opsional)
+                        <div id="user_id-help" class="myds-body-xs myds-text--muted mt-1">
+                            Pilih pengguna yang akan menjadi pemilik kenderaan ini
                         </div>
                     @else
                         <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
                         <div class="myds-input bg-muted cursor-not-allowed" role="textbox" aria-readonly="true" tabindex="-1">
                             {{ auth()->user()->name ?? 'Pengguna Semasa' }}
                         </div>
-                        <div id="user_id-help" class="myds-body-xs text-muted mt-1">
+                        <div id="user_id-help" class="myds-body-xs myds-text--muted mt-1">
                             Anda akan menjadi pemilik kenderaan ini
                         </div>
                     @endif
                     @error('user_id')
-                        <div id="user_id-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
+                        <div id="user_id-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert">
                             <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
@@ -131,7 +131,7 @@
                 <div class="mb-4">
                     <label for="qty" class="form-label myds-body-sm font-medium d-block mb-2">
                         Kuantiti
-                        <span class="text-danger ms-1" aria-label="medan wajib">*</span>
+                        <span class="myds-text--danger ms-1" aria-label="medan wajib">*</span>
                     </label>
               <input type="number"
                   id="qty"
@@ -142,11 +142,11 @@
                   aria-describedby="qty-help @error('qty') qty-error @enderror"
                   aria-required="true"
                   required>
-                    <div id="qty-help" class="myds-body-xs text-muted mt-1">
+                    <div id="qty-help" class="myds-body-xs myds-text--muted mt-1">
                         Masukkan bilangan unit kenderaan (minimum 1)
                     </div>
                     @error('qty')
-                        <div id="qty-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
+                        <div id="qty-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert">
                             <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
@@ -158,8 +158,8 @@
                     <label for="price" class="form-label myds-body-sm font-medium d-block mb-2">
                         Harga (RM)
                     </label>
-                    <div class="input-group">
-               <span class="input-group-text bg-muted" aria-hidden="true">RM</span>
+                    <div class="myds-input-group">
+               <span class="myds-input-group__text bg-muted" aria-hidden="true">RM</span>
                <input type="number"
                    id="price"
                    name="price"
@@ -169,11 +169,11 @@
                    min="0"
                    aria-describedby="price-help @error('price') price-error @enderror">
                     </div>
-                    <div id="price-help" class="myds-body-xs text-muted mt-1">
-                        Masukkan harga per unit dalam Ringgit Malaysia (opsional)
+                    <div id="price-help" class="myds-body-xs myds-text--muted mt-1">
+                        Masukkan harga per unit dalam Ringgit Malaysia
                     </div>
                     @error('price')
-                        <div id="price-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
+                        <div id="price-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert">
                             <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
@@ -191,11 +191,11 @@
                               rows="4"
                               aria-describedby="description-help @error('description') description-error @enderror"
                               maxlength="1000">{{ old('description') }}</textarea>
-                    <div id="description-help" class="myds-body-xs text-muted mt-1">
+                    <div id="description-help" class="myds-body-xs myds-text--muted mt-1">
                         Tambahan maklumat tentang kenderaan (maksimum 1000 aksara)
                     </div>
                     @error('description')
-                        <div id="description-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
+                        <div id="description-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert">
                             <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
@@ -224,7 +224,7 @@
             <div class="space-y-3">
                 <div>
                     <h4 class="myds-body-sm font-medium mb-1">Tips Pengisian</h4>
-                    <ul class="myds-body-xs text-muted space-y-1">
+                    <ul class="myds-body-xs myds-text--muted space-y-1">
                         <li>Gunakan nama yang mudah difahami</li>
                         <li>Pastikan kuantiti dan harga adalah tepat</li>
                         <li>Tambah keterangan untuk maklumat tambahan</li>
@@ -232,7 +232,7 @@
                 </div>
                 <div>
                     <h4 class="myds-body-sm font-medium mb-1">Sokongan</h4>
-                    <p class="myds-body-xs text-muted">
+                    <p class="myds-body-xs myds-text--muted">
                         Jika menghadapi masalah, hubungi pasukan sokongan di
                         <a href="mailto:support@jdn.gov.my" class="text-primary">support@jdn.gov.my</a>
                     </p>

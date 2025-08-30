@@ -1,6 +1,6 @@
 <div role="group" aria-label="Maklumat pengguna" class="row g-3">
     <div class="col-12">
-        <label for="name" class="form-label myds-label">Nama <span class="text-danger" aria-hidden="true">*</span></label>
+        <label for="name" class="form-label myds-label">Nama <span class="myds-text--danger" aria-hidden="true">*</span></label>
     <input id="name"
                name="name"
                type="text"
@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-12">
-        <label for="email" class="form-label myds-label">Emel <span class="text-danger" aria-hidden="true">*</span></label>
+        <label for="email" class="form-label myds-label">Emel <span class="myds-text--danger" aria-hidden="true">*</span></label>
     <input id="email"
                name="email"
                type="email"
@@ -38,7 +38,7 @@
     <div class="col-12">
         <label for="password" class="form-label myds-label">Kata Laluan
             @unless(isset($user))
-                <span class="text-danger" aria-hidden="true">*</span>
+                <span class="myds-text--danger" aria-hidden="true">*</span>
             @endunless
         </label>
     <input id="password"

@@ -71,12 +71,9 @@
                 </div>
 
                 {{-- Link to Login --}}
-                <div class="text-center mt-4">
-                    <p class="myds-body-sm text-muted">
-                        {{ __('Sudah mempunyai akaun?') }}
-                        <a href="{{ route('login') }}" class="myds-link">{{ __('Log masuk di sini') }}</a>
-                    </p>
-                </div>
+                                            <div class="myds-body-xs myds-text--muted text-center">
+                                Sudah mempunyai akaun? <a href="{{ route('login') }}" class="text-decoration-none">Log masuk di sini</a>
+                            </div>
             </form>
         </div>
     </div>

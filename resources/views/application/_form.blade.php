@@ -1,6 +1,6 @@
 <div class="row g-3">
     <div class="col-12">
-        <label for="name" class="form-label font-heading">Nama <span class="text-danger" aria-hidden="true">*</span></label>
+        <label for="name" class="form-label font-heading">Nama <span class="myds-text--danger" aria-hidden="true">*</span></label>
         <input
             id="name"
             name="name"

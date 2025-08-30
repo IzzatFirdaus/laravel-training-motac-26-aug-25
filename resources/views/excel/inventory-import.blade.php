@@ -8,7 +8,7 @@
         <header class="d-flex flex-column flex-md-row align-items-start justify-content-between mb-3">
             <div>
                 <h1 id="page-title" class="myds-heading-md font-heading">Import Inventori</h1>
-                <p class="myds-body-sm text-muted mb-0">Muat naik fail Excel (.xlsx atau .csv), pratonton data dan sahkan import mengikut templat.</p>
+                <p class="myds-body-sm myds-text--muted mb-0">Muat naik fail Excel (.xlsx atau .csv), pratonton data dan sahkan import mengikut templat.</p>
             </div>
 
             <div class="mt-3 mt-md-0">
@@ -35,7 +35,7 @@
                         </label>
 
                         {{-- Filename preview for screen readers and visual --}}
-                        <div id="file-name" class="myds-body-sm text-muted" aria-live="polite">
+                        <div id="file-name" class="myds-body-sm myds-text--muted" aria-live="polite">
                             Tiada fail dipilih
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         required
                     />
 
-                    <div id="file-help" class="myds-body-xs text-muted mt-2">Sokong .xlsx dan .csv sahaja. Saiz maksimum bergantung pada konfigurasi pelayan.</div>
+                    <div id="file-help" class="myds-body-xs myds-text--muted mt-2">Sokong .xlsx dan .csv sahaja. Saiz maksimum bergantung pada konfigurasi pelayan.</div>
 
                     @error('file')
                         <div class="myds-alert myds-alert--danger mt-2" role="alert">{{ $message }}</div>
@@ -103,7 +103,7 @@
                 @endphp
 
                 @if($previewRowsArray->isEmpty())
-                    <p class="myds-body-sm text-muted">Tiada data untuk dipratonton.</p>
+                    <p class="myds-body-sm myds-text--muted">Tiada data untuk dipratonton.</p>
                 @else
                     <div class="myds-table-responsive mb-3" role="region" aria-labelledby="preview-title" aria-live="polite">
                         <table class="myds-table" role="table" aria-describedby="preview-count">
@@ -111,7 +111,7 @@
                             <thead>
                                 <tr>
                                     @foreach($columns as $col)
-                                        <th scope="col" class="myds-body-sm text-muted">{{ $col }}</th>
+                                        <th scope="col" class="myds-body-sm myds-text--muted">{{ $col }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
@@ -127,7 +127,7 @@
                             </tbody>
                         </table>
 
-                        <div id="preview-count" class="myds-body-xs text-muted mt-2">
+                        <div id="preview-count" class="myds-body-xs myds-text--muted mt-2">
                             Paparan {{ $previewRowsArray->count() }} baris untuk pratonton.
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                         <input type="hidden" name="_reupload" id="reupload-flag" value="0">
 
                         <div class="d-flex flex-column gap-2 flex-grow-1">
-                            <div class="myds-body-sm text-muted">Anda boleh terus import data yang dipratonton, atau muat naik fail baru untuk import.</div>
+                            <div class="myds-body-sm myds-text--muted">Anda boleh terus import data yang dipratonton, atau muat naik fail baru untuk import.</div>
 
                             <div class="d-flex gap-2 align-items-center">
                                 <button type="submit" name="import" value="confirm" class="myds-btn myds-btn--primary">Import</button>
@@ -153,7 +153,7 @@
                                 <label for="reupload-file" class="myds-btn myds-btn--outline" id="reupload-label" role="button" aria-controls="reupload-file">
                                     Muat naik fail baru untuk import
                                 </label>
-                                <div id="reupload-filename" class="myds-body-sm text-muted" aria-live="polite">Tiada fail baru dipilih</div>
+                                <div id="reupload-filename" class="myds-body-sm myds-text--muted" aria-live="polite">Tiada fail baru dipilih</div>
 
                                 <input id="reupload-file" name="file" type="file" accept=".xlsx,.csv" class="sr-only" />
                             </div>

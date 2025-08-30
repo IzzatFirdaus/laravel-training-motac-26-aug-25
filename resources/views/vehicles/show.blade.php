@@ -7,7 +7,7 @@
     <div class="desktop:col-span-8 tablet:col-span-8 mobile:col-span-4 mx-auto content-maxwidth-lg">
         <header class="mb-3">
             <h1 class="myds-heading-md font-heading font-semibold">Kenderaan #{{ $vehicle->id }}</h1>
-            <p class="myds-body-sm text-muted">Butiran penuh kenderaan yang direkodkan</p>
+            <p class="myds-body-sm myds-text--muted">Butiran penuh kenderaan yang direkodkan</p>
         </header>
 
         <div class="bg-surface border rounded-m p-4 shadow-sm">
@@ -16,19 +16,19 @@
             @endif
 
             <dl class="row g-3">
-                <dt class="col-4 myds-body-sm text-muted">Nama</dt>
+                <dt class="col-4 myds-body-sm myds-text--muted">Nama</dt>
                 <dd class="col-8 myds-body-md">{{ $vehicle->name ?? '—' }}</dd>
 
-                <dt class="col-4 myds-body-sm text-muted">Pemilik</dt>
+                <dt class="col-4 myds-body-sm myds-text--muted">Pemilik</dt>
                 <dd class="col-8 myds-body-md">{{ $vehicle->owner?->name ?? '—' }}</dd>
 
-                <dt class="col-4 myds-body-sm text-muted">Kuantiti</dt>
+                <dt class="col-4 myds-body-sm myds-text--muted">Kuantiti</dt>
                 <dd class="col-8 myds-body-md">{{ $vehicle->qty ?? 0 }}</dd>
 
-                <dt class="col-4 myds-body-sm text-muted">Harga</dt>
+                <dt class="col-4 myds-body-sm myds-text--muted">Harga</dt>
                 <dd class="col-8 myds-body-md">{{ isset($vehicle->price) ? 'RM '.number_format($vehicle->price, 2) : '—' }}</dd>
 
-                <dt class="col-12 myds-body-sm text-muted">Keterangan</dt>
+                <dt class="col-12 myds-body-sm myds-text--muted">Keterangan</dt>
                 <dd class="col-12 myds-body-md">{!! nl2br(e($vehicle->description)) !!}</dd>
             </dl>
 
@@ -43,7 +43,7 @@
                 <h3 class="myds-heading-sm">Inventori berkaitan</h3>
                 <ul class="myds-list myds-list--bare">
                     @foreach($vehicle->inventories as $inv)
-                        <li><a href="{{ route('inventories.show', $inv->id) }}">{{ $inv->name ?? '—' }}</a> <span class="text-muted">(ID: {{ $inv->id }})</span></li>
+                        <li><a href="{{ route('inventories.show', $inv->id) }}">{{ $inv->name ?? '—' }}</a> <span class="myds-text--muted">(ID: {{ $inv->id }})</span></li>
                     @endforeach
                 </ul>
             @endif

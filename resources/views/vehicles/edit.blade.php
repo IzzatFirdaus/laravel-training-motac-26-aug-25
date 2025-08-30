@@ -6,7 +6,7 @@
 <main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="edit-heading">
     <header class="mb-4">
         <h1 id="edit-heading" class="myds-heading-md font-heading font-semibold">Ubah Kenderaan</h1>
-        <p class="myds-body-sm text-muted mb-0">Kemaskini maklumat kenderaan. Kosongkan kata laluan (jika ada) untuk mengekalkan kata laluan sedia ada.</p>
+        <p class="myds-body-sm myds-text--muted mb-0">Kemaskini maklumat kenderaan. Kosongkan kata laluan (jika ada) untuk mengekalkan kata laluan sedia ada.</p>
     </header>
 
     <div class="myds-card">
@@ -22,9 +22,9 @@
                 <h2 id="form-edit-title" class="visually-hidden">Borang Ubah Kenderaan</h2>
 
                 <div class="mb-3">
-                    <label for="name" class="myds-label d-block mb-2">Nama <span class="text-danger">*</span></label>
+                    <label for="name" class="myds-label d-block mb-2">Nama <span class="myds-text--danger">*</span></label>
                     <input id="name" name="name" type="text" class="myds-input @error('name') is-invalid @enderror" value="{{ old('name', $vehicle->name) }}" required aria-describedby="name-error" maxlength="255" />
-                    @error('name') <div id="name-error" class="myds-body-xs text-danger mt-2" role="alert">{{ $message }}</div> @enderror
+                    @error('name') <div id="name-error" class="myds-body-xs myds-text--danger mt-2" role="alert">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
@@ -36,7 +36,7 @@
                                 <option value="{{ $user->id }}" {{ (string) old('user_id', $vehicle->user_id) === (string) $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                             @endforeach
                         </select>
-                        @error('user_id') <div id="user_id-error" class="myds-body-xs text-danger mt-2" role="alert">{{ $message }}</div> @enderror
+                        @error('user_id') <div id="user_id-error" class="myds-body-xs myds-text--danger mt-2" role="alert">{{ $message }}</div> @enderror
                     @else
                         <input type="hidden" name="user_id" value="{{ $vehicle->user_id ?? '' }}">
                         <div class="myds-input bg-muted">{{ $vehicle->user?->name ?? '(tiada pemilik)' }}</div>
@@ -46,7 +46,7 @@
                 <div class="mb-3">
                     <label for="qty" class="myds-label d-block mb-2">Kuantiti</label>
                     <input id="qty" name="qty" type="number" min="0" class="myds-input @error('qty') is-invalid @enderror" value="{{ old('qty', $vehicle->qty ?? 0) }}" aria-describedby="qty-error" />
-                    @error('qty') <div id="qty-error" class="myds-body-xs text-danger mt-2" role="alert">{{ $message }}</div> @enderror
+                    @error('qty') <div id="qty-error" class="myds-body-xs myds-text--danger mt-2" role="alert">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
@@ -55,13 +55,13 @@
                         <span class="myds-input-addon">RM</span>
                         <input id="price" name="price" type="number" step="0.01" min="0" class="myds-input @error('price') is-invalid @enderror" value="{{ old('price', $vehicle->price ?? '') }}" aria-describedby="price-error" />
                     </div>
-                    @error('price') <div id="price-error" class="myds-body-xs text-danger mt-2" role="alert">{{ $message }}</div> @enderror
+                    @error('price') <div id="price-error" class="myds-body-xs myds-text--danger mt-2" role="alert">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="description" class="myds-label d-block mb-2">Keterangan</label>
                     <textarea id="description" name="description" rows="4" class="myds-input @error('description') is-invalid @enderror" aria-describedby="description-error">{{ old('description', $vehicle->description) }}</textarea>
-                    @error('description') <div id="description-error" class="myds-body-xs text-danger mt-2" role="alert">{{ $message }}</div> @enderror
+                    @error('description') <div id="description-error" class="myds-body-xs myds-text--danger mt-2" role="alert">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="d-flex justify-content-end gap-2">

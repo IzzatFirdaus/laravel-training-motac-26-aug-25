@@ -8,7 +8,7 @@
         <header class="mb-3 d-flex justify-content-between align-items-start">
             <div>
                 <h1 id="user-heading" class="myds-heading-md font-heading font-semibold">{{ $user->name }}</h1>
-                <p class="myds-body-sm text-muted mb-0">Butiran pengguna.</p>
+                <p class="myds-body-sm myds-text--muted mb-0">Butiran pengguna.</p>
             </div>
 
             <div>
@@ -21,18 +21,18 @@
         <section aria-labelledby="user-details">
             <div class="bg-surface border rounded p-4 shadow-sm">
                 <dl class="row g-3" id="user-details">
-                    <dt class="col-4 myds-body-sm text-muted">ID</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">ID</dt>
                     <dd class="col-8 myds-body-md">{{ $user->id }}</dd>
 
-                    <dt class="col-4 myds-body-sm text-muted">Nama</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">Nama</dt>
                     <dd class="col-8 myds-body-md">{{ $user->name }}</dd>
 
-                    <dt class="col-4 myds-body-sm text-muted">Emel</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">Emel</dt>
                     <dd class="col-8 myds-body-md">
                         <a href="mailto:{{ $user->email }}" class="text-primary text-decoration-none" rel="noopener">{{ $user->email }}</a>
                     </dd>
 
-                    <dt class="col-4 myds-body-sm text-muted">Dicipta</dt>
+                    <dt class="col-4 myds-body-sm myds-text--muted">Dicipta</dt>
                     <dd class="col-8 myds-body-md">
                         <time datetime="{{ $user->created_at?->toIso8601String() ?? now()->toIso8601String() }}">
                             {{ $user->created_at?->format('Y-m-d H:i') ?? '—' }}

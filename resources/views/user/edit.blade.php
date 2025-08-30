@@ -6,7 +6,7 @@
 <main id="main-content" class="myds-container py-6" role="main" tabindex="-1" aria-labelledby="edit-user-heading">
     <header class="mb-4">
         <h1 id="edit-user-heading" class="myds-heading-md font-heading font-semibold">Ubah Pengguna</h1>
-        <p class="myds-body-sm text-muted mb-0">Kemaskini maklumat pengguna. Kosongkan kata laluan untuk mengekalkan kata laluan sedia ada.</p>
+                <p class="myds-body-sm myds-text--muted mb-0">Kemaskini maklumat pengguna</p>
     </header>
 
     <section aria-labelledby="edit-user-form">

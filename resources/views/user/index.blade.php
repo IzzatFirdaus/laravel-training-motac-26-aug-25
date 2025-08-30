@@ -7,7 +7,7 @@
     <header class="mb-6 d-flex flex-column flex-md-row align-items-md-start justify-content-md-between gap-4">
         <div>
             <h1 id="users-heading" class="myds-heading-md font-heading font-semibold mb-2">Pengurusan Pengguna</h1>
-            <p class="myds-body-md text-muted mb-0">Senarai dan pengurusan pengguna yang berdaftar dalam sistem inventori kerajaan.</p>
+            <p class="myds-body-md myds-text--muted mb-0">Senarai dan pengurusan pengguna yang berdaftar dalam sistem inventori kerajaan.</p>
         </div>
 
         @can('create', App\Models\User::class)
@@ -26,7 +26,7 @@
         @php
             $usersCount = method_exists($users, 'total') ? $users->total() : (is_countable($users) ? count($users) : 0);
         @endphp
-        <div id="users-count" class="myds-body-sm text-muted mb-4" role="status">
+        <div id="users-count" class="myds-body-sm myds-text--muted mb-4" role="status">
             Memaparkan {{ $usersCount }} pengguna yang berdaftar
         </div>
 
@@ -46,12 +46,12 @@
                     <tbody>
                         @forelse ($users as $user)
                             <tr>
-                                <td class="myds-body-sm text-muted">{{ $user->id }}</td>
+                                <td class="myds-body-sm myds-text--muted">{{ $user->id }}</td>
                                 <td class="myds-body-sm font-medium">{{ $user->name }}</td>
                                 <td class="myds-body-sm">
                                     <a href="mailto:{{ $user->email }}" class="text-primary text-decoration-none" rel="noopener">{{ $user->email }}</a>
                                 </td>
-                                <td class="myds-body-sm text-muted">{{ $user->created_at?->format('d/m/Y') ?? '—' }}</td>
+                                <td class="myds-body-sm myds-text--muted">{{ $user->created_at?->format('d/m/Y') ?? '—' }}</td>
                                 <td class="text-nowrap">
                                     <x-action-buttons
                                         :model="$user"
@@ -67,9 +67,9 @@
                             <tr>
                                 <td colspan="5" class="text-center py-6">
                                     <div role="status" class="p-4">
-                                        <i class="bi bi-people fs-1 mx-auto d-block mb-3 text-muted" aria-hidden="true"></i>
+                                        <i class="bi bi-people fs-1 mx-auto d-block mb-3 myds-text--muted" aria-hidden="true"></i>
                                         <h3 class="myds-heading-xs font-heading font-medium mb-2">Tiada Pengguna Dijumpai</h3>
-                                        <p class="myds-body-sm text-muted mb-3">Belum ada pengguna yang didaftarkan dalam sistem.</p>
+                                        <p class="myds-body-sm myds-text--muted mb-3">Belum ada pengguna yang didaftarkan dalam sistem.</p>
                                         @can('create', App\Models\User::class)
                                             <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta pengguna pertama">
                                                 <i class="bi bi-person-plus me-2" aria-hidden="true"></i>

@@ -23,17 +23,17 @@
           <div class="mb-3">
             <label for="user_id" class="form-label myds-body-sm font-medium">Pemilik (pilihan)</label>
             @if(auth()->check() && auth()->user()->hasRole('admin'))
-              <select id="user_id" name="user_id" class="form-control myds-input" aria-describedby="user_id-help">
+              <select id="user_id" name="user_id" class="myds-input" aria-describedby="user_id-help">
                 <option value="">(tiada pemilik)</option>
                 @foreach(($users ?? collect()) as $user)
                   <option value="{{ $user->id }}" @selected((string) old('user_id') === (string) $user->id)>{{ $user->name }}</option>
                 @endforeach
               </select>
-              <div id="user_id-help" class="myds-body-xs text-muted mt-1">Biarkan kosong jika pemilik belum ditetapkan.</div>
-              @error('user_id') <div class="text-danger myds-body-xs mt-1" role="alert">{{ $message }}</div> @enderror
+              <div id="user_id-help" class="myds-body-xs myds-text--muted mt-1">Biarkan kosong jika pemilik belum ditetapkan.</div>
+              @error('user_id') <div class="myds-text--danger myds-body-xs mt-1" role="alert">{{ $message }}</div> @enderror
             @else
               <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-              <div class="form-text myds-body-xs text-muted">Anda akan menjadi pemilik item ini.</div>
+              <div class="form-text myds-body-xs myds-text--muted">Anda akan menjadi pemilik item ini.</div>
             @endif
           </div>
 

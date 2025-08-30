@@ -65,12 +65,9 @@
                 </div>
 
                 {{-- Link to Register --}}
-                <div class="text-center mt-4">
-                    <p class="myds-body-sm text-muted">
-                        {{ __('Belum mempunyai akaun?') }}
-                        <a href="{{ route('register') }}" class="myds-link">{{ __('Daftar di sini') }}</a>
-                    </p>
-                </div>
+                                            <div class="myds-body-xs myds-text--muted text-center">
+                                Belum mempunyai akaun? <a href="{{ route('register') }}" class="text-decoration-none">Daftar di sini</a>
+                            </div>
             </form>
         </div>
     </div>
