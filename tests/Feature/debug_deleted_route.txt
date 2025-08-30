@@ -9,7 +9,7 @@ status=200
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="pLTeHRavLcYpbq2BPLdGJCPGMGrF4NwnRCoGfpbl">
+    <meta name="csrf-token" content="7WNLs7jINUyuMO9gPx1CEbC07GWbf7FJ43LRkRHN">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">

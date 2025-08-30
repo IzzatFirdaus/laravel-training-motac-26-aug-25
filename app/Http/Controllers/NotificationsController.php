@@ -29,16 +29,74 @@ class NotificationsController extends Controller
     {
         $user = Auth::user();
         $notification = $user->notifications()->where('id', $id)->firstOrFail();
-
+        /** @var \Illuminate\Notifications\DatabaseNotification $notification */
         if (is_null($notification->read_at)) {
-            $notification->markAsRead();
+            if (method_exists($notification, 'markAsRead')) {
+                $notification->markAsRead();
+            }
         }
 
         $data = $notification->data ?? [];
-        if (! empty($data['inventory_id'])) {
-            return redirect()->route('inventories.show', $data['inventory_id']);
+        if (! empty($data['inventory_id']) && is_numeric($data['inventory_id'])) {
+            return redirect()->route('inventories.show', ['inventory' => (int) $data['inventory_id']]);
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * Mark a single notification as read (POST).
+     */
+    public function read($id)
+    {
+        $user = Auth::user();
+        $notification = $user->notifications()->where('id', $id)->firstOrFail();
+
+        /** @var \Illuminate\Notifications\DatabaseNotification $notification */
+        if (is_null($notification->read_at)) {
+            if (method_exists($notification, 'markAsRead')) {
+                $notification->markAsRead();
+            }
+        }
+
+        return redirect()->back()->with('status', 'Pemberitahuan ditandakan dibaca.');
+    }
+
+    /**
+     * Mark a single notification as unread (PUT).
+     */
+    public function unread($id)
+    {
+        $user = Auth::user();
+        $notification = $user->notifications()->where('id', $id)->firstOrFail();
+
+        /** @var \Illuminate\Notifications\DatabaseNotification $notification */
+        if (! is_null($notification->read_at)) {
+            $notification->read_at = null;
+            $notification->save();
+        }
+
+        return redirect()->back()->with('status', 'Pemberitahuan ditandakan belum dibaca.');
+    }
+
+    /**
+     * Mark all unread notifications as read (POST).
+     */
+    public function readAll()
+    {
+        $user = Auth::user();
+
+        // Use the unreadNotifications() relation to fetch unread notifications
+        // (avoids accessing a dynamic property which some analyzers flag as undefined).
+        $unread = $user->unreadNotifications()->get();
+
+        /** @var \Illuminate\Notifications\DatabaseNotification $n */
+        foreach ($unread as $n) {
+            if (method_exists($n, 'markAsRead')) {
+                $n->markAsRead();
+            }
+        }
+
+        return redirect()->back()->with('status', 'Semua pemberitahuan telah ditandakan sebagai dibaca.');
     }
 }

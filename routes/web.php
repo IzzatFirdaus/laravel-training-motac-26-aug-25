@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\VerificationController;
 
 // Default route for the welcome page
 Route::get('/', function () {
@@ -22,7 +23,13 @@ Route::get('/welcome', function () {
 })->name('welcome');
 
 // Authentication routes (login, register, etc.)
-Auth::routes();
+// Enable email verification routes so views that call route('verification.resend') resolve.
+Auth::routes(['verify' => true]);
+
+// Email verification routes (explicit) - ensure named routes are available for views
+Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
+Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
 // Route for the home page after login
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -189,6 +196,12 @@ Route::post('/api/mail/inventories/{inventory}/notify', [InventoryController::cl
 // Notifications: index and detail (mark-as-read)
 Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications.index');
 Route::get('/notifications/{notification}', [App\Http\Controllers\NotificationsController::class, 'show'])->name('notifications.show');
+// Mark a single notification as read (POST)
+Route::post('/notifications/{notification}/read', [App\Http\Controllers\NotificationsController::class, 'read'])->name('notifications.read');
+// Mark a single notification as unread (PUT)
+Route::put('/notifications/{notification}/unread', [App\Http\Controllers\NotificationsController::class, 'unread'])->name('notifications.unread');
+// Mark all notifications as read (POST)
+Route::post('/notifications/read-all', [App\Http\Controllers\NotificationsController::class, 'readAll'])->name('notifications.readAll');
 
 // External posts listing (consumes jsonplaceholder.typicode.com)
 Route::get('/posts', [APIPostController::class, 'index'])->name('posts.index');

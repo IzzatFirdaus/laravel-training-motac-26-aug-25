@@ -5,14 +5,17 @@
     'value' => null,
     'required' => false,
     'placeholder' => '',
+    'help' => null,
 ])
 
 @php
+    // Deterministic IDs for accessibility
     $labelText = $label ?? ucfirst(str_replace('_', ' ', $name));
     $id = $name;
     $errorId = $name . '-error';
     $hasError = $errors->has($name);
     $showValue = old($name, $value);
+    $helpId = $help ? $name . '-help' : null;
 @endphp
 
 <div class="myds-form-group">
@@ -30,8 +33,9 @@
             name="{{ $name }}"
             class="myds-input myds-textarea {{ $hasError ? 'is-invalid' : '' }}"
             aria-invalid="{{ $hasError ? 'true' : 'false' }}"
-            @if($hasError) aria-describedby="{{ $errorId }}" @endif
+            @if($hasError) aria-describedby="{{ $errorId }}{{ $helpId ? ' ' . $helpId : '' }}" @elseif($helpId) aria-describedby="{{ $helpId }}" @endif
             @if($placeholder) placeholder="{{ __($placeholder) }}" @endif
+            @if($required) required aria-required="true" @endif
         >{{ $showValue }}</textarea>
     @else
         <input
@@ -41,14 +45,20 @@
             value="{{ $showValue }}"
             class="myds-input {{ $hasError ? 'is-invalid' : '' }}"
             aria-invalid="{{ $hasError ? 'true' : 'false' }}"
-            @if($hasError) aria-describedby="{{ $errorId }}" @endif
+            @if($hasError) aria-describedby="{{ $errorId }}{{ $helpId ? ' ' . $helpId : '' }}" @elseif($helpId) aria-describedby="{{ $helpId }}" @endif
             @if($placeholder) placeholder="{{ __($placeholder) }}" @endif
             @if($required) required aria-required="true" @endif
         >
     @endif
 
+    @if($help)
+        <div id="{{ $helpId }}" class="myds-body-xs myds-text--muted mt-1">
+            {!! e($help) !!}
+        </div>
+    @endif
+
     @if($hasError)
-        <div id="{{ $errorId }}" class="myds-field-error" role="alert">
+        <div id="{{ $errorId }}" class="myds-field-error mt-1" role="alert">
             {{ $errors->first($name) }}
         </div>
     @endif

@@ -1,17 +1,17 @@
 // resources/js/pages/welcome.js
-// Enhance accessibility with keyboard navigation for interactive card-like elements.
-// Matches previous inline behavior: selects elements with role="button" or .card[href]
-document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('[role="button"], .card[href]');
-    cards.forEach(function(card) {
-        if (!card.getAttribute('tabindex')) {
-            card.setAttribute('tabindex', '0');
-        }
+// Accessibility helpers for "welcome" or demo pages:
+// - Enhances card-like interactive elements to be keyboard accessible
+// - Does not modify behaviour if cards are not present
 
-        card.addEventListener('keydown', function(e) {
+document.addEventListener('DOMContentLoaded', function () {
+    const selectors = ['[role="button"]', '.card[href]', '.myds-card--clickable', '[data-href]'];
+    const elements = document.querySelectorAll(selectors.join(','));
+    elements.forEach(function (card) {
+        if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+        // Keyboard triggers click to preserve existing handlers
+        card.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                // Trigger the card's click handler to preserve behavior
                 card.click();
             }
         });

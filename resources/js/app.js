@@ -1,48 +1,63 @@
-// Project JS follows MYDS/MyGOVEA guidelines:
-// - Keep behaviour accessible (keyboard, ARIA)
-// - Theme via CSS tokens (data-theme)
-// - Avoid inline event handlers; use delegated listeners
+/*
+ * Main application entrypoint (MYDS/MyGOVEA)
+ * - Bundles feature modules
+ * - Initializes global behaviors with accessibility in mind
+ *
+ * Exports minimal global namespace window.MYDS for safe integration.
+ */
+
+/* polyfills / bootstrap */
 import './bootstrap';
-// Import Bootstrap CSS and Bootstrap Icons so styles and icons are available globally
+
+/* third-party libraries */
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Swal from 'sweetalert2';
-import enhanceUsersAutocomplete from './users-autocomplete';
-import './features/warehouses-menu';
 
-// Expose MYDS namespace (keeps global pollution minimal)
+/* feature modules (idempotent where appropriate) */
+import enhanceUsersAutocomplete from './users-autocomplete';
+import initWarehousesMenu from './features/warehouses-menu';
+import './features/navbar';
+import './features/admin-layout';
+import './features/site-init';
+import './features/password-toggle';
+import './components/action-buttons';
+import './features/clipboard';
+
+/* expose MYDS namespace */
 window.MYDS = window.MYDS || {};
 window.MYDS.Swal = Swal;
 
-// Theme toggle uses Bootstrap Icons classes instead of inline SVGs
+/**
+ * Set the theme toggle icon element classes (uses Bootstrap Icons).
+ * Accepts 'dark' or 'light'.
+ */
 function setThemeToggleIcon(theme) {
   const iconEl = document.getElementById('theme-toggle-icon');
   if (!iconEl) return;
-  // Ensure we target either <i> element or a container span
-  const target = iconEl.tagName.toLowerCase() === 'i' ? iconEl : iconEl.firstElementChild || iconEl;
-  if (!target) return;
-  target.classList.remove('bi', 'bi-sun', 'bi-moon');
-  target.classList.add('bi', theme === 'dark' ? 'bi-moon' : 'bi-sun');
+  // replace classes safely
+  iconEl.className = '';
+  iconEl.classList.add('bi', theme === 'dark' ? 'bi-moon-fill' : 'bi-sun-fill');
 }
 
 /**
- * Show confirm dialog for destructive actions (delete)
- * Accepts a button element contained in a form. Uses SweetAlert2 if available,
- * otherwise falls back to native confirm(). If confirmed, submits the ancestor form.
+ * Confirm destructive actions (used by data-myds-form flow)
+ * If SweetAlert2 present use it; otherwise fallback to native confirm()
  *
- * @param {HTMLElement} btn - The button or element that triggered the action.
+ * Accepts the button element that triggered the action (submitter).
  */
-window.MYDS.handleDestroy = function (btn) {
-  const title = 'Amaran';
-  const text = 'Ini hanya contoh: tindakan ini akan memadam item jika dihantar. Teruskan?';
-  const confirmText = 'Ya, padam';
-  const cancelText = 'Batal';
+window.MYDS.handleDestroy = function (btn, options = {}) {
+  const title = options.title || 'Amaran';
+  const text = options.text || 'Tindakan ini akan memadam item. Teruskan?';
+  const confirmText = options.confirmText || 'Ya, padam';
+  const cancelText = options.cancelText || 'Batal';
 
   if (window.MYDS.Swal && typeof window.MYDS.Swal.fire === 'function') {
+    // Use CSS variables if present to style buttons
     const cs = getComputedStyle(document.documentElement);
-    const confirmColor = (cs.getPropertyValue('--danger') || 'var(--danger)').trim();
-    const cancelColor = (cs.getPropertyValue('--primary') || 'var(--primary)').trim();
+    const confirmColor = (cs.getPropertyValue('--myds-danger') || cs.getPropertyValue('--danger') || '#dc3545').trim();
+    const cancelColor = (cs.getPropertyValue('--myds-primary') || cs.getPropertyValue('--primary') || '#0d6efd').trim();
 
-    window.MYDS.Swal.fire({
+    return window.MYDS.Swal.fire({
       title,
       text,
       icon: 'warning',
@@ -57,41 +72,38 @@ window.MYDS.handleDestroy = function (btn) {
         if (form) form.submit();
       }
     });
-  } else {
-    if (confirm(text)) {
-      const form = btn.closest('form');
-      if (form) form.submit();
-    }
+  }
+
+  // fallback
+  if (confirm(text)) {
+    const form = btn.closest('form');
+    if (form) form.submit();
   }
 };
 
 /**
- * Apply theme: sets data-theme attribute and updates toggle icon & aria-pressed.
- * @param {string} theme - 'light' | 'dark'
+ * Apply theme globally
  */
 function applyTheme(theme) {
   const btn = document.getElementById('theme-toggle');
-
   if (theme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
-  setThemeToggleIcon('dark');
+    setThemeToggleIcon('dark');
     if (btn) btn.setAttribute('aria-pressed', 'true');
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
-  setThemeToggleIcon('light');
+    setThemeToggleIcon('light');
     if (btn) btn.setAttribute('aria-pressed', 'false');
   }
 }
 window.MYDS.applyTheme = applyTheme;
 
 /**
- * Enhance logout links: find an anchor with id 'logout-link' and submit the nearby logout form.
- * This keeps logout as POST while allowing users to click a visible link.
+ * Wire logout anchor to actual logout POST form
  */
 function wireLogout() {
   const logoutLink = document.getElementById('logout-link');
   if (!logoutLink) return;
-
   logoutLink.addEventListener('click', (e) => {
     e.preventDefault();
     const form = document.getElementById('logout-form');
@@ -100,14 +112,12 @@ function wireLogout() {
 }
 
 /**
- * Ensure skip-link moves focus to main content and that main receives focus for accessibility.
+ * Ensure skip-link moves focus to main content
  */
 function wireSkipLink() {
-  const skip = document.querySelector('.skip-link');
+  const skip = document.querySelector('.myds-skip-link, .skip-link');
   if (!skip) return;
-
-  skip.addEventListener('click', (e) => {
-    // normal anchor behaviour will scroll; we also focus the main region
+  skip.addEventListener('click', () => {
     setTimeout(() => {
       const main = document.getElementById('main-content');
       if (main) main.focus();
@@ -116,43 +126,41 @@ function wireSkipLink() {
 }
 
 /**
- * DOM ready initialization
+ * Initialize on DOMContentLoaded
  */
 document.addEventListener('DOMContentLoaded', () => {
-  // Show flash toast if present
-  const toast = document.getElementById('global-toast');
-  if (toast) {
-    const msg = (toast.getAttribute('data-toast') || '').trim();
-    if (msg && window.MYDS.Swal && typeof window.MYDS.Swal.fire === 'function') {
-      window.MYDS.Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 4000,
-        icon: 'success',
-        title: msg,
-      });
-    }
+  // Show toast (read from data attributes to avoid exposing content in DOM)
+  const toastEl = document.getElementById('global-toast');
+  const toastMsg = toastEl ? toastEl.dataset.toast : '';
+  if (toastMsg && window.MYDS.Swal && typeof window.MYDS.Swal.fire === 'function') {
+    window.MYDS.Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 4000,
+      icon: 'success',
+      title: toastMsg,
+    });
   }
 
-  // Theme initialization
+  // Theme init: prefer stored, then system preference
   let stored = null;
-  try { stored = localStorage.getItem('myds_theme'); } catch (e) { /* ignore */ }
+  try { stored = localStorage.getItem('myds-theme'); } catch (e) { /* ignore */ }
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   const theme = stored || (prefersDark ? 'dark' : 'light');
   applyTheme(theme === 'dark' ? 'dark' : 'light');
 
+  // Toggle button
   const toggleBtn = document.getElementById('theme-toggle');
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       const next = isDark ? 'light' : 'dark';
-      try { localStorage.setItem('myds_theme', next); } catch (err) { /* ignore */ }
+      try { localStorage.setItem('myds-theme', next); } catch (err) { /* ignore */ }
       applyTheme(next);
     });
   }
 
-  // Wire logout and skip link
   wireLogout();
   wireSkipLink();
 
@@ -179,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, true);
 
-  // Intercept submit for destructive submitters (modern browsers expose e.submitter)
+  // Intercept submit for modern browsers where submitter is provided
   document.body.addEventListener('submit', (e) => {
     const form = e.target;
     if (!form || !form.hasAttribute || !form.hasAttribute('data-myds-form')) return;
@@ -198,27 +206,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, true);
 
-  // Global simple actions to replace inline onclick attributes
+  // Global data-action handlers (history-back, reload)
   document.body.addEventListener('click', (e) => {
     const actionEl = e.target.closest('[data-action]');
     if (!actionEl) return;
     const action = actionEl.getAttribute('data-action');
     if (!action) return;
-
+    e.preventDefault();
     if (action === 'history-back') {
-      e.preventDefault();
-      try { history.back(); } catch (_) { /* ignore */ }
+      if (window.history.length > 1) history.back();
+      else window.location.href = '/';
     } else if (action === 'reload') {
-      e.preventDefault();
-      try { location.reload(); } catch (_) { /* ignore */ }
+      location.reload();
     }
   });
 
-  // Initialize any optional enhancements (non-fatal)
-  try {
-    enhanceUsersAutocomplete('#users-autocomplete');
-  } catch (err) {
-    // non-fatal
-    // console.debug('users-autocomplete not present or failed to initialize', err);
-  }
+  // Try to initialize optional enhancements (non-fatal)
+  try { enhanceUsersAutocomplete('#users-autocomplete'); } catch (err) { /* non-fatal */ }
+  try { initWarehousesMenu(); } catch (err) { /* non-fatal */ }
 });

@@ -154,7 +154,7 @@
     display: grid;
     gap: 24px;
   }
-  
+
   /* Desktop: 12 columns (≥1024px) */
   @media (min-width: 1024px) {
     .myds-grid-desktop { grid-template-columns: repeat(12, 1fr); }
@@ -489,6 +489,10 @@
   .myds-input-group > .myds-input { border-top-left-radius: 0; border-bottom-left-radius: 0; }
   .myds-input-group > .myds-input.is-invalid { border-left-color: var(--danger) !important; }
 
+  /* Autocomplete helpers (used by progressive enhancement JS) */
+  .autocomplete-list { list-style: none; margin: 0; padding: 0; }
+  .autocomplete-list--hidden { display: none; }
+
   /* Auth card */
   .myds-auth-card { max-width: 480px; margin: 2rem auto; background-color: var(--bg-surface); border: 1px solid var(--otl-default); border-radius: var(--radius-m); overflow: hidden; }
   .myds-auth-card__header { padding: 1.25rem 1.25rem 0 1.25rem; }
@@ -521,6 +525,15 @@
   /* Pagination */
   .myds-pagination { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
   .myds-pagination ul { display: flex; align-items: center; gap: 0.25rem; margin: 0; padding: 0; list-style: none; }
+
+  /* Inventory import page helpers */
+  .import-action-column { width: 180px; }
+  @media (max-width: 767px) {
+    .import-action-column { width: 100%; }
+  }
+
+  /* Filters: ensure consistent minimum widths for filter controls */
+  .filter-owner-column { min-width: 220px; }
 }
 
 /* Utilities layer */

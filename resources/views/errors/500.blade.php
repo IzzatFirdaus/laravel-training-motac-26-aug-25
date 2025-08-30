@@ -26,10 +26,10 @@
       </div>
 
       {{-- Suggestions --}}
-      <div class="bg-surface border rounded p-4 mb-6" role="region" aria-labelledby="actions-title">
+      <div class="myds-card bg-surface border rounded p-4 mb-6" role="region" aria-labelledby="actions-title">
         <h3 id="actions-title" class="myds-heading-xs font-heading font-medium mb-3">Apa yang boleh anda lakukan</h3>
 
-        <ul class="list-unstyled" style="margin:0; padding-left:0; list-style:none;">
+        <ul class="myds-list myds-list--bare" style="margin:0; padding-left:0; list-style:none;">
           <li class="d-flex align-items-start mb-2">
             <i class="bi bi-check2-circle me-2 mt-1 text-primary flex-shrink-0" aria-hidden="true"></i>
             <span class="myds-body-sm">Tunggu beberapa minit dan cuba semula.</span>
@@ -66,12 +66,12 @@
           Laman Utama
         </a>
 
-  <button type="button" data-action="reload" class="myds-btn myds-btn--secondary" aria-label="Muat semula halaman">
+        <button type="button" data-action="reload" class="myds-btn myds-btn--secondary" aria-label="Muat semula halaman">
           <i class="bi bi-arrow-repeat me-2" aria-hidden="true"></i>
           Cuba Semula
         </button>
 
-  <button type="button" data-action="history-back" class="myds-btn myds-btn--tertiary" aria-label="Kembali">
+        <button type="button" data-action="history-back" class="myds-btn myds-btn--tertiary" aria-label="Kembali">
           <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
           Kembali
         </button>
@@ -84,12 +84,14 @@
 
         <div class="bg-muted p-3 rounded myds-body-xs">
           <div class="myds-text--muted"><strong>Kod Ralat:</strong> <span class="myds-body-sm">500</span></div>
-          <div class="myds-text--muted"><strong>Masa:</strong> <span class="myds-body-sm">{{ now()->format('d/m/Y H:i:s') }}</span></div>
-          <div class="myds-text--muted"><strong>Rujukan:</strong> <span class="myds-body-sm">{{ substr(md5(now()->timestamp), 0, 8) }}</span></div>
-          <div class="myds-text--muted"><strong>URL:</strong> <span class="myds-body-sm">{{ request()->fullUrl() }}</span></div>
-        </div>        <div class="mt-3">
+          <div class="myds-text--muted"><strong>Masa:</strong> <span class="myds-body-sm"><time datetime="{{ now()->toIso8601String() }}">{{ now()->format('d/m/Y H:i:s') }}</time></span></div>
+          <div class="myds-text--muted"><strong>Rujukan:</strong> <span class="myds-body-sm">{{ substr(md5(now()->timestamp . (request()->ip() ?? '')), 0, 10) }}</span></div>
+          <div class="myds-text--muted"><strong>URL:</strong> <span class="myds-body-sm">{{ e(request()->fullUrl()) }}</span></div>
+        </div>
+
+        <div class="mt-3">
           @if(config('app.support_email'))
-            <a href="mailto:{{ config('app.support_email') }}?subject=Support%20request%20(500)%20{{ urlencode(request()->path()) }}" class="myds-btn myds-btn--secondary" aria-label="Hubungi sokongan">Hubungi Sokongan</a>
+            <a href="mailto:{{ config('app.support_email') }}?subject={{ urlencode('Support request (500): ' . request()->path()) }}" class="myds-btn myds-btn--secondary" aria-label="Hubungi sokongan">Hubungi Sokongan</a>
           @endif
           <a href="{{ url('/status') }}" class="myds-btn myds-btn--tertiary" aria-label="Semak status sistem">Semak Status Sistem</a>
         </div>
@@ -98,4 +100,9 @@
     </div>
   </div>
 </main>
+
+@push('scripts')
+<!-- Error page actions (reload / history-back) are handled globally by resources/js/components/action-buttons.js and resources/js/app.js -->
+@endpush
+
 @endsection

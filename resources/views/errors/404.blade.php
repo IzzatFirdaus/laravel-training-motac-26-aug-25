@@ -27,10 +27,10 @@
       </div>
 
       {{-- Recovery suggestions --}}
-      <div class="bg-surface border rounded p-4 mb-6" role="region" aria-labelledby="help-title">
+      <div class="myds-card bg-surface border rounded p-4 mb-6" role="region" aria-labelledby="help-title">
         <h3 id="help-title" class="myds-heading-xs font-heading font-medium mb-3">Apa yang boleh anda lakukan</h3>
 
-        <ul class="list-unstyled" style="margin:0; padding-left:0; list-style:none;">
+        <ul class="myds-list myds-list--bare" style="margin:0; padding-left:0; list-style:none;">
           <li class="d-flex align-items-start mb-2">
             <i class="bi bi-check2-circle me-2 mt-1 text-primary flex-shrink-0" aria-hidden="true"></i>
             <span class="myds-body-sm">Semak ejaan alamat dan cuba lagi.</span>
@@ -55,7 +55,7 @@
           Laman Utama
         </a>
 
-  <button type="button" data-action="history-back" class="myds-btn myds-btn--secondary" aria-label="Kembali ke halaman sebelumnya">
+        <button type="button" data-action="history-back" class="myds-btn myds-btn--secondary" aria-label="Kembali ke halaman sebelumnya">
           <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
           Kembali
         </button>
@@ -82,18 +82,20 @@
 
           <div class="myds-text--muted">
             <strong>Tarikh & Masa:</strong>
-            <span class="myds-body-sm">{{ now()->format('d/m/Y H:i:s') }}</span>
+            <span class="myds-body-sm">
+              <time datetime="{{ now()->toIso8601String() }}">{{ now()->format('d/m/Y H:i:s') }}</time>
+            </span>
           </div>
 
           <div class="myds-text--muted">
             <strong>URL:</strong>
-            <span class="myds-body-sm">{{ request()->fullUrl() }}</span>
+            <span class="myds-body-sm">{{ e(request()->fullUrl()) }}</span>
           </div>
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3 d-flex gap-2 flex-wrap">
           @if(config('app.support_email'))
-            <a href="mailto:{{ config('app.support_email') }}?subject=Support%20request%20(404)%20{{ urlencode(request()->path()) }}" class="myds-btn myds-btn--secondary" aria-label="Hubungi sokongan">
+            <a href="mailto:{{ config('app.support_email') }}?subject={{ urlencode('Support request (404): ' . request()->path()) }}" class="myds-btn myds-btn--secondary" aria-label="Hubungi sokongan">
               Hubungi Sokongan
             </a>
           @endif
@@ -104,4 +106,9 @@
     </div>
   </div>
 </main>
+
+@push('scripts')
+<!-- Error page actions (history-back / reload) are handled globally by resources/js/components/action-buttons.js and resources/js/app.js -->
+@endpush
+
 @endsection

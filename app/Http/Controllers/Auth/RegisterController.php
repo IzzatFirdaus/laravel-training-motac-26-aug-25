@@ -60,10 +60,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // In test/local environments, allow tests to request an admin user by
+        // registering with an email that starts with "admin+". This keeps
+        // production behaviour unchanged while making E2E tests deterministic.
+        // Always provide a sane default to avoid DB integrity errors when the
+        // users table does not have a nullable "role" column or the DB
+        // defaults differ from migrations. Tests can request an admin user by
+        // registering with an email that starts with "admin+" in local or
+        // testing environments.
+        $role = 'user';
+        if ((app()->environment('local') || app()->environment('testing'))
+            && isset($data['email'])
+            && str_starts_with($data['email'], 'admin+')) {
+            $role = 'admin';
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => $role,
         ]);
     }
 }

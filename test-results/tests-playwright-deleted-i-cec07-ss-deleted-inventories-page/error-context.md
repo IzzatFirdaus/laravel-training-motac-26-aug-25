@@ -1,0 +1,336 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Langkau ke kandungan utama" [ref=e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - banner [ref=e6]:
+      - navigation "Navigasi utama" [ref=e7]:
+        - generic [ref=e8]:
+          - link "Laman utama second-crud" [ref=e9] [cursor=pointer]:
+            - /url: http://127.0.0.1:8000
+            - img "second-crud logo" [ref=e10] [cursor=pointer]
+            - generic [ref=e11] [cursor=pointer]: second-crud
+          - link "Langkau ke kandungan" [ref=e12] [cursor=pointer]:
+            - /url: "#main-content"
+          - button "Togol menu navigasi" [ref=e13] [cursor=pointer]:
+            - generic [ref=e14] [cursor=pointer]: Togol menu navigasi
+            - generic [ref=e15] [cursor=pointer]: 
+        - text:   
+  - main [ref=e16]:
+    - main [ref=e18]:
+      - generic [ref=e21]:
+        - heading "Inventori" [level=1] [ref=e22]
+        - paragraph
+        - generic [ref=e23]:
+          - link "Cipta inventori baharu" [ref=e24] [cursor=pointer]:
+            - /url: http://127.0.0.1:8000/inventories/create
+            - generic [ref=e25] [cursor=pointer]: 
+            - text: Cipta Inventori
+          - link "Import atau export data inventori" [ref=e26] [cursor=pointer]:
+            - /url: http://127.0.0.1:8000/excel/inventories/import
+            - text: Import/Export
+          - link "Lihat inventori yang telah dipadam" [ref=e27] [cursor=pointer]:
+            - /url: http://127.0.0.1:8000/inventories/deleted
+            - text: Inventori Dipadam
+      - region "Penapis dan carian inventori" [ref=e28]:
+        - heading "Penapis dan carian inventori" [level=2] [ref=e29]
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - strong [ref=e33]: "46"
+            - text: item inventori dijumpai
+          - form "Penapis carian inventori" [ref=e34]:
+            - generic [ref=e35]:
+              - generic [ref=e36]: Cari inventori
+              - textbox "Cari inventori" [ref=e37]
+              - generic [ref=e38]: Cari berdasarkan nama atau keterangan item.
+            - generic [ref=e39]:
+              - generic [ref=e40]: Pemilik
+              - combobox "Pemilik" [ref=e41]:
+                - option "Semua pemilik" [selected]
+                - option "Admin 1756552489077"
+                - option "Admin 1756552563560"
+                - option "Admin 1756552570280"
+                - option "Admin 1756552574433"
+                - option "Admin 1756552611496"
+                - option "Admin 1756552636145"
+                - option "Admin 1756552640095"
+                - option "Admin 1756552644108"
+                - option "Admin 1756552657332"
+                - option "Admin 1756552682275"
+                - option "Admin 1756552686335"
+                - option "Admin 1756552690443"
+                - option "Admin 1756553258763"
+                - option "Admin 1756553283872"
+                - option "Admin 1756553287687"
+                - option "Admin 1756553291593"
+                - option "Admin 1756553515924"
+                - option "Admin User"
+                - option "Bernice Baumbach"
+                - option "Christian Collier"
+                - option "Dovie Reichert I"
+                - option "Dr. Emmanuel Stokes"
+                - option "Dr. Shyann Hodkiewicz"
+                - option "E2E Tester 1756552489077"
+                - option "E2E Tester 1756552611558"
+                - option "E2E Tester 1756552657173"
+                - option "E2E Tester 1756553258800"
+                - option "E2E User 1756552611499"
+                - option "E2E User 1756552657349"
+                - option "E2E User 1756553258797"
+                - option "Evan Rosenbaum"
+                - option "Finn Schamberger"
+                - option "Gideon Dibbert"
+                - option "Henry Gulgowski"
+                - option "InvTester 1756552611535"
+                - option "InvTester 1756552657302"
+                - option "InvTester 1756553258855"
+                - option "IzzatFirdaus"
+                - option "Jan Boehm"
+                - option "Jimmie Kilback"
+                - option "Lilian Paucek"
+                - option "Maribel Cummerata"
+                - option "Miss Elisabeth Altenwerth I"
+                - option "Mr. Jarrett Hand V"
+                - option "Mr. Ned Rohan"
+                - option "Mr. Steve Green"
+                - option "Mr. Turner Labadie II"
+                - option "Nils Hessel I"
+                - option "Oceane Mraz"
+                - option "Orlo Durgan"
+                - option "pp.izzat"
+                - option "Prof. Marcellus Purdy"
+                - option "Prof. Ronny Macejkovic"
+                - option "Romaine Lynch"
+                - option "Test User"
+                - option "User 1756552546158"
+                - option "User 1756552631526"
+                - option "User 1756552677706"
+                - option "User 1756553278917"
+                - option "VTester 1756552545842"
+                - option "VTester 1756552628800"
+                - option "VTester 1756552674698"
+                - option "VTester 1756553275752"
+                - option "Wilber Spencer"
+            - generic [ref=e42]:
+              - generic [ref=e43]: Item per halaman
+              - combobox "Item per halaman" [ref=e44]:
+                - option "5 item" [selected]
+                - option "10 item"
+                - option "15 item"
+                - option "25 item"
+                - option "50 item"
+                - option "100 item"
+            - button "Cari" [ref=e46] [cursor=pointer]:
+              - generic [ref=e47] [cursor=pointer]: 
+              - text: Cari
+      - region "Senarai data inventori" [ref=e48]:
+        - heading "Senarai data inventori" [level=2] [ref=e49]
+        - region [ref=e51]:
+          - table "Jadual inventori dengan 46 item. Gunakan butang tindakan untuk lihat atau edit item." [ref=e52]:
+            - caption [ref=e53]: Jadual inventori dengan 46 item. Gunakan butang tindakan untuk lihat atau edit item.
+            - rowgroup [ref=e54]:
+              - row "ID Nama Item Kuantiti Pemilik Harga (RM) Keterangan Tindakan" [ref=e55]:
+                - columnheader "ID" [ref=e56]
+                - columnheader "Nama Item" [ref=e57]
+                - columnheader "Kuantiti" [ref=e58]
+                - columnheader "Pemilik" [ref=e59]
+                - columnheader "Harga (RM)" [ref=e60]
+                - columnheader "Keterangan" [ref=e61]
+                - columnheader "Tindakan" [ref=e62]
+            - rowgroup [ref=e63]:
+              - row "#46 LAPTOP LENOVO LEGION 1 IzzatFirdaus RM 4,000.00 Lihat detail LAPTOP LENOVO LEGION Edit LAPTOP LENOVO LEGION Padam LAPTOP LENOVO LEGION" [ref=e64]:
+                - cell "#46" [ref=e65]:
+                  - generic [ref=e66]: "#46"
+                - cell "LAPTOP LENOVO LEGION" [ref=e67]:
+                  - strong [ref=e68]: LAPTOP LENOVO LEGION
+                - cell "1" [ref=e69]:
+                  - generic [ref=e70]: "1"
+                - cell "IzzatFirdaus" [ref=e71]
+                - cell "RM 4,000.00" [ref=e72]
+                - cell [ref=e73]
+                - cell "Lihat detail LAPTOP LENOVO LEGION Edit LAPTOP LENOVO LEGION Padam LAPTOP LENOVO LEGION" [ref=e74]:
+                  - generic [ref=e75]:
+                    - link "Lihat detail LAPTOP LENOVO LEGION" [ref=e76] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/46
+                      - generic [ref=e77] [cursor=pointer]: 
+                      - generic [ref=e78] [cursor=pointer]: Lihat
+                    - link "Edit LAPTOP LENOVO LEGION" [ref=e79] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/46/edit
+                      - generic [ref=e80] [cursor=pointer]: 
+                      - generic [ref=e81] [cursor=pointer]: Edit
+                    - button "Padam LAPTOP LENOVO LEGION" [ref=e83] [cursor=pointer]:
+                      - generic [ref=e84] [cursor=pointer]: 
+                      - generic [ref=e85] [cursor=pointer]: Padam
+              - 'row "#33 MOUSE APPLE MODEL-008 10 Wilber Spencer RM 22.15 Manufacturer: Apple Model: Apple Model-008 Category: Mouse S... Lihat detail MOUSE APPLE MODEL-008 Edit MOUSE APPLE MODEL-008 Padam MOUSE APPLE MODEL-008" [ref=e86]':
+                - cell "#33" [ref=e87]:
+                  - generic [ref=e88]: "#33"
+                - cell "MOUSE APPLE MODEL-008" [ref=e89]:
+                  - strong [ref=e90]: MOUSE APPLE MODEL-008
+                - cell "10" [ref=e91]:
+                  - generic [ref=e92]: "10"
+                - cell "Wilber Spencer" [ref=e93]
+                - cell "RM 22.15" [ref=e94]
+                - 'cell "Manufacturer: Apple Model: Apple Model-008 Category: Mouse S..." [ref=e95]':
+                  - 'generic "Manufacturer: Apple Model: Apple Model-008 Category: Mouse Serial: SN-AH702 Lokasi: Pejabat JB Tarikh Pembelian: 2021-09-02 Tamat Waranti: 2024-09-02" [ref=e96]': "Manufacturer: Apple Model: Apple Model-008 Category: Mouse S..."
+                - cell "Lihat detail MOUSE APPLE MODEL-008 Edit MOUSE APPLE MODEL-008 Padam MOUSE APPLE MODEL-008" [ref=e97]:
+                  - generic [ref=e98]:
+                    - link "Lihat detail MOUSE APPLE MODEL-008" [ref=e99] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/33
+                      - generic [ref=e100] [cursor=pointer]: 
+                      - generic [ref=e101] [cursor=pointer]: Lihat
+                    - link "Edit MOUSE APPLE MODEL-008" [ref=e102] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/33/edit
+                      - generic [ref=e103] [cursor=pointer]: 
+                      - generic [ref=e104] [cursor=pointer]: Edit
+                    - button "Padam MOUSE APPLE MODEL-008" [ref=e106] [cursor=pointer]:
+                      - generic [ref=e107] [cursor=pointer]: 
+                      - generic [ref=e108] [cursor=pointer]: Padam
+              - 'row "#34 ROUTER DELL MODEL-683 5 Wilber Spencer RM 215.16 Manufacturer: Dell Model: Dell Model-683 Category: Router Se... Lihat detail ROUTER DELL MODEL-683 Edit ROUTER DELL MODEL-683 Padam ROUTER DELL MODEL-683" [ref=e109]':
+                - cell "#34" [ref=e110]:
+                  - generic [ref=e111]: "#34"
+                - cell "ROUTER DELL MODEL-683" [ref=e112]:
+                  - strong [ref=e113]: ROUTER DELL MODEL-683
+                - cell "5" [ref=e114]:
+                  - generic [ref=e115]: "5"
+                - cell "Wilber Spencer" [ref=e116]
+                - cell "RM 215.16" [ref=e117]
+                - 'cell "Manufacturer: Dell Model: Dell Model-683 Category: Router Se..." [ref=e118]':
+                  - 'generic "Manufacturer: Dell Model: Dell Model-683 Category: Router Serial: SN-TH532 Lokasi: Gudang Kuching Tarikh Pembelian: 2024-05-15 Tamat Waranti: 2027-05-15" [ref=e119]': "Manufacturer: Dell Model: Dell Model-683 Category: Router Se..."
+                - cell "Lihat detail ROUTER DELL MODEL-683 Edit ROUTER DELL MODEL-683 Padam ROUTER DELL MODEL-683" [ref=e120]:
+                  - generic [ref=e121]:
+                    - link "Lihat detail ROUTER DELL MODEL-683" [ref=e122] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/34
+                      - generic [ref=e123] [cursor=pointer]: 
+                      - generic [ref=e124] [cursor=pointer]: Lihat
+                    - link "Edit ROUTER DELL MODEL-683" [ref=e125] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/34/edit
+                      - generic [ref=e126] [cursor=pointer]: 
+                      - generic [ref=e127] [cursor=pointer]: Edit
+                    - button "Padam ROUTER DELL MODEL-683" [ref=e129] [cursor=pointer]:
+                      - generic [ref=e130] [cursor=pointer]: 
+                      - generic [ref=e131] [cursor=pointer]: Padam
+              - 'row "#35 MONITOR HP MODEL-144 9 Wilber Spencer RM 502.99 Manufacturer: HP Model: HP Model-144 Category: Monitor Seria... Lihat detail MONITOR HP MODEL-144 Edit MONITOR HP MODEL-144 Padam MONITOR HP MODEL-144" [ref=e132]':
+                - cell "#35" [ref=e133]:
+                  - generic [ref=e134]: "#35"
+                - cell "MONITOR HP MODEL-144" [ref=e135]:
+                  - strong [ref=e136]: MONITOR HP MODEL-144
+                - cell "9" [ref=e137]:
+                  - generic [ref=e138]: "9"
+                - cell "Wilber Spencer" [ref=e139]
+                - cell "RM 502.99" [ref=e140]
+                - 'cell "Manufacturer: HP Model: HP Model-144 Category: Monitor Seria..." [ref=e141]':
+                  - 'generic "Manufacturer: HP Model: HP Model-144 Category: Monitor Serial: SN-YS460 Lokasi: Gudang Kuching Tarikh Pembelian: 2024-03-21 Tamat Waranti: 2027-03-21" [ref=e142]': "Manufacturer: HP Model: HP Model-144 Category: Monitor Seria..."
+                - cell "Lihat detail MONITOR HP MODEL-144 Edit MONITOR HP MODEL-144 Padam MONITOR HP MODEL-144" [ref=e143]:
+                  - generic [ref=e144]:
+                    - link "Lihat detail MONITOR HP MODEL-144" [ref=e145] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/35
+                      - generic [ref=e146] [cursor=pointer]: 
+                      - generic [ref=e147] [cursor=pointer]: Lihat
+                    - link "Edit MONITOR HP MODEL-144" [ref=e148] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/35/edit
+                      - generic [ref=e149] [cursor=pointer]: 
+                      - generic [ref=e150] [cursor=pointer]: Edit
+                    - button "Padam MONITOR HP MODEL-144" [ref=e152] [cursor=pointer]:
+                      - generic [ref=e153] [cursor=pointer]: 
+                      - generic [ref=e154] [cursor=pointer]: Padam
+              - 'row "#36 MOUSE DELL MODEL-448 10 Wilber Spencer RM 165.25 Manufacturer: Dell Model: Dell Model-448 Category: Mouse Ser... Lihat detail MOUSE DELL MODEL-448 Edit MOUSE DELL MODEL-448 Padam MOUSE DELL MODEL-448" [ref=e155]':
+                - cell "#36" [ref=e156]:
+                  - generic [ref=e157]: "#36"
+                - cell "MOUSE DELL MODEL-448" [ref=e158]:
+                  - strong [ref=e159]: MOUSE DELL MODEL-448
+                - cell "10" [ref=e160]:
+                  - generic [ref=e161]: "10"
+                - cell "Wilber Spencer" [ref=e162]
+                - cell "RM 165.25" [ref=e163]
+                - 'cell "Manufacturer: Dell Model: Dell Model-448 Category: Mouse Ser..." [ref=e164]':
+                  - 'generic "Manufacturer: Dell Model: Dell Model-448 Category: Mouse Serial: SN-FM585 Lokasi: Gudang Kuching Tarikh Pembelian: 2022-06-27 Tamat Waranti: 2025-06-27" [ref=e165]': "Manufacturer: Dell Model: Dell Model-448 Category: Mouse Ser..."
+                - cell "Lihat detail MOUSE DELL MODEL-448 Edit MOUSE DELL MODEL-448 Padam MOUSE DELL MODEL-448" [ref=e166]:
+                  - generic [ref=e167]:
+                    - link "Lihat detail MOUSE DELL MODEL-448" [ref=e168] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/36
+                      - generic [ref=e169] [cursor=pointer]: 
+                      - generic [ref=e170] [cursor=pointer]: Lihat
+                    - link "Edit MOUSE DELL MODEL-448" [ref=e171] [cursor=pointer]:
+                      - /url: http://127.0.0.1:8000/inventories/36/edit
+                      - generic [ref=e172] [cursor=pointer]: 
+                      - generic [ref=e173] [cursor=pointer]: Edit
+                    - button "Padam MOUSE DELL MODEL-448" [ref=e175] [cursor=pointer]:
+                      - generic [ref=e176] [cursor=pointer]: 
+                      - generic [ref=e177] [cursor=pointer]: Padam
+      - navigation "Navigasi halaman inventori" [ref=e178]:
+        - navigation "Navigasi halaman" [ref=e179]:
+          - generic [ref=e180]:
+            - generic [ref=e181]: Memaparkan 1 hingga 5 daripada 46 rekod
+            - list [ref=e182]:
+              - listitem "Sebelumnya" [ref=e183]:
+                - generic [ref=e184]:
+                  - generic [ref=e185]: 
+                  - text: Sebelumnya
+              - listitem [ref=e186]:
+                - generic [ref=e187] [cursor=pointer]:
+                  - text: "1"
+                  - generic [ref=e188] [cursor=pointer]: (halaman semasa)
+              - listitem [ref=e189]:
+                - link "Pergi ke halaman 2" [ref=e190] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=2
+                  - text: "2"
+              - listitem [ref=e191]:
+                - link "Pergi ke halaman 3" [ref=e192] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=3
+                  - text: "3"
+              - listitem [ref=e193]:
+                - link "Pergi ke halaman 4" [ref=e194] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=4
+                  - text: "4"
+              - listitem [ref=e195]:
+                - link "Pergi ke halaman 5" [ref=e196] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=5
+                  - text: "5"
+              - listitem [ref=e197]:
+                - link "Pergi ke halaman 6" [ref=e198] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=6
+                  - text: "6"
+              - listitem [ref=e199]:
+                - link "Pergi ke halaman 7" [ref=e200] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=7
+                  - text: "7"
+              - listitem [ref=e201]:
+                - link "Pergi ke halaman 8" [ref=e202] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=8
+                  - text: "8"
+              - listitem [ref=e203]:
+                - link "Pergi ke halaman 9" [ref=e204] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=9
+                  - text: "9"
+              - listitem [ref=e205]:
+                - link "Pergi ke halaman 10" [ref=e206] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=10
+                  - text: "10"
+              - listitem [ref=e207]:
+                - link "Halaman seterusnya" [ref=e208] [cursor=pointer]:
+                  - /url: http://127.0.0.1:8000/inventories?page=2
+                  - text: Seterusnya
+                  - generic [ref=e209] [cursor=pointer]: 
+  - contentinfo [ref=e210]:
+    - generic [ref=e211]:
+      - generic [ref=e212]:
+        - text: © 2025
+        - generic [ref=e213]: second-crud
+      - navigation "Footer" [ref=e214]:
+        - link "Home" [ref=e215] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000
+        - link "Disclaimer" [ref=e216] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/disclaimer
+        - link "Privacy" [ref=e217] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/privacy
+        - link "Contact" [ref=e218] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/contact
+  - generic [ref=e219]:
+    - heading [level=2] [ref=e220]: Sahkan tindakan
+    - paragraph [ref=e221]: Anda pasti mahu meneruskan tindakan ini?
+    - generic [ref=e222]:
+      - button [ref=e223] [cursor=pointer]: Ya
+      - button [ref=e224] [cursor=pointer]: Batal
+```

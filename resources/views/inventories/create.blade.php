@@ -89,6 +89,12 @@
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
+
+                    {{-- Users autocomplete (owner suggestions) - progressive enhancement hooks used by JS --}}
+                    <div id="users-autocomplete" class="position-relative mt-2 autocomplete-wrapper" data-search-url="{{ route('users.search') }}">
+                        <ul id="users-list" class="autocomplete-list autocomplete-list--hidden bg-surface border rounded p-0 m-0" role="listbox" aria-label="Cadangan pengguna"></ul>
+                        <div id="users-list-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+                    </div>
                 </div>
                 </div>
 

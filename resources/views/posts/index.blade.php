@@ -76,9 +76,8 @@
                                         <button type="button"
                                                 class="myds-btn myds-btn--tertiary myds-btn--sm"
                                                 data-copy-url="{{ $externalUrl }}"
-                                                aria-label="Salin pautan pos"
-                                                onclick="navigator.clipboard?.writeText(this.dataset.copyUrl).then(()=>{this.innerText='Disalin'; setTimeout(()=>this.innerText='Salin pautan',1500)}).catch(()=>{ alert('Gagal menyalin pautan'); })">
-                                            Salin pautan
+                                                aria-label="{{ __('ui.copy_link') }}">
+                                            {{ __('ui.copy_link') }}
                                         </button>
                                     </div>
                                 </div>

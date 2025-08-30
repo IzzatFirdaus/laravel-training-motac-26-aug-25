@@ -1,111 +1,173 @@
-// Enhancements for Application form: user autocomplete and vehicles-by-inventory
+/**
+ * application-form.js
+ * Enhancements for Application forms:
+ * - users autocomplete (re-usable)
+ * - inventory -> vehicle dependent select population
+ *
+ * Idempotent: safe to include on both create/edit pages.
+ */
 export default function enhanceApplicationForm(root = document) {
+  if (!root) root = document;
+  if (root._applicationFormEnhanced) return;
+  root._applicationFormEnhanced = true;
+
   const nameInput = root.querySelector('#name');
   const usersList = root.querySelector('#users-list');
   const usersWrapper = root.querySelector('#users-autocomplete');
   const ownerSelect = root.querySelector('#user_id');
 
-  if (nameInput && usersList) {
+  // users autocomplete logic
+  if (nameInput && usersList && usersWrapper) {
+    const searchUrl = usersWrapper.dataset.searchUrl || '/users/search';
+
     async function fetchUsers(q = '') {
       try {
-        const url = new URL('/users/search', window.location.origin);
+        const url = new URL(searchUrl, window.location.origin);
         if (q) url.searchParams.set('q', q);
         const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
         if (!res.ok) return [];
         return await res.json();
-      } catch { return []; }
+      } catch (err) { return []; }
     }
 
     function selectUser(u) {
       if (!u) return;
       if (ownerSelect) {
         const opt = Array.from(ownerSelect.options).find(o => o.value === String(u.id));
-        if (opt) ownerSelect.value = u.id; else {
+        if (opt) ownerSelect.value = u.id;
+        else {
           const newOpt = document.createElement('option');
-          newOpt.value = u.id; newOpt.text = u.name; newOpt.selected = true; ownerSelect.appendChild(newOpt);
+          newOpt.value = u.id; newOpt.text = u.name; newOpt.selected = true;
+          ownerSelect.appendChild(newOpt);
         }
       } else {
         let hidden = root.querySelector('input[name="user_id"]');
-        if (!hidden) { hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.name = 'user_id'; root.querySelector('form')?.appendChild(hidden); }
+        if (!hidden) {
+          hidden = document.createElement('input');
+          hidden.type = 'hidden';
+          hidden.name = 'user_id';
+          root.querySelector('form')?.appendChild(hidden);
+        }
         hidden.value = u.id;
       }
-      nameInput.value = (nameInput.value || '').replace(/\s*\u2014\s*.*$/, '') + ' \u2014 ' + u.name;
-      usersList.style.display = 'none';
+
+      nameInput.value = (nameInput.value || '').replace(/\s*\u2014\s*.*$/, '').trim() + ' — ' + u.name;
+      usersList.classList.add('visually-hidden');
       usersList.setAttribute('aria-hidden', 'true');
+      nameInput.focus();
     }
 
-    function renderUsers(items) {
+    async function renderUsers(q) {
+      const arr = await fetchUsers(q);
       usersList.innerHTML = '';
-      usersList.style.display = 'none';
-      if (!Array.isArray(items) || items.length === 0) return;
-      items.forEach((u) => {
+      if (!arr || !arr.length) {
+        usersList.classList.add('visually-hidden');
+        usersList.setAttribute('aria-hidden', 'true');
+        return;
+      }
+      arr.forEach((u) => {
         const li = document.createElement('li');
-        li.className = 'list-group-item list-group-item-action';
+        li.className = 'myds-autocomplete-item';
         li.setAttribute('role', 'option');
         li.setAttribute('tabindex', '0');
         li.textContent = u.name;
-        li.dataset.userId = u.id;
         li.addEventListener('click', () => selectUser(u));
         li.addEventListener('keydown', (ev) => {
           if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectUser(u); }
-          if (ev.key === 'ArrowDown') { ev.preventDefault(); li.nextElementSibling?.focus(); }
-          if (ev.key === 'ArrowUp') { ev.preventDefault(); li.previousElementSibling?.focus(); }
         });
         usersList.appendChild(li);
       });
-      usersList.style.display = 'block';
+      usersList.classList.remove('visually-hidden');
       usersList.setAttribute('aria-hidden', 'false');
     }
 
-    nameInput.addEventListener('focus', async () => { renderUsers(await fetchUsers(nameInput.value.trim())); });
-    nameInput.addEventListener('input', async () => {
-      const q = nameInput.value.trim();
-      if (!q) { usersList.style.display = 'none'; return; }
-      renderUsers(await fetchUsers(q));
-    });
-    document.addEventListener('click', (ev) => {
-      if (!usersWrapper.contains(ev.target) && ev.target !== nameInput) {
-        usersList.style.display = 'none'; usersList.setAttribute('aria-hidden', 'true');
-      }
-    });
-    document.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Escape') { usersList.style.display = 'none'; usersList.setAttribute('aria-hidden', 'true'); nameInput.focus(); }
-    });
+    if (!nameInput._appFormHandlersAttached) {
+      nameInput.addEventListener('input', (ev) => {
+        const q = nameInput.value.trim();
+        if (!q) {
+          usersList.innerHTML = '';
+          usersList.classList.add('visually-hidden');
+          usersList.setAttribute('aria-hidden', 'true');
+          return;
+        }
+        renderUsers(q);
+      });
+
+      nameInput.addEventListener('focus', () => {
+        const q = nameInput.value.trim();
+        if (q) renderUsers(q);
+      });
+
+      document.addEventListener('click', (ev) => {
+        try {
+          if (!usersWrapper.contains(ev.target) && ev.target !== nameInput) {
+            usersList.classList.add('visually-hidden');
+            usersList.setAttribute('aria-hidden', 'true');
+          }
+        } catch (e) { /* ignore */ }
+      });
+
+      nameInput._appFormHandlersAttached = true;
+    }
   }
 
+  // inventory -> vehicle dependency
   const inventorySelect = root.querySelector('#inventory_id');
   const vehicleSelect = root.querySelector('#vehicle_id');
   if (inventorySelect && vehicleSelect) {
+    const vehiclesUrlTemplate = inventorySelect.dataset.vehiclesUrl || inventorySelect.dataset.fetchUrl || '/inventories/{id}/vehicles';
+
     async function fetchVehiclesForInventory(inventoryId) {
       if (!inventoryId) return [];
       try {
-        const url = new URL(`/inventories/${inventoryId}/vehicles`, window.location.origin);
+        let urlStr = vehiclesUrlTemplate;
+        if (urlStr.indexOf('{id}') !== -1) {
+          urlStr = urlStr.replace('{id}', encodeURIComponent(inventoryId));
+        } else {
+          urlStr = `/inventories/${encodeURIComponent(inventoryId)}/vehicles`;
+        }
+        const url = new URL(urlStr, window.location.origin);
         const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
         if (!res.ok) return [];
         return await res.json();
-      } catch { return []; }
+      } catch (err) { return []; }
     }
+
     function populateVehicleSelect(items, selectedId = null) {
-      const previousVal = vehicleSelect.value || '';
+      const prev = vehicleSelect.value || '';
       vehicleSelect.innerHTML = '';
       const empty = document.createElement('option'); empty.value = ''; empty.text = '(tiada)'; vehicleSelect.appendChild(empty);
       (items || []).forEach((v) => {
-        const opt = document.createElement('option'); opt.value = v.id; opt.text = v.name;
-        if (String(previousVal) === String(v.id) || (selectedId && String(selectedId) === String(v.id))) opt.selected = true;
+        const opt = document.createElement('option');
+        opt.value = v.id; opt.text = v.name;
+        if (String(prev) === String(v.id) || (selectedId && String(selectedId) === String(v.id))) opt.selected = true;
         vehicleSelect.appendChild(opt);
       });
     }
-    inventorySelect.addEventListener('change', async () => {
-      populateVehicleSelect(await fetchVehiclesForInventory(inventorySelect.value));
-    });
+
+    if (!inventorySelect._appFormChangeAttached) {
+      inventorySelect.addEventListener('change', async () => {
+        const items = await fetchVehiclesForInventory(inventorySelect.value);
+        populateVehicleSelect(items);
+      });
+      inventorySelect._appFormChangeAttached = true;
+    }
+
+    // initial populate if value exists
     (async function init() {
-      const invId = inventorySelect.value; if (invId) populateVehicleSelect(await fetchVehiclesForInventory(invId), vehicleSelect.value);
+      const invId = inventorySelect.value;
+      if (invId) {
+        const items = await fetchVehiclesForInventory(invId);
+        populateVehicleSelect(items, vehicleSelect.value);
+      }
     })();
   }
 }
 
-// Auto-initialize if loaded directly via Vite on pages with the form
+/* auto-init when loaded as module in the page */
 document.addEventListener('DOMContentLoaded', () => {
-  const root = document.getElementById('main-content') || document;
-  enhanceApplicationForm(root);
+  try {
+    const root = document.getElementById('main-content') || document;
+    enhanceApplicationForm(root);
+  } catch (err) { /* non-fatal */ }
 });

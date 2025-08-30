@@ -1,6 +1,8 @@
 // resources/js/pages/inventories-create.js
-// Progressive enhancement for dependent selects (warehouse -> shelves).
-// Reads server-provided URLs and initial values from data- attributes on the selects.
+// Progressive enhancement for warehouse -> shelf dependent selects:
+// - Reads URLs and initial values from data-* attributes
+// - Populates selects via XHR, non-blocking
+// - Defensive and idempotent
 
 document.addEventListener('DOMContentLoaded', function () {
   const warehouseSelect = document.getElementById('warehouse_id');
@@ -44,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (initialWarehouse) {
       const base = warehousesUrl.replace(/\/$/, '');
-      const shelves = await fetchJSON(base + '/' + initialWarehouse + '/shelves');
+      const shelves = await fetchJSON(`${base}/${initialWarehouse}/shelves`);
       populateSelect(shelfSelect, shelves, initialShelf);
     }
   })();
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
   warehouseSelect.addEventListener('change', async function () {
     const wid = this.value;
     const base = warehousesUrl.replace(/\/$/, '');
-    const shelves = wid ? await fetchJSON(base + '/' + wid + '/shelves') : [];
+    const shelves = wid ? await fetchJSON(`${base}/${wid}/shelves`) : [];
     populateSelect(shelfSelect, shelves, null);
   });
 });

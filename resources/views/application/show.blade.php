@@ -3,11 +3,11 @@
 @section('title', ($application->name ?? 'Permohonan') . ' — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<main id="main-content" class="myds-container py-4" role="main" tabindex="-1">
+<main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="application-heading">
     <div class="mx-auto content-maxwidth-lg">
         <header class="mb-3 d-flex justify-content-between align-items-start">
             <div>
-                <h1 class="myds-heading-md font-heading">{{ $application->name ?? 'Permohonan' }}</h1>
+                <h1 id="application-heading" class="myds-heading-md font-heading">{{ $application->name ?? 'Permohonan' }}</h1>
                 <p class="myds-body-sm myds-text--muted mb-0">Butiran permohonan.</p>
             </div>
             <div class="text-end">
@@ -17,24 +17,30 @@
             </div>
         </header>
 
-        <section>
-            <div class="bg-surface border rounded p-4 shadow-sm">
-                <dl class="row g-3">
-                    <dt class="col-4 myds-body-sm myds-text--muted">ID</dt>
-                    <dd class="col-8 myds-body-md">{{ $application->id }}</dd>
+        <section aria-labelledby="application-details">
+            <div class="myds-card">
+                <div class="myds-card__body">
+                    <dl class="row g-3" id="application-details">
+                        <dt class="col-4 myds-body-sm myds-text--muted">ID</dt>
+                        <dd class="col-8 myds-body-md">{{ $application->id }}</dd>
 
-                    <dt class="col-4 myds-body-sm myds-text--muted">Nama</dt>
-                    <dd class="col-8 myds-body-md">{{ $application->name ?? '—' }}</dd>
+                        <dt class="col-4 myds-body-sm myds-text--muted">Nama</dt>
+                        <dd class="col-8 myds-body-md">{{ $application->name ?? '—' }}</dd>
 
-                    <dt class="col-4 myds-body-sm myds-text--muted">Dicipta</dt>
-                    <dd class="col-8 myds-body-md">{{ $application->created_at?->format('Y-m-d') ?? '—' }}</dd>
+                        <dt class="col-4 myds-body-sm myds-text--muted">Dicipta</dt>
+                        <dd class="col-8 myds-body-md">
+                            <time datetime="{{ $application->created_at?->toIso8601String() ?? now()->toIso8601String() }}">
+                                {{ $application->created_at?->format('Y-m-d') ?? '—' }}
+                            </time>
+                        </dd>
 
-                    <dt class="col-4 myds-body-sm myds-text--muted">Keterangan</dt>
-                    <dd class="col-8 myds-body-md">{{ $application->description ?? '—' }}</dd>
-                </dl>
+                        <dt class="col-4 myds-body-sm myds-text--muted">Keterangan</dt>
+                        <dd class="col-8 myds-body-md">{{ $application->description ?? '—' }}</dd>
+                    </dl>
 
-                <div class="mt-3">
-                    <a href="{{ route('applications.index') }}" class="myds-btn myds-btn--tertiary">Kembali</a>
+                    <div class="mt-3">
+                        <a href="{{ route('applications.index') }}" class="myds-btn myds-btn--tertiary">Kembali</a>
+                    </div>
                 </div>
             </div>
         </section>

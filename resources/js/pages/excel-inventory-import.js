@@ -5,62 +5,72 @@
 // Accessible: uses aria-live regions to announce updates
 
 (function () {
-    function setupInitialUpload() {
-        var fileInput = document.getElementById('file');
-        var fileNameEl = document.getElementById('file-name');
-        var fileSelectLabel = document.getElementById('file-select-label');
+  'use strict';
 
-        if (!fileInput || !fileNameEl || !fileSelectLabel) {
-            return;
+  function bytesToKB(n) {
+    return Math.round(n / 1024);
+  }
+
+  function setupInitialUpload() {
+    const fileInput = document.getElementById('file');
+    const fileNameEl = document.getElementById('file-name');
+    const fileSelectLabel = document.getElementById('file-select-label');
+
+    if (!fileInput || !fileNameEl || !fileSelectLabel) return;
+
+    if (!fileSelectLabel._clickAttached) {
+      fileSelectLabel._clickAttached = true;
+      fileSelectLabel.addEventListener('click', () => fileInput.click());
+    }
+
+    if (!fileInput._changeAttached) {
+      fileInput._changeAttached = true;
+      fileInput.addEventListener('change', () => {
+        const f = fileInput.files && fileInput.files[0];
+        if (f) {
+          fileNameEl.textContent = `${f.name} (${bytesToKB(f.size)} KB)`;
+        } else {
+          fileNameEl.textContent = 'Tiada fail dipilih';
         }
+      });
+    }
+  }
 
-        fileSelectLabel.addEventListener('click', function () {
-            fileInput.click();
-        });
+  function setupReupload() {
+    const reuploadFile = document.getElementById('reupload-file');
+    const reuploadFlag = document.getElementById('reupload-flag');
+    const reuploadFilename = document.getElementById('reupload-filename');
+    const reuploadLabel = document.getElementById('reupload-label');
 
-        fileInput.addEventListener('change', function () {
-            var f = fileInput.files && fileInput.files[0];
-            if (f) {
-                fileNameEl.textContent = f.name + ' (' + Math.round(f.size / 1024) + ' KB)';
-            } else {
-                fileNameEl.textContent = 'Tiada fail dipilih';
-            }
-        });
+    if (!reuploadFile || !reuploadFlag || !reuploadFilename || !reuploadLabel) return;
+
+    if (!reuploadLabel._clickAttached) {
+      reuploadLabel._clickAttached = true;
+      reuploadLabel.addEventListener('click', () => reuploadFile.click());
     }
 
-    function setupReupload() {
-        var reuploadFile = document.getElementById('reupload-file');
-        var reuploadFlag = document.getElementById('reupload-flag');
-        var reuploadFilename = document.getElementById('reupload-filename');
-        var reuploadLabel = document.getElementById('reupload-label');
-
-        if (!reuploadFile || !reuploadFlag || !reuploadFilename || !reuploadLabel) {
-            return;
+    if (!reuploadFile._changeAttached) {
+      reuploadFile._changeAttached = true;
+      reuploadFile.addEventListener('change', () => {
+        const f = reuploadFile.files && reuploadFile.files[0];
+        if (f) {
+          reuploadFilename.textContent = `${f.name} (${bytesToKB(f.size)} KB)`;
+          reuploadFlag.value = '1';
+        } else {
+          reuploadFilename.textContent = 'Tiada fail baru dipilih';
+          reuploadFlag.value = '0';
         }
-
-        reuploadLabel.addEventListener('click', function () {
-            reuploadFile.click();
-        });
-
-        reuploadFile.addEventListener('change', function () {
-            var f = reuploadFile.files && reuploadFile.files[0];
-            if (f) {
-                reuploadFilename.textContent = f.name + ' (' + Math.round(f.size / 1024) + ' KB)';
-                reuploadFlag.value = '1';
-            } else {
-                reuploadFilename.textContent = 'Tiada fail baru dipilih';
-                reuploadFlag.value = '0';
-            }
-        });
+      });
     }
+  }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () {
-            setupInitialUpload();
-            setupReupload();
-        });
-    } else {
-        setupInitialUpload();
-        setupReupload();
-    }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setupInitialUpload();
+      setupReupload();
+    });
+  } else {
+    setupInitialUpload();
+    setupReupload();
+  }
 })();
