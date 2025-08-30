@@ -1,3 +1,7 @@
+// Project JS follows MYDS/MyGOVEA guidelines:
+// - Keep behaviour accessible (keyboard, ARIA)
+// - Theme via CSS tokens (data-theme)
+// - Avoid inline event handlers; use delegated listeners
 import './bootstrap';
 // Import Bootstrap CSS and Bootstrap Icons so styles and icons are available globally
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -35,8 +39,8 @@ window.MYDS.handleDestroy = function (btn) {
 
   if (window.MYDS.Swal && typeof window.MYDS.Swal.fire === 'function') {
     const cs = getComputedStyle(document.documentElement);
-    const confirmColor = (cs.getPropertyValue('--danger') || '#d33').trim();
-    const cancelColor = (cs.getPropertyValue('--primary') || '#3085d6').trim();
+    const confirmColor = (cs.getPropertyValue('--danger') || 'var(--danger)').trim();
+    const cancelColor = (cs.getPropertyValue('--primary') || 'var(--primary)').trim();
 
     window.MYDS.Swal.fire({
       title,

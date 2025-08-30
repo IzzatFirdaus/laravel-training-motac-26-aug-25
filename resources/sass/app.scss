@@ -1,3 +1,11 @@
+/*
+	Project follows MyGOVEA design principles and MYDS tokens.
+	Conventions:
+	- Use semantic tokens via CSS custom properties in `_myds-variables.scss`.
+	- Keep components accessible (ARIA, keyboard nav, focus-visible)
+	- Prefer no inline styles; use utility classes in this stylesheet.
+*/
+
 // Variables (module) - must come before any CSS rules or @import statements
 @use 'variables' as *;
 // MYDS token partial (exported CSS custom properties)

@@ -5,7 +5,7 @@
             id="name"
             name="name"
             type="text"
-            class="form-control myds-input @error('name') is-invalid @enderror"
+            class="myds-input @error('name') is-invalid @enderror"
             value="{{ old('name', $application->name ?? '') }}"
             required
             maxlength="255"
@@ -27,7 +27,7 @@
         <textarea
             id="description"
             name="description"
-            class="form-control myds-input @error('description') is-invalid @enderror"
+            class="myds-input @error('description') is-invalid @enderror"
             aria-invalid="{{ $errors->has('description') ? 'true' : 'false' }}"
             @if($errors->has('description')) aria-describedby="description-error" @endif
         >{{ old('description', $application->description ?? '') }}</textarea>
@@ -41,7 +41,7 @@
         <select
             id="inventory_id"
             name="inventory_id"
-            class="form-control myds-input @error('inventory_id') is-invalid @enderror"
+            class="myds-input @error('inventory_id') is-invalid @enderror"
             aria-invalid="{{ $errors->has('inventory_id') ? 'true' : 'false' }}"
             @if($errors->has('inventory_id')) aria-describedby="inventory-error" @endif
         >
@@ -62,7 +62,7 @@
         <select
             id="vehicle_id"
             name="vehicle_id"
-            class="form-control myds-input @error('vehicle_id') is-invalid @enderror"
+            class="myds-input @error('vehicle_id') is-invalid @enderror"
             aria-invalid="{{ $errors->has('vehicle_id') ? 'true' : 'false' }}"
             @if($errors->has('vehicle_id')) aria-describedby="vehicle-error" @endif
         >

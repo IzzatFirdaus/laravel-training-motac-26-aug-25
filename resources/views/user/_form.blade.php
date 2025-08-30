@@ -5,7 +5,7 @@
                name="name"
                type="text"
                inputmode="text"
-           class="form-control myds-input @error('name') is-invalid @enderror"
+           class="myds-input @error('name') is-invalid @enderror"
            value="{{ old('name', $user->name ?? '') }}"
            required
            aria-required="true"
@@ -23,7 +23,7 @@
                name="email"
                type="email"
                inputmode="email"
-           class="form-control myds-input @error('email') is-invalid @enderror"
+           class="myds-input @error('email') is-invalid @enderror"
            value="{{ old('email', $user->email ?? '') }}"
            required
            aria-required="true"
@@ -44,7 +44,7 @@
     <input id="password"
                name="password"
                type="password"
-               class="form-control myds-input @error('password') is-invalid @enderror"
+               class="myds-input @error('password') is-invalid @enderror"
            {{ isset($user) ? '' : 'required' }}
            @unless(isset($user)) aria-required="true" @endunless
                minlength="8"

@@ -6,11 +6,10 @@
 <main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="page-heading">
     {{-- Page Header (MYDS) --}}
     <header class="mb-4">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
             <div>
-                <h1 id="page-heading" class="myds-heading-md font-heading font-semibold mb-2">Inventori</h1>
-                <p class="text-muted mb-0">Sistem pengurusan inventori kerajaan. Lihat, urus dan cipta rekod inventori dengan mudah.</p>
-            </div>
+                <h1 class="myds-heading-md font-heading">Inventori</h1>
+                <p class="myds-text--muted mb-0">
             <div class="d-flex gap-2 flex-wrap">
                 @can('create', App\Models\Inventory::class)
                     <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta inventori baharu">
@@ -42,7 +41,7 @@
 
         <div class="bg-surface p-3 rounded border mb-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="text-muted" id="inventory-count" aria-live="polite">
+                <div class="myds-text--muted" id="inventory-count" aria-live="polite">
                     <strong>{{ number_format($inventoryCount) }}</strong> item inventori dijumpai
                 </div>
             </div>
@@ -51,7 +50,7 @@
                 <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-6">
                     <label for="search" class="form-label myds-body-sm font-medium">Cari inventori</label>
                     <input id="search" name="search" class="myds-input" value="{{ request('search','') }}" placeholder="{{ __('placeholders.inventory_search') }}" aria-describedby="search-help" />
-                    <div id="search-help" class="myds-body-xs text-muted mt-1">Cari berdasarkan nama atau keterangan item.</div>
+                    <div id="search-help" class="myds-body-xs myds-text--muted mt-1">Cari berdasarkan nama atau keterangan item.</div>
                 </div>
 
                 <div class="mobile:col-span-2 tablet:col-span-2 desktop:col-span-3">
@@ -114,13 +113,13 @@
                             <tr role="row">
                                 <td><span class="font-mono font-medium">#{{ $inventory->id }}</span></td>
                                 <td><strong>{{ $inventory->name }}</strong></td>
-                                <td><span class="badge bg-primary rounded-pill">{{ $inventory->qty }}</span></td>
+                                <td><span class="myds-badge myds-badge--primary rounded-pill">{{ $inventory->qty }}</span></td>
                                 <td>{{ $inventory->user?->name ?? '—' }}</td>
                                 <td>
                                     @if($inventory->price !== null)
                                         RM {{ number_format($inventory->price, 2) }}
                                     @else
-                                        <span class="text-muted">—</span>
+                                        <span class="myds-text--muted">—</span>
                                     @endif
                                 </td>
                                 <td>
@@ -154,8 +153,8 @@
                         @empty
                             <tr role="row">
                                 <td colspan="7" class="text-center py-4">
-                                    <div class="text-muted">
-                                        <i class="bi bi-inboxes fs-1 mb-2 mx-auto d-block text-muted" aria-hidden="true"></i>
+                                    <div class="myds-text--muted">
+                                        <i class="bi bi-inboxes fs-1 mb-2 mx-auto d-block myds-text--muted" aria-hidden="true"></i>
                                         <p>Tiada inventori dijumpai.</p>
                                         @can('create', App\Models\Inventory::class)
                                             <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary myds-btn--sm">Cipta Inventori Pertama</a>

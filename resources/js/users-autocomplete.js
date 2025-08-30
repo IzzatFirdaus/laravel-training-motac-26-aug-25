@@ -1,5 +1,6 @@
-// Lightweight accessibility enhancement for the users autocomplete used in inventory forms
-// Adds keyboard navigation (ArrowUp/ArrowDown/Enter/Escape) and ARIA state management.
+// MYDS/MyGOVEA: users autocomplete enhancement
+// Accessibility: keyboard navigation, proper ARIA roles, and live-region announcements
+// Keep behaviour modular and progressive-enhancement friendly
 
 export default function enhanceUsersAutocomplete(containerSelector = '#users-autocomplete') {
     const container = document.querySelector(containerSelector);

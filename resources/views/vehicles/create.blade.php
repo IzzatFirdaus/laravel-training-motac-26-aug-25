@@ -3,7 +3,7 @@
 @section('title', 'Cipta Kenderaan — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<main id="main-content" class="myds-container py-4" role="main">
+<main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="page-heading">
 
 {{-- MYDS Breadcrumb Navigation --}}
 <nav aria-label="Breadcrumb" class="mb-4">
@@ -16,7 +16,7 @@
 
 {{-- Page Header (MyGOVEA clear display principles) --}}
 <header class="mb-6">
-    <h1 class="myds-heading-md font-heading font-semibold mb-3">Cipta Kenderaan Baharu</h1>
+    <h1 id="page-heading" class="myds-heading-md font-heading font-semibold mb-3">Cipta Kenderaan Baharu</h1>
     <div class="myds-body-md text-muted">
         <p class="mb-2">
             Isi maklumat di bawah untuk menambah kenderaan baharu ke dalam sistem inventori.
@@ -67,14 +67,14 @@
                 <div class="mb-4">
                     <label for="name" class="form-label myds-body-sm font-medium d-block mb-2">
                         Nama Kenderaan
-                        <span class="text-danger ms-1" aria-label="medan wajib">*</span>
+                        <span class="text-danger ms-1" aria-hidden="true">*</span>
+                        <span class="sr-only"> medan wajib</span>
                     </label>
                     <input type="text"
                            id="name"
                            name="name"
                            class="myds-input @error('name') is-invalid border-danger @enderror"
                            value="{{ old('name') }}"
-                           placeholder="{{ __('placeholders.example_vehicle') }}"
                            aria-describedby="name-help @error('name') name-error @enderror"
                            aria-required="true"
                            maxlength="255"
@@ -112,7 +112,7 @@
                         </div>
                     @else
                         <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-                        <div class="myds-input bg-muted cursor-not-allowed">
+                        <div class="myds-input bg-muted cursor-not-allowed" role="textbox" aria-readonly="true" tabindex="-1">
                             {{ auth()->user()->name ?? 'Pengguna Semasa' }}
                         </div>
                         <div id="user_id-help" class="myds-body-xs text-muted mt-1">
@@ -133,16 +133,15 @@
                         Kuantiti
                         <span class="text-danger ms-1" aria-label="medan wajib">*</span>
                     </label>
-                    <input type="number"
-                           id="qty"
-                           name="qty"
-                           class="myds-input @error('qty') is-invalid border-danger @enderror"
-                           value="{{ old('qty', 1) }}"
-                           min="1"
-                           placeholder="{{ __('placeholders.example_quantity') }}"
-                           aria-describedby="qty-help @error('qty') qty-error @enderror"
-                           aria-required="true"
-                           required>
+              <input type="number"
+                  id="qty"
+                  name="qty"
+                  class="myds-input @error('qty') is-invalid border-danger @enderror"
+                  value="{{ old('qty', 1) }}"
+                  min="1"
+                  aria-describedby="qty-help @error('qty') qty-error @enderror"
+                  aria-required="true"
+                  required>
                     <div id="qty-help" class="myds-body-xs text-muted mt-1">
                         Masukkan bilangan unit kenderaan (minimum 1)
                     </div>
@@ -160,16 +159,15 @@
                         Harga (RM)
                     </label>
                     <div class="input-group">
-                        <span class="input-group-text bg-muted">RM</span>
-                        <input type="number"
-                               id="price"
-                               name="price"
-                               class="myds-input @error('price') is-invalid border-danger @enderror"
-                               value="{{ old('price') }}"
-                               step="0.01"
-                               min="0"
-                               placeholder="{{ __('placeholders.example_price') }}"
-                               aria-describedby="price-help @error('price') price-error @enderror">
+               <span class="input-group-text bg-muted" aria-hidden="true">RM</span>
+               <input type="number"
+                   id="price"
+                   name="price"
+                   class="myds-input @error('price') is-invalid border-danger @enderror"
+                   value="{{ old('price') }}"
+                   step="0.01"
+                   min="0"
+                   aria-describedby="price-help @error('price') price-error @enderror">
                     </div>
                     <div id="price-help" class="myds-body-xs text-muted mt-1">
                         Masukkan harga per unit dalam Ringgit Malaysia (opsional)
@@ -191,7 +189,6 @@
                               name="description"
                               class="myds-input @error('description') is-invalid border-danger @enderror"
                               rows="4"
-                              placeholder="{{ __('placeholders.extra_vehicle_info') }}"
                               aria-describedby="description-help @error('description') description-error @enderror"
                               maxlength="1000">{{ old('description') }}</textarea>
                     <div id="description-help" class="myds-body-xs text-muted mt-1">

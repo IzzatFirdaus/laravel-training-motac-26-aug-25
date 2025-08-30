@@ -2,10 +2,11 @@
  | resources/css/app.css
  | MYDS + MyGOVEA tokens and utilities
  */
-
-/* Import Tailwind CSS */
-@import "tailwindcss";
-
+/*
+  resources/css/app.css
+  - Compiled project styles following MyGOVEA & MYDS conventions.
+  - Ensure all components include ARIA attributes and keyboard support.
+*/
 /* MYDS Design Tokens as CSS Custom Properties */
 @layer base {
   :root {

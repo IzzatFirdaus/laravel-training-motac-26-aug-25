@@ -1,5 +1,6 @@
-// resources/js/pages/inventories-edit.js
-// Moved from inline script in inventories/edit.blade.php
+// MYDS/MyGOVEA: page-specific JS for inventories edit
+// - Progressive enhancement of form interactions
+// - Ensure ARIA roles for dynamic lists and selects
 document.addEventListener('DOMContentLoaded', function () {
   // Simple user autocomplete (click to select)
   const nameInput = document.getElementById('name');

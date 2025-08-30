@@ -1,3 +1,11 @@
+/*
+	Project styling conventions
+	- Follows MyGOVEA principles and MYDS tokens/layout guidance
+	- Use semantic CSS custom properties (see _myds-variables.scss)
+	- Prefer :focus-visible for keyboard focus rings
+	- Keep CSS changes here minimal; component styles live in app.scss
+*/
+
 // Body
 // Body
 $body-bg: #f8fafc;

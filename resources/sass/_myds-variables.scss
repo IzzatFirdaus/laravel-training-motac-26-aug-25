@@ -328,9 +328,7 @@
     font-weight: var(--bs-body-font-weight);
     line-height: var(--bs-body-line-height);
     text-align: var(--bs-body-text-align);
-    -webkit-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    /* Use vendor-prefixed properties for widest support; the unprefixed property has limited availability and triggers compat warnings */
+    /* text-size-adjust support varies; use @supports blocks below to enable where available */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     font-family: var(--font-body);
     /* text-size-adjust support varies; use @supports blocks below */
@@ -475,4 +473,7 @@
 }
 @supports (-webkit-text-size-adjust: 100%) {
     :root { -webkit-text-size-adjust: 100%; }
+}
+@supports (-moz-text-size-adjust: 100%) {
+    :root { -moz-text-size-adjust: 100%; }
 }

@@ -34,29 +34,30 @@
 
         {{-- Status Message --}}
         @if (session('status'))
-            <div class="alert alert-success d-flex align-items-start mb-4" role="alert">
+            <div class="myds-alert myds-alert--success d-flex align-items-start mb-4" role="status" aria-live="polite">
                 <i class="bi bi-check-circle me-2 flex-shrink-0" aria-hidden="true"></i>
                 <div>
-                    <h4 class="alert-heading myds-body-md font-medium">Berjaya</h4>
+                    <h4 class="myds-body-md font-medium">Berjaya</h4>
                     <p class="mb-0 myds-body-sm">{{ session('status') }}</p>
                 </div>
             </div>
         @endif
 
         {{-- Main Form Card --}}
-        <div class="bg-surface border rounded-m p-4 shadow-sm">
+                <div class="myds-card">
+                    <div class="myds-card__body p-4 shadow-sm">
             <form method="POST" action="{{ route('inventories.store') }}" novalidate aria-labelledby="form-title">
                 @csrf
 
                 <h2 id="form-title" class="sr-only">Borang Cipta Inventori Baharu</h2>
 
                 {{-- Required Fields Notice --}}
-        <div class="bg-muted border-start border-3 border-primary p-3 mb-4">
+                <div class="myds-alert myds-alert--info mb-4">
                     <div class="d-flex align-items-start">
-            <i class="bi bi-info-circle me-2 mt-1 text-primary flex-shrink-0" aria-hidden="true"></i>
+                        <i class="bi bi-info-circle me-2 mt-1 flex-shrink-0" aria-hidden="true"></i>
                         <div>
                             <p class="myds-body-sm font-medium mb-1">Panduan Pengisian Borang</p>
-                            <p class="myds-body-sm text-muted mb-0">
+                            <p class="myds-body-sm myds-text--muted mb-0">
                                 Pastikan semua medan wajib (*) telah diisi dengan lengkap dan tepat sebelum menyerahkan borang.
                             </p>
                         </div>
@@ -118,12 +119,12 @@
                 {{-- Price Field --}}
                 <div class="mb-3">
                     <label for="price" class="form-label font-medium">Harga (RM)</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-muted border-end-0">RM</span>
+                    <div class="myds-input-group">
+                        <span class="myds-input-group__addon">RM</span>
                         <input type="number"
                                id="price"
                                name="price"
-                               class="myds-input border-start-0 @error('price') is-invalid @enderror"
+                               class="myds-input @error('price') myds-input--error @enderror"
                                value="{{ old('price') }}"
                                step="0.01"
                                min="0"

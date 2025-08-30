@@ -10,18 +10,18 @@
       {{-- Error summary --}}
       <div class="text-center mb-6" role="region" aria-describedby="error-description">
         <div class="mb-4" aria-hidden="true">
-          <i class="bi bi-exclamation-triangle text-muted" style="font-size:80px;"></i>
+          <i class="bi bi-exclamation-triangle myds-text--muted" style="font-size:80px;"></i>
         </div>
 
         <h1 id="error-title" class="myds-heading-md font-heading font-semibold text-primary mb-2">404</h1>
         <h2 class="myds-heading-sm font-heading mb-2">Halaman Tidak Dijumpai</h2>
 
-        <p id="error-description" class="myds-body-md text-muted mb-4">
+        <p id="error-description" class="myds-body-md myds-text--muted mb-4">
           Maaf, halaman yang anda cari tidak wujud atau telah dipindahkan.
           Sila semak alamat (URL) atau gunakan navigasi di laman untuk mencari maklumat yang anda perlukan.
         </p>
 
-        <p class="myds-body-sm text-muted mb-4" lang="en">
+        <p class="myds-body-sm myds-text--muted mb-4" lang="en">
           <em>Sorry, the page you are looking for does not exist or has been moved.</em>
         </p>
       </div>
@@ -71,21 +71,21 @@
       {{-- Contact & diagnostics --}}
       <div class="mt-6 p-4 bg-muted rounded" role="contentinfo" aria-label="Maklumat sokongan">
         <h4 class="myds-heading-xs font-heading font-medium mb-2">Perlu bantuan?</h4>
-        <p class="myds-body-sm text-muted mb-2">
+        <p class="myds-body-sm myds-text--muted mb-2">
           Jika masalah berterusan, sila hubungi pasukan sokongan teknikal kami. Sertakan maklumat berikut untuk membantu kami mengenal pasti isu.
         </p>
 
         <div class="d-flex flex-wrap gap-3">
-          <div class="text-muted">
+          <div class="myds-text--muted">
             <strong>Kod Ralat:</strong> <span class="myds-body-sm">404</span>
           </div>
 
-          <div class="text-muted">
+          <div class="myds-text--muted">
             <strong>Tarikh & Masa:</strong>
             <span class="myds-body-sm">{{ now()->format('d/m/Y H:i:s') }}</span>
           </div>
 
-          <div class="text-muted">
+          <div class="myds-text--muted">
             <strong>URL:</strong>
             <span class="myds-body-sm">{{ request()->fullUrl() }}</span>
           </div>

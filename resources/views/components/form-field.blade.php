@@ -28,7 +28,7 @@
         <textarea
             id="{{ $id }}"
             name="{{ $name }}"
-            class="form-control myds-input myds-textarea {{ $hasError ? 'is-invalid' : '' }}"
+            class="myds-input myds-textarea {{ $hasError ? 'is-invalid' : '' }}"
             aria-invalid="{{ $hasError ? 'true' : 'false' }}"
             @if($hasError) aria-describedby="{{ $errorId }}" @endif
             @if($placeholder) placeholder="{{ __($placeholder) }}" @endif
@@ -39,7 +39,7 @@
             name="{{ $name }}"
             type="{{ $type }}"
             value="{{ $showValue }}"
-            class="form-control myds-input {{ $hasError ? 'is-invalid' : '' }}"
+            class="myds-input {{ $hasError ? 'is-invalid' : '' }}"
             aria-invalid="{{ $hasError ? 'true' : 'false' }}"
             @if($hasError) aria-describedby="{{ $errorId }}" @endif
             @if($placeholder) placeholder="{{ __($placeholder) }}" @endif

@@ -104,7 +104,7 @@
                                     @endauth
 
                                     <div class="dropdown-divider"></div>
-                                    <div class="px-3 py-2 text-muted small">Excel</div>
+                                    <div class="px-3 py-2 myds-text--muted small">Excel</div>
                                     <a class="dropdown-item" href="{{ route('excel.inventory.form') }}" role="menuitem">Import Inventori</a>
                                     <a class="dropdown-item" href="{{ route('excel.inventory.export') }}" role="menuitem">Muat Turun Templat</a>
 
@@ -219,10 +219,10 @@
                                 </a>
 
                                 <div id="warehousesMenu" class="dropdown-menu myds-dropdown" aria-labelledby="navWarehouses" role="menu">
-                                    <div class="px-3 py-2 text-muted small">Gudang & Rak</div>
+                                    <div class="px-3 py-2 myds-text--muted small">Gudang & Rak</div>
                                     <div id="warehouses-list" class="px-2" role="presentation">
                                         {{-- JS progressive enhancement will populate list items here --}}
-                                        <div class="text-muted small px-2">Memuatkan...</div>
+                                        <div class="myds-text--muted small px-2">Memuatkan...</div>
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('inventories.create') }}">Cipta Inventori</a>
@@ -265,7 +265,7 @@
                                        data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Pemberitahuan">
                                         <i class="bi bi-bell" aria-hidden="true"></i>
                                         @if($unreadCount)
-                                            <span class="badge bg-danger rounded-pill position-absolute myds-badge myds-badge--danger notification-count-badge" aria-hidden="true">{{ $unreadCount }}</span>
+                                            <span class="myds-badge myds-badge--danger rounded-pill position-absolute notification-count-badge" aria-hidden="true">{{ $unreadCount }}</span>
                                             <span class="visually-hidden">{{ $unreadCount }} pemberitahuan belum dibaca</span>
                                         @endif
                                     </a>
@@ -273,11 +273,11 @@
                                     <div class="dropdown-menu dropdown-menu-end myds-dropdown py-0 notifications-menu" aria-labelledby="navNotifications" role="menu">
                                         <div class="px-3 py-2 border-bottom">
                                             <strong>Pemberitahuan</strong>
-                                            <span class="text-muted small d-block">{{ $unreadCount }} belum dibaca</span>
+                                            <span class="myds-text--muted small d-block">{{ $unreadCount }} belum dibaca</span>
                                         </div>
 
                                         @if($unreadCount === 0)
-                                            <div class="px-3 py-3 text-muted">Tiada pemberitahuan</div>
+                                            <div class="px-3 py-3 myds-text--muted">Tiada pemberitahuan</div>
                                         @else
                                             <div class="list-group list-group-flush" role="list">
                                                 @foreach($unread->take(10) as $note)
@@ -285,7 +285,7 @@
                                                         <div class="me-2" aria-hidden="true"><i class="bi bi-bell"></i></div>
                                                         <div class="flex-fill">
                                                             <div class="small fw-semibold">{{ $note->data['message'] ?? '—' }}</div>
-                                                            <div class="small text-muted">{{ optional($note->created_at)->format('d/m/Y H:i') }}</div>
+                                                            <div class="small myds-text--muted">{{ optional($note->created_at)->format('d/m/Y H:i') }}</div>
                                                         </div>
                                                     </a>
                                                 @endforeach
@@ -334,24 +334,24 @@
                             <span class="font-heading font-semibold">{{ config('app.name', 'Sistem Kerajaan') }}</span>
                         </div>
 
-                        <p class="text-muted small mb-3">
+                        <p class="myds-text--muted small mb-3">
                             Sistem pengurusan inventori dan kenderaan Kerajaan Malaysia.
                             Dibangunkan mengikut prinsip MyGOVEA dan Malaysia Government Design System (MYDS).
                         </p>
 
                         <div class="d-flex flex-wrap gap-3 mb-3">
-                            <a href="#" class="text-muted small">Dasar Privasi</a>
-                            <a href="#" class="text-muted small">Terma Penggunaan</a>
-                            <a href="#" class="text-muted small">Hubungi Kami</a>
-                            <a href="#" class="text-muted small">Bantuan</a>
+                            <a href="#" class="myds-text--muted small">Dasar Privasi</a>
+                            <a href="#" class="myds-text--muted small">Terma Penggunaan</a>
+                            <a href="#" class="myds-text--muted small">Hubungi Kami</a>
+                            <a href="#" class="myds-text--muted small">Bantuan</a>
                         </div>
 
-                        <p class="text-muted small mb-0">© {{ date('Y') }} Kerajaan Malaysia. Hak cipta terpelihara.</p>
+                        <p class="myds-text--muted small mb-0">© {{ date('Y') }} Kerajaan Malaysia. Hak cipta terpelihara.</p>
                     </div>
 
                     <div class="mobile:col-span-4 tablet:col-span-2 desktop:col-span-4">
                         <h6 class="font-heading font-semibold mb-2">Hubungi Kami</h6>
-                        <address class="text-muted small mb-0">
+                        <address class="myds-text--muted small mb-0">
                             <div>Jabatan Digital Negara</div>
                             <div>Putrajaya, Malaysia</div>
                             <div>Tel: 03-8000 8000</div>
@@ -434,12 +434,12 @@
             try {
                 const res = await fetch('{{ url('/api/warehouses') }}', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
                 if (!res.ok) {
-                    container.innerHTML = '<div class="text-muted small px-2">Tidak dapat memuatkan.</div>';
+                    container.innerHTML = '<div class="myds-text--muted small px-2">Tidak dapat memuatkan.</div>';
                     return;
                 }
                 const items = await res.json();
                 if (!items || !items.length) {
-                    container.innerHTML = '<div class="text-muted small px-2">Tiada gudang didaftarkan.</div>';
+                    container.innerHTML = '<div class="myds-text--muted small px-2">Tiada gudang didaftarkan.</div>';
                     return;
                 }
                 container.innerHTML = '';
@@ -452,7 +452,7 @@
                     container.appendChild(a);
                 });
             } catch (e) {
-                container.innerHTML = '<div class="text-muted small px-2">Ralat memuatkan gudang.</div>';
+                container.innerHTML = '<div class="myds-text--muted small px-2">Ralat memuatkan gudang.</div>';
             }
         }
 
