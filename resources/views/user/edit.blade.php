@@ -1,32 +1,34 @@
 @extends('layouts.app')
 
-@section('title', 'Ubah Pengguna — ' . config('app.name', 'second-crud'))
+@section('title', 'Ubah Pengguna — ' . config('app.name', 'Sistem Kerajaan'))
 
 @section('content')
-<div class="myds-container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Edit Pengguna</div>
+<main id="main-content" class="myds-container py-6" role="main" tabindex="-1" aria-labelledby="edit-user-heading">
+    <header class="mb-4">
+        <h1 id="edit-user-heading" class="myds-heading-md font-heading font-semibold">Ubah Pengguna</h1>
+        <p class="myds-body-sm text-muted mb-0">Kemaskini maklumat pengguna. Kosongkan kata laluan untuk mengekalkan kata laluan sedia ada.</p>
+    </header>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success myds-alert myds-alert--success">{{ session('status') }}</div>
-                    @endif
+    <section aria-labelledby="edit-user-form">
+        <div class="myds-card">
+            <div class="myds-card__body">
+                @if (session('status'))
+                    <div class="myds-alert myds-alert--success mb-3" role="status">{{ session('status') }}</div>
+                @endif
 
-                    <form method="POST" action="{{ route('users.update', $user->id) }}">
-                        @csrf
+                <form method="POST" action="{{ route('users.update', $user->id) }}" novalidate>
+                    @csrf
+                    @method('PUT')
 
-                        @include('user._form', ['user' => $user])
+                    @include('user._form', ['user' => $user])
 
-                        <div class="d-flex justify-content-end">
-                            <a href="{{ route('users.index') }}" class="myds-btn myds-btn--secondary mr-2" aria-label="Batal dan kembali ke senarai">Batal</a>
-                            <button type="submit" class="myds-btn myds-btn--primary" aria-label="Kemaskini pengguna">Kemaskini</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{{ route('users.index') }}" class="myds-btn myds-btn--secondary" aria-label="Batal dan kembali ke senarai">Batal</a>
+                        <button type="submit" class="myds-btn myds-btn--primary" aria-label="Kemaskini pengguna">Kemaskini</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 @endsection

@@ -329,8 +329,14 @@
     line-height: var(--bs-body-line-height);
     text-align: var(--bs-body-text-align);
     -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    /* Use vendor-prefixed properties for widest support; the unprefixed property has limited availability and triggers compat warnings */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     font-family: var(--font-body);
+    /* text-size-adjust support varies; use @supports blocks below */
+    /* -webkit-text-size-adjust: 100%; */
+    /* -moz-text-size-adjust: 100%; */
+    /* text-size-adjust: 100%; */
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
     --bs-card-spacer-y: 1rem;
@@ -460,4 +466,13 @@
 
 [data-theme="dark"] {
     /* Dark-mode overrides are already handled elsewhere; keep as a no-op guard */
+    color-scheme: dark;
+}
+
+/* Prefer feature queries to avoid cross-browser warnings while enabling where available */
+@supports (text-size-adjust: 100%) {
+    :root { text-size-adjust: 100%; }
+}
+@supports (-webkit-text-size-adjust: 100%) {
+    :root { -webkit-text-size-adjust: 100%; }
 }
