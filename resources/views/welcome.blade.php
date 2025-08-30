@@ -24,7 +24,7 @@
 
             <div class="d-flex gap-3 justify-content-center flex-wrap">
                 <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary" aria-label="Mula gunakan sistem">
-                    <svg width="16" height="16" class="me-2" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM4 9h16" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+                    <i class="bi bi-box-seam me-2" aria-hidden="true"></i>
                     Mula Guna Sistem
                 </a>
 
@@ -49,9 +49,9 @@
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-6">
                 <div class="bg-surface p-4 rounded border h-100">
                     <div class="d-flex align-items-start mb-3">
-                        <div class="me-3 p-2 bg-primary text-white rounded">
-                            <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-                        </div>
+                            <div class="me-3 p-2 bg-primary text-white rounded">
+                                <i class="bi bi-box-seam" aria-hidden="true" style="font-size:24px"></i>
+                            </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Pengurusan Inventori</h3>
                             <p class="text-muted small mb-2">Urus inventori kerajaan dengan sistem yang mudah dan sistematik.</p>
@@ -65,9 +65,9 @@
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-6">
                 <div class="bg-surface p-4 rounded border h-100">
                     <div class="d-flex align-items-start mb-3">
-                        <div class="me-3 p-2 bg-success text-white rounded">
-                            <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 17h14" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-                        </div>
+                            <div class="me-3 p-2 bg-success text-white rounded">
+                                <i class="bi bi-truck" aria-hidden="true" style="font-size:24px"></i>
+                            </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Pengurusan Kenderaan</h3>
                             <p class="text-muted small mb-2">Pantau dan urus kenderaan kerajaan dengan komprehensif.</p>
@@ -81,9 +81,9 @@
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-6">
                 <div class="bg-surface p-4 rounded border h-100">
                     <div class="d-flex align-items-start mb-3">
-                        <div class="me-3 p-2 bg-warning text-white rounded">
-                            <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-                        </div>
+                            <div class="me-3 p-2 bg-warning text-white rounded">
+                                <i class="bi bi-people" aria-hidden="true" style="font-size:24px"></i>
+                            </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Pengurusan Pengguna</h3>
                             <p class="text-muted small mb-2">Urus akaun pengguna dan akses sistem dengan selamat.</p>
@@ -97,9 +97,9 @@
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-6">
                 <div class="bg-surface p-4 rounded border h-100">
                     <div class="d-flex align-items-start mb-3">
-                        <div class="me-3 p-2 bg-danger text-white rounded">
-                            <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-                        </div>
+                            <div class="me-3 p-2 bg-danger text-white rounded">
+                                <i class="bi bi-journal-text" aria-hidden="true" style="font-size:24px"></i>
+                            </div>
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">Permohonan</h3>
                             <p class="text-muted small mb-2">Proses dan urus permohonan rasmi dengan sistematik.</p>
@@ -121,7 +121,7 @@
         <div class="myds-grid myds-grid-desktop myds-grid-tablet myds-grid-mobile gap-3">
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-4 text-center p-3">
                 <div class="mx-auto mb-2 icon-circle bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width:56px;height:56px;border-radius:9999px;">
-                    <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.5"/></svg>
+                    <i class="bi bi-people" aria-hidden="true" style="font-size:24px"></i>
                 </div>
                 <h3 class="font-heading font-semibold h6 mb-1">Berpaksikan Rakyat</h3>
                 <p class="text-muted small mb-0">Mengutamakan keperluan pengguna sebagai fokus utama.</p>
@@ -129,7 +129,7 @@
 
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-4 text-center p-3">
                 <div class="mx-auto mb-2 icon-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width:56px;height:56px;border-radius:9999px;">
-                    <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="1.5"/></svg>
+                    <i class="bi bi-graph-up" aria-hidden="true" style="font-size:24px"></i>
                 </div>
                 <h3 class="font-heading font-semibold h6 mb-1">Berpacukan Data</h3>
                 <p class="text-muted small mb-0">Menggunakan data dengan efisien untuk keputusan yang tepat.</p>
@@ -137,7 +137,7 @@
 
             <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-4 text-center p-3">
                 <div class="mx-auto mb-2 icon-circle bg-warning text-white d-inline-flex align-items-center justify-content-center" style="width:56px;height:56px;border-radius:9999px;">
-                    <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M7 2H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.5"/></svg>
+                    <i class="bi bi-sliders" aria-hidden="true" style="font-size:24px"></i>
                 </div>
                 <h3 class="font-heading font-semibold h6 mb-1">Antara Muka Minimalis</h3>
                 <p class="text-muted small mb-0">Reka bentuk yang mudah difahami dan digunakan.</p>

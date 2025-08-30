@@ -1,14 +1,24 @@
 import './bootstrap';
+// Import Bootstrap CSS and Bootstrap Icons so styles and icons are available globally
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import Swal from 'sweetalert2';
 import enhanceUsersAutocomplete from './users-autocomplete';
+import './features/warehouses-menu';
 
 // Expose MYDS namespace (keeps global pollution minimal)
 window.MYDS = window.MYDS || {};
 window.MYDS.Swal = Swal;
 
-/* Inline icons for theme toggle (kept minimal and accessible). */
-const __MYDS_SVG_SUN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const __MYDS_SVG_MOON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/></svg>';
+// Theme toggle uses Bootstrap Icons classes instead of inline SVGs
+function setThemeToggleIcon(theme) {
+  const iconEl = document.getElementById('theme-toggle-icon');
+  if (!iconEl) return;
+  // Ensure we target either <i> element or a container span
+  const target = iconEl.tagName.toLowerCase() === 'i' ? iconEl : iconEl.firstElementChild || iconEl;
+  if (!target) return;
+  target.classList.remove('bi', 'bi-sun', 'bi-moon');
+  target.classList.add('bi', theme === 'dark' ? 'bi-moon' : 'bi-sun');
+}
 
 /**
  * Show confirm dialog for destructive actions (delete)
@@ -56,16 +66,15 @@ window.MYDS.handleDestroy = function (btn) {
  * @param {string} theme - 'light' | 'dark'
  */
 function applyTheme(theme) {
-  const icon = document.getElementById('theme-toggle-icon');
   const btn = document.getElementById('theme-toggle');
 
   if (theme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
-    if (icon) icon.innerHTML = __MYDS_SVG_MOON;
+  setThemeToggleIcon('dark');
     if (btn) btn.setAttribute('aria-pressed', 'true');
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
-    if (icon) icon.innerHTML = __MYDS_SVG_SUN;
+  setThemeToggleIcon('light');
     if (btn) btn.setAttribute('aria-pressed', 'false');
   }
 }
@@ -184,6 +193,22 @@ document.addEventListener('DOMContentLoaded', () => {
       form.submit();
     }
   }, true);
+
+  // Global simple actions to replace inline onclick attributes
+  document.body.addEventListener('click', (e) => {
+    const actionEl = e.target.closest('[data-action]');
+    if (!actionEl) return;
+    const action = actionEl.getAttribute('data-action');
+    if (!action) return;
+
+    if (action === 'history-back') {
+      e.preventDefault();
+      try { history.back(); } catch (_) { /* ignore */ }
+    } else if (action === 'reload') {
+      e.preventDefault();
+      try { location.reload(); } catch (_) { /* ignore */ }
+    }
+  });
 
   // Initialize any optional enhancements (non-fatal)
   try {

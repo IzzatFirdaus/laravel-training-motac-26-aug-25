@@ -7,7 +7,7 @@ status=200
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="3kLc7u2SO1eYzB6AruOYsoQKr8YmRMUwdhO0CIiy">
+    <meta name="csrf-token" content="uG9FNEdxNifc6jMc5R4g5myjnzhVfFjz4fCphF7c">
 
     <!-- Security Headers for government compliance -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">

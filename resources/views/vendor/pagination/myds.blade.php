@@ -10,18 +10,14 @@
             @if ($paginator->onFirstPage())
                 <li aria-disabled="true" aria-label="Sebelumnya">
                     <span class="myds-btn myds-btn--secondary opacity-50 cursor-not-allowed">
-                        <svg width="16" height="16" class="me-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <polyline points="15,18 9,12 15,6" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-chevron-left me-1" aria-hidden="true"></i>
                         Sebelumnya
                     </span>
                 </li>
             @else
                 <li>
                     <a class="myds-btn myds-btn--secondary" href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="Halaman sebelumnya">
-                        <svg width="16" height="16" class="me-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <polyline points="15,18 9,12 15,6" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-chevron-left me-1" aria-hidden="true"></i>
                         Sebelumnya
                     </a>
                 </li>
@@ -60,18 +56,14 @@
                 <li>
                     <a class="myds-btn myds-btn--secondary" href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="Halaman seterusnya">
                         Seterusnya
-                        <svg width="16" height="16" class="ms-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <polyline points="9,18 15,12 9,6" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-chevron-right ms-1" aria-hidden="true"></i>
                     </a>
                 </li>
             @else
                 <li aria-disabled="true" aria-label="Seterusnya">
                     <span class="myds-btn myds-btn--secondary opacity-50 cursor-not-allowed">
                         Seterusnya
-                        <svg width="16" height="16" class="ms-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <polyline points="9,18 15,12 9,6" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-chevron-right ms-1" aria-hidden="true"></i>
                     </span>
                 </li>
             @endif

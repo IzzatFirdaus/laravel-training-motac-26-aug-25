@@ -166,60 +166,6 @@
 </main>
 
 @push('scripts')
-<script>
-/*
- * Small progressive JS to improve file input UX:
- * - Mirror selected filename into visible label/text.
- * - Toggle hidden _reupload flag when user chooses a new file for import.
- * - Keep accessibility (aria-live) for announcement of file changes.
- *
- * This is enhancement only; forms still work without JS.
- */
-document.addEventListener('DOMContentLoaded', function () {
-    // Upload preview file input (initial upload)
-    var fileInput = document.getElementById('file');
-    var fileNameEl = document.getElementById('file-name');
-    var fileSelectLabel = document.getElementById('file-select-label');
-
-    if (fileSelectLabel && fileInput && fileNameEl) {
-        // Clicking the visible label should focus the hidden file input
-        fileSelectLabel.addEventListener('click', function (e) {
-            fileInput.click();
-        });
-
-        fileInput.addEventListener('change', function () {
-            var f = fileInput.files && fileInput.files[0];
-            if (f) {
-                fileNameEl.textContent = f.name + ' (' + Math.round(f.size / 1024) + ' KB)';
-            } else {
-                fileNameEl.textContent = 'Tiada fail dipilih';
-            }
-        });
-    }
-
-    // Reupload file (during import)
-    var reuploadFile = document.getElementById('reupload-file');
-    var reuploadFlag = document.getElementById('reupload-flag');
-    var reuploadFilename = document.getElementById('reupload-filename');
-    var reuploadLabel = document.getElementById('reupload-label');
-
-    if (reuploadLabel && reuploadFile && reuploadFlag && reuploadFilename) {
-        reuploadLabel.addEventListener('click', function (e) {
-            reuploadFile.click();
-        });
-
-        reuploadFile.addEventListener('change', function () {
-            var f = reuploadFile.files && reuploadFile.files[0];
-            if (f) {
-                reuploadFilename.textContent = f.name + ' (' + Math.round(f.size / 1024) + ' KB)';
-                reuploadFlag.value = '1';
-            } else {
-                reuploadFilename.textContent = 'Tiada fail baru dipilih';
-                reuploadFlag.value = '0';
-            }
-        });
-    }
-});
-</script>
+@vite('resources/js/pages/excel-inventory-import.js')
 @endpush
 @endsection

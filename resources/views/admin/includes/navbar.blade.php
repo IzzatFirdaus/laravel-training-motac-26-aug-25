@@ -48,8 +48,12 @@
               {{ auth()->user()->name }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-              <li><a class="dropdown-item" href="{{ route('profile') }}">Profil</a></li>
-              <li><a class="dropdown-item" href="{{ route('settings') }}">Tetapan</a></li>
+              @if (Route::has('profile'))
+                <li><a class="dropdown-item" href="{{ route('profile') }}">Profil</a></li>
+              @endif
+              @if (Route::has('settings'))
+                <li><a class="dropdown-item" href="{{ route('settings') }}">Tetapan</a></li>
+              @endif
               <li><hr class="dropdown-divider"></li>
               {{-- logout handled via POST form for safety --}}
               <li>

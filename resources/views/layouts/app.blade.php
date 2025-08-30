@@ -240,7 +240,7 @@
                             {{-- Theme toggle placed to the left of the profile dropdown for RTL safety and alignment --}}
                             <li class="nav-item d-flex align-items-center me-2">
                                 <button id="theme-toggle" class="myds-btn myds-btn--secondary" type="button" aria-pressed="false" aria-label="{{ __('nav.theme_toggle') }}" title="{{ __('nav.theme_toggle') }}">
-                                    <span id="theme-toggle-icon" class="me-1" aria-hidden="true"><!-- svg icon inserted by JS --></span>
+                                    <span id="theme-toggle-icon" class="me-1" aria-hidden="true"><i class="bi"></i></span>
                                     <span class="visually-hidden">{{ __('nav.theme_toggle') }}</span>
                                 </button>
                             </li>
@@ -253,8 +253,7 @@
                                     $unreadCount = $unread->count();
                                 @endphp
                                 <a id="navNotifications" class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Pemberitahuan">
-                                    {{-- Bell icon --}}
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 17H9a3 3 0 0 1-3-3V11a6 6 0 1 1 12 0v3a3 3 0 0 1-3 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <i class="bi bi-bell" aria-hidden="true"></i>
                                     @if($unreadCount)
                                         <span class="badge bg-danger rounded-pill position-absolute myds-badge myds-badge--danger notification-count-badge">{{ $unreadCount }}</span>
                                     @endif
@@ -272,9 +271,7 @@
                                         <div class="list-group list-group-flush">
                                             @foreach($unread->take(10) as $note)
                                                 <a href="{{ url('/notifications/'.$note->id) }}" class="list-group-item list-group-item-action d-flex align-items-start">
-                                                    <div class="me-2">
-                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 22s1.5-1 4-1 4-1 4-5V9a8 8 0 1 0-16 0v7c0 4 2.5 5 4 5s4 1 4 1z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                                    </div>
+                                                    <div class="me-2"><i class="bi bi-bell" aria-hidden="true"></i></div>
                                                     <div class="flex-fill">
                                                         <div class="small fw-semibold">{{ $note->data['message'] ?? '—' }}</div>
                                                         <div class="small text-muted">{{ optional($note->created_at)->format('d/m/Y H:i') }}</div>
@@ -371,55 +368,5 @@
     <!-- Scripts (separate include to avoid bundling into one head entry) -->
     @vite('resources/js/app.js')
     @stack('scripts')
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const container = document.querySelector('#warehouses-list');
-        if (! container) return;
-
-        async function fetchWarehouses() {
-            const res = await fetch('{{ url('/warehouses') }}', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-            if (! res.ok) return [];
-            return await res.json();
-        }
-
-        async function fetchShelves(warehouseId) {
-            const res = await fetch('/warehouses/' + warehouseId + '/shelves', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-            if (! res.ok) return [];
-            return await res.json();
-        }
-
-        (async function init() {
-            const warehouses = await fetchWarehouses();
-            container.innerHTML = '';
-            for (const w of warehouses) {
-                // warehouse header
-                const header = document.createElement('h6');
-                header.className = 'dropdown-header';
-                header.textContent = w.name;
-                container.appendChild(header);
-
-                const shelves = await fetchShelves(w.id);
-                if (shelves.length === 0) {
-                    const none = document.createElement('div');
-                    none.className = 'dropdown-item text-muted small';
-                    none.textContent = '(Tiada rak)';
-                    container.appendChild(none);
-                } else {
-                    for (const s of shelves) {
-                        const a = document.createElement('a');
-                        a.className = 'dropdown-item';
-                        a.href = '{{ route('inventories.create') }}' + '?warehouse_id=' + encodeURIComponent(w.id) + '&shelf_id=' + encodeURIComponent(s.id);
-                        a.textContent = s.shelf_number;
-                        container.appendChild(a);
-                    }
-                }
-
-                const divider = document.createElement('div');
-                divider.className = 'dropdown-divider';
-                container.appendChild(divider);
-            }
-        })();
-    });
-    </script>
 </body>
 </html>

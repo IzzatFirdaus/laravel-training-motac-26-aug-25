@@ -14,9 +14,7 @@
             <div class="d-flex gap-2 flex-wrap">
                 @can('create', App\Models\Inventory::class)
                     <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta inventori baharu">
-                        <svg width="16" height="16" class="me-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
                         Cipta Inventori
                     </a>
                 @endcan
@@ -81,10 +79,7 @@
 
                 <div class="mobile:col-span-4 tablet:col-span-8 desktop:col-span-12 d-flex gap-2">
                     <button type="submit" class="myds-btn myds-btn--primary">
-                        <svg width="16" height="16" class="me-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-                            <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <i class="bi bi-search me-1" aria-hidden="true"></i>
                         Cari
                     </button>
                     @if(request()->hasAny(['search', 'owner_id']) && (request('search') || request('owner_id')))
@@ -134,17 +129,12 @@
                                 <td>
                                     <div class="d-flex gap-1">
                                         <a href="{{ route('inventories.show', $inventory->id) }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat detail {{ $inventory->name }}" title="Lihat detail">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
-                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-                                            </svg>
+                                            <i class="bi bi-eye me-1" aria-hidden="true"></i>
                                             <span class="sr-only">Lihat</span>
                                         </a>
                                         @can('update', $inventory)
                                             <a href="{{ route('inventories.edit', $inventory->id) }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Edit {{ $inventory->name }}" title="Edit item">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
+                                                <i class="bi bi-pencil-square me-1" aria-hidden="true"></i>
                                                 <span class="sr-only">Edit</span>
                                             </a>
                                         @endcan
@@ -153,10 +143,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="myds-btn myds-btn--danger myds-btn--sm" aria-label="Padam {{ $inventory->name }}" title="Padam item">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                        <polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                        <path d="m19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
+                                                    <i class="bi bi-trash3 me-1" aria-hidden="true"></i>
                                                     <span class="sr-only">Padam</span>
                                                 </button>
                                             </form>
@@ -168,9 +155,7 @@
                             <tr role="row">
                                 <td colspan="7" class="text-center py-4">
                                     <div class="text-muted">
-                                        <svg width="48" height="48" class="mb-2 mx-auto d-block" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM4 9h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
+                                        <i class="bi bi-inboxes fs-1 mb-2 mx-auto d-block text-muted" aria-hidden="true"></i>
                                         <p>Tiada inventori dijumpai.</p>
                                         @can('create', App\Models\Inventory::class)
                                             <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary myds-btn--sm">Cipta Inventori Pertama</a>

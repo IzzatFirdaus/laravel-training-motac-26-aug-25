@@ -17,7 +17,9 @@
 </main>
 
 @push('scripts')
-<script>setTimeout(function(){ window.location = '{{ route('users.index') }}'; }, 1200);</script>
+	<meta id="users-redirect-url" content="{{ route('users.index') }}">
+	<meta id="users-redirect-delay" content="1200">
+	@vite('resources/js/pages/users-redirect.js')
 @endpush
 
 @endsection

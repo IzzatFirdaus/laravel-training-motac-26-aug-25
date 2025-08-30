@@ -19,10 +19,7 @@
             @can('create', App\Models\Vehicle::class)
                 <div>
                     <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary">
-                        <svg width="16" height="16" class="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/>
-                            <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
                         Cipta Kenderaan
                     </a>
                 </div>
@@ -78,7 +75,7 @@
                 {{-- Per Page Filter --}}
                 <div class="mobile:col-span-4 tablet:col-span-2 desktop:col-span-2">
                     <label for="per_page" class="form-label myds-body-sm font-medium d-block mb-2">Item per Halaman</label>
-                    <select id="per_page" name="per_page" class="myds-input" onchange="this.form.submit()" aria-describedby="per-page-help">
+                    <select id="per_page" name="per_page" class="myds-input" aria-describedby="per-page-help">
                         @foreach([5,10,15,25,50,100] as $n)
                             <option value="{{ $n }}" {{ (int) request('per_page', 10) === $n ? 'selected' : '' }}>{{ $n }}</option>
                         @endforeach
@@ -86,13 +83,14 @@
                     <div id="per-page-help" class="myds-body-xs text-muted mt-1">Bilangan item yang dipaparkan</div>
                 </div>
 
+                @push('scripts')
+                    @vite('resources/js/pages/vehicles-index.js')
+                @endpush
+
                 {{-- Submit Button --}}
                 <div class="mobile:col-span-4 tablet:col-span-1 desktop:col-span-4 d-flex align-items-end">
                     <button type="submit" class="myds-btn myds-btn--primary w-100">
-                        <svg width="16" height="16" class="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-                            <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-search me-2" aria-hidden="true"></i>
                         Tapis
                     </button>
                 </div>
@@ -145,20 +143,14 @@
                             <tr>
                                 <td colspan="8" class="text-center py-6">
                                     <div role="status" class="p-4">
-                                        <svg width="48" height="48" class="mx-auto mb-3 text-muted" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path d="M3 3h18v18H3V3zm16 16V5H5v14h14z" stroke="currentColor" stroke-width="2"/>
-                                            <path d="M8 8h8v8H8V8z" stroke="currentColor" stroke-width="2"/>
-                                        </svg>
+                                        <i class="bi bi-inboxes fs-1 mx-auto d-block mb-3 text-muted" aria-hidden="true"></i>
                                         <h3 class="myds-heading-xs font-heading font-medium mb-2">Tiada Kenderaan Dijumpai</h3>
                                         <p class="myds-body-sm text-muted mb-3">
                                             Belum ada kenderaan yang didaftarkan dalam sistem atau tiada hasil yang sepadan dengan carian anda.
                                         </p>
                                         @can('create', App\Models\Vehicle::class)
                                             <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary">
-                                                <svg width="16" height="16" class="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/>
-                                                    <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>
-                                                </svg>
+                                                <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
                                                 Cipta Kenderaan Pertama
                                             </a>
                                         @endcan

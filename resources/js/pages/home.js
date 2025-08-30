@@ -13,15 +13,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const go = function () { window.location.href = href; };
 
         card.addEventListener('click', function (e) {
-            // allow inside anchors or buttons to behave normally
-            const target = e.target.closest('a, button, [role="link"]');
-            if (target && target.closest('.myds-card--clickable') === card && target.tagName.toLowerCase() !== 'a') {
-                return;
+            // If clicking on interactive child (links, buttons, inputs), let it handle the event
+            const interactive = e.target.closest('a, button, input, select, textarea, [role="button"], [role="link"]');
+            if (interactive && card.contains(interactive)) {
+                return; // don't hijack inner controls
             }
             go();
         });
 
         card.addEventListener('keydown', function (e) {
+            // Ignore key events when focus is on inner interactive elements
+            const interactive = e.target.closest('a, button, input, select, textarea, [role="button"], [role="link"]');
+            if (interactive && card.contains(interactive)) {
+                return;
+            }
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 go();

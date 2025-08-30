@@ -35,9 +35,7 @@
         {{-- Status Message --}}
         @if (session('status'))
             <div class="myds-alert myds-alert--success d-flex align-items-start mb-4" role="alert">
-                <svg width="20" height="20" class="me-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <i class="bi bi-check-circle me-2 flex-shrink-0" aria-hidden="true"></i>
                 <div>
                     <h4 class="myds-body-md font-medium">Berjaya</h4>
                     <p class="mb-0 myds-body-sm">{{ session('status') }}</p>
@@ -55,10 +53,7 @@
                 {{-- Required Fields Notice --}}
                 <div class="bg-muted border-l-4 border-primary p-3 mb-4">
                     <div class="d-flex align-items-start">
-                        <svg width="16" height="16" class="me-2 mt-0.5 text-primary flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                            <path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-info-circle me-2 mt-0.5 text-primary flex-shrink-0" aria-hidden="true"></i>
                         <div>
                             <p class="myds-body-sm font-medium mb-1">Panduan Pengisian Borang</p>
                             <p class="myds-body-sm text-muted mb-0">
@@ -89,11 +84,7 @@
                     </div>
                     @error('name')
                         <div id="name-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
-                            <svg width="14" height="14" class="me-1 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
-                                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                            <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -130,11 +121,7 @@
                     @endif
                     @error('user_id')
                         <div id="user_id-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
-                            <svg width="14" height="14" class="me-1 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
-                                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                            <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -161,11 +148,7 @@
                     </div>
                     @error('qty')
                         <div id="qty-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
-                            <svg width="14" height="14" class="me-1 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
-                                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                            <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -193,11 +176,7 @@
                     </div>
                     @error('price')
                         <div id="price-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
-                            <svg width="14" height="14" class="me-1 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
-                                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                            <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -220,11 +199,7 @@
                     </div>
                     @error('description')
                         <div id="description-error" class="d-flex align-items-start text-danger myds-body-xs mt-2" role="alert">
-                            <svg width="14" height="14" class="me-1 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
-                                <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                            <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -233,17 +208,11 @@
                 {{-- Form Actions --}}
                 <div class="d-flex flex-column flex-sm-row gap-3 justify-content-end">
                     <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary">
-                        <svg width="16" height="16" class="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <polyline points="15,18 9,12 15,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
                         Batal
                     </a>
                     <button type="submit" class="myds-btn myds-btn--primary">
-                        <svg width="16" height="16" class="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <polyline points="17,21 17,13 7,13 7,21" stroke="currentColor" stroke-width="2"/>
-                            <polyline points="7,3 7,8 15,8" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-save me-2" aria-hidden="true"></i>
                         Cipta Kenderaan
                     </button>
                 </div>

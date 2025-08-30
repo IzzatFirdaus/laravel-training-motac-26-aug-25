@@ -19,12 +19,7 @@
             @can('create', App\Models\User::class)
                 <div>
                     <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary">
-                        <svg width="16" height="16" class="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
-                            <line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="2"/>
-                            <line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <i class="bi bi-person-plus me-2" aria-hidden="true"></i>
                         Cipta Pengguna
                     </a>
                 </div>
@@ -84,22 +79,14 @@
                             <tr>
                                 <td colspan="5" class="text-center py-6">
                                     <div role="status" class="p-4">
-                                        <svg width="48" height="48" class="mx-auto mb-3 text-muted" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
-                                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
-                                        </svg>
+                                        <i class="bi bi-people fs-1 mx-auto d-block mb-3 text-muted" aria-hidden="true"></i>
                                         <h3 class="myds-heading-xs font-heading font-medium mb-2">Tiada Pengguna Dijumpai</h3>
                                         <p class="myds-body-sm text-muted mb-3">
                                             Belum ada pengguna yang didaftarkan dalam sistem.
                                         </p>
                                         @can('create', App\Models\User::class)
                                             <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary">
-                                                <svg width="16" height="16" class="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
-                                                    <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
-                                                    <line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="2"/>
-                                                    <line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2"/>
-                                                </svg>
+                                                <i class="bi bi-person-plus me-2" aria-hidden="true"></i>
                                                 Cipta Pengguna Pertama
                                             </a>
                                         @endcan
