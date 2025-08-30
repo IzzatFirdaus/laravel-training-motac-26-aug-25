@@ -21,7 +21,7 @@
           <x-form-field name="name" label="Nama" :value="old('name')" required />
 
           <div class="mb-3">
-            <label for="user_id" class="form-label myds-body-sm font-medium">Pemilik (pilihan)</label>
+            <label for="user_id" class="myds-label myds-body-sm font-medium">Pemilik (pilihan)</label>
             @if(auth()->check() && auth()->user()->hasRole('admin'))
               <select id="user_id" name="user_id" class="myds-input" aria-describedby="user_id-help">
                 <option value="">(tiada pemilik)</option>
@@ -33,7 +33,7 @@
               @error('user_id') <div class="myds-text--danger myds-body-xs mt-1" role="alert">{{ $message }}</div> @enderror
             @else
               <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-              <div class="form-text myds-body-xs myds-text--muted">Anda akan menjadi pemilik item ini.</div>
+              <div class="myds-body-xs myds-text--muted">Anda akan menjadi pemilik item ini.</div>
             @endif
           </div>
 

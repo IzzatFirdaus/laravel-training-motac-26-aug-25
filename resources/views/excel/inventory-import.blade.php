@@ -26,7 +26,7 @@
                 @csrf
 
                 <div class="flex-grow-1">
-                    <label for="file" class="form-label myds-body-sm">Fail Excel</label>
+                    <label for="file" class="myds-label myds-body-sm">Fail Excel</label>
 
                     {{-- Visible custom file control with progressive enhancement --}}
                     <div class="d-flex gap-2 align-items-center">

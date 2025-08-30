@@ -31,7 +31,7 @@
         </div>
 
         <div class="bg-surface border rounded overflow-hidden">
-            <div class="table-responsive">
+            <div class="myds-table-responsive">
                 <table class="myds-table" aria-describedby="users-count">
                     <caption class="sr-only">Senarai pengguna; gunakan tindakan untuk lihat atau edit pengguna.</caption>
                     <thead>

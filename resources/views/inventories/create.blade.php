@@ -66,14 +66,14 @@
 
                 {{-- Name Field (MYDS Input Component) --}}
                 <div class="mb-4">
-                    <label for="name" class="form-label myds-body-sm font-medium d-block mb-2">
+                    <label for="name" class="myds-label myds-body-sm font-medium d-block mb-2">
                         Nama Item
                         <span class="myds-text--danger ms-1" aria-label="medan wajib">*</span>
                     </label>
                     <input type="text"
                            id="name"
                            name="name"
-                           class="myds-input @error('name') is-invalid border-danger @enderror"
+                           class="myds-input @error('name') is-invalid @enderror"
                            value="{{ old('name') }}"
                            placeholder="{{ __('placeholders.example_inventory') }}"
                            aria-describedby="name-help @error('name') name-error @enderror"
@@ -94,7 +94,7 @@
 
                 {{-- Quantity Field --}}
                 <div class="mb-3">
-                    <label for="qty" class="form-label font-medium">
+                    <label for="qty" class="myds-label font-medium">
                         Kuantiti <span class="myds-text--danger" aria-label="wajib">*</span>
                     </label>
                     <input type="number"
@@ -106,7 +106,7 @@
                            placeholder="{{ __('placeholders.example_quantity') }}"
                            aria-describedby="qty-help @error('qty') qty-error @enderror"
                            required>
-                    <div id="qty-help" class="form-text myds-text--muted">
+                    <div id="qty-help" class="myds-body-xs myds-text--muted">
                         Masukkan bilangan unit item
                     </div>
                     @error('qty')
@@ -118,7 +118,7 @@
 
                 {{-- Price Field --}}
                 <div class="mb-3">
-                    <label for="price" class="form-label font-medium">Harga (RM)</label>
+                    <label for="price" class="myds-label font-medium">Harga (RM)</label>
                     <div class="myds-input-group">
                         <span class="myds-input-group__addon">RM</span>
                         <input type="number"
@@ -131,7 +131,7 @@
                                placeholder="{{ __('placeholders.example_price') }}"
                                aria-describedby="price-help @error('price') price-error @enderror">
                     </div>
-                    <div id="price-help" class="form-text myds-text--muted">
+                    <div id="price-help" class="myds-body-xs myds-text--muted">
                         Masukkan harga per unit dalam Ringgit Malaysia
                     </div>
                     @error('price')
@@ -143,14 +143,14 @@
 
                 {{-- Description Field --}}
                 <div class="mb-4">
-                    <label for="description" class="form-label font-medium">Keterangan</label>
+                    <label for="description" class="myds-label font-medium">Keterangan</label>
                     <textarea id="description"
                               name="description"
                               class="myds-input @error('description') is-invalid @enderror"
                               rows="4"
                               placeholder="{{ __('placeholders.example_description') }}"
                               aria-describedby="description-help @error('description') description-error @enderror">{{ old('description') }}</textarea>
-                    <div id="description-help" class="form-text myds-text--muted">
+                    <div id="description-help" class="myds-body-xs myds-text--muted">
                         Berikan maklumat tambahan seperti model, spesifikasi, atau nota khas
                     </div>
                     @error('description')

@@ -78,7 +78,7 @@
 
         {{-- Table --}}
         <div class="bg-surface border rounded overflow-hidden">
-            <div class="table-responsive">
+            <div class="myds-table-responsive">
                 <table class="myds-table" aria-describedby="vehicles-count">
                     <caption class="sr-only">Senarai kenderaan; gunakan tindakan untuk melihat atau mengurus.</caption>
                     <thead>

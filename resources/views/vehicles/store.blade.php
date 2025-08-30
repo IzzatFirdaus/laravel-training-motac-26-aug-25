@@ -25,15 +25,15 @@
                 </div>
             @endif
 
-            <div class="card">
-                <div class="card-body">
+            <div class="myds-card">
+                <div class="myds-card__body">
                     <form method="POST" action="{{ route('vehicles.store') }}">
                         @csrf
 
                         <x-form-field name="name" label="Nama" :value="old('name')" required />
 
                         <div class="mb-3">
-                            <label for="user_id" class="form-label">Pemilik (pilihan)</label>
+                            <label for="user_id" class="myds-label">Pemilik (pilihan)</label>
                             @if(auth()->check() && auth()->user()->hasRole('admin'))
                                 <select id="user_id" name="user_id" class="myds-input" aria-describedby="user_id-error">
                                     <option value="">(tiada pemilik)</option>
@@ -44,7 +44,7 @@
                                 @error('user_id') <div id="user_id-error" class="myds-text--danger">{{ $message }}</div> @enderror
                             @else
                                 <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
-                                <div class="form-text">Anda akan menjadi pemilik item ini.</div>
+                                <div class="myds-body-xs myds-text--muted">Anda akan menjadi pemilik item ini.</div>
                             @endif
                         </div>
 
@@ -56,7 +56,7 @@
 
                         @if(isset($categories) && count($categories) > 0)
                             <div class="mb-3">
-                                <label for="category_id" class="form-label">Kategori</label>
+                                <label for="category_id" class="myds-label">Kategori</label>
                                 <select id="category_id" name="category_id" class="myds-input" aria-describedby="category_id-error">
                                     <option value="">— Pilih kategori —</option>
                                     @foreach($categories as $id => $label)

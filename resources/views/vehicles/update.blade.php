@@ -6,8 +6,8 @@
 <div class="myds-container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
-			<div class="card">
-				<div class="card-body">
+			<div class="myds-card">
+				<div class="myds-card__body">
 					<h2 class="h5">Kenderaan dikemaskini</h2>
 					<p class="mb-0">Kenderaan telah berjaya dikemaskini.</p>
 						<div class="mt-3">

@@ -1,6 +1,6 @@
 <div class="row g-3">
     <div class="col-12">
-        <label for="name" class="form-label font-heading">Nama <span class="myds-text--danger" aria-hidden="true">*</span></label>
+    <label for="name" class="myds-label font-heading">Nama <span class="myds-text--danger" aria-hidden="true">*</span></label>
         <input
             id="name"
             name="name"
@@ -14,16 +14,16 @@
             @if($errors->has('name')) aria-describedby="name-error" @endif
         >
         @error('name')
-            <div id="name-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+            <div id="name-error" class="myds-field-error" role="alert">{{ $message }}</div>
         @enderror
 
         <div id="users-autocomplete" class="position-relative mt-2 autocomplete-wrapper" aria-hidden="false">
-            <ul id="users-list" class="list-group autocomplete-list" role="listbox" aria-label="Cadangan pengguna" style="display:none"></ul>
+            <ul id="users-list" class="autocomplete-list bg-surface border rounded p-0 m-0" role="listbox" aria-label="Cadangan pengguna" style="display:none; list-style:none;"></ul>
         </div>
     </div>
 
     <div class="col-12">
-        <label for="description" class="form-label">Keterangan</label>
+    <label for="description" class="myds-label">Keterangan</label>
         <textarea
             id="description"
             name="description"
@@ -32,12 +32,12 @@
             @if($errors->has('description')) aria-describedby="description-error" @endif
         >{{ old('description', $application->description ?? '') }}</textarea>
         @error('description')
-            <div id="description-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+            <div id="description-error" class="myds-field-error" role="alert">{{ $message }}</div>
         @enderror
     </div>
 
     <div class="col-12">
-        <label for="inventory_id" class="form-label">Inventori</label>
+    <label for="inventory_id" class="myds-label">Inventori</label>
         <select
             id="inventory_id"
             name="inventory_id"
@@ -53,12 +53,12 @@
             @endforeach
         </select>
         @error('inventory_id')
-            <div id="inventory-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+            <div id="inventory-error" class="myds-field-error" role="alert">{{ $message }}</div>
         @enderror
     </div>
 
     <div class="col-12">
-        <label for="vehicle_id" class="form-label">Kenderaan</label>
+    <label for="vehicle_id" class="myds-label">Kenderaan</label>
         <select
             id="vehicle_id"
             name="vehicle_id"
@@ -77,7 +77,7 @@
             @endif
         </select>
         @error('vehicle_id')
-            <div id="vehicle-error" class="invalid-feedback" role="alert">{{ $message }}</div>
+            <div id="vehicle-error" class="myds-field-error" role="alert">{{ $message }}</div>
         @enderror
     </div>
 

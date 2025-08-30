@@ -1,26 +1,21 @@
 status=200
+<!--
+  MYDS & MyGOVEA compliant layout shell
+  - Ensures grid, typography, ARIA, skip links, theme toggle, semantic tokens, accessibility
+  - Follows all government design system and citizen-centric principles
+-->
 <!doctype html>
-<!-- Application UI content is presented in Bahasa Melayu (ms) per MyGOVEA requirement -->
-<html lang="ms" data-theme="light">
+<html lang="ms-MY" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="uG9FNEdxNifc6jMc5R4g5myjnzhVfFjz4fCphF7c">
-
-    <!-- Security Headers for government compliance -->
+    <meta name="csrf-token" content="pLTeHRavLcYpbq2BPLdGJCPGMGrF4NwnRCoGfpbl">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-
-    <!-- Favicon: Malaysia Government standard -->
-    <link rel="icon" href="https://laravel.com/img/favicon/favicon.ico" type="image/x-icon">
-
-    
+    <link rel="icon" href="http://127.0.0.1:8000/images/gov-logo.png" type="image/png">
     <title>Inventori Dipadam — second-crud</title>
-
-    <!-- Fonts: MYDS Typography System -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <!-- Use Poppins for headings and Inter for body text per MYDS guidelines -->
-    <link href="ht
+    <link href="https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500" rel="stylesheet">
+    
+    <script type="module" src="http://[::1]:5173/@vite

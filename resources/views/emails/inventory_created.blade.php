@@ -12,12 +12,12 @@
   <style>
     /* Base */
     :root{
-      --myds-primary: #2563EB;
-      --myds-bg: #ffffff;
-      --myds-surface: #FAFAFA;
-      --myds-text: #0F172A;
-      --myds-muted: #6B7280;
-      --myds-border: #E6EEF8;
+      --myds-primary: rgb(37, 99, 235);
+      --myds-bg: rgb(255, 255, 255);
+      --myds-surface: rgb(250, 250, 250);
+      --myds-text: rgb(15, 23, 42);
+      --myds-muted: rgb(107, 114, 128);
+      --myds-border: rgb(230, 238, 248);
       --myds-radius: 8px;
     }
 
@@ -25,7 +25,7 @@
     body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;color:var(--myds-text);line-height:1.4;}
   .myds-container{max-width:680px;margin:0 auto;padding:24px;}
     .brand{display:block;font-weight:700;color:var(--myds-primary);font-size:18px;margin-bottom:12px;text-decoration:none;}
-    .card{background:var(--myds-bg);border:1px solid var(--myds-border);border-radius:var(--myds-radius);padding:18px;}
+  .myds-card{background:var(--myds-bg);border:1px solid var(--myds-border);border-radius:var(--myds-radius);padding:18px;}
     h1,h2{margin:0 0 8px 0;font-weight:600;color:var(--myds-text);}
     p{margin:0 0 12px 0;color:var(--myds-text);}
     .muted{color:var(--myds-muted);font-size:14px;margin:0 0 12px 0;}
@@ -62,7 +62,7 @@
       @endif
     </a>
 
-    <div class="card" role="article" aria-labelledby="inv-title">
+  <div class="myds-card" role="article" aria-labelledby="inv-title">
       <h2 id="inv-title">{{ __('Inventori baharu dicipta') }}</h2>
 
       <p class="muted">

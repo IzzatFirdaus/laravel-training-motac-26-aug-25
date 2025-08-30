@@ -36,12 +36,12 @@
 
                 <form method="GET" action="{{ route('inventories.deleted.index') }}" class="d-flex flex-column flex-md-row gap-3 align-items-end" role="search" aria-label="Carian inventori dipadam">
                     <div class="flex-grow-1">
-                        <label for="search" class="form-label myds-body-sm">Cari</label>
+                        <label for="search" class="myds-label myds-body-sm">Cari</label>
                         <input id="search" name="search" type="search" value="{{ request('search') }}" class="myds-input" placeholder="{{ __('Cari mengikut nama atau kod') }}" aria-label="Carian inventori">
                     </div>
 
                     <div style="min-width:220px;">
-                        <label for="owner_id" class="form-label myds-body-sm">Pemilik</label>
+                        <label for="owner_id" class="myds-label myds-body-sm">Pemilik</label>
                         <select id="owner_id" name="owner_id" class="myds-input" aria-label="Penapis pemilik">
                             <option value="">{{ __('(semua)') }}</option>
                             @isset($users)

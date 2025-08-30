@@ -15,8 +15,8 @@
     $showValue = old($name, $value);
 @endphp
 
-<div class="mb-3 form-group">
-    <label for="{{ $id }}" class="form-label font-heading">
+<div class="myds-form-group">
+    <label for="{{ $id }}" class="myds-label font-heading">
         {{ $labelText }}
         @if($required)
             <span aria-hidden="true" class="myds-text--danger">*</span>
@@ -48,7 +48,7 @@
     @endif
 
     @if($hasError)
-        <div id="{{ $errorId }}" class="invalid-feedback" role="alert">
+        <div id="{{ $errorId }}" class="myds-field-error" role="alert">
             {{ $errors->first($name) }}
         </div>
     @endif

@@ -29,27 +29,27 @@ SASS architecture.
 	/* Font tokens (MYDS) */
 	--font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 	--font-heading: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-	/* Primitive / brand */
-	--primary: #3A75F6; /* MYDS primary (primary-500) */
-	--danger: #EF4444; /* danger-500 */
-	--success: #22C55E; /* success-500 */
-	--warning: #EAB308; /* warning-500 */
+	/* MYDS Primitive / brand tokens (RGB values without hex) */
+	--primary: rgb(58, 117, 246); /* MYDS primary-500 */
+	--danger: rgb(220, 38, 38); /* danger-600 */
+	--success: rgb(22, 163, 74); /* success-600 */
+	--warning: rgb(202, 138, 4); /* warning-600 */
 
-	/* Background / surfaces */
-	--bg-page: #FAFAFA; /* gray-50 */
-	--bg-surface: #FFFFFF; /* white */
-	--bg-muted: #F4F4F5; /* gray-100 / washed */
+	/* MYDS Light mode semantic background tokens */
+	--bg-page: rgb(250, 250, 250); /* gray-50 */
+	--bg-surface: rgb(255, 255, 255); /* white */
+	--bg-muted: rgb(244, 244, 245); /* gray-100 / washed */
 
-	/* Text */
-	--txt-primary: #18181B; /* gray-900 */
-	--txt-muted: #71717A; /* gray-500 */
-	--txt-disabled: #52525B; /* gray-600 per MYDS text disabled (light) */
+	/* MYDS Light mode text semantic tokens */
+	--txt-primary: rgb(24, 24, 27); /* gray-900 */
+	--txt-muted: rgb(107, 107, 116); /* gray-500 */
+	--txt-disabled: rgb(82, 82, 91); /* gray-600 per MYDS text disabled (light) */
 
 	/* Outlines / focus */
 	--otl-default: rgba(15,23,42,0.06);
-	/* focus ring uses primary-300 (#96B7FF) at reduced opacity */
-	--fr: rgba(150,183,255,0.4);
-	--fr-shadow: rgba(150,183,255,0.12);
+	/* Focus ring uses MYDS primary-300 at 40% opacity for accessibility */
+	--fr: rgba(150, 183, 255, 0.4);
+	--fr-shadow: rgba(150, 183, 255, 0.12);
 
 	/* Motion */
 	--motion-short: 200ms;
@@ -63,27 +63,27 @@ SASS architecture.
 	--radius-l: 12px;
 	--radius-xl: 14px;
 
-	/* MYDS token aliases for text/background/outlines */
-	--txt-on-primary: #ffffff;
-	--otl-primary: rgba(58,117,246,0.12);
+	/* MYDS-compliant text-on-primary token */
+	--txt-on-primary: rgb(255, 255, 255);
+	--otl-primary: rgba(58, 117, 246, 0.12);
 	--bg-primary-surface: var(--primary);
 }
 
 /* Dark theme token overrides */
 [data-theme="dark"] {
-	/* In dark mode we prefer lighter accents mapped to the MYDS dark palette */
-	--primary: #6394FF; /* primary-400 mapped for dark surfaces */
-	--danger: #FF6B6B; /* danger-400/darker accent */
-	--success: #2DD4BF; /* success-400 */
-	--warning: #F59E0B; /* warning-400 */
+	/* MYDS Dark theme primary accent tokens (mapped to lighter variants) */
+	--primary: rgb(99, 148, 255); /* primary-400 mapped for dark surfaces */
+	--danger: rgb(248, 113, 113); /* danger-400/darker accent */
+	--success: rgb(45, 212, 191); /* success-400 */
+	--warning: rgb(245, 158, 11); /* warning-400 */
 
-	--bg-page: #161619; /* gray-930 */
-	--bg-surface: #1D1D21; /* gray-850 */
-	--bg-muted: #27272A; /* gray-800 */
+	--bg-page: rgb(22, 22, 25); /* gray-930 */
+	--bg-surface: rgb(29, 29, 33); /* gray-850 */
+	--bg-muted: rgb(39, 39, 42); /* gray-800 */
 
-	--txt-primary: #FFFFFF; /* text on dark */
-	--txt-muted: #D4D4D8; /* gray-300 */
-	--txt-disabled: #A1A1AA; /* gray-400 per MYDS text disabled (dark) */
+	--txt-primary: rgb(255, 255, 255); /* text on dark */
+	--txt-muted: rgb(212, 212, 216); /* gray-300 */
+	--txt-disabled: rgb(161, 161, 170); /* gray-400 per MYDS text disabled (dark) */
 
 	--otl-default: rgba(255,255,255,0.04);
 	/* Focus ring per MYDS: primary-700 at 40% */
@@ -218,12 +218,12 @@ SASS architecture.
 }
 .myds-btn--danger{
 	background-color: var(--danger);
-	color: #ffffff;
+	color: rgb(255, 255, 255);
 	border: 1px solid var(--otl-default);
 }
 .myds-btn--success{
 	background-color: var(--success);
-	color: #ffffff;
+	color: rgb(255, 255, 255);
 	border: 1px solid var(--otl-default);
 }
 .myds-action--danger{ color: var(--danger) !important; }
@@ -354,13 +354,13 @@ input::placeholder, textarea::placeholder {
 }
 .btn-danger, .btn.btn-danger, .btn-outline-danger {
 	background-color: var(--danger) !important;
-	color: #fff !important;
-	border: 1px solid rgba(0,0,0,0.08) !important;
+	color: rgb(255, 255, 255) !important;
+	border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 .btn-success {
 	background-color: var(--success) !important;
-	color: #fff !important;
-	border: 1px solid rgba(0,0,0,0.04) !important;
+	color: rgb(255, 255, 255) !important;
+	border: 1px solid rgba(0, 0, 0, 0.04) !important;
 }
 
 /* Small / block sizing consistent with MYDS tap targets */

@@ -6,9 +6,8 @@
 	- Keep CSS changes here minimal; component styles live in app.scss
 */
 
-// Body
-// Body
-$body-bg: #f8fafc;
+// Body background (MYDS compliant)
+$body-bg: rgb(248, 250, 252);
 
 // MYDS font stack: prefer Poppins (headings) and Inter (body), fallback to system sans
 $font-family-heading: 'Poppins', 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -22,54 +21,54 @@ $line-height-base: 1.6;
 // Expose runtime CSS variables for application-level theming.
 // Keep SASS variables as safe compile-time fallbacks for Bootstrap/Sass functions.
 :root {
-	/* Backgrounds */
-	--bg-page: #f8fafc; /* page background */
-	--bg-surface: #ffffff; /* cards, panels */
-	--bg-muted: #f3f4f6; /* subtle surfaces */
+	/* MYDS Light mode surface semantic tokens */
+	--bg-page: rgb(248, 250, 252); /* page background */
+	--bg-surface: rgb(255, 255, 255); /* cards, panels */
+	--bg-muted: rgb(243, 244, 246); /* subtle surfaces */
 
-	/* Text */
-	--txt-primary: #111827;
-	--txt-muted: #6b7280;
+	/* MYDS Light mode text semantic tokens */
+	--txt-primary: rgb(17, 24, 39);
+	--txt-muted: rgb(107, 114, 128);
 
-	/* Borders / outlines */
-	--otl-default: rgba(0,0,0,0.08);
+	/* MYDS outline tokens for borders and dividers */
+	--otl-default: rgba(0, 0, 0, 0.08);
 
-	/* Actions */
-	--primary: #3A75F6; /* primary-500 */
-	--danger: #EF4444; /* danger-500 */
-	--success: #22C55E; /* success-500 */
-	--warning: #EAB308; /* warning-500 */
+	/* MYDS brand/action semantic tokens (primary colors) */
+	--primary: rgb(58, 117, 246); /* primary-500 */
+	--danger: rgb(239, 68, 68); /* danger-500 */
+	--success: rgb(34, 197, 94); /* success-500 */
+	--warning: rgb(234, 179, 8); /* warning-500 */
 
-	/* Focus ring */
-	--fr: #96B7FF; /* primary-300 */
-		--fr-shadow: rgba(150,183,255,0.12);
+	/* MYDS focus ring tokens for accessibility */
+	--fr: rgb(150, 183, 255); /* primary-300 */
+	--fr-shadow: rgba(150, 183, 255, 0.12);
 }
 
 [data-theme="dark"] {
-	--bg-page: #0b1220;
-	--bg-surface: #071023;
-	--bg-muted: #071822;
+	--bg-page: rgb(11, 18, 32);
+	--bg-surface: rgb(7, 16, 35);
+	--bg-muted: rgb(7, 24, 34);
 
-	--txt-primary: #e6eef8;
-	--txt-muted: #9ca3af;
+	--txt-primary: rgb(230, 238, 248);
+	--txt-muted: rgb(156, 163, 175);
 
-	--otl-default: rgba(255,255,255,0.06);
+	--otl-default: rgba(255, 255, 255, 0.06);
 
-	--primary: #3b82f6;
-	--danger: #ef4444;
-	--success: #34d399;
-	--warning: #f59e0b;
+	--primary: rgb(59, 130, 246);
+	--danger: rgb(239, 68, 68);
+	--success: rgb(52, 211, 153);
+	--warning: rgb(245, 158, 11);
 
-	--fr: #60a5fa;
-		--fr-shadow: rgba(96,165,250,0.12);
+	--fr: rgb(96, 165, 250);
+	--fr-shadow: rgba(96, 165, 250, 0.12);
 }
 
-// SASS fallbacks for compile-time usage (do not reference CSS vars in functions)
-$myds-primary: #3A75F6; // MYDS Blue (compile-time)
-$myds-danger: #EF4444;
-$myds-success: #22C55E;
-$myds-warning: #EAB308;
-$myds-gray-700: #374151;
+// MYDS SASS fallbacks for compile-time usage (avoid hex colors in production CSS)
+$myds-primary: rgb(58, 117, 246); // MYDS Blue (compile-time)
+$myds-danger: rgb(239, 68, 68);
+$myds-success: rgb(34, 197, 94);
+$myds-warning: rgb(234, 179, 8);
+$myds-gray-700: rgb(55, 65, 81);
 
-// Focus ring fallback
-$myds-focus-ring: #96B7FF;
+// MYDS focus ring fallback for SASS compilation
+$myds-focus-ring: rgb(150, 183, 255);

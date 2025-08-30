@@ -17,6 +17,11 @@ This Laravel application has been comprehensively updated to adhere to the **Mal
 - **Rich Text Format**: Specialized typography for article content
 - **Implementation**: CSS custom properties with `.myds-heading-*` and `.myds-body-*` classes
 
+Authoritative reference and mapping:
+
+- MYDS specifies Poppins for headings and Inter for body text with explicit size/line-height scales for h1–h6 and body sizes (regular 400, medium 500, semibold 600). See: [Typography (MYDS)](https://design.digital.gov.my/en/docs/design/typography)
+- Our utility classes map to these scales to ensure consistent hierarchy and readability across pages.
+
 #### Color System
 
 - **Primary Colors**: MYDS Blue (#2563EB), Danger (#D32F2F), Success (#388E3C), Warning (#FFA000)
@@ -25,12 +30,21 @@ This Laravel application has been comprehensively updated to adhere to the **Mal
 - **Text Tokens**: `--txt-primary`, `--txt-secondary`, `--txt-muted`, `--txt-disabled`
 - **Theme Support**: Automatic light/dark mode switching
 
+Authoritative reference and mapping:
+
+- MYDS divides colour into Primitive colour (static: white, gray, primary, danger, success, warning) and Colour tokens (dynamic for light/dark, covering background/text/outline/focus ring). See: [Colour (MYDS)](https://design.digital.gov.my/en/docs/design/color)
+- Our semantic CSS variables align to MYDS token categories and flip per mode to maintain WCAG contrast.
+
 #### Grid System (12-8-4)
 
 - **Desktop**: 12-column grid (≥1024px)
 - **Tablet**: 8-column grid (768px-1023px)
 - **Mobile**: 4-column grid (≤767px)
 - **Implementation**: `.myds-grid` with responsive breakpoints
+
+Authoritative reference:
+
+- [12-8-4 Grid System (MYDS)](https://design.digital.gov.my/en/docs/design/12-8-4-grid)
 
 #### Components
 
@@ -41,6 +55,11 @@ This Laravel application has been comprehensively updated to adhere to the **Mal
 - **Alerts**: Success, danger, and warning message styles
 - **Badges**: Status indicators with proper color coding
 - **Pagination**: Bilingual navigation with accessibility features
+
+Pagination specifics (aligned to MYDS):
+
+- Previous/Next buttons use Button Type=Secondary; numbers use Button Type=Tertiary. Disabled states remove button shadow; disable both on a single page. See: [Pagination (MYDS)](https://design.digital.gov.my/en/docs/design/pagination)
+- Our `resources/views/vendor/pagination/*.blade.php` templates implement these rules and aria labels.
 
 ---
 
@@ -376,6 +395,16 @@ $usersCount = method_exists($users, 'total') ? $users->total() : $users->count()
 - **Text Scaling**: Responsive typography that scales properly
 - **Color Independence**: Information not conveyed by color alone
 
+WCAG 2.2 updates (per MYDS Accessibility guidance):
+
+- Target size at least 24×24 CSS px (44×44 recommended); visible controls must be dismissible/hoverable/persistent; provide alternatives for dragging; strengthen focus appearance. See: [Accessibility (MYDS)](https://design.digital.gov.my/en/docs/develop/accessibility)
+- Our components ensure visible focus, keyboard operability, semantic landmarks, labelled controls, and sufficient contrast.
+
+Laravel integration note for MYDS React (future-ready):
+
+- MYDS provides a React component library and Laravel setup guide (CSS import or Tailwind configuration; Vite/Blade integration). See: [Laravel (Develop, MYDS)](https://design.digital.gov.my/en/docs/develop/laravel)
+- This project currently uses Blade-first templates with MYDS-compliant CSS. If React components are adopted later, follow the official guide to add `@govtechmy/myds-style` and `@govtechmy/myds-react` with Vite.
+
 ---
 
 ## Security and Government Compliance
@@ -448,6 +477,37 @@ vendor/bin/pint  # Code formatting
 - **Load Times**: Fast initial page load
 - **Core Web Vitals**: Meeting Google's performance standards
 - **Accessibility Score**: WCAG 2.1 AA compliance
+
+---
+
+## Additional MYDS & MyGOVEA references and mapping
+
+This project follows the public guidance from MyGOVEA and the Malaysia Government Design System (MYDS). The links below are authoritative references used to validate design and development decisions and to guide further work.
+
+- MyGOVEA Design Principles (official): [https://mygovea.jdn.gov.my/page-prinsip-reka-bentuk/](https://mygovea.jdn.gov.my/page-prinsip-reka-bentuk/)
+- MYDS documentation (overview): [https://design.digital.gov.my/en](https://design.digital.gov.my/en)
+- MYDS - Develop (tokens, components, accessibility): [https://design.digital.gov.my/en/docs/develop](https://design.digital.gov.my/en/docs/develop)
+- MYDS - Design (patterns, typography, colour): [https://design.digital.gov.my/en/docs/design](https://design.digital.gov.my/en/docs/design)
+
+Direct deep links used for conformance and audits:
+
+- Typography — [design.digital.gov.my/en/docs/design/typography](https://design.digital.gov.my/en/docs/design/typography)
+- Colour — [design.digital.gov.my/en/docs/design/color](https://design.digital.gov.my/en/docs/design/color)
+- 12-8-4 Grid System — [design.digital.gov.my/en/docs/design/12-8-4-grid](https://design.digital.gov.my/en/docs/design/12-8-4-grid)
+- Pagination (Design) — [design.digital.gov.my/en/docs/design/pagination](https://design.digital.gov.my/en/docs/design/pagination)
+- Laravel (Develop) — [design.digital.gov.my/en/docs/develop/laravel](https://design.digital.gov.my/en/docs/develop/laravel)
+- Accessibility (Develop) — [design.digital.gov.my/en/docs/develop/accessibility](https://design.digital.gov.my/en/docs/develop/accessibility)
+
+Mapping of key guidance to this repository's implementation:
+
+- Typography: MYDS prescribes clear heading and body scales (Poppins for headings, Inter for body). Implemented via CSS classes and responsive scales in `resources/css` and Tailwind config.
+- Colour tokens & themes: MYDS token model (primitive + semantic tokens) informs our `--bg-*` and `--txt-*` variables and light/dark mapping.
+- Accessibility (WCAG & ARIA): MYDS guidance on contrast, focus, and semantics was used to implement keyboard navigation, ARIA roles, and skip links throughout views.
+- Components & patterns: Buttons, forms, cards and tables follow MYDS component guidance (states, spacing, 48px touch targets) and are implemented as Blade components in `resources/views/components`.
+- Grid & layout: The 12-8-4 responsive grid recommendation is reflected in the `.myds-grid` utility classes and Tailwind breakpoints.
+- Content strategy & bilingual support: MyGOVEA's citizen-centric and planned-content principles justify bilingual labels, helper text, and contextual help used across forms and pages.
+
+- Add direct links to the above MYDS docs in the repo README.
 
 ---
 

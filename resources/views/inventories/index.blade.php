@@ -48,13 +48,13 @@
 
             <form method="GET" class="myds-grid myds-grid-desktop myds-grid-tablet myds-grid-mobile gap-3" aria-label="Penapis carian inventori" id="inventories-filter-form">
                 <div class="mobile:col-span-4 tablet:col-span-4 desktop:col-span-6">
-                    <label for="search" class="form-label myds-body-sm font-medium">Cari inventori</label>
+                    <label for="search" class="myds-label myds-body-sm font-medium">Cari inventori</label>
                     <input id="search" name="search" class="myds-input" value="{{ request('search','') }}" placeholder="{{ __('placeholders.inventory_search') }}" aria-describedby="search-help" />
                     <div id="search-help" class="myds-body-xs myds-text--muted mt-1">Cari berdasarkan nama atau keterangan item.</div>
                 </div>
 
                 <div class="mobile:col-span-2 tablet:col-span-2 desktop:col-span-3">
-                    <label for="owner_id" class="form-label myds-body-sm font-medium">Pemilik</label>
+                    <label for="owner_id" class="myds-label myds-body-sm font-medium">Pemilik</label>
                     <select id="owner_id" name="owner_id" class="myds-input">
                         <option value="">Semua pemilik</option>
                         @isset($users)
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="mobile:col-span-2 tablet:col-span-2 desktop:col-span-3">
-                    <label for="per_page" class="form-label myds-body-sm font-medium">Item per halaman</label>
+                    <label for="per_page" class="myds-label myds-body-sm font-medium">Item per halaman</label>
                     <select id="per_page" name="per_page" class="myds-input">
                         @foreach([5,10,15,25,50,100] as $n)
                             <option value="{{ $n }}" {{ (int) request('per_page', 5) === $n ? 'selected' : '' }}>{{ $n }} item</option>

@@ -65,7 +65,7 @@
 
                 {{-- Name Field (MYDS Input Component) --}}
                 <div class="mb-4">
-                    <label for="name" class="form-label myds-body-sm font-medium d-block mb-2">
+                    <label for="name" class="myds-label myds-body-sm font-medium d-block mb-2">
                         Nama Kenderaan
                         <span class="myds-text--danger ms-1" aria-hidden="true">*</span>
                         <span class="sr-only"> medan wajib</span>
@@ -73,7 +73,7 @@
                     <input type="text"
                            id="name"
                            name="name"
-                           class="myds-input @error('name') is-invalid border-danger @enderror"
+                           class="myds-input @error('name') is-invalid @enderror"
                            value="{{ old('name') }}"
                            aria-describedby="name-help @error('name') name-error @enderror"
                            aria-required="true"
@@ -92,13 +92,13 @@
 
                 {{-- Owner Field --}}
                 <div class="mb-4">
-                    <label for="user_id" class="form-label myds-body-sm font-medium d-block mb-2">
+                    <label for="user_id" class="myds-label myds-body-sm font-medium d-block mb-2">
                         Pemilik Kenderaan
                     </label>
                     @if(auth()->check() && auth()->user()->hasRole('admin'))
                         <select id="user_id"
                                 name="user_id"
-                                class="myds-input @error('user_id') is-invalid border-danger @enderror"
+                                class="myds-input @error('user_id') is-invalid @enderror"
                                 aria-describedby="user_id-help @error('user_id') user_id-error @enderror">
                             <option value="">(Tiada pemilik ditetapkan)</option>
                             @foreach(($users ?? collect()) as $user)
@@ -129,14 +129,14 @@
 
                 {{-- Quantity Field --}}
                 <div class="mb-4">
-                    <label for="qty" class="form-label myds-body-sm font-medium d-block mb-2">
+                    <label for="qty" class="myds-label myds-body-sm font-medium d-block mb-2">
                         Kuantiti
                         <span class="myds-text--danger ms-1" aria-label="medan wajib">*</span>
                     </label>
               <input type="number"
                   id="qty"
                   name="qty"
-                  class="myds-input @error('qty') is-invalid border-danger @enderror"
+                  class="myds-input @error('qty') is-invalid @enderror"
                   value="{{ old('qty', 1) }}"
                   min="1"
                   aria-describedby="qty-help @error('qty') qty-error @enderror"
@@ -155,7 +155,7 @@
 
                 {{-- Price Field --}}
                 <div class="mb-4">
-                    <label for="price" class="form-label myds-body-sm font-medium d-block mb-2">
+                    <label for="price" class="myds-label myds-body-sm font-medium d-block mb-2">
                         Harga (RM)
                     </label>
                     <div class="myds-input-group">
@@ -163,7 +163,7 @@
                <input type="number"
                    id="price"
                    name="price"
-                   class="myds-input @error('price') is-invalid border-danger @enderror"
+                   class="myds-input @error('price') is-invalid @enderror"
                    value="{{ old('price') }}"
                    step="0.01"
                    min="0"
@@ -182,12 +182,12 @@
 
                 {{-- Description Field --}}
                 <div class="mb-6">
-                    <label for="description" class="form-label myds-body-sm font-medium d-block mb-2">
+                    <label for="description" class="myds-label myds-body-sm font-medium d-block mb-2">
                         Keterangan
                     </label>
                     <textarea id="description"
                               name="description"
-                              class="myds-input @error('description') is-invalid border-danger @enderror"
+                              class="myds-input @error('description') is-invalid @enderror"
                               rows="4"
                               aria-describedby="description-help @error('description') description-error @enderror"
                               maxlength="1000">{{ old('description') }}</textarea>
