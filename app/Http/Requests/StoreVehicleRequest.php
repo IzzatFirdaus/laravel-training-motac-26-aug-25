@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Vehicle;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class StoreVehicleRequest extends FormRequest
 {

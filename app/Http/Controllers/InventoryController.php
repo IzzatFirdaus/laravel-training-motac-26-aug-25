@@ -11,7 +11,6 @@ use App\Models\Warehouse;
 use App\Notifications\StoreInventoryNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class InventoryController extends Controller

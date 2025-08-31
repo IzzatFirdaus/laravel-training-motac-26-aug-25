@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Inventory;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class ImportInventoryRequest extends FormRequest
 {

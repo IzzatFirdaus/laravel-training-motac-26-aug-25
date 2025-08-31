@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
