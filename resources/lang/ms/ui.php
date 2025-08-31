@@ -210,4 +210,37 @@ return [
         'label' => 'Kategori',
         'select_placeholder' => '— Pilih kategori —',
     ],
+    // Controller flash messages
+    'vehicles' => [
+        'created' => 'Kenderaan berjaya dicipta',
+        'deleted' => 'Kenderaan berjaya dipadam',
+        'updated_message' => 'Kenderaan dikemaskini',
+    ],
+    'inventories' => [
+        'created' => 'Inventori berjaya dicipta',
+        'updated' => 'Inventori dikemaskini',
+        'deleted' => 'Inventori berjaya dipadam',
+        'restored' => 'Inventori telah dipulihkan',
+        'force_deleted' => 'Inventori telah dipadam secara kekal',
+    ],
+    'applications' => [
+        'created' => 'Permohonan berjaya dicipta',
+        'updated' => 'Permohonan dikemaskini',
+        'deleted' => 'Permohonan dipadam',
+    ],
+    'users' => [
+        'created' => 'Pengguna berjaya dicipta',
+        'updated' => 'Pengguna dikemaskini',
+        'deleted' => 'Pengguna dipadam',
+        'cannot_delete_self' => 'Anda tidak boleh memadam akaun sendiri.',
+    ],
+    'notifications' => [
+        'marked_read' => 'Pemberitahuan ditandakan dibaca.',
+        'marked_unread' => 'Pemberitahuan ditandakan belum dibaca.',
+        'marked_all_read' => 'Semua pemberitahuan telah ditandakan sebagai dibaca.',
+    ],
+    'excel' => [
+        'import_failure' => 'Sebahagian baris gagal diimport. Sila semak ralat.',
+        'import_success' => 'Import inventori berjaya.',
+    ],
 ];

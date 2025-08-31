@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\Exports\InventoryExport;
 use App\Http\Requests\ImportInventoryRequest;
 use App\Http\Requests\PreviewInventoryImportRequest;
@@ -20,7 +21,7 @@ class ExcelController extends Controller
     }
 
     /** Download an Excel template for Inventory. */
-    public function exportInventory(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function exportInventory(): BinaryFileResponse
     {
         $this->authorize('viewAny', Inventory::class);
 
@@ -65,9 +66,9 @@ class ExcelController extends Controller
         $import->import($data['file']);
 
         if ($import->failures()->isNotEmpty()) {
-            return back()->withErrors(['file' => 'Sebahagian baris gagal diimport. Sila semak ralat.'])->with('import_failures', $import->failures());
+            return back()->withErrors(['file' => __('ui.excel.import_failure')])->with('import_failures', $import->failures());
         }
 
-        return redirect()->route('inventories.index')->with('toast', 'Import inventori berjaya.');
+        return redirect()->route('inventories.index')->with('toast', __('ui.excel.import_success'));
     }
 }

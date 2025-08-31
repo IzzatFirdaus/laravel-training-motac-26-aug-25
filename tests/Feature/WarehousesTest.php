@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\InventoryController;
+use Illuminate\Support\Facades\Route;
 use App\Models\Warehouse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -15,9 +17,9 @@ class WarehousesTest extends TestCase
         parent::setUp();
 
         // Ensure the JSON endpoints are available for the test environment
-        \Illuminate\Support\Facades\Route::model('warehouse', Warehouse::class);
-        \Illuminate\Support\Facades\Route::get('/warehouses', [\App\Http\Controllers\InventoryController::class, 'warehouses']);
-        \Illuminate\Support\Facades\Route::get('/warehouses/{warehouse}/shelves', [\App\Http\Controllers\InventoryController::class, 'shelvesByWarehouse']);
+        Route::model('warehouse', Warehouse::class);
+        Route::get('/warehouses', [InventoryController::class, 'warehouses']);
+        Route::get('/warehouses/{warehouse}/shelves', [InventoryController::class, 'shelvesByWarehouse']);
     }
 
     public function test_warehouses_index_returns_json()

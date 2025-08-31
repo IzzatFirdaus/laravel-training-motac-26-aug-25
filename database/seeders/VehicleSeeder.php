@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
 
 class VehicleSeeder extends Seeder
@@ -12,6 +13,6 @@ class VehicleSeeder extends Seeder
     public function run(): void
     {
         // Create demo vehicles; some vehicles will be owned by users
-        \App\Models\Vehicle::factory(30)->create();
+        Vehicle::factory(30)->create();
     }
 }

@@ -56,7 +56,7 @@ class VehicleController extends Controller
 
         $vehicle->delete();
 
-        return redirect()->route('vehicles.index')->with('success', 'Kenderaan berjaya dipadam.');
+        return redirect()->route('vehicles.index')->with('success', __('ui.vehicles.deleted'));
     }
 
     /**
@@ -97,7 +97,7 @@ class VehicleController extends Controller
             'description' => $data['description'] ?? null,
         ]);
 
-        return redirect()->route('vehicles.index')->with('status', 'Kenderaan berjaya dicipta.');
+        return redirect()->route('vehicles.index')->with('status', __('ui.vehicles.created'));
     }
 
     /**
@@ -173,6 +173,6 @@ class VehicleController extends Controller
 
         $vehicle->save();
 
-        return redirect()->route('vehicles.show', $vehicleId)->with('status', 'Kenderaan dikemaskini.');
+        return redirect()->route('vehicles.show', $vehicleId)->with('status', __('ui.vehicles.updated_message'));
     }
 }

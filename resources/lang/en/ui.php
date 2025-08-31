@@ -186,4 +186,37 @@ return [
         'label' => 'Category',
         'select_placeholder' => '— Select a category —',
     ],
+    // Controller flash messages
+    'vehicles' => [
+        'created' => 'Vehicle created',
+        'deleted' => 'Vehicle deleted',
+        'updated_message' => 'Vehicle updated',
+    ],
+    'inventories' => [
+        'created' => 'Inventory created',
+        'updated' => 'Inventory updated',
+        'deleted' => 'Inventory deleted',
+        'restored' => 'Inventory restored',
+        'force_deleted' => 'Inventory permanently deleted',
+    ],
+    'applications' => [
+        'created' => 'Application created',
+        'updated' => 'Application updated',
+        'deleted' => 'Application deleted',
+    ],
+    'users' => [
+        'created' => 'User created',
+        'updated' => 'User updated',
+        'deleted' => 'User deleted',
+        'cannot_delete_self' => 'You cannot delete your own account.',
+    ],
+    'notifications' => [
+        'marked_read' => 'Notification marked as read.',
+        'marked_unread' => 'Notification marked as unread.',
+        'marked_all_read' => 'All notifications marked as read.',
+    ],
+    'excel' => [
+        'import_failure' => 'Some rows failed to import. Check the errors.',
+        'import_success' => 'Inventory import completed successfully.',
+    ],
 ];

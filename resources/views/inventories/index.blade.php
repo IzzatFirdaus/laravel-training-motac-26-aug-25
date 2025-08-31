@@ -11,15 +11,15 @@
     </div>
 
     <div class="d-flex gap-2">
-      @can('create', App\Models\Inventory::class)
+      @if($canCreateInventory)
         <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta inventori baru">
           <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Cipta Inventori
         </a>
-      @endcan
+      @endif
 
-      @can('viewAny', App\Models\Inventory::class)
+      @if($canViewAnyInventory)
         <a href="{{ route('excel.inventory.form') }}" class="myds-btn myds-btn--secondary" aria-label="Import atau eksport inventori">Import/Export</a>
-      @endcan
+      @endif
 
       @auth
         @if(auth()->user()->hasRole('admin'))
@@ -132,9 +132,9 @@
                   <div class="myds-body-sm myds-text--muted">
                     <i class="bi bi-inboxes fs-1 mb-2" aria-hidden="true"></i>
                     <p class="mb-2">Tiada inventori dijumpai.</p>
-                    @can('create', App\Models\Inventory::class)
+                    @if($canCreateInventory)
                       <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary myds-btn--sm">Cipta Inventori Pertama</a>
-                    @endcan
+                    @endif
                   </div>
                 </td>
               </tr>

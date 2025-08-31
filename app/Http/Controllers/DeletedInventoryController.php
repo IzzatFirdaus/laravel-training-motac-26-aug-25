@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Inventory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class DeletedInventoryController extends Controller
 
         $deletedInventories = $query->paginate($perPage)->appends($request->only(['search', 'per_page', 'owner_id']));
 
-        $users = \App\Models\User::query()->select('id', 'name')->orderBy('name')->get();
+        $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
         return view('inventories.deleted.index', compact('deletedInventories', 'users'));
     }
@@ -49,7 +50,7 @@ class DeletedInventoryController extends Controller
 
         $inventory->restore();
 
-        return redirect()->route('inventories.deleted.index')->with('toast', 'Inventori telah dipulihkan.');
+        return redirect()->route('inventories.deleted.index')->with('toast', __('ui.inventories.restored'));
     }
 
     /**
@@ -61,6 +62,6 @@ class DeletedInventoryController extends Controller
 
         $inventory->forceDelete();
 
-        return redirect()->route('inventories.deleted.index')->with('toast', 'Inventori telah dipadam secara kekal.');
+        return redirect()->route('inventories.deleted.index')->with('toast', __('ui.inventories.force_deleted'));
     }
 }

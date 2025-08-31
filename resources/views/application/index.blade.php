@@ -11,9 +11,9 @@
                 <p class="myds-body-sm myds-text--muted mb-0">Senarai permohonan dalam sistem.</p>
             </div>
             <div class="text-end">
-                @can('create', App\Models\Application::class)
+                @if($canCreateApplication)
                     <a href="{{ route('applications.create') }}" class="myds-btn myds-btn--primary">Cipta Permohonan</a>
-                @endcan
+                @endif
             </div>
         </header>
 
@@ -75,9 +75,9 @@
                                         <td colspan="4">
                                             <div role="status" class="p-3 text-center">
                                                 <p class="mb-2">Tiada permohonan dijumpai.</p>
-                                                @can('create', App\Models\Application::class)
+                                                @if($canCreateApplication)
                                                     <a href="{{ route('applications.create') }}" class="myds-btn myds-btn--primary">Cipta permohonan pertama</a>
-                                                @endcan
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

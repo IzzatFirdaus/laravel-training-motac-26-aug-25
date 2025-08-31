@@ -10,7 +10,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\VerificationController;
 
 // Default route for the welcome page
 Route::get('/', function () {
@@ -26,10 +25,7 @@ Route::get('/welcome', function () {
 // Enable email verification routes so views that call route('verification.resend') resolve.
 Auth::routes(['verify' => true]);
 
-// Email verification routes (explicit) - ensure named routes are available for views
-Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
-Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
-Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+// Email verification routes are registered by Auth::routes(['verify' => true]) above.
 
 // Route for the home page after login
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -131,8 +127,8 @@ Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehi
 // Correct store route: use POST to create a new vehicle
 Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
 // Redirect legacy path `/vehicles/show` (no id) to the vehicles index to avoid 404s
+// Redirect legacy path `/vehicles/show` (no id) to the vehicles index to avoid 404s
 Route::redirect('/vehicles/show', '/vehicles');
-Route::redirect('/vehicles/show/', '/vehicles');
 
 // Backwards compatibility: redirect GET /vehicles/store to the create form
 Route::get('/vehicles/store', function () {

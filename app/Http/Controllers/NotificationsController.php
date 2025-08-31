@@ -59,7 +59,7 @@ class NotificationsController extends Controller
             }
         }
 
-        return redirect()->back()->with('status', 'Pemberitahuan ditandakan dibaca.');
+        return redirect()->back()->with('status', __('ui.notifications.marked_read'));
     }
 
     /**
@@ -76,7 +76,7 @@ class NotificationsController extends Controller
             $notification->save();
         }
 
-        return redirect()->back()->with('status', 'Pemberitahuan ditandakan belum dibaca.');
+        return redirect()->back()->with('status', __('ui.notifications.marked_unread'));
     }
 
     /**
@@ -97,6 +97,6 @@ class NotificationsController extends Controller
             }
         }
 
-        return redirect()->back()->with('status', 'Semua pemberitahuan telah ditandakan sebagai dibaca.');
+        return redirect()->back()->with('status', __('ui.notifications.marked_all_read'));
     }
 }

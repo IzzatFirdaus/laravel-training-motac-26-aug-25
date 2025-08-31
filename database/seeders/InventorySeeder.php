@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Inventory;
 use Illuminate\Database\Seeder;
 
 class InventorySeeder extends Seeder
@@ -12,6 +13,6 @@ class InventorySeeder extends Seeder
     public function run(): void
     {
         // Create demo inventories
-        \App\Models\Inventory::factory(50)->create();
+        Inventory::factory(50)->create();
     }
 }

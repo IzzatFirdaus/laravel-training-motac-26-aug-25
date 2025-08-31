@@ -111,7 +111,7 @@ class InventoryController extends Controller
             $inventory->getKey()
         );
 
-        return $route->with('toast', 'Inventori berjaya dicipta.');
+        return $route->with('toast', __('ui.inventories.created'));
     }
 
     /**
@@ -176,7 +176,7 @@ class InventoryController extends Controller
             $inventory->vehicles()->sync(array_values($data['vehicle_ids']));
         }
 
-        return redirect()->route('inventories.show', $inventoryId)->with('toast', 'Inventory updated.');
+        return redirect()->route('inventories.show', $inventoryId)->with('toast', __('ui.inventories.updated'));
     }
 
     /**
@@ -190,7 +190,7 @@ class InventoryController extends Controller
         $this->authorize('delete', $inventory);
         $inventory->delete();
 
-        return redirect()->route('inventories.index')->with('toast', 'Inventory deleted.');
+        return redirect()->route('inventories.index')->with('toast', __('ui.inventories.deleted'));
     }
 
     /**

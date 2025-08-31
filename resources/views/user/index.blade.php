@@ -10,14 +10,14 @@
             <p class="myds-body-md myds-text--muted mb-0">{{ __('ui.users.description') }}</p>
         </div>
 
-        @can('create', App\Models\User::class)
+    @if($canCreateUser)
             <div>
                 <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary" aria-label="{{ __('ui.users.create') }}">
                     <i class="bi bi-person-plus me-2" aria-hidden="true"></i>
                     {{ __('ui.users.create') }}
                 </a>
             </div>
-        @endcan
+    @endif
     </header>
 
     <section aria-labelledby="users-table-heading">
@@ -70,12 +70,12 @@
                                         <i class="bi bi-people fs-1 mx-auto d-block mb-3 myds-text--muted" aria-hidden="true"></i>
                                         <h3 class="myds-heading-xs font-heading font-medium mb-2">{{ __('ui.users.none_found') }}</h3>
                                         <p class="myds-body-sm myds-text--muted mb-3">{{ __('ui.users.none_found_description') }}</p>
-                                        @can('create', App\Models\User::class)
+                                            @if($canCreateUser)
                                             <a href="{{ route('users.create') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="{{ __('ui.users.create_first') }}">
                                                 <i class="bi bi-person-plus me-2" aria-hidden="true"></i>
                                                 {{ __('ui.users.create_first') }}
                                             </a>
-                                        @endcan
+                                            @endif
                                     </div>
                                 </td>
                             </tr>

@@ -47,7 +47,7 @@
             <div class="myds-dropdown-divider"></div>
 
             @auth
-              @if(auth()->user()->hasRole('admin'))
+                @if(auth()->user()->hasRole('admin'))
                 @if(Route::has('inventories.deleted.index'))
                   <a class="myds-dropdown-item" href="{{ route('inventories.deleted.index') }}" role="menuitem">Inventori Dipadam</a>
                 @endif
@@ -116,12 +116,12 @@
             @endif
 
             @auth
-              @if(auth()->user()->hasRole('admin'))
-                @can('create', App\Models\User::class)
+                @if(auth()->user()->hasRole('admin'))
+                @if($canCreateUser)
                   @if(Route::has('users.create'))
                     <a class="myds-dropdown-item" href="{{ route('users.create') }}" role="menuitem">{{ __('nav.users_add') }}</a>
                   @endif
-                @endcan
+                @endif
                 @if(Route::has('users.edit'))
                   <a class="myds-dropdown-item" href="{{ route('users.edit', 1) }}" role="menuitem">{{ __('nav.users_edit') }}</a>
                 @endif
@@ -234,8 +234,13 @@
           </li>
           <li class="myds-nav-item dropdown me-2">
             @php
-              $unread = auth()->user()->unreadNotifications ?? collect();
-              $unreadCount = $unread->count();
+              // Prefer controller-provided notification data when available
+              if (! isset($unread)) {
+                  $unread = auth()->user()->unreadNotifications ?? collect();
+              }
+              if (! isset($unreadCount)) {
+                  $unreadCount = isset($unread) ? $unread->count() : 0;
+              }
             @endphp
             <button id="navNotificationsBtn" class="myds-nav-link myds-nav-link--toggle position-relative" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navNotificationsMenu" aria-label="Pemberitahuan">
               <i class="bi bi-bell" aria-hidden="true"></i>

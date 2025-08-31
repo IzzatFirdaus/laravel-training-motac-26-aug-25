@@ -51,7 +51,7 @@ class UserController extends Controller
             'password' => $data['password'],
         ]);
 
-        return redirect()->route('users.index')->with('toast', 'Pengguna berjaya dicipta.');
+        return redirect()->route('users.index')->with('toast', __('ui.users.created'));
     }
 
     /**
@@ -98,7 +98,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.show', $userId)->with('toast', 'Pengguna dikemaskini.');
+        return redirect()->route('users.show', $userId)->with('toast', __('ui.users.updated'));
     }
 
     /**
@@ -110,14 +110,14 @@ class UserController extends Controller
 
         // Prevent a user from deleting themselves via the UI
         if (Auth::check() && Auth::id() === $user->getKey()) {
-            return redirect()->route('users.index')->with('toast', 'Anda tidak boleh memadam akaun sendiri.');
+            return redirect()->route('users.index')->with('toast', __('ui.users.cannot_delete_self'));
         }
 
         $this->authorize('delete', $user);
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('toast', 'Pengguna dipadam.');
+        return redirect()->route('users.index')->with('toast', __('ui.users.deleted'));
     }
 
     /**

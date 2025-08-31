@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Shelf;
 use App\Models\Inventory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,7 @@ class StoreInventoryRequest extends FormRequest
             $wid = $this->input('warehouse_id');
             $sid = $this->input('shelf_id');
             if ($wid && $sid) {
-                $shelf = \App\Models\Shelf::find($sid);
+                $shelf = Shelf::find($sid);
                 if (! $shelf || (string) $shelf->warehouse_id !== (string) $wid) {
                     $validator->errors()->add('shelf_id', 'Rak yang dipilih bukan sebahagian daripada gudang yang dipilih.');
                 }

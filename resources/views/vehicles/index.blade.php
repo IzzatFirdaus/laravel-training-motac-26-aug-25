@@ -15,7 +15,7 @@
                 <p class="myds-body-md myds-text--muted mb-0">{{ __('ui.vehicles.description') }}</p>
             </div>
 
-        @can('create', App\Models\Vehicle::class)
+        @if($canCreateVehicle)
             <div>
                 <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta Kenderaan">
                     <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
@@ -27,7 +27,7 @@
                         <i class="bi bi-plus-lg me-2" aria-hidden="true"></i> {{ __('ui.vehicles.create_button') }}
                     </a>
                 </div>
-        @endcan
+        @endif
     </header>
 
     <section aria-labelledby="vehicles-table-heading">
@@ -161,21 +161,21 @@
                                         <i class="bi bi-inboxes fs-1 mx-auto d-block mb-3 myds-text--muted" aria-hidden="true"></i>
                                         <h3 class="myds-heading-xs font-heading font-medium mb-2">Tiada Kenderaan Dijumpai</h3>
                                         <p class="myds-body-sm myds-text--muted mb-3">Belum ada kenderaan didaftarkan atau tiada keputusan yang sepadan.</p>
-                                        @can('create', App\Models\Vehicle::class)
+                                        @if($canCreateVehicle)
                                             <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta Kenderaan">
                                                 <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>Cipta Kenderaan Pertama
                                             </a>
-                                        @endcan
+                                        @endif
                                     </div>
                                         <div role="status" class="p-4">
                                             <i class="bi bi-inboxes fs-1 mb-3 myds-text--muted" aria-hidden="true"></i>
                                             <h3 class="myds-heading-xs font-heading font-medium mb-2">{{ __('ui.vehicles.empty.heading') }}</h3>
                                             <p class="myds-body-sm myds-text--muted mb-3">{{ __('ui.vehicles.empty.description') }}</p>
-                                            @can('create', App\Models\Vehicle::class)
+                                            @if($canCreateVehicle)
                                                 <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--primary" aria-label="{{ __('ui.vehicles.create_first') }}">
                                                     <i class="bi bi-plus-lg me-2" aria-hidden="true"></i> {{ __('ui.vehicles.create_first') }}
                                                 </a>
-                                            @endcan
+                                            @endif
                                         </div>
                                 </td>
                             </tr>

@@ -21,11 +21,11 @@
     </header>
 
     @php
-        // Defensive counts — avoid throwing if models not available
-        try { $inventoriesCount = \App\Models\Inventory::count(); } catch (\Throwable $e) { $inventoriesCount = 0; }
-        try { $vehiclesCount = \App\Models\Vehicle::count(); } catch (\Throwable $e) { $vehiclesCount = 0; }
-        try { $usersCount = \App\Models\User::count(); } catch (\Throwable $e) { $usersCount = 0; }
-        try { $applicationsCount = \App\Models\Application::count(); } catch (\Throwable $e) { $applicationsCount = 0; }
+        // Counts are provided by the controller: $inventoriesCount, $vehiclesCount, $usersCount, $applicationsCount
+        $inventoriesCount = $inventoriesCount ?? 0;
+        $vehiclesCount = $vehiclesCount ?? 0;
+        $usersCount = $usersCount ?? 0;
+        $applicationsCount = $applicationsCount ?? 0;
     @endphp
 
     <section aria-labelledby="dashboard-cards-heading" class="mb-6">
@@ -54,9 +54,9 @@
 
                 <div class="myds-card__footer d-flex gap-2">
                     <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat senarai inventori">Lihat Senarai</a>
-                    @can('create', App\Models\Inventory::class)
+                        @if($canCreateInventory)
                         <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Cipta inventori baru">Cipta Baharu</a>
-                    @endcan
+                        @endif
                 </div>
             </article>
 
@@ -82,9 +82,9 @@
 
                 <div class="myds-card__footer d-flex gap-2">
                     <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat senarai kenderaan">Lihat Senarai</a>
-                    @can('create', App\Models\Vehicle::class)
+                        @if($canCreateVehicle)
                         <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Daftar kenderaan baru">Daftar Baharu</a>
-                    @endcan
+                        @endif
                 </div>
             </article>
 
@@ -110,9 +110,9 @@
 
                 <div class="myds-card__footer d-flex gap-2">
                     <a href="{{ route('users.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat pengguna">Lihat Pengguna</a>
-                    @can('create', App\Models\User::class)
+                        @if($canCreateUser)
                         <a href="{{ route('users.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Daftar pengguna baru">Daftar Baharu</a>
-                    @endcan
+                        @endif
                 </div>
             </article>
 
@@ -138,9 +138,9 @@
 
                 <div class="myds-card__footer d-flex gap-2">
                     <a href="{{ route('applications.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat permohonan">Lihat Permohonan</a>
-                    @can('create', App\Models\Application::class)
+                        @if($canCreateApplication)
                         <a href="{{ route('applications.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Cipta permohonan baru">Cipta Baharu</a>
-                    @endcan
+                        @endif
                 </div>
             </article>
         </div>

@@ -91,7 +91,7 @@ class ApplicationController extends Controller
             'user_id' => $userId,
         ]);
 
-        return redirect()->route('applications.index')->with('toast', 'Permohonan berjaya dicipta.');
+        return redirect()->route('applications.index')->with('toast', __('ui.applications.created'));
     }
 
     /**
@@ -126,7 +126,7 @@ class ApplicationController extends Controller
         $application->fill($data);
         $application->save();
 
-        return redirect()->route('applications.show', $application->getKey())->with('toast', 'Permohonan dikemaskini.');
+        return redirect()->route('applications.show', $application->getKey())->with('toast', __('ui.applications.updated'));
     }
 
     /**
@@ -138,6 +138,6 @@ class ApplicationController extends Controller
 
         $application->delete();
 
-        return redirect()->route('applications.index')->with('toast', 'Permohonan dipadam.');
+        return redirect()->route('applications.index')->with('toast', __('ui.applications.deleted'));
     }
 }
