@@ -98,6 +98,98 @@ SASS architecture.
 	box-shadow: 0 0 0 4px var(--fr-shadow) !important;
 }
 
+/* Visually hidden utility for ARIA live regions and screen-reader-only text */
+.visually-hidden {
+	position: absolute !important;
+	width: 1px; height: 1px;
+	padding: 0; margin: -1px;
+	overflow: hidden; clip: rect(0 0 0 0);
+	white-space: nowrap; border: 0;
+}
+
+/* Skip link per MyGOVEA: accessible, off-screen until focused */
+.myds-skip-link {
+	position: absolute;
+	left: -999px;
+	top: auto;
+	background: var(--myds-skip-bg, var(--bg-surface));
+	color: var(--txt-primary);
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.25rem;
+	z-index: 9999;
+}
+.myds-skip-link:focus, .myds-skip-link:active {
+	left: 1rem; top: 1rem;
+}
+
+/* Tap target helper to ensure 48x48 touch targets per MYDS guidelines */
+.myds-tap-target {
+	min-width: 48px;
+	min-height: 48px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/*
+  MYDS Grid System (12 - Desktop, 8 - Tablet, 4 - Mobile)
+  - Use `.myds-grid` as the grid container.
+  - Children can set column span using `.myds-col-span-N` (N from 1..12).
+  - Use `.myds-container` to constrain article/content widths per MYDS guidance.
+*/
+.myds-container {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	max-width: 1200px; /* sensible page max — article content constrained further by helpers */
+}
+
+.myds-grid {
+	display: grid;
+	gap: 1.5rem;
+	/* Default to desktop 12-column layout */
+	grid-template-columns: repeat(12, 1fr);
+}
+
+/* Tablet (768 - 1023) map to 8 columns */
+@media (max-width: 1023px) and (min-width: 768px) {
+	.myds-grid { grid-template-columns: repeat(8, 1fr); }
+}
+
+/* Mobile (<= 767) map to 4 columns */
+@media (max-width: 767px) {
+	.myds-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Column span utilities: simple, responsive-friendly approach
+   Use the same classes across breakpoints — values > available columns simply clamp. */
+@for $i from 1 through 12 {
+	.myds-col-span-#{$i} { grid-column: span #{$i} / auto; }
+}
+
+/* Ensure interactive elements meet 48x48 touch targets on coarse pointers (mobile & touch devices) */
+@media (pointer: coarse) {
+	a, button, .btn, .myds-btn, .nav-link, .dropdown-item, .list-group-item-action, [role="button"] {
+		min-width: 48px !important;
+		min-height: 48px !important;
+		padding: max(.375rem, 0.5rem) !important;
+		line-height: 1 !important;
+		box-sizing: border-box;
+	}
+}
+
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		transition-duration: 0.001ms !important;
+		animation-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
 /* Utilities added to replace inline styles found in templates */
 .hero-heading-size {
 	font-size: 2.5rem;

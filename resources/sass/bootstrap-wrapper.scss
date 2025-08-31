@@ -1,7 +1,15 @@
 // bootstrap-wrapper.scss
-// Import Bootstrap via the Sass module system. This avoids deprecated
-// `@import` usage and prepares the project for newer Dart Sass versions.
-// We bring variables/mixins into the local scope using `as *` to preserve
-// accessibility for existing styles that reference Bootstrap globals.
+// Provide Bootstrap with MYDS token mappings and sensible defaults
+// by exposing a small set of variables before importing the module.
+// This mirrors the MYDS tokens so Bootstrap components match the design system.
 
-@use 'bootstrap' as *;
+// Configure Bootstrap with MYDS-friendly variable values using the `with` API.
+// This avoids defining the same variables in two modules which triggers
+// Dart Sass errors when @use is combined with other modules that define
+// the same variable names.
+@use 'bootstrap' with (
+	$grid-gutter-width: 24px,
+	$border-radius: 0.375rem,
+	// Provide a simple, quoted fallback font-family string to avoid parsing issues
+	$font-family-sans-serif: "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+);

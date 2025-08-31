@@ -42,6 +42,11 @@ $line-height-base: 1.6;
 	/* MYDS focus ring tokens for accessibility */
 	--fr: rgb(150, 183, 255); /* primary-300 */
 	--fr-shadow: rgba(150, 183, 255, 0.12);
+
+	/* MYDS helpers */
+	--tap-target-size: 48px;
+	--myds-grid-gutter: 24px;
+	--myds-article-max-width: 640px;
 }
 
 [data-theme="dark"] {

@@ -238,6 +238,13 @@
     --motion-short: 200ms;
     --motion-medium: 400ms;
     --motion-long: 600ms;
+    /* MYDS / MyGovEA helpers */
+    --tap-target-size: 48px; /* recommended minimum interactive size for touch */
+    --myds-grid-gutter: 24px; /* MYDS gutter for desktop/tablet */
+    --myds-grid-columns-desktop: 12;
+    --myds-grid-columns-tablet: 8;
+    --myds-grid-columns-mobile: 4;
+    --myds-article-max-width: 640px; /* recommended readable width for articles */
     --radius-xs: 4px;
     --radius-s: 6px;
     --radius-m: 8px;
