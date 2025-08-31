@@ -12,7 +12,7 @@ class StoreInventoryRequest extends FormRequest
     public function authorize(): bool
     {
         // Use policy to determine if the user may create inventories
-        return Auth::check() && $this->user()->can('create', Inventory::class);
+        return auth()->check() && $this->user()->can('create', Inventory::class);
     }
 
     public function rules(): array

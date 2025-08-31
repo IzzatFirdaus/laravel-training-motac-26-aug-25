@@ -11,7 +11,7 @@ class UpdateInventoryRequest extends FormRequest
     public function authorize(): bool
     {
         // Authorization will be checked in controller after locating the model
-        return Auth::check();
+        return auth()->check();
     }
 
     public function rules(): array

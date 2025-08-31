@@ -73,10 +73,10 @@ class InventoryController extends Controller
 
         // Only admins may set an arbitrary owner. Regular users always own the
         // inventory they create.
-        if (! Auth::check()) {
+        if (! auth()->check()) {
             $data['user_id'] = null;
-        } elseif (! Auth::user()->hasRole('admin')) {
-            $data['user_id'] = Auth::id();
+        } elseif (! auth()->user()->hasRole('admin')) {
+            $data['user_id'] = auth()->id();
         } else {
             // Admin: allow provided user_id or null
             $data['user_id'] = $data['user_id'] ?? null;
@@ -165,7 +165,7 @@ class InventoryController extends Controller
         ]);
 
         // Only allow admins to reassign ownership.
-        if (! empty($data['user_id']) && Auth::check() && Auth::user()->hasRole('admin')) {
+        if (! empty($data['user_id']) && auth()->check() && auth()->user()->hasRole('admin')) {
             $inventory->user_id = $data['user_id'];
         }
 

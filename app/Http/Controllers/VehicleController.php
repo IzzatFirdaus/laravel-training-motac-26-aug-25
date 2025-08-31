@@ -81,10 +81,10 @@ class VehicleController extends Controller
         $data = $request->validated();
 
         // Only admins may set arbitrary owner. Regular users will own the vehicle they create.
-        if (! Auth::check()) {
+        if (! auth()->check()) {
             $data['user_id'] = null;
-        } elseif (! Auth::user()->hasRole('admin')) {
-            $data['user_id'] = Auth::id();
+        } elseif (! auth()->user()->hasRole('admin')) {
+            $data['user_id'] = auth()->id();
         } else {
             $data['user_id'] = $data['user_id'] ?? null;
         }
@@ -167,7 +167,7 @@ class VehicleController extends Controller
         ]);
 
         // Only admins may reassign ownership
-        if (! empty($data['user_id']) && Auth::user()->hasRole('admin')) {
+        if (! empty($data['user_id']) && auth()->user()->hasRole('admin')) {
             $vehicle->user_id = $data['user_id'];
         }
 

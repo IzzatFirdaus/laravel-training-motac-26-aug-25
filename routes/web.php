@@ -84,16 +84,16 @@ Route::get('/inventories/store', function () {
 });
 
 // Route to show a single inventory item (limit {inventory} to numeric IDs to avoid colliding with static paths)
-Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->whereNumber('inventory')->name('inventories.show');
+Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->where('number', 'inventory')->name('inventories.show');
 
 // Route to edit a single inventory item (use conventional /{id}/edit path to avoid name collision)
-Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])->whereNumber('inventory')->name('inventories.edit');
+Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])->where('number', 'inventory')->name('inventories.edit');
 
 // Route to update an inventory item (using POST instead of PATCH for environments that prefer POST)
-Route::post('/inventories/{inventory}', [InventoryController::class, 'update'])->whereNumber('inventory')->name('inventories.update');
+Route::post('/inventories/{inventory}', [InventoryController::class, 'update'])->where('number', 'inventory')->name('inventories.update');
 
 // Route to destroy an inventory item (using POST to a /destroy endpoint)
-Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'destroy'])->whereNumber('inventory')->name('inventories.destroy');
+Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'destroy'])->where('number', 'inventory')->name('inventories.destroy');
 
 // Deleted Inventory routes (for soft-deleted items)
 
@@ -101,14 +101,12 @@ Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'de
 Route::get('/inventories/deleted', [DeletedInventoryController::class, 'index'])->name('inventories.deleted.index');
 
 // Route to restore a soft-deleted inventory
-Route::post('/inventories/{inventory}/restore', [DeletedInventoryController::class, 'restore'])
-    ->whereNumber('inventory')
+Route::post('/inventories/{inventory}/restore', [DeletedInventoryController::class, 'restore'])->where('number', 'inventory')
     ->name('inventories.restore')
     ->withTrashed();
 
 // Route to permanently delete a soft-deleted inventory
-Route::post('/inventories/{inventory}/force-delete', [DeletedInventoryController::class, 'forceDelete'])
-    ->whereNumber('inventory')
+Route::post('/inventories/{inventory}/force-delete', [DeletedInventoryController::class, 'forceDelete'])->where('number', 'inventory')
     ->name('inventories.force-delete')
     ->withTrashed();
 
@@ -136,16 +134,16 @@ Route::get('/vehicles/store', function () {
 });
 
 // Route to edit a single vehicle item (use conventional /{id}/edit path to avoid name collision)
-Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->whereNumber('vehicle')->name('vehicles.edit');
+Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->where('number', 'vehicle')->name('vehicles.edit');
 
 // Route to update a vehicle item (using POST instead of PATCH for environments that prefer POST)
-Route::post('/vehicles/{vehicle}', [VehicleController::class, 'update'])->whereNumber('vehicle')->name('vehicles.update');
+Route::post('/vehicles/{vehicle}', [VehicleController::class, 'update'])->where('number', 'vehicle')->name('vehicles.update');
 
 // Route to destroy a vehicle (using POST to a /destroy endpoint)
-Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy'])->whereNumber('vehicle')->name('vehicles.destroy');
+Route::post('/vehicles/{vehicle}/destroy', [VehicleController::class, 'destroy'])->where('number', 'vehicle')->name('vehicles.destroy');
 
 // Vehicle detail route
-Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->whereNumber('vehicle')->name('vehicles.show');
+Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->where('number', 'vehicle')->name('vehicles.show');
 // JSON endpoint: return vehicles belonging to an inventory (for dynamic selects)
 Route::get('/inventories/{inventory}/vehicles', [VehicleController::class, 'byInventory'])->name('inventories.vehicles');
 // JSON endpoint: return shelves for a warehouse (dynamic dropdown)

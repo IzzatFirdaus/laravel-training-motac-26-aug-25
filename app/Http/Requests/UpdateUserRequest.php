@@ -9,7 +9,7 @@ class UpdateUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Auth::check();
+        return auth()->check();
     }
 
     public function rules(): array

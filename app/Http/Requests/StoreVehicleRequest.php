@@ -10,7 +10,7 @@ class StoreVehicleRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Auth::check() && $this->user()->can('create', Vehicle::class);
+        return auth()->check() && $this->user()->can('create', Vehicle::class);
     }
 
     public function rules(): array

@@ -10,7 +10,7 @@ class UpdateVehicleRequest extends FormRequest
     public function authorize(): bool
     {
         // Controller will perform model authorization after fetching resource
-        return Auth::check();
+        return auth()->check();
     }
 
     public function rules(): array

@@ -10,7 +10,7 @@ class ImportInventoryRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Auth::check() && $this->user()->can('create', Inventory::class);
+        return auth()->check() && $this->user()->can('create', Inventory::class);
     }
 
     public function rules(): array

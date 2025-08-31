@@ -109,7 +109,7 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
 
         // Prevent a user from deleting themselves via the UI
-        if (Auth::check() && Auth::id() === $user->getKey()) {
+        if (auth()->check() && auth()->id() === $user->getKey()) {
             return redirect()->route('users.index')->with('toast', __('ui.users.cannot_delete_self'));
         }
 

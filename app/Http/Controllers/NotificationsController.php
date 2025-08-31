@@ -16,7 +16,7 @@ class NotificationsController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $notifications = $user->notifications()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('notifications.index', compact('notifications'));
@@ -27,7 +27,7 @@ class NotificationsController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $notification = $user->notifications()->where('id', $id)->firstOrFail();
         /** @var \Illuminate\Notifications\DatabaseNotification $notification */
         if (is_null($notification->read_at) && method_exists($notification, 'markAsRead')) {
@@ -48,7 +48,7 @@ class NotificationsController extends Controller
      */
     public function read($id)
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $notification = $user->notifications()->where('id', $id)->firstOrFail();
 
         /** @var \Illuminate\Notifications\DatabaseNotification $notification */
@@ -65,7 +65,7 @@ class NotificationsController extends Controller
      */
     public function unread($id)
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $notification = $user->notifications()->where('id', $id)->firstOrFail();
 
         /** @var \Illuminate\Notifications\DatabaseNotification $notification */
@@ -82,7 +82,7 @@ class NotificationsController extends Controller
      */
     public function readAll()
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
         // Use the unreadNotifications() relation to fetch unread notifications
         // (avoids accessing a dynamic property which some analyzers flag as undefined).

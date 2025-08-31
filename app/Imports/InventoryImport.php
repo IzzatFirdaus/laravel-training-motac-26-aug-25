@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Models\Inventory;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -74,8 +73,8 @@ class InventoryImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithVa
         $payload = Arr::only($row, $this->columns);
 
         // For non-admins, force ownership to current user
-        if (! Auth::user()?->hasRole('admin')) {
-            $payload['user_id'] = Auth::id();
+        if (! auth()->user()?->hasRole('admin')) {
+            $payload['user_id'] = auth()->id();
         }
 
         if ($this->previewOnly) {
