@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -108,7 +109,7 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
 
         // Prevent a user from deleting themselves via the UI
-        if (auth()->check() && auth()->id() === $user->getKey()) {
+    if (Auth::check() && Auth::id() === $user->getKey()) {
             return redirect()->route('users.index')->with('toast', __('ui.users.cannot_delete_self'));
         }
 

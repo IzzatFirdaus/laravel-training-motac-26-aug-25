@@ -4,13 +4,14 @@ namespace App\Http\Requests;
 
 use App\Models\Shelf;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateInventoryRequest extends FormRequest
 {
     public function authorize(): bool
     {
         // Authorization will be checked in controller after locating the model
-        return auth()->check();
+    return Auth::check();
     }
 
     public function rules(): array

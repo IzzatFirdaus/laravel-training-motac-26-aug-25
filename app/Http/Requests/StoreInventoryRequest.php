@@ -5,13 +5,14 @@ namespace App\Http\Requests;
 use App\Models\Shelf;
 use App\Models\Inventory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreInventoryRequest extends FormRequest
 {
     public function authorize(): bool
     {
         // Use policy to determine if the user may create inventories
-        return auth()->check() && $this->user()->can('create', Inventory::class);
+    return Auth::check() && $this->user()->can('create', Inventory::class);
     }
 
     public function rules(): array

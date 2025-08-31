@@ -12,6 +12,7 @@ use App\Notifications\StoreInventoryNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
@@ -75,10 +76,10 @@ class InventoryController extends Controller
 
         // Only admins may set an arbitrary owner. Regular users always own the
         // inventory they create.
-        if (! auth()->check()) {
+        if (! Auth::check()) {
             $data['user_id'] = null;
-        } elseif (! auth()->user()->hasRole('admin')) {
-            $data['user_id'] = auth()->id();
+        } elseif (! Auth::user()?->hasRole('admin')) {
+            $data['user_id'] = Auth::id();
         } else {
             // Admin: allow provided user_id or null
             $data['user_id'] = $data['user_id'] ?? null;
@@ -170,7 +171,7 @@ class InventoryController extends Controller
         ]);
 
         // Only allow admins to reassign ownership.
-        if (! empty($data['user_id']) && auth()->check() && auth()->user()->hasRole('admin')) {
+    if (! empty($data['user_id']) && Auth::check() && Auth::user()?->hasRole('admin')) {
             $inventory->user_id = $data['user_id'];
         }
 

@@ -3,13 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreVehicleRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->check() && $this->user()->can('create', Vehicle::class);
+    return Auth::check() && $this->user()->can('create', Vehicle::class);
     }
 
     public function rules(): array

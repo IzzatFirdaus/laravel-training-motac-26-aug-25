@@ -3,13 +3,14 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateVehicleRequest extends FormRequest
 {
     public function authorize(): bool
     {
         // Controller will perform model authorization after fetching resource
-        return auth()->check();
+    return Auth::check();
     }
 
     public function rules(): array

@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -73,11 +74,12 @@ class ApplicationController extends Controller
 
         // Allow admins to set an explicit owner; otherwise default to creator when available.
         $userId = null;
-        if (auth()->check()) {
-            if (auth()->user()->hasRole('admin')) {
+        if (Auth::check()) {
+            $currentUser = Auth::user();
+            if ($currentUser && method_exists($currentUser, 'hasRole') && $currentUser->hasRole('admin')) {
                 $userId = $data['user_id'] ?? null;
             } else {
-                $userId = auth()->id();
+                $userId = Auth::id();
             }
         }
 

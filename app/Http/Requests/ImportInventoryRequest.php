@@ -3,13 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ImportInventoryRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->check() && $this->user()->can('create', Inventory::class);
+    return Auth::check() && $this->user()->can('create', Inventory::class);
     }
 
     public function rules(): array
