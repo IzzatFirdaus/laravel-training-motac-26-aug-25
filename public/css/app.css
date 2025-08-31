@@ -1,12 +1,108 @@
-/* Minimal admin styles (StartBootstrap-like) */
-body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color: var(--txt-primary, rgb(17, 24, 39)); background: var(--bg-page, rgb(248, 250, 252)); }
-.navbar { box-shadow: 0 1px 2px rgba(0,0,0,.03); }
-.aside { background: var(--bg-surface, rgb(255, 255, 255)); }
-.vh-100 { min-height:100vh; }
-.myds-btn { display:inline-block; padding:.5rem .75rem; border-radius:.375rem; background: var(--primary, rgb(11, 95, 255)); color: var(--txt-on-primary, rgb(255, 255, 255)); text-decoration:none; }
-.container-fluid { padding-left:0; padding-right:0 }
-/* simple responsive layout */
+/*
+  public/css/app.css
+  Updated to follow MYDS + MyGovEA principles.
+  - Uses MYDS semantic tokens (light/dark)
+  - Accessible focus states (WCAG AA)
+  - Minimal overrides to avoid breaking existing layout
+*/
+
+/* MYDS tokens (light mode) */
+:root {
+  /* Typography */
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Primary + semantic colours (light) */
+  --primary: #2563EB; /* primary-600 */
+  --danger: #DC2626; /* danger-600 */
+  --success: #16A34A; /* success-600 */
+  --warning: #CA8A04; /* warning-600 */
+
+  /* Backgrounds */
+  --bg-page: #FFFFFF; /* White */
+  --bg-surface: #FAFAFA; /* gray-50 */
+  --bg-muted: #F4F4F5; /* gray-100 */
+
+  /* Text */
+  --txt-primary: #18181B; /* gray-900 */
+  --txt-secondary: #3F3F46; /* gray-700 */
+  --txt-muted: #71717A; /* gray-500 */
+  --txt-on-primary: #FFFFFF; /* white */
+
+  /* Outline / focus ring */
+  --otl-default: #F4F4F5; /* otl-divider */
+  --otl-card: #E4E4E7; /* gray-200 */
+  --fr: rgba(150, 183, 255, 0.40); /* fr-primary (light) */
+  --fr-shadow: rgba(150, 183, 255, 0.12);
+
+  /* Motion & radius */
+  --motion-short: 200ms;
+  --radius-s: 6px;
+  --radius-m: 8px;
+}
+
+/* MYDS tokens (dark mode) */
+[data-theme="dark"] {
+  --primary: #6394FF; /* primary-400 in dark */
+  --danger: #F87171; /* danger-400 */
+  --success: #22C55E; /* success-500 */
+  --warning: #FACC15; /* warning-400 */
+
+  --bg-page: #161619; /* gray-930 */
+  --bg-surface: #1D1D21; /* gray-850 */
+  --bg-muted: #27272A; /* gray-800 */
+
+  --txt-primary: #FFFFFF; /* white */
+  --txt-secondary: #E4E4E7; /* gray-200 */
+  --txt-muted: #A1A1AA; /* gray-400 */
+
+  --otl-default: #1D1D21; /* divider in dark */
+  --otl-card: #27272A; /* gray-800 */
+  --fr: rgba(29, 78, 216, 0.40); /* primary-700 40% */
+  --fr-shadow: rgba(29, 78, 216, 0.10);
+}
+
+/* Base */
+html, body { height: 100%; }
+body {
+  font-family: var(--font-body);
+  color: var(--txt-primary);
+  background: var(--bg-page);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.navbar { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03); background: var(--bg-surface); color: var(--txt-primary); }
+.aside { background: var(--bg-surface); color: var(--txt-primary); border-right: 1px solid var(--otl-card); }
+.vh-100 { min-height: 100vh; }
+.container-fluid { padding-left: 0; padding-right: 0; }
+
+/* Buttons (MYDS) */
+.myds-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .75rem; /* ensures ~44px height with line-height */
+  border-radius: var(--radius-s);
+  background: var(--primary);
+  color: var(--txt-on-primary);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background var(--motion-short), box-shadow var(--motion-short), border-color var(--motion-short);
+}
+.myds-btn:hover { filter: brightness(0.95); }
+.myds-btn:active { filter: brightness(0.90); }
+.myds-btn:focus-visible { outline: 2px solid var(--fr); outline-offset: 2px; box-shadow: 0 0 0 4px var(--fr-shadow); }
+.myds-btn[disabled], .myds-btn[aria-disabled="true"] { opacity: .6; cursor: not-allowed; }
+
+/* Simple responsive layout (MyGovEA: clear mobile layout) */
 @media (max-width: 767px) {
-  aside.col-md-2 { display:none }
-  main.col-md-10 { width:100%; }
+  aside.col-md-2 { display: none; }
+  main.col-md-10 { width: 100%; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .myds-btn { transition: none; }
 }

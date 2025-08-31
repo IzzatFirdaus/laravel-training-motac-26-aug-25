@@ -21,7 +21,7 @@ export default function enhanceUsersAutocomplete(containerSelector = '#users-aut
   const form = container.closest('form') || document.querySelector('form');
   const input = form ? form.querySelector('#name') : null;
   const list = container.querySelector('#users-list');
-  const live = container.querySelector('#users-list-live') || null;
+  let live = container.querySelector('#users-list-live') || null;
 
   if (!input || !list) return;
 
@@ -39,9 +39,24 @@ export default function enhanceUsersAutocomplete(containerSelector = '#users-aut
   list.setAttribute('role', 'listbox');
   list.hidden = true;
 
+    // Provide a live region for assistive announcements; allow container to override messages via data attributes
+    if (!live) {
+      live = container.querySelector('#users-list-live');
+    }
+    if (!live) {
+      const el = document.createElement('span');
+      el.id = 'users-list-live';
+      el.setAttribute('aria-live', 'polite');
+      el.className = 'visually-hidden';
+      container.appendChild(el);
+      live = el;
+    }
+
   function announce(text) {
-    if (!live) return;
-    live.textContent = text;
+      if (!live) return;
+      // Allow localized override
+      const localized = container.dataset.announcePrefix ? (container.dataset.announcePrefix + ' ' + text) : text;
+      live.textContent = localized;
   }
 
   function clearList() {
@@ -127,7 +142,9 @@ export default function enhanceUsersAutocomplete(containerSelector = '#users-aut
     });
     list.hidden = false;
     input.setAttribute('aria-expanded', 'true');
-    announce(`${items.length} keputusan ditemui`);
+      // Use dataset override or default Malay string; templates should set data-count-found
+      const foundMsg = container.dataset.countFound || `${items.length} keputusan ditemui`;
+      announce(foundMsg.replace('{count}', items.length));
   }
 
   // keyboard navigation

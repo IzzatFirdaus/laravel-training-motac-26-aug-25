@@ -44,7 +44,11 @@ class ApplicationController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-        return view('application.index', compact('applications', 'inventories', 'q'));
+        return view('application.index', [
+            'applications' => $applications,
+            'inventories' => $inventories,
+            'q' => $q,
+        ]);
     }
 
     public function create(): View
@@ -55,7 +59,10 @@ class ApplicationController extends Controller
         $inventories = Inventory::query()->select('id', 'name')->orderBy('name')->limit(200)->get();
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-        return view('application.create', compact('inventories', 'users'));
+        return view('application.create', [
+            'inventories' => $inventories,
+            'users' => $users,
+        ]);
     }
 
     public function store(StoreApplicationRequest $request): RedirectResponse
@@ -88,14 +95,14 @@ class ApplicationController extends Controller
     {
         $this->authorize('view', $application);
 
-        return view('application.show', compact('application'));
+        return view('application.show', ['application' => $application]);
     }
 
     public function edit(Application $application): View
     {
         $this->authorize('update', $application);
 
-        return view('application.edit', compact('application'));
+        return view('application.edit', ['application' => $application]);
     }
 
     public function update(UpdateApplicationRequest $request, Application $application): RedirectResponse

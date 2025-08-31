@@ -16,18 +16,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const perPage = document.getElementById('per_page');
   if (perPage) {
-    perPage.addEventListener('change', () => form.submit());
+    if (!perPage.dataset.mydsInit) {
+      perPage.dataset.mydsInit = '1';
+      perPage.addEventListener('change', () => form.submit());
+    }
   }
 
   const owner = document.getElementById('owner_id');
   if (owner) {
-    owner.addEventListener('change', () => form.submit());
+    if (!owner.dataset.mydsInit) {
+      owner.dataset.mydsInit = '1';
+      owner.addEventListener('change', () => form.submit());
+    }
   }
 
   const search = document.getElementById('search');
   if (search) {
-    const submitSearch = debounce(() => form.submit(), 400);
-    search.addEventListener('input', submitSearch);
+    // Mark input for aria-describedby / live announcements
+    if (!search.getAttribute('aria-label') && search.dataset.mydsLabel) search.setAttribute('aria-label', search.dataset.mydsLabel);
+    const submitSearch = debounce(() => form.submit(), Number(search.dataset.debounce) || 400);
+    if (!search.dataset.mydsInit) {
+      search.dataset.mydsInit = '1';
+      search.addEventListener('input', submitSearch);
+    }
   }
 });
 

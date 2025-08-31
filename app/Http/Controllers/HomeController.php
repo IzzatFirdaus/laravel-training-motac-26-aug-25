@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\Application;
+use App\Models\Inventory;
 use App\Models\User;
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
-use App\Models\Inventory;
+
 class HomeController extends Controller
 {
     /**
@@ -60,19 +61,32 @@ class HomeController extends Controller
         // Prefer passing a small slice of notifications to the view to avoid querying inside the navbar
         $unread = collect();
         $unreadCount = 0;
-        if (!Auth::check()){
+        if (! Auth::check()) {
 
-        return view('home', compact('inventoriesCount', 'vehiclesCount', 'usersCount', 'applicationsCount', 'unread', 'unreadCount'));
-    }
-            try {
-                $unread = Auth::user()->unreadNotifications->take(10);
-                $unreadCount = $unread->count();
-            } catch (Throwable $e) {
-                $unread = collect();
-                $unreadCount = 0;
-            }
+            return view('home', [
+                'inventoriesCount' => $inventoriesCount,
+                'vehiclesCount' => $vehiclesCount,
+                'usersCount' => $usersCount,
+                'applicationsCount' => $applicationsCount,
+                'unread' => $unread,
+                'unreadCount' => $unreadCount,
+            ]);
+        }
+        try {
+            $unread = Auth::user()->unreadNotifications->take(10);
+            $unreadCount = $unread->count();
+        } catch (Throwable $e) {
+            $unread = collect();
+            $unreadCount = 0;
+        }
 
-
-        return view('home', compact('inventoriesCount', 'vehiclesCount', 'usersCount', 'applicationsCount', 'unread', 'unreadCount'));
+        return view('home', [
+            'inventoriesCount' => $inventoriesCount,
+            'vehiclesCount' => $vehiclesCount,
+            'usersCount' => $usersCount,
+            'applicationsCount' => $applicationsCount,
+            'unread' => $unread,
+            'unreadCount' => $unreadCount,
+        ]);
     }
 }

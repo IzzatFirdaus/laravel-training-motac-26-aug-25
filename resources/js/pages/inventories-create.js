@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!warehouseSelect || !shelfSelect) return;
 
+  // Prevent double-initialisation when this script is included multiple times
+  if (warehouseSelect.dataset.mydsInit === '1') return;
+  warehouseSelect.dataset.mydsInit = '1';
+
   const warehousesUrl = warehouseSelect.dataset.warehousesUrl || '/warehouses';
   const initialWarehouse = warehouseSelect.dataset.initialWarehouse || '';
   const initialShelf = shelfSelect.dataset.initialShelf || '';
@@ -25,11 +29,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function populateSelect(select, items, selectedValue) {
-    select.innerHTML = '';
-    const empty = document.createElement('option');
-    empty.value = '';
-    empty.textContent = '(Pilih)';
-    select.appendChild(empty);
+  if (!select) return;
+  select.innerHTML = '';
+  const empty = document.createElement('option');
+  empty.value = '';
+  empty.textContent = select.dataset.emptyText || '(Pilih)';
+  select.appendChild(empty);
+
+  // accessibility: allow an explicit aria-label or derive one from dataset/name
+  if (!select.getAttribute('aria-label')) select.setAttribute('aria-label', select.dataset.ariaLabel || select.name || 'Pilih');
 
     (items || []).forEach(it => {
       const opt = document.createElement('option');

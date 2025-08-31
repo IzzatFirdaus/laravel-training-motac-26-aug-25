@@ -29,12 +29,31 @@ document.addEventListener('DOMContentLoaded', function () {
       li.className = 'list-group-item list-group-item-action';
       li.textContent = u.name;
       li.setAttribute('role', 'option');
+      li.setAttribute('tabindex', '0');
+
+      // Keyboard support for selection
+      li.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          this.click();
+        }
+      });
+
       li.addEventListener('click', () => {
         if (ownerSelect) {
           const existing = Array.from(ownerSelect.options).find(o => o.value === String(u.id));
-          if (existing) existing.selected = true;
-          else {
-            const opt = document.createElement('option');
+      // Idempotent guard and live region setup for the users-autocomplete widget
+      if (usersWrapper && usersWrapper.dataset.mydsInit === '1') {
+        // already initialized; continue to ensure other parts of this file run
+      } else if (usersWrapper) {
+        usersWrapper.dataset.mydsInit = '1';
+        if (!usersWrapper.querySelector('#users-list-live')) {
+          const live = document.createElement('span');
+          live.id = 'users-list-live';
+          live.setAttribute('aria-live', 'polite');
+          live.className = 'visually-hidden';
+          usersWrapper.appendChild(live);
+        }
             opt.value = u.id; opt.text = u.name; opt.selected = true;
             ownerSelect.appendChild(opt);
           }

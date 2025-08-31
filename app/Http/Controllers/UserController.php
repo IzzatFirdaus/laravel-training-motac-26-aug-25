@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $users = User::orderBy('created_at', 'desc')->paginate(15);
 
-        return view('user.index', compact('users'));
+        return view('user.index', ['users' => $users]);
     }
 
     /**
@@ -61,7 +61,7 @@ class UserController extends Controller
         $user = User::with('inventories', 'vehicles')->findOrFail($userId);
         $this->authorize('view', $user);
 
-        return view('user.show', compact('user'));
+        return view('user.show', ['user' => $user]);
     }
 
     /**
@@ -72,7 +72,7 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
         $this->authorize('update', $user);
 
-        return view('user.edit', compact('user'));
+        return view('user.edit', ['user' => $user]);
     }
 
     /**

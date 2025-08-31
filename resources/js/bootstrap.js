@@ -24,6 +24,11 @@ import axios from 'axios';
 
 window.axios = window.axios || axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-// If Laravel sets XSRF cookie, axios will send it automatically. Ensure backend cookie name matches axios defaults if customised.
-// No throw; axios not required for all pages.
+// If Laravel sets XSRF cookie, axios will send it automatically. Optionally read CSRF token meta and set header for non-cookie setups.
+if (!window.axios._mydsCsrfSetup) {
+	window.axios._mydsCsrfSetup = true;
+	const meta = document.querySelector('meta[name="csrf-token"]');
+	if (meta && meta.content) {
+		window.axios.defaults.headers.common['X-CSRF-TOKEN'] = meta.content;
+	}
+}

@@ -69,19 +69,21 @@
                 e.preventDefault();
                 const action = el.getAttribute('data-demo') || 'demo';
                 const model = el.getAttribute('data-model') || '';
+                const prefix = el.dataset.demoPrefix || '';
                 const message = model ? `${model} — ${action} demo` : `${action} demo`;
 
+                // Use dataset-provided localized messages when present
                 if (action === 'store') {
-                    showToast(`${message} (simulasi: gunakan borang Cipta)`, 'success');
+                    showToast(el.dataset.demoStoreMessage || `${prefix} ${message} (simulasi: gunakan borang Cipta)`, 'success');
                     return;
                 }
 
                 if (action === 'update') {
-                    showToast(`${message} (simulasi: gunakan borang Ubah)`, 'success');
+                    showToast(el.dataset.demoUpdateMessage || `${prefix} ${message} (simulasi: gunakan borang Ubah)`, 'success');
                     return;
                 }
 
-                showToast(message, 'info');
+                showToast(el.dataset.demoMessage || message, 'info');
             });
         });
     }

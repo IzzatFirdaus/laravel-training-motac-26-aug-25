@@ -25,11 +25,6 @@ return [
     'import_export_button' => 'Import/Export',
     'new_inventory_created' => 'Inventori baru telah dicipta',
     'view_inventory_button' => 'Lihat Inventori',
-    'welcome_title' => 'Selamat Datang — :app',
-    'welcome_heading' => 'Selamat Datang ke :app',
-    'welcome_description' => 'Sistem pengurusan inventori dan kenderaan yang dibangunkan mengikut prinsip MyGOVEA dan Malaysia Government Design System (MYDS).',
-    'features_heading' => 'Ciri-ciri Utama Sistem',
-    'features_sub' => 'Sistem ini dibangunkan mengikut prinsip berpaksikan rakyat dan standard MYDS',
     'features' => [
         'inventory' => [
             'title' => 'Pengurusan Inventori',
@@ -220,8 +215,8 @@ return [
         'created' => 'Inventori berjaya dicipta',
         'updated' => 'Inventori dikemaskini',
         'deleted' => 'Inventori berjaya dipadam',
-        'restored' => 'Inventori telah dipulihkan',
-        'force_deleted' => 'Inventori telah dipadam secara kekal',
+    'restored' => 'Inventori telah dipulihkan.',
+    'force_deleted' => 'Inventori telah dipadam secara kekal.',
     ],
     'applications' => [
         'created' => 'Permohonan berjaya dicipta',

@@ -64,8 +64,8 @@ window.MYDS.handleDestroy = function (btn, options = {}) {
       showCancelButton: true,
       confirmButtonColor: confirmColor,
       cancelButtonColor: cancelColor,
-      confirmButtonText: confirmText,
-      cancelButtonText: cancelText,
+      confirmButtonText: options.confirmText || confirmText,
+      cancelButtonText: options.cancelText || cancelText,
     }).then((result) => {
       if (result.isConfirmed) {
         const form = btn.closest('form');

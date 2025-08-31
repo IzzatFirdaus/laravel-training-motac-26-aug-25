@@ -20,6 +20,7 @@ export default defineConfig({
                 'resources/js/pages/vehicles-index.js',
                 // Feature-level entry points referenced directly from partials
                 'resources/js/features/application-form.js',
+                'resources/js/features/footer.js',
             ],
             refresh: true,
         }),

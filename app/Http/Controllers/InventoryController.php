@@ -45,7 +45,10 @@ class InventoryController extends Controller
         // Provide owners list for filter UI
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-        return view('inventories.index', compact('inventories', 'users'));
+        return view('inventories.index', [
+            'inventories' => $inventories,
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -59,7 +62,7 @@ class InventoryController extends Controller
         // Fetch all users ordered by name to populate the dropdown in the form using Eloquent
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-        return view('inventories.create', compact('users'));
+        return view('inventories.create', ['users' => $users]);
     }
 
     /**
@@ -125,7 +128,7 @@ class InventoryController extends Controller
         // Authorize that the current user can view this inventory
         $this->authorize('view', $inventory);
 
-        return view('inventories.show', compact('inventory'));
+        return view('inventories.show', ['inventory' => $inventory]);
     }
 
     public function edit($inventoryId): View
@@ -138,7 +141,10 @@ class InventoryController extends Controller
         // Authorize the current user may update this inventory
         $this->authorize('update', $inventory);
 
-        return view('inventories.edit', compact('inventory', 'users'));
+        return view('inventories.edit', [
+            'inventory' => $inventory,
+            'users' => $users,
+        ]);
     }
 
     /**

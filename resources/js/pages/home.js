@@ -6,11 +6,18 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.myds-card--clickable, [data-href]').forEach(function (card) {
+        // Avoid double init
+        if (card.dataset.mydsInit === '1') return;
+        card.dataset.mydsInit = '1';
+
         if (!card.hasAttribute('role')) card.setAttribute('role', 'link');
         if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
 
         const href = card.dataset.href || card.getAttribute('href') || card.getAttribute('data-href');
         if (!href) return;
+
+        // Ensure minimum touch target by annotating for CSS if necessary
+        if (!card.hasAttribute('data-touch-target')) card.setAttribute('data-touch-target', '48');
 
         function go() {
             // Respect target attribute if set

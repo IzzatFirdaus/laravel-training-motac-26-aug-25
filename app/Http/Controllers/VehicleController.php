@@ -38,7 +38,10 @@ class VehicleController extends Controller
 
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-        return view('vehicles.index', compact('vehicles', 'users'));
+        return view('vehicles.index', [
+            'vehicles' => $vehicles,
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -68,7 +71,7 @@ class VehicleController extends Controller
         // Eagerly load users for owner assignment dropdown (admins only in UI)
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-        return view('vehicles.create', compact('users'));
+        return view('vehicles.create', ['users' => $users]);
     }
 
     /**
@@ -108,7 +111,7 @@ class VehicleController extends Controller
 
         $this->authorize('view', $vehicle);
 
-        return view('vehicles.show', compact('vehicle'));
+        return view('vehicles.show', ['vehicle' => $vehicle]);
     }
 
     /**
@@ -143,7 +146,10 @@ class VehicleController extends Controller
 
         $this->authorize('update', $vehicle);
 
-        return view('vehicles.edit', compact('vehicle', 'users'));
+        return view('vehicles.edit', [
+            'vehicle' => $vehicle,
+            'users' => $users,
+        ]);
     }
 
     /**

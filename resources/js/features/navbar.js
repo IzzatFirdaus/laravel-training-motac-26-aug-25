@@ -32,8 +32,7 @@
     if (!btn) return;
     // close other menus
     document.querySelectorAll('.myds-nav-link--toggle[aria-expanded="true"]').forEach((other) => {
-      if (other === btn) return;
-      closeMenu(other);
+      if (other !== btn) closeMenu(other);
     });
     const menu = getMenuForButton(btn);
     btn.setAttribute('aria-expanded', 'true');
@@ -66,28 +65,28 @@
   }
 
   // Mobile nav toggle
-  document.addEventListener('DOMContentLoaded', () => {
+  function initNavToggle() {
     const navToggle = document.getElementById('navToggle');
     const navMain = document.getElementById('navMain');
-    if (navToggle && navMain) {
-      if (!navToggle._navToggleAttached) {
-        navToggle._navToggleAttached = true;
-        navToggle.addEventListener('click', () => {
-          const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-          navToggle.setAttribute('aria-expanded', String(!expanded));
-          navMain.hidden = expanded;
-        });
-      }
+    if (navToggle && navMain && !navToggle._navToggleAttached) {
+      navToggle._navToggleAttached = true;
+      navToggle.addEventListener('click', () => {
+        const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', String(!expanded));
+        navMain.hidden = expanded;
+      });
     }
+  }
 
-    attachMenuButtons();
+  function attachEventListeners() {
+    if (attachEventListeners._attached) return;
+    attachEventListeners._attached = true;
 
     // close menus on outside click
     document.addEventListener('click', (e) => {
       const target = e.target;
       if (target.closest && (target.closest('.myds-dropdown') || isMenuButton(target) || target.closest('.myds-nav-link--toggle'))) {
-        // clicked inside a menu area: ignore
-        return;
+        return; // clicked inside a menu area: ignore
       }
       document.querySelectorAll('.myds-nav-link--toggle[aria-expanded="true"]').forEach((btn) => closeMenu(btn));
     });
@@ -103,46 +102,53 @@
         if (navMain) navMain.hidden = true;
       }
     });
-  });
+  }
 
-  // Theme toggle wiring (useful if theme button exists)
-  document.addEventListener('DOMContentLoaded', () => {
+  function initThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-toggle-icon');
-    if (!themeToggle) return;
+    if (!themeToggle || themeToggle._themeAttached) return;
+    themeToggle._themeAttached = true;
 
     function applyTheme(theme) {
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-        document.documentElement.setAttribute('data-theme', 'dark');
-        if (themeIcon) themeIcon.className = 'bi bi-moon-fill';
-        themeToggle.setAttribute('aria-pressed', 'true');
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.documentElement.setAttribute('data-theme', 'light');
-        if (themeIcon) themeIcon.className = 'bi bi-sun-fill';
-        themeToggle.setAttribute('aria-pressed', 'false');
-      }
+      document.documentElement.setAttribute('data-theme', theme);
+      try { document.documentElement.dataset.theme = theme; } catch (e) { /* ignore */ }
+      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      if (themeIcon) themeIcon.className = 'bi ' + (theme === 'dark' ? 'bi-moon-fill' : 'bi-sun-fill');
       try { localStorage.setItem('myds-theme', theme); } catch (e) { /* ignore */ }
     }
 
-    // init
-    (function initTheme() {
-      try {
-        const stored = localStorage.getItem('myds-theme');
-        const pref = stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        applyTheme(pref);
-      } catch (e) {
-        applyTheme('light');
-      }
-    }());
-
-    if (!themeToggle._themeAttached) {
-      themeToggle._themeAttached = true;
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-        applyTheme(current === 'dark' ? 'light' : 'dark');
-      });
+    // init theme
+    try {
+      const stored = localStorage.getItem('myds-theme');
+      const pref = stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      applyTheme(pref);
+    } catch (e) {
+      applyTheme('light');
     }
-  });
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  function init() {
+    if (init._attached) return;
+    init._attached = true;
+    initNavToggle();
+    attachMenuButtons();
+    attachEventListeners();
+    initThemeToggle();
+  }
+
+  // Expose for manual calls
+  window.MYDS = window.MYDS || {};
+  window.MYDS.initNavbar = init;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();

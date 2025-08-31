@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 class NotificationsController extends Controller
 {
     public function __construct()
@@ -18,7 +17,7 @@ class NotificationsController extends Controller
         $user = auth()->user();
         $notifications = $user->notifications()->orderBy('created_at', 'desc')->paginate(20);
 
-        return view('notifications.index', compact('notifications'));
+        return view('notifications.index', ['notifications' => $notifications]);
     }
 
     /**
@@ -30,7 +29,7 @@ class NotificationsController extends Controller
         $notification = $user->notifications()->where('id', $id)->firstOrFail();
         /** @var \Illuminate\Notifications\DatabaseNotification $notification */
         if (is_null($notification->read_at) && method_exists($notification, 'markAsRead')) {
-                $notification->markAsRead();
+            $notification->markAsRead();
 
         }
 
@@ -52,7 +51,7 @@ class NotificationsController extends Controller
 
         /** @var \Illuminate\Notifications\DatabaseNotification $notification */
         if (is_null($notification->read_at) && method_exists($notification, 'markAsRead')) {
-                $notification->markAsRead();
+            $notification->markAsRead();
 
         }
 

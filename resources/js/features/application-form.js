@@ -1,10 +1,10 @@
 /**
  * application-form.js
  * Enhancements for Application forms:
- * - users autocomplete (re-usable)
+ * - users autocomplete (re-usable, ARIA-compliant)
  * - inventory -> vehicle dependent select population
  *
- * Idempotent: safe to include on both create/edit pages.
+ * MYDS/MyGOVEA: Idempotent, accessible, and citizen-centric form enhancements.
  */
 export default function enhanceApplicationForm(root = document) {
   if (!root) root = document;
@@ -54,6 +54,7 @@ export default function enhanceApplicationForm(root = document) {
       nameInput.value = (nameInput.value || '').replace(/\s*\u2014\s*.*$/, '').trim() + ' — ' + u.name;
       usersList.classList.add('visually-hidden');
       usersList.setAttribute('aria-hidden', 'true');
+      nameInput.setAttribute('aria-expanded', 'false');
       nameInput.focus();
     }
 
@@ -65,15 +66,29 @@ export default function enhanceApplicationForm(root = document) {
         usersList.setAttribute('aria-hidden', 'true');
         return;
       }
+      usersList.setAttribute('role', 'listbox');
+      usersList.setAttribute('aria-label', 'Senarai pengguna berkaitan');
       arr.forEach((u) => {
         const li = document.createElement('li');
         li.className = 'myds-autocomplete-item';
         li.setAttribute('role', 'option');
         li.setAttribute('tabindex', '0');
+        li.setAttribute('aria-describedby', `user-${u.id}-desc`);
         li.textContent = u.name;
         li.addEventListener('click', () => selectUser(u));
         li.addEventListener('keydown', (ev) => {
           if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectUser(u); }
+          else if (ev.key === 'ArrowDown') {
+            ev.preventDefault();
+            const next = li.nextElementSibling;
+            if (next) next.focus();
+          }
+          else if (ev.key === 'ArrowUp') {
+            ev.preventDefault();
+            const prev = li.previousElementSibling;
+            if (prev) prev.focus();
+            else nameInput.focus();
+          }
         });
         usersList.appendChild(li);
       });
@@ -82,20 +97,41 @@ export default function enhanceApplicationForm(root = document) {
     }
 
     if (!nameInput._appFormHandlersAttached) {
+      nameInput.setAttribute('aria-autocomplete', 'list');
+      nameInput.setAttribute('aria-expanded', 'false');
+      if (usersList) nameInput.setAttribute('aria-controls', usersList.id || 'users-list');
+
       nameInput.addEventListener('input', (ev) => {
         const q = nameInput.value.trim();
         if (!q) {
           usersList.innerHTML = '';
           usersList.classList.add('visually-hidden');
           usersList.setAttribute('aria-hidden', 'true');
+          nameInput.setAttribute('aria-expanded', 'false');
           return;
         }
+        nameInput.setAttribute('aria-expanded', 'true');
         renderUsers(q);
       });
 
       nameInput.addEventListener('focus', () => {
         const q = nameInput.value.trim();
-        if (q) renderUsers(q);
+        if (q) {
+          nameInput.setAttribute('aria-expanded', 'true');
+          renderUsers(q);
+        }
+      });
+
+      nameInput.addEventListener('keydown', (ev) => {
+        if (ev.key === 'ArrowDown') {
+          ev.preventDefault();
+          const firstItem = usersList.querySelector('[role="option"]');
+          if (firstItem) firstItem.focus();
+        } else if (ev.key === 'Escape') {
+          usersList.classList.add('visually-hidden');
+          usersList.setAttribute('aria-hidden', 'true');
+          nameInput.setAttribute('aria-expanded', 'false');
+        }
       });
 
       document.addEventListener('click', (ev) => {
@@ -103,6 +139,7 @@ export default function enhanceApplicationForm(root = document) {
           if (!usersWrapper.contains(ev.target) && ev.target !== nameInput) {
             usersList.classList.add('visually-hidden');
             usersList.setAttribute('aria-hidden', 'true');
+            nameInput.setAttribute('aria-expanded', 'false');
           }
         } catch (e) { /* ignore */ }
       });
@@ -171,3 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     enhanceApplicationForm(root);
   } catch (err) { /* non-fatal */ }
 });
+
+// Expose for manual initialization
+window.MYDS = window.MYDS || {};
+window.MYDS.enhanceApplicationForm = enhanceApplicationForm;

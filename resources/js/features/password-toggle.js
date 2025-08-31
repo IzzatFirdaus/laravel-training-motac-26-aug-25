@@ -5,7 +5,8 @@
 
   function setIcon(btn, visible) {
     if (!btn) return;
-    btn.innerHTML = visible ? '<i class="bi bi-eye-slash" aria-hidden="true"></i>' : '<i class="bi bi-eye" aria-hidden="true"></i>';
+  // Use aria-hidden on decorative icons; button should keep an accessible name via aria-label or dataset
+  btn.innerHTML = visible ? '<i class="bi bi-eye-slash" aria-hidden="true"></i>' : '<i class="bi bi-eye" aria-hidden="true"></i>';
   }
 
   function normalizeTargetId(v) {
@@ -18,10 +19,14 @@
     if (!buttons || !buttons.length) return;
 
     buttons.forEach(function (btn) {
-      if (btn._pwToggleAttached) return;
-      btn._pwToggleAttached = true;
+  if (btn._pwToggleAttached) return;
+  btn._pwToggleAttached = true;
 
-      const rawTarget = btn.getAttribute('data-target') || btn.getAttribute('aria-controls');
+  // Mark as button for assistive tech and ensure keyboard focus
+  if (!btn.hasAttribute('role')) btn.setAttribute('role', 'button');
+  if (!btn.hasAttribute('tabindex')) btn.setAttribute('tabindex', '0');
+
+  const rawTarget = btn.getAttribute('data-target') || btn.getAttribute('aria-controls');
       const targetId = normalizeTargetId(rawTarget);
       let input = targetId ? document.getElementById(targetId) : null;
 
@@ -31,15 +36,27 @@
       }
       if (!input) return;
 
-      // initialize icon based on current visibility
+      // initialize icon based on current visibility and set accessible label
       const isPwd = input.getAttribute('type') === 'password';
       setIcon(btn, isPwd);
+      if (!btn.getAttribute('aria-label')) {
+        btn.setAttribute('aria-label', btn.dataset.ariaLabel || (isPwd ? 'Tunjukkan kata laluan' : 'Sembunyikan kata laluan'));
+      }
 
-      btn.addEventListener('click', () => {
+      // Toggle on click & keyboard
+      function toggleVisibility(e) {
+        if (e) e.preventDefault();
         const currentlyPwd = input.getAttribute('type') === 'password';
-        try { input.setAttribute('type', currentlyPwd ? 'text' : 'password'); } catch (e) { /* ignore */ }
+        try { input.setAttribute('type', currentlyPwd ? 'text' : 'password'); } catch (err) { /* ignore */ }
         setIcon(btn, !currentlyPwd);
         try { input.focus(); } catch (e) { /* ignore */ }
+        // update aria-label after toggle
+        try { btn.setAttribute('aria-label', btn.dataset.ariaLabel || (!currentlyPwd ? 'Tunjukkan kata laluan' : 'Sembunyikan kata laluan')); } catch (e) {}
+      }
+
+      btn.addEventListener('click', toggleVisibility);
+      btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { toggleVisibility(e); }
       });
     });
   }

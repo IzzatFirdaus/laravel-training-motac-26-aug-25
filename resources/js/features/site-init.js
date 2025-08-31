@@ -41,7 +41,7 @@
         const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
         const next = current === 'dark' ? 'light' : 'dark';
         setTheme(next);
-        try { localStorage.setItem('myds-theme', next); } catch (e) { /* ignore */ }
+  try { localStorage.setItem('myds-theme', next); } catch (e) { /* ignore */ }
       });
     }
   }
@@ -81,15 +81,22 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  function init(root = document) {
+    if (init._attached) return;
+    init._attached = true;
     initTheme();
     // non-blocking warehouse loader
     setTimeout(loadWarehouses, 0);
     wireSkipLink();
-  });
-  window.addEventListener('load', function () {
-    initTheme();
-    setTimeout(loadWarehouses, 0);
-    wireSkipLink();
-  });
+  }
+
+  // Expose for programmatic init
+  window.MYDS = window.MYDS || {};
+  window.MYDS.initSite = init;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { init(document); });
+  } else {
+    init(document);
+  }
 })();

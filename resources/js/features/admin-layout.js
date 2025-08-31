@@ -57,14 +57,21 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function init() {
+    if (init._attached) return;
+    init._attached = true;
     wireSidebarToggle();
     wireSkipLink();
-  });
+  }
 
-  window.addEventListener('load', () => {
-    wireSidebarToggle();
-    wireSkipLink();
-  });
+  // Expose for manual initialization
+  window.MYDS = window.MYDS || {};
+  window.MYDS.initAdminLayout = init;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();

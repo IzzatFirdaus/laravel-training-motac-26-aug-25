@@ -32,24 +32,44 @@
       if (btn._clipboardAttached) return;
       btn._clipboardAttached = true;
 
-      const originalText = (btn.textContent || '').trim();
-      const live = document.createElement('span');
-      live.setAttribute('aria-live', 'polite');
-      live.className = 'visually-hidden';
-      btn.appendChild(live);
+      // Ensure the element is presented as a button to assistive tech
+      if (!btn.hasAttribute('role')) btn.setAttribute('role', 'button');
+      if (!btn.hasAttribute('tabindex')) btn.setAttribute('tabindex', '0');
 
-      btn.addEventListener('click', function () {
+      const originalText = (btn.textContent || '').trim();
+
+      // Provide a dedicated live region (not visible) for announcements
+      let live = btn.querySelector('[aria-live]');
+      if (!live) {
+        live = document.createElement('span');
+        live.setAttribute('aria-live', 'polite');
+        live.className = 'visually-hidden';
+        btn.appendChild(live);
+      }
+
+      // Use dataset fallbacks for copy messages so templates can localize
+      const successText = btn.dataset.copySuccess || 'Pautan disalin ke papan klip';
+      const buttonSuccessLabel = btn.dataset.copyLabelSuccess || 'Disalin';
+      const failureText = btn.dataset.copyFailure || 'Gagal menyalin pautan';
+
+      // Ensure accessible name exists
+      if (!btn.getAttribute('aria-label')) {
+        btn.setAttribute('aria-label', btn.dataset.copyAriaLabel || originalText || 'Salin pautan');
+      }
+
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
         const url = btn.getAttribute('data-copy-url') || '';
         copyToClipboard(url).then(function () {
           // Temporary UI feedback
-          try { btn.innerText = 'Disalin'; } catch (e) { /* ignore */ }
-          try { live.textContent = 'Pautan disalin ke papan klip'; } catch (e) {}
+          try { btn.textContent = buttonSuccessLabel; } catch (e) { /* ignore */ }
+          try { live.textContent = successText; } catch (e) {}
           setTimeout(function () {
-            try { btn.innerText = originalText || 'Salin pautan'; } catch (e) {}
+            try { btn.textContent = originalText || (btn.dataset.copyLabel || 'Salin pautan'); } catch (e) {}
             try { live.textContent = ''; } catch (e) {}
           }, 1500);
         }).catch(function () {
-          try { alert('Gagal menyalin pautan'); } catch (e) {}
+          try { live.textContent = failureText; } catch (e) {}
         });
       });
     });

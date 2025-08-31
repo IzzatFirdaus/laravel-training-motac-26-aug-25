@@ -84,16 +84,16 @@ Route::get('/inventories/store', function () {
 });
 
 // Route to show a single inventory item (limit {inventory} to numeric IDs to avoid colliding with static paths)
-Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->where('number', 'inventory')->name('inventories.show');
+Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->where('inventory', '\\d+')->name('inventories.show');
 
 // Route to edit a single inventory item (use conventional /{id}/edit path to avoid name collision)
-Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])->where('number', 'inventory')->name('inventories.edit');
+Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])->where('inventory', '\\d+')->name('inventories.edit');
 
 // Route to update an inventory item (using POST instead of PATCH for environments that prefer POST)
-Route::post('/inventories/{inventory}', [InventoryController::class, 'update'])->where('number', 'inventory')->name('inventories.update');
+Route::post('/inventories/{inventory}', [InventoryController::class, 'update'])->where('inventory', '\\d+')->name('inventories.update');
 
 // Route to destroy an inventory item (using POST to a /destroy endpoint)
-Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'destroy'])->where('number', 'inventory')->name('inventories.destroy');
+Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'destroy'])->where('inventory', '\\d+')->name('inventories.destroy');
 
 // Deleted Inventory routes (for soft-deleted items)
 
@@ -101,12 +101,12 @@ Route::post('/inventories/{inventory}/destroy', [InventoryController::class, 'de
 Route::get('/inventories/deleted', [DeletedInventoryController::class, 'index'])->name('inventories.deleted.index');
 
 // Route to restore a soft-deleted inventory
-Route::post('/inventories/{inventory}/restore', [DeletedInventoryController::class, 'restore'])->where('number', 'inventory')
+Route::post('/inventories/{inventory}/restore', [DeletedInventoryController::class, 'restore'])->where('inventory', '\\d+')
     ->name('inventories.restore')
     ->withTrashed();
 
 // Route to permanently delete a soft-deleted inventory
-Route::post('/inventories/{inventory}/force-delete', [DeletedInventoryController::class, 'forceDelete'])->where('number', 'inventory')
+Route::post('/inventories/{inventory}/force-delete', [DeletedInventoryController::class, 'forceDelete'])->where('inventory', '\\d+')
     ->name('inventories.force-delete')
     ->withTrashed();
 

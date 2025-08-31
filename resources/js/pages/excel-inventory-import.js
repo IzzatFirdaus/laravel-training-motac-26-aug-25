@@ -18,19 +18,23 @@
 
     if (!fileInput || !fileNameEl || !fileSelectLabel) return;
 
-    if (!fileSelectLabel._clickAttached) {
-      fileSelectLabel._clickAttached = true;
+    // idempotent click wiring
+    if (!fileSelectLabel.dataset.mydsClick) {
+      fileSelectLabel.dataset.mydsClick = '1';
       fileSelectLabel.addEventListener('click', () => fileInput.click());
     }
 
-    if (!fileInput._changeAttached) {
-      fileInput._changeAttached = true;
+    // ensure fileNameEl has an aria-live region for announcements
+    if (!fileNameEl.getAttribute('aria-live')) fileNameEl.setAttribute('aria-live', 'polite');
+
+    if (!fileInput.dataset.mydsChange) {
+      fileInput.dataset.mydsChange = '1';
       fileInput.addEventListener('change', () => {
         const f = fileInput.files && fileInput.files[0];
         if (f) {
           fileNameEl.textContent = `${f.name} (${bytesToKB(f.size)} KB)`;
         } else {
-          fileNameEl.textContent = 'Tiada fail dipilih';
+          fileNameEl.textContent = fileNameEl.dataset.emptyText || 'Tiada fail dipilih';
         }
       });
     }
@@ -44,20 +48,22 @@
 
     if (!reuploadFile || !reuploadFlag || !reuploadFilename || !reuploadLabel) return;
 
-    if (!reuploadLabel._clickAttached) {
-      reuploadLabel._clickAttached = true;
+    if (!reuploadLabel.dataset.mydsClick) {
+      reuploadLabel.dataset.mydsClick = '1';
       reuploadLabel.addEventListener('click', () => reuploadFile.click());
     }
 
-    if (!reuploadFile._changeAttached) {
-      reuploadFile._changeAttached = true;
+    if (!reuploadFilename.getAttribute('aria-live')) reuploadFilename.setAttribute('aria-live', 'polite');
+
+    if (!reuploadFile.dataset.mydsChange) {
+      reuploadFile.dataset.mydsChange = '1';
       reuploadFile.addEventListener('change', () => {
         const f = reuploadFile.files && reuploadFile.files[0];
         if (f) {
           reuploadFilename.textContent = `${f.name} (${bytesToKB(f.size)} KB)`;
           reuploadFlag.value = '1';
         } else {
-          reuploadFilename.textContent = 'Tiada fail baru dipilih';
+          reuploadFilename.textContent = reuploadFilename.dataset.emptyText || 'Tiada fail baru dipilih';
           reuploadFlag.value = '0';
         }
       });

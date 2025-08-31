@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Inventory;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -38,7 +38,10 @@ class DeletedInventoryController extends Controller
 
         $users = User::query()->select('id', 'name')->orderBy('name')->get();
 
-        return view('inventories.deleted.index', compact('deletedInventories', 'users'));
+        return view('inventories.deleted.index', [
+            'deletedInventories' => $deletedInventories,
+            'users' => $users,
+        ]);
     }
 
     /**
