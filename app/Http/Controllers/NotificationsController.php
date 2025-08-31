@@ -30,10 +30,9 @@ class NotificationsController extends Controller
         $user = Auth::user();
         $notification = $user->notifications()->where('id', $id)->firstOrFail();
         /** @var \Illuminate\Notifications\DatabaseNotification $notification */
-        if (is_null($notification->read_at)) {
-            if (method_exists($notification, 'markAsRead')) {
+        if (is_null($notification->read_at) && method_exists($notification, 'markAsRead')) {
                 $notification->markAsRead();
-            }
+            
         }
 
         $data = $notification->data ?? [];
@@ -53,10 +52,9 @@ class NotificationsController extends Controller
         $notification = $user->notifications()->where('id', $id)->firstOrFail();
 
         /** @var \Illuminate\Notifications\DatabaseNotification $notification */
-        if (is_null($notification->read_at)) {
-            if (method_exists($notification, 'markAsRead')) {
+        if (is_null($notification->read_at) && method_exists($notification, 'markAsRead')) {
                 $notification->markAsRead();
-            }
+            
         }
 
         return redirect()->back()->with('status', __('ui.notifications.marked_read'));

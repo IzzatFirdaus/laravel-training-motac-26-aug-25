@@ -46,12 +46,13 @@ class StoreInventoryRequest extends FormRequest
         $validator->after(function ($validator) {
             $wid = $this->input('warehouse_id');
             $sid = $this->input('shelf_id');
-            if ($wid && $sid) {
+            if (!($wid && $sid)){
+        return;} 
                 $shelf = Shelf::find($sid);
                 if (! $shelf || (string) $shelf->warehouse_id !== (string) $wid) {
                     $validator->errors()->add('shelf_id', 'Rak yang dipilih bukan sebahagian daripada gudang yang dipilih.');
                 }
-            }
+            
         });
     }
 }

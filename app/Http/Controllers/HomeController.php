@@ -54,7 +54,10 @@ class HomeController extends Controller
         // Prefer passing a small slice of notifications to the view to avoid querying inside the navbar
         $unread = collect();
         $unreadCount = 0;
-        if (\Illuminate\Support\Facades\Auth::check()) {
+        if (!\Illuminate\Support\Facades\Auth::check()){
+
+        return view('home', compact('inventoriesCount', 'vehiclesCount', 'usersCount', 'applicationsCount', 'unread', 'unreadCount'));
+    } 
             try {
                 $unread = \Illuminate\Support\Facades\Auth::user()->unreadNotifications->take(10);
                 $unreadCount = $unread->count();
@@ -62,7 +65,7 @@ class HomeController extends Controller
                 $unread = collect();
                 $unreadCount = 0;
             }
-        }
+        
 
         return view('home', compact('inventoriesCount', 'vehiclesCount', 'usersCount', 'applicationsCount', 'unread', 'unreadCount'));
     }
