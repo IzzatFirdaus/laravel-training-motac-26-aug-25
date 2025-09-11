@@ -5,6 +5,13 @@
 // - Defensive and idempotent
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Initialize users autocomplete enhancement if available
+  try {
+    // dynamic import for progressive enhancement
+    import('../users-autocomplete.js').then(mod => { if (mod && typeof mod.default === 'function') mod.default('#users-autocomplete'); }).catch(() => {});
+  } catch (e) {
+    // ignore if module system not available in this environment
+  }
   const warehouseSelect = document.getElementById('warehouse_id');
   const shelfSelect = document.getElementById('shelf_id');
 

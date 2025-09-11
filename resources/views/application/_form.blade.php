@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+@endphp
+
 <div class="row g-3" role="group" aria-label="Maklumat Permohonan">
     {{-- Name --}}
     <div class="col-12">
@@ -100,7 +104,7 @@
     <div class="col-12 col-md-6">
         <label for="owner_id" class="myds-label">Pemilik</label>
 
-        @if(auth()->check() && auth()->user()->hasRole('admin'))
+        @if(Auth::check() && Auth::user()->hasRole('admin'))
             <select id="owner_id" name="owner_id" class="myds-input @error('owner_id') is-invalid @enderror" aria-describedby="@error('owner_id') owner-error @enderror">
                 <option value="">(Tiada pemilik ditetapkan)</option>
                 @foreach(($users ?? collect()) as $user)
@@ -113,8 +117,8 @@
                 <div id="owner-error" class="myds-field-error" role="alert">{{ $message }}</div>
             @enderror
         @else
-            <input type="hidden" name="owner_id" value="{{ auth()->id() ?? '' }}">
-            <div class="myds-input bg-muted mt-1" aria-hidden="true">{{ auth()->user()->name ?? 'Pengguna Semasa' }}</div>
+            <input type="hidden" name="owner_id" value="{{ Auth::id() ?? '' }}">
+            <div class="myds-input bg-muted mt-1" aria-hidden="true">{{ Auth::user()->name ?? 'Pengguna Semasa' }}</div>
             <div class="myds-body-xs myds-text--muted">Anda akan menjadi pemilik permohonan ini</div>
         @endif
     </div>

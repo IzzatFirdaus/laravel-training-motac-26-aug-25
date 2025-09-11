@@ -60,9 +60,13 @@ export default function enhanceUsersAutocomplete(containerSelector = '#users-aut
   }
 
   function clearList() {
-    list.innerHTML = '';
-    list.hidden = true;
-    input.setAttribute('aria-expanded', 'false');
+  list.innerHTML = '';
+  list.hidden = true;
+  list.classList.add('visually-hidden');
+  // ensure CSS display rules are reset (app.css uses .autocomplete-list.show to show)
+  list.classList.remove('show');
+  list.setAttribute('aria-hidden', 'true');
+  input.setAttribute('aria-expanded', 'false');
     items = [];
     focused = -1;
   }
@@ -141,7 +145,11 @@ export default function enhanceUsersAutocomplete(containerSelector = '#users-aut
       list.appendChild(li);
     });
     list.hidden = false;
-    input.setAttribute('aria-expanded', 'true');
+    list.classList.remove('visually-hidden');
+    // add the 'show' class so compiled CSS will make the list visible
+    list.classList.add('show');
+  list.setAttribute('aria-hidden', 'false');
+  input.setAttribute('aria-expanded', 'true');
       // Use dataset override or default Malay string; templates should set data-count-found
       const foundMsg = container.dataset.countFound || `${items.length} keputusan ditemui`;
       announce(foundMsg.replace('{count}', items.length));
@@ -181,3 +189,18 @@ export default function enhanceUsersAutocomplete(containerSelector = '#users-aut
   document.addEventListener('click', (ev) => { if (!container.contains(ev.target) && ev.target !== input) clearList(); });
 }
   // internal state
+
+// Auto-initialize in browser environments to support E2E tests and progressive enhancement
+try {
+  if (typeof window !== 'undefined') {
+    const init = () => { try { enhanceUsersAutocomplete && enhanceUsersAutocomplete('#users-autocomplete'); } catch (e) {} };
+    if (document.readyState === 'loading') {
+      window.addEventListener && window.addEventListener('DOMContentLoaded', init);
+    } else {
+      // document already loaded
+      init();
+    }
+  }
+} catch (e) {
+  // ignore
+}

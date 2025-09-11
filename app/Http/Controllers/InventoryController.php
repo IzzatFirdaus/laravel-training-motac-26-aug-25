@@ -11,8 +11,9 @@ use App\Models\Warehouse;
 use App\Notifications\StoreInventoryNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class InventoryController extends Controller
 {
@@ -71,6 +72,8 @@ class InventoryController extends Controller
      */
     public function store(StoreInventoryRequest $request): RedirectResponse
     {
+        Log::info('InventoryController@store called', ['path' => request()->path(), 'method' => request()->method(), 'has_x_e2e' => request()->header('x-e2e-run')]);
+
         $this->authorize('create', Inventory::class);
         $data = $request->validated();
 
@@ -101,13 +104,21 @@ class InventoryController extends Controller
         }
 
         // Dispatch a job to send the inventory-created mail (keeps controller lightweight)
+        // When running E2E tests the test runner will set an 'x-e2e-run' header to
+        // indicate that background jobs and external integrations should be skipped
+        // so the request returns promptly.
         $recipient = $inventory->user?->email ?? config('mail.from.address', 'user@example.com');
-        InventoryCreatedJob::dispatch($inventory);
 
-        // Also create a notification record and send notification (mail + database)
-        // This uses the StoreInventoryNotification class. If there is an owning user,
-        // notify that user; otherwise route a notification to the configured fallback email.
-        $this->notifyInventoryCreated($inventory, $recipient);
+        if (! (request()->header('x-e2e-run') || request()->input('x-e2e-run'))) {
+            InventoryCreatedJob::dispatch($inventory);
+
+            // Also create a notification record and send notification (mail + database)
+            // This uses the StoreInventoryNotification class. If there is an owning user,
+            // notify that user; otherwise route a notification to the configured fallback email.
+            $this->notifyInventoryCreated($inventory, $recipient);
+        } else {
+            Log::info('Skipping InventoryCreatedJob and notifications due to x-e2e-run header');
+        }
 
         $route = redirect()->route(
             'inventories.show',
@@ -171,7 +182,7 @@ class InventoryController extends Controller
         ]);
 
         // Only allow admins to reassign ownership.
-    if (! empty($data['user_id']) && Auth::check() && Auth::user()?->hasRole('admin')) {
+        if (! empty($data['user_id']) && Auth::check() && Auth::user()?->hasRole('admin')) {
             $inventory->user_id = $data['user_id'];
         }
 

@@ -37,15 +37,27 @@
 
         <div class="d-flex gap-2">
             @if($unreadCount > 0 && Route::has('notifications.readAll'))
-                <form method="POST" action="{{ route('notifications.readAll') }}" class="d-inline" data-myds-form aria-label="Tandakan semua pemberitahuan sebagai dibaca">
+                <form method="POST" action="{{ route('notifications.readAll') }}" class="d-inline"
+                      data-myds-form data-action-type="read-all-notifications"
+                      aria-label="Tandakan semua pemberitahuan sebagai dibaca">
                     @csrf
-                    <button type="submit" class="myds-btn myds-btn--tertiary myds-btn--sm" data-confirm="Tandakan semua pemberitahuan sebagai dibaca?">
+                    <button type="submit"
+                            class="myds-btn myds-btn--tertiary myds-btn--sm myds-tap-target"
+                            data-action="read-all" data-confirm="true"
+                            data-confirm-message="Tandakan semua pemberitahuan sebagai dibaca?">
+                        <i class="bi bi-check-all me-1" aria-hidden="true"></i>
                         Tandakan Semua Dibaca
                     </button>
                 </form>
             @endif
 
-            <a href="{{ url()->current() }}" class="myds-btn myds-btn--outline myds-btn--sm" aria-label="Segarkan pemberitahuan">Segarkan</a>
+            <a href="{{ url()->current() }}"
+               class="myds-btn myds-btn--outline myds-btn--sm myds-tap-target"
+               data-action="refresh" data-refresh-type="notifications"
+               aria-label="Segarkan senarai pemberitahuan">
+                <i class="bi bi-arrow-clockwise me-1" aria-hidden="true"></i>
+                Segarkan
+            </a>
         </div>
     </div>
 
@@ -100,24 +112,44 @@
                         </div>
 
                         <div class="ms-3 d-flex gap-2 align-items-start">
-                            <a href="{{ route('notifications.show', $note->id) }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Lihat pemberitahuan {{ $note->id }}">
+                            <a href="{{ route('notifications.show', $note->id) }}"
+                               class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                               data-action="view" data-notification-id="{{ $note->id }}"
+                               aria-label="Lihat butiran pemberitahuan {{ $note->id }}">
+                                <i class="bi bi-eye me-1" aria-hidden="true"></i>
                                 Lihat
                             </a>
 
                             @if($isUnread)
-                                <form method="POST" action="{{ route('notifications.read', $note->id) }}" class="d-inline" data-myds-form aria-label="Tandakan pemberitahuan sebagai dibaca">
+                                <form method="POST" action="{{ route('notifications.read', $note->id) }}" class="d-inline"
+                                      data-myds-form data-action-type="mark-read"
+                                      data-notification-id="{{ $note->id }}"
+                                      aria-label="Tandakan pemberitahuan sebagai dibaca">
                                     @csrf
-                                    <button type="submit" class="myds-btn myds-btn--tertiary myds-btn--sm" aria-label="Tandakan sebagai dibaca">
+                                    <button type="submit"
+                                            class="myds-btn myds-btn--tertiary myds-btn--sm myds-tap-target"
+                                            data-action="mark-read" data-item-id="{{ $note->id }}"
+                                            aria-label="Tandakan sebagai dibaca">
+                                        <i class="bi bi-check me-1" aria-hidden="true"></i>
                                         Tandakan Dibaca
                                     </button>
                                 </form>
                             @else
                                 {{-- Optionally allow marking as unread if route exists --}}
                                 @if(Route::has('notifications.unread'))
-                                    <form method="POST" action="{{ route('notifications.unread', $note->id) }}" class="d-inline" data-myds-form aria-label="Tandakan pemberitahuan sebagai belum dibaca">
+                                    <form method="POST" action="{{ route('notifications.unread', $note->id) }}" class="d-inline"
+                                          data-myds-form data-action-type="mark-unread"
+                                          data-notification-id="{{ $note->id }}"
+                                          aria-label="Tandakan pemberitahuan sebagai belum dibaca">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="myds-btn myds-btn--outline myds-btn--sm" aria-label="Tandakan sebagai belum dibaca">Tandakan Belum Dibaca</button>
+                                        <button type="submit"
+                                                class="myds-btn myds-btn--outline myds-btn--sm myds-tap-target"
+                                                data-action="mark-unread" data-item-id="{{ $note->id }}"
+                                                aria-label="Tandakan sebagai belum dibaca">
+                                            <i class="bi bi-x me-1" aria-hidden="true"></i>
+                                            Tandakan Belum Dibaca
+                                        </button>
                                     </form>
                                 @endif
                             @endif

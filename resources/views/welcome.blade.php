@@ -23,13 +23,20 @@
             </p>
 
             <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary" aria-label="{{ __('ui.cta_start') }}">
+                <a href="{{ route('inventories.index') }}"
+                   class="myds-btn myds-btn--secondary myds-tap-target"
+                   data-action="navigate" data-destination="inventory-management"
+                   aria-label="{{ __('ui.cta_start') }}">
                     <i class="bi bi-box-seam me-2" aria-hidden="true"></i>
                     {{ __('ui.cta_start') }}
                 </a>
 
                 @guest
-                    <a href="{{ route('login') }}" class="myds-btn myds-btn--tertiary" aria-label="{{ __('ui.login') }}">
+                    <a href="{{ route('login') }}"
+                       class="myds-btn myds-btn--tertiary myds-tap-target"
+                       data-action="navigate" data-destination="authentication"
+                       aria-label="{{ __('ui.login') }}">
+                        <i class="bi bi-person me-1" aria-hidden="true"></i>
                         {{ __('ui.login') }}
                     </a>
                 @endguest
@@ -55,7 +62,12 @@
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">{{ __('ui.features.inventory.title') }}</h3>
                             <p class="myds-text--muted small mb-2">{{ __('ui.features.inventory.description') }}</p>
-                            <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="{{ __('ui.view_inventory') }}">{{ __('ui.view_inventory') }}</a>
+                            <a href="{{ route('inventories.index') }}"
+                               class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                               data-action="navigate" data-feature="inventory-management"
+                               aria-label="{{ __('ui.view_inventory') }}">
+                                {{ __('ui.view_inventory') }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -71,7 +83,12 @@
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">{{ __('ui.features.vehicles.title') }}</h3>
                             <p class="myds-text--muted small mb-2">{{ __('ui.features.vehicles.description') }}</p>
-                            <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="{{ __('ui.view_vehicle') }}">{{ __('ui.view_vehicle') }}</a>
+                            <a href="{{ route('vehicles.index') }}"
+                               class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                               data-action="navigate" data-feature="vehicle-management"
+                               aria-label="{{ __('ui.view_vehicle') }}">
+                                {{ __('ui.view_vehicle') }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -87,7 +104,12 @@
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">{{ __('ui.features.users.title') }}</h3>
                             <p class="myds-text--muted small mb-2">{{ __('ui.features.users.description') }}</p>
-                            <a href="{{ route('users.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="{{ __('ui.view_user') }}">{{ __('ui.view_user') }}</a>
+                            <a href="{{ route('users.index') }}"
+                               class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                               data-action="navigate" data-feature="user-management"
+                               aria-label="{{ __('ui.view_user') }}">
+                                {{ __('ui.view_user') }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -103,7 +125,12 @@
                         <div>
                             <h3 class="font-heading font-semibold h6 mb-1">{{ __('ui.features.applications.title') }}</h3>
                             <p class="myds-text--muted small mb-2">{{ __('ui.features.applications.description') }}</p>
-                            <a href="{{ route('applications.index') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="{{ __('ui.view_applications') }}">{{ __('ui.view_applications') }}</a>
+                            <a href="{{ route('applications.index') }}"
+                               class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                               data-action="navigate" data-feature="application-management"
+                               aria-label="{{ __('ui.view_applications') }}">
+                                {{ __('ui.view_applications') }}
+                            </a>
                         </div>
                     </div>
                 </div>

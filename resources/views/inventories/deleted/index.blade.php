@@ -14,7 +14,13 @@
             </div>
 
             <div class="mt-3 mt-md-0">
-                <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--secondary" aria-label="Kembali ke Inventori">Kembali ke Inventori</a>
+                <a data-test="header-back-inventories" href="{{ route('inventories.index') }}"
+                   class="myds-btn myds-btn--secondary myds-tap-target"
+                   data-action="navigate" data-destination="inventory-list"
+                   aria-label="Kembali ke senarai inventori utama">
+                    <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>
+                    Kembali
+                </a>
             </div>
         </header>
 
@@ -54,9 +60,21 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button type="submit" class="myds-btn myds-btn--primary" aria-label="Tapis carian">Tapis</button>
+                            <button type="submit"
+                                    class="myds-btn myds-btn--primary myds-tap-target"
+                                    data-action="search" data-search-type="deleted-inventory"
+                                    aria-label="Tapis carian inventori dipadam">
+                                <i class="bi bi-search me-1" aria-hidden="true"></i>
+                                Tapis
+                            </button>
                             @if(request('search') || request('owner_id'))
-                                <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--tertiary" aria-label="Kosongkan penapis">Kosongkan</a>
+                                <a href="{{ route('inventories.deleted.index') }}"
+                                   class="myds-btn myds-btn--tertiary myds-tap-target"
+                                   data-action="clear-filters" data-filter-type="deleted-inventory"
+                                   aria-label="Kosongkan penapis carian">
+                                    <i class="bi bi-x me-1" aria-hidden="true"></i>
+                                    Kosongkan
+                                </a>
                             @endif
                         </div>
                     </form>
@@ -113,19 +131,34 @@
                                     <td class="text-nowrap">
                                         <div class="d-flex flex-wrap gap-2 align-items-center">
                                             @can('restore', $inventory)
-                                                <form method="POST" action="{{ route('inventories.restore', $inventory) }}" class="d-inline" data-myds-form data-model="Inventori {{ $inventory->id }}" aria-label="Pulihkan Inventori {{ $inventory->id }}">
+                                                <form method="POST" action="{{ route('inventories.restore', $inventory) }}" class="d-inline"
+                                                      data-myds-form data-model="Inventori {{ $inventory->id }}"
+                                                      data-action-type="restore" data-inventory-id="{{ $inventory->id }}"
+                                                      aria-label="Pulihkan Inventori {{ $inventory->id }}">
                                                     @csrf
-                                                    <button type="submit" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Pulihkan inventori {{ $inventory->id }}">
+                                                    <button type="submit"
+                                                            class="myds-btn myds-btn--primary myds-btn--sm myds-tap-target"
+                                                            data-action="restore" data-item-id="{{ $inventory->id }}"
+                                                            aria-label="Pulihkan inventori {{ $inventory->name ?? $inventory->id }}">
+                                                        <i class="bi bi-arrow-clockwise me-1" aria-hidden="true"></i>
                                                         Pulihkan
                                                     </button>
                                                 </form>
                                             @endcan
 
                                             @can('forceDelete', $inventory)
-                                                <form method="POST" action="{{ route('inventories.force-delete', $inventory) }}" class="d-inline" data-myds-form data-model="Inventori {{ $inventory->id }}" aria-label="Padam kekal Inventori {{ $inventory->id }}">
+                                                <form method="POST" action="{{ route('inventories.force-delete', $inventory) }}" class="d-inline"
+                                                      data-myds-form data-model="Inventori {{ $inventory->id }}"
+                                                      data-action-type="force-delete" data-inventory-id="{{ $inventory->id }}"
+                                                      aria-label="Padam kekal Inventori {{ $inventory->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="myds-btn myds-btn--danger myds-btn--sm" aria-label="Padam kekal inventori {{ $inventory->id }}">
+                                                    <button type="submit"
+                                                            class="myds-btn myds-btn--danger myds-btn--sm myds-tap-target"
+                                                            data-action="force-delete" data-item-id="{{ $inventory->id }}"
+                                                            data-confirm="true"
+                                                            aria-label="Padam kekal inventori {{ $inventory->name ?? $inventory->id }}">
+                                                        <i class="bi bi-trash me-1" aria-hidden="true"></i>
                                                         Padam Kekal
                                                     </button>
                                                 </form>
@@ -152,7 +185,7 @@
                         Tiada inventori yang dipadam dijumpai.
                     </div>
                     <div class="mt-3">
-                        <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary">Kembali ke Inventori</a>
+                            <a id="back-to-inventories" href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary">Kembali ke Inventori</a>
                     </div>
                 </div>
             </div>

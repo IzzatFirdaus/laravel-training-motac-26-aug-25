@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Facades\Auth;
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Ubah Inventori — ' . config('app.name', 'Sistem Kerajaan'))
@@ -6,7 +10,7 @@
 <main id="main-content" class="myds-container py-4" role="main" tabindex="-1" aria-labelledby="page-heading">
     <nav aria-label="Breadcrumb" class="mb-4">
         <ol class="d-flex list-unstyled myds-text--muted myds-body-sm m-0 p-0">
-            <li><a href="{{ route('inventories.index') }}" class="text-primary text-decoration-none">Inventori</a></li>
+            <li><a href="{{ route('inventories.index') }}" class="text-primary text-decoration-none" data-nav="inventories">Inventori</a></li>
             <li class="mx-2" aria-hidden="true">/</li>
             <li aria-current="page" class="myds-text--muted">Ubah</li>
         </ol>
@@ -23,42 +27,65 @@
                 <div class="myds-alert myds-alert--success mb-4" role="status" aria-live="polite">{{ session('status') }}</div>
             @endif
 
-            <div class="myds-card">
-                <div class="myds-card__body">
-                    <form method="POST" action="{{ route('inventories.update', $inventory->id) }}" novalidate aria-labelledby="form-title" data-myds-form>
-                        @csrf
-                        @method('PUT')
+            <div class="bg-surface border rounded-m p-4 shadow-sm" data-myds-card="inventory-edit">
+                <form method="POST" action="{{ route('inventories.update', $inventory->id) }}" novalidate aria-labelledby="form-title" data-myds-form="inventory-edit">
+                    @csrf
+                    @method('PUT')
 
-                        <h2 id="form-title" class="sr-only">Borang Ubah Inventori</h2>
+                    <h2 id="form-title" class="sr-only">Borang Ubah Inventori</h2>
 
-                        <div class="mb-4">
-                            <label for="name" class="myds-label font-medium">Nama Item <span class="myds-text--danger" aria-hidden="true">*</span></label>
-                            <input id="name" name="name" type="text" class="myds-input @error('name') is-invalid @enderror" value="{{ old('name', $inventory->name) }}" maxlength="255" required aria-required="true" aria-describedby="name-help @error('name') name-error @enderror">
-                            <div id="name-help" class="myds-body-xs myds-text--muted mt-1">Nama yang jelas dan mudah dicari.</div>
-                            @error('name') <div id="name-error" class="myds-field-error mt-1" role="alert">{{ $message }}</div> @enderror
-
-                            <div id="users-autocomplete" class="position-relative mt-2" data-search-url="{{ route('users.search') }}">
-                                <ul id="users-list" class="autocomplete-list visually-hidden" role="listbox" aria-label="Cadangan pengguna"></ul>
-                                <div id="users-list-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+                    <div class="mb-4" data-field="name">
+                        <label for="name" class="myds-label myds-body-sm font-medium d-block mb-2" data-field-label="Nama Item">Nama Item <span class="myds-text--danger ms-1" aria-hidden="true">*</span></label>
+                        <input id="name"
+                               name="name"
+                               type="text"
+                               class="myds-input myds-tap-target @error('name') is-invalid myds-input--error @enderror"
+                               value="{{ old('name', $inventory->name) }}"
+                               maxlength="255"
+                               required
+                               aria-required="true"
+                               aria-invalid="{{ $errors->has('name') ? 'true' : 'false' }}"
+                               aria-describedby="name-help @error('name') name-error @enderror"
+                               data-myds-input="text">
+                        <div id="name-help" class="myds-body-xs myds-text--muted mt-1" data-field-help="Nama yang jelas dan mudah dicari.">Nama yang jelas dan mudah dicari.</div>
+                        @error('name')
+                            <div id="name-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert" data-field-error="{{ $message }}">
+                                <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
+                                <span>{{ $message }}</span>
                             </div>
-                        </div>
+                        @enderror
 
-                        <div class="mb-3">
-                            <label for="user_id" class="myds-label font-medium">Pemilik (pilihan)</label>
-                            @if(auth()->check() && auth()->user()->hasRole('admin'))
-                                <select id="user_id" name="user_id" class="myds-select @error('user_id') is-invalid @enderror" aria-describedby="user-help">
-                                      <option value="">(tiada pemilik)</option>
-                                    @foreach(($users ?? collect()) as $user)
-                                        <option value="{{ $user->id }}" @selected((string) old('user_id', $inventory->user_id) === (string) $user->id)>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div id="user-help" class="myds-body-xs myds-text--muted mt-1">Biarkan kosong jika tiada pemilik ditetapkan.</div>
-                                @error('user_id') <div class="myds-field-error mt-1" role="alert">{{ $message }}</div> @enderror
-                            @else
-                                <input type="hidden" name="user_id" value="{{ $inventory->user_id ?? '' }}">
-                                <div class="myds-form-plaintext">{{ $inventory->user?->name ?? '(tiada pemilik)' }}</div>
-                            @endif
+                        <div id="users-autocomplete" class="position-relative mt-2" data-search-url="{{ route('users.search') }}">
+                            <ul id="users-list" class="autocomplete-list visually-hidden" role="listbox" aria-label="Cadangan pengguna"></ul>
+                            <div id="users-list-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
                         </div>
+                    </div>
+
+                    <div class="mb-3" data-field="user_id">
+                        <label for="user_id" class="myds-label myds-body-sm font-medium d-block mb-2" data-field-label="Pemilik">Pemilik (pilihan)</label>
+                        @if(Auth::check() && Auth::user()->hasRole('admin'))
+                            <select id="user_id"
+                                    name="user_id"
+                                    class="myds-input myds-tap-target @error('user_id') is-invalid myds-input--error @enderror"
+                                    aria-describedby="user-help @error('user_id') user_id-error @enderror"
+                                    data-myds-select="owner">
+                                  <option value="">(tiada pemilik)</option>
+                                @foreach(($users ?? collect()) as $user)
+                                    <option value="{{ $user->id }}" @selected((string) old('user_id', $inventory->user_id) === (string) $user->id)>{{ e($user->name) }}</option>
+                                @endforeach
+                            </select>
+                            <div id="user-help" class="myds-body-xs myds-text--muted mt-1" data-field-help="Biarkan kosong jika tiada pemilik ditetapkan.">Biarkan kosong jika tiada pemilik ditetapkan.</div>
+                            @error('user_id')
+                                <div id="user_id-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert" data-field-error="{{ $message }}">
+                                    <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
+                                    <span>{{ $message }}</span>
+                                </div>
+                            @enderror
+                        @else
+                            <input type="hidden" name="user_id" value="{{ $inventory->user_id ?? '' }}">
+                            <div class="myds-input bg-muted cursor-not-allowed" role="textbox" aria-readonly="true" tabindex="-1">{{ $inventory->user?->name ?? '(tiada pemilik)' }}</div>
+                        @endif
+                    </div>
 
                         <div class="mb-3">
                             <label for="qty" class="myds-label font-medium">Kuantiti <span class="myds-text--danger" aria-hidden="true">*</span></label>

@@ -64,19 +64,23 @@
                                     <div class="d-flex flex-column align-items-end gap-2">
                                         {{-- External link opens in new tab with appropriate rel attributes for security --}}
                                         <a href="{{ $externalUrl }}"
-                                           class="myds-btn myds-btn--secondary myds-btn--sm"
+                                           class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
                                            target="_blank"
                                            rel="noopener noreferrer"
-                                           aria-label="Lihat pos di sumber luar">
+                                           data-action="view-external" data-post-id="{{ $postId }}"
+                                           data-external-url="{{ $externalUrl }}"
+                                           aria-label="Lihat pos di sumber luar jsonplaceholder.typicode.com">
                                             <span>Lihat</span>
                                             <svg class="myds-icon ms-2" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         </a>
 
                                         {{-- Optional "Copy link" for quick sharing (progressive enhancement) --}}
                                         <button type="button"
-                                                class="myds-btn myds-btn--tertiary myds-btn--sm"
+                                                class="myds-btn myds-btn--tertiary myds-btn--sm myds-tap-target"
+                                                data-action="copy-link" data-post-id="{{ $postId }}"
                                                 data-copy-url="{{ $externalUrl }}"
-                                                aria-label="{{ __('ui.copy_link') }}">
+                                                aria-label="Salin pautan pos ke papan keratan">
+                                            <i class="bi bi-link me-1" aria-hidden="true"></i>
                                             {{ __('ui.copy_link') }}
                                         </button>
                                     </div>

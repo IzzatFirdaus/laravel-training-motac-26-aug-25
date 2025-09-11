@@ -47,12 +47,27 @@
           </dl>
 
           <div class="mt-4 d-flex gap-2">
-            <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--tertiary">Kembali</a>
+            <a href="{{ route('inventories.index') }}"
+               class="myds-btn myds-btn--tertiary myds-tap-target"
+               data-action="navigate" data-destination="inventory-list"
+               aria-label="Kembali ke senarai inventori">
+                <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>
+                Kembali
+            </a>
             @can('update', $inventory)
-              <a href="{{ route('inventories.edit', $inventory->id) }}" class="myds-btn myds-btn--primary">Ubah</a>
+              <a href="{{ route('inventories.edit', $inventory->id) }}"
+                 class="myds-btn myds-btn--primary myds-tap-target"
+                 data-action="edit" data-inventory-id="{{ $inventory->id }}"
+                 aria-label="Kemaskini inventori {{ $inventory->name }}">
+                  <i class="bi bi-pencil me-1" aria-hidden="true"></i>
+                  Kemaskini
+              </a>
             @endcan
             @can('delete', $inventory)
-              <x-destroy :action="route('inventories.destroy', $inventory->id)" :label="$inventory->name ?? 'Inventori'"/>
+              <x-destroy :action="route('inventories.destroy', $inventory->id)"
+                         :label="$inventory->name ?? 'Inventori'"
+                         data-item-id="{{ $inventory->id }}"
+                         data-item-type="inventory"/>
             @endcan
           </div>
 
