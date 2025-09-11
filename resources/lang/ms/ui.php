@@ -1,6 +1,16 @@
 <?php
 
 return [
+    'users.breadcrumb_label' => 'Pengguna',
+    'user.details_heading' => 'Butiran Pengguna',
+    'user.updated' => 'Pengguna telah dikemaskini.',
+    'help.user_actions' => 'Tindakan Pengguna',
+    'help.available_actions' => 'Tindakan Tersedia',
+    'users.help.view_tip_1' => 'Klik nama pengguna untuk melihat butiran.',
+    'users.help.view_tip_2' => 'Gunakan carian untuk mencari pengguna tertentu.',
+    'users.help.view_tip_3' => 'Klik sunting untuk mengubah maklumat pengguna.',
+    'help.support_heading' => 'Sokongan',
+    'help.support_contact' => 'Jika menghadapi masalah, hubungi :contact',
     'skip_to_content' => 'Langkau ke kandungan',
     'restore' => 'Pulihkan',
     'delete_forever' => 'Padam Kekal',

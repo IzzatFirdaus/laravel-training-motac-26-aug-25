@@ -58,11 +58,17 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')
 // Route to edit a single user
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 
+// Route to destroy a user (using POST to a /destroy endpoint)
+Route::post('/users/{user}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+
+// Admin dashboard route
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+// Admin login route
+Route::get('/admin/login', [\App\Http\Controllers\AdminController::class, 'login'])->name('admin.login');
+
 // Route to update a user (accept PUT so method-spoofed forms match)
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-
-// Route to destroy a user
-Route::post('/users/{user}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
 
 // Inventory routes
 

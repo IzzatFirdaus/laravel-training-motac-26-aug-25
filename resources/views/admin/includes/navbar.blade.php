@@ -116,8 +116,8 @@
           {{-- Language toggle --}}
           <li class="nav-item me-lg-2" role="none">
             <div class="btn-group myds-btn-group" role="group" aria-label="Pilih bahasa">
-              <a href="{{ route('locale.switch', ['locale' => 'ms']) }}" class="btn myds-btn myds-btn--sm @if(app()->getLocale() === 'ms') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'ms' ? 'true' : 'false' }}">MS</a>
-              <a href="{{ route('locale.switch', ['locale' => 'en']) }}" class="btn myds-btn myds-btn--sm @if(app()->getLocale() === 'en') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'en' ? 'true' : 'false' }}">EN</a>
+              <a href="{{ route('language.switch', ['locale' => 'ms']) }}" class="btn myds-btn myds-btn--sm @if(app()->getLocale() === 'ms') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'ms' ? 'true' : 'false' }}">MS</a>
+              <a href="{{ route('language.switch', ['locale' => 'en']) }}" class="btn myds-btn myds-btn--sm @if(app()->getLocale() === 'en') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'en' ? 'true' : 'false' }}">EN</a>
             </div>
           </li>
 

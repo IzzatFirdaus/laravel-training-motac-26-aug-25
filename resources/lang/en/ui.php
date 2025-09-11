@@ -1,6 +1,16 @@
 <?php
 
 return [
+    'users.breadcrumb_label' => 'Users',
+    'user.details_heading' => 'User Details',
+    'user.updated' => 'User has been updated.',
+    'help.user_actions' => 'User Actions',
+    'help.available_actions' => 'Available Actions',
+    'users.help.view_tip_1' => 'Click on a user name to view details.',
+    'users.help.view_tip_2' => 'Use search to find a specific user.',
+    'users.help.view_tip_3' => 'Click edit to update user information.',
+    'help.support_heading' => 'Support',
+    'help.support_contact' => 'If you encounter issues, contact :contact',
     'skip_to_content' => 'Skip to content',
     'restore' => 'Restore',
     'delete_forever' => 'Delete Permanently',
