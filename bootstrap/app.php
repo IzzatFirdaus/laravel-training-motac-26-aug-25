@@ -14,6 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // Register middleware aliases
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRoleMiddleware::class,
+            'lang' => \App\Http\Middleware\LanguageMiddleware::class,
+        ]);
+
+        // Apply language middleware to all web routes so locale is set per request
+        $middleware->web(append: [
+            \App\Http\Middleware\LanguageMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -32,5 +32,46 @@
             </div>
         </div>
     </section>
+    <section class="mt-4" aria-labelledby="user-change-history">
+        <h2 id="user-change-history" class="sr-only">User change history</h2>
+        <div class="myds-card">
+            <div class="myds-card__body">
+                <table class="myds-table w-full" aria-describedby="user-change-history">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="myds-table__th">Tarikh</th>
+                            <th scope="col" class="myds-table__th">Tindakan</th>
+                            <th scope="col" class="myds-table__th">Perubahan</th>
+                            <th scope="col" class="myds-table__th">Pengguna</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($user->audits ?? [] as $audit)
+                            <tr>
+                                <td class="myds-table__td">{{ $audit->created_at->format('d/m/Y H:i') }}</td>
+                                <td class="myds-table__td">{{ ucfirst($audit->event) }}</td>
+                                <td class="myds-table__td">
+                                    @if (!empty($audit->getModified()))
+                                        <ul class="list-disc pl-4">
+                                            @foreach ($audit->getModified() as $field => $change)
+                                                <li><strong>{{ $field }}</strong>: {{ $change['old'] ?? '-' }} → {{ $change['new'] ?? '-' }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <span class="myds-text--muted">Tiada perubahan</span>
+                                    @endif
+                                </td>
+                                <td class="myds-table__td">{{ $audit->user?->name ?? '-' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="myds-table__td" colspan="4"><span class="myds-text--muted">Tiada rekod audit untuk pengguna ini.</span></td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 </main>
 @endsection

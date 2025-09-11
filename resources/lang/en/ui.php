@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'skip_to_content' => 'Skip to content',
+    'restore' => 'Restore',
+    'delete_forever' => 'Delete Permanently',
     'welcome_title' => 'Welcome — :app',
     'welcome_heading' => 'Welcome to :app',
     'welcome_description' => 'Inventory and vehicle management system built following the MyGOVEA principles and Malaysia Government Design System (MYDS).',

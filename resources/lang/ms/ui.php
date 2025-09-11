@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'skip_to_content' => 'Langkau ke kandungan',
+    'restore' => 'Pulihkan',
+    'delete_forever' => 'Padam Kekal',
     'welcome_title' => 'Selamat Datang — :app',
     'welcome_heading' => 'Selamat Datang ke :app',
     'welcome_description' => 'Sistem pengurusan inventori dan kenderaan yang dibangunkan mengikut prinsip MyGOVEA dan Malaysia Government Design System (MYDS).',
@@ -215,8 +218,8 @@ return [
         'created' => 'Inventori berjaya dicipta',
         'updated' => 'Inventori dikemaskini',
         'deleted' => 'Inventori berjaya dipadam',
-    'restored' => 'Inventori telah dipulihkan.',
-    'force_deleted' => 'Inventori telah dipadam secara kekal.',
+        'restored' => 'Inventori telah dipulihkan.',
+        'force_deleted' => 'Inventori telah dipadam secara kekal.',
     ],
     'applications' => [
         'created' => 'Permohonan berjaya dicipta',

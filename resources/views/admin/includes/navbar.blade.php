@@ -6,7 +6,7 @@
       <span class="font-heading font-semibold">{{ config('app.name', 'Sistem Kerajaan') }}</span>
     </a>
     {{-- Skip link for keyboard users (MYDS) --}}
-    <a class="myds-skip-link sr-only focus:not-sr-only" href="#main-content">Langkau ke kandungan</a>
+  <a class="myds-skip-link sr-only focus:not-sr-only" href="#main-content">{{ __('ui.skip_to_content') ?? 'Skip to content' }}</a>
     <button id="navToggle" class="myds-btn myds-btn--tertiary" type="button" aria-controls="navMain" aria-expanded="false" aria-label="Togol menu navigasi">
       <span class="sr-only">Togol menu navigasi</span>
       <i class="bi bi-list" aria-hidden="true"></i>
@@ -26,22 +26,22 @@
             @endif
 
             @if(Route::has('inventories.create'))
-              <a class="myds-dropdown-item" href="{{ route('inventories.create') }}" role="menuitem">{{ __('nav.inventory_add') ?? 'Cipta Inventori' }}</a>
+              <a class="myds-dropdown-item" href="{{ route('inventories.create') }}" role="menuitem">{{ __('nav.inventory_add') }}</a>
             @endif
 
             @if(Route::has('inventories.show'))
-              <a class="myds-dropdown-item" href="{{ route('inventories.show', 1) }}" role="menuitem">{{ __('nav.inventory_read') ?? 'Lihat Inventori' }}</a>
+              <a class="myds-dropdown-item" href="{{ route('inventories.show', 1) }}" role="menuitem">{{ __('nav.inventory_read') }}</a>
             @endif
 
             @if(Route::has('inventories.edit'))
-              <a class="myds-dropdown-item" href="{{ route('inventories.edit', 1) }}" role="menuitem">{{ __('nav.inventory_edit') ?? 'Sunting Inventori' }}</a>
+              <a class="myds-dropdown-item" href="{{ route('inventories.edit', 1) }}" role="menuitem">{{ __('nav.inventory_edit') }}</a>
             @endif
 
             @if(Route::has('excel.inventory.form'))
-              <a class="myds-dropdown-item" href="{{ route('excel.inventory.form') }}" role="menuitem">Import Inventori</a>
+              <a class="myds-dropdown-item" href="{{ route('excel.inventory.form') }}" role="menuitem">{{ __('nav.inventory_create') }}</a>
             @endif
             @if(Route::has('excel.inventory.export'))
-              <a class="myds-dropdown-item" href="{{ route('excel.inventory.export') }}" role="menuitem">Muat Turun Templat</a>
+              <a class="myds-dropdown-item" href="{{ route('excel.inventory.export') }}" role="menuitem">{{ __('nav.notifications_view_all') }}</a>
             @endif
 
             <div class="myds-dropdown-divider"></div>
@@ -49,7 +49,7 @@
             @auth
                 @if(auth()->user()->hasRole('admin'))
                 @if(Route::has('inventories.deleted.index'))
-                  <a class="myds-dropdown-item" href="{{ route('inventories.deleted.index') }}" role="menuitem">Inventori Dipadam</a>
+                  <a class="myds-dropdown-item" href="{{ route('inventories.deleted.index') }}" role="menuitem">{{ __('nav.inventory_delete') }}</a>
                 @endif
                 @if(Route::has('inventories.destroy'))
                   <form method="POST" action="{{ route('inventories.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.inventory') }}" data-myds-form>
@@ -60,13 +60,13 @@
                 @if(Route::has('inventories.restore'))
                   <form method="POST" action="{{ route('inventories.restore', 1) }}" class="px-3" role="menuitem">
                     @csrf
-                    <button type="submit" class="myds-dropdown-item">Pulihkan Inventori</button>
+                    <button type="submit" class="myds-dropdown-item">{{ __('ui.restore') ?? 'Restore' }}</button>
                   </form>
                 @endif
                 @if(Route::has('inventories.force-delete'))
                   <form method="POST" action="{{ route('inventories.force-delete', 1) }}" class="px-3" role="menuitem">
                     @csrf
-                    <button type="submit" class="myds-dropdown-item myds-btn myds-btn--danger">Padam Kekal</button>
+                    <button type="submit" class="myds-dropdown-item myds-btn myds-btn--danger">{{ __('ui.delete_forever') ?? 'Delete Permanently' }}</button>
                   </form>
                 @endif
               @endif
@@ -84,15 +84,15 @@
             @endif
 
             @if(Route::has('vehicles.create'))
-              <a class="myds-dropdown-item" href="{{ route('vehicles.create') }}" role="menuitem">{{ __('nav.vehicles_add') ?? 'Tambah Kenderaan' }}</a>
+              <a class="myds-dropdown-item" href="{{ route('vehicles.create') }}" role="menuitem">{{ __('nav.vehicles_add') }}</a>
             @endif
 
             @if(Route::has('vehicles.show'))
-              <a class="myds-dropdown-item" href="{{ route('vehicles.show', 1) }}" role="menuitem">{{ __('nav.vehicles_read') ?? 'Lihat Kenderaan' }}</a>
+              <a class="myds-dropdown-item" href="{{ route('vehicles.show', 1) }}" role="menuitem">{{ __('nav.vehicles_read') }}</a>
             @endif
 
             @if(Route::has('vehicles.edit'))
-              <a class="myds-dropdown-item" href="{{ route('vehicles.edit', 1) }}" role="menuitem">{{ __('nav.vehicles_edit') ?? 'Sunting Kenderaan' }}</a>
+              <a class="myds-dropdown-item" href="{{ route('vehicles.edit', 1) }}" role="menuitem">{{ __('nav.vehicles_edit') }}</a>
             @endif
 
             @auth
@@ -141,31 +141,31 @@
         </li>
         {{-- Applications --}}
         <li class="myds-nav-item myds-nav-item--hasmenu" role="none">
-          <button id="navApplications" class="myds-nav-link myds-nav-link--toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navApplicationsMenu" aria-label="Permohonan menu">
-            Permohonan
+            <button id="navApplications" class="myds-nav-link myds-nav-link--toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navApplicationsMenu" aria-label="{{ __('nav.applications') }} menu">
+            {{ __('nav.applications') }}
           </button>
           <div id="navApplicationsMenu" class="myds-dropdown" aria-labelledby="navApplications" role="menu" hidden>
             @if(Route::has('applications.index'))
-              <a class="myds-dropdown-item {{ request()->routeIs('applications.index') ? 'active' : '' }}" href="{{ route('applications.index') }}" role="menuitem" @if(request()->routeIs('applications.index')) aria-current="page" @endif>Semak Permohonan</a>
+              <a class="myds-dropdown-item {{ request()->routeIs('applications.index') ? 'active' : '' }}" href="{{ route('applications.index') }}" role="menuitem" @if(request()->routeIs('applications.index')) aria-current="page" @endif>{{ __('nav.applications_browse') }}</a>
             @endif
 
             @if(Route::has('applications.create'))
-              <a class="myds-dropdown-item" href="{{ route('applications.create') }}" role="menuitem">Cipta Permohonan</a>
+              <a class="myds-dropdown-item" href="{{ route('applications.create') }}" role="menuitem">{{ __('nav.applications_add') }}</a>
             @endif
 
             @if(Route::has('applications.show'))
-              <a class="myds-dropdown-item" href="{{ route('applications.show', 1) }}" role="menuitem">Lihat Permohonan</a>
+              <a class="myds-dropdown-item" href="{{ route('applications.show', 1) }}" role="menuitem">{{ __('nav.applications_read') }}</a>
             @endif
 
             @if(Route::has('applications.edit'))
-              <a class="myds-dropdown-item" href="{{ route('applications.edit', 1) }}" role="menuitem">Edit Permohonan</a>
+              <a class="myds-dropdown-item" href="{{ route('applications.edit', 1) }}" role="menuitem">{{ __('nav.applications_edit') }}</a>
             @endif
 
             @auth
               @if(auth()->user()->hasRole('admin') && Route::has('applications.destroy'))
-                <form method="POST" action="{{ route('applications.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="Permohonan" data-myds-form>
+                <form method="POST" action="{{ route('applications.destroy', 1) }}" class="px-3 myds-destroy-form" data-model="{{ __('nav.applications') }}" data-myds-form>
                   @csrf
-                  <button type="submit" class="myds-dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="Padam Permohonan">Padam Permohonan</button>
+                  <button type="submit" class="myds-dropdown-item myds-btn myds-btn--danger" role="menuitem" aria-label="{{ __('nav.applications') }}">{{ __('nav.inventory_delete') }}</button>
                 </form>
               @endif
             @endauth
@@ -173,23 +173,23 @@
         </li>
         {{-- Warehouses dynamic list --}}
         <li class="myds-nav-item myds-nav-item--hasmenu" role="none">
-          <button id="navWarehouses" class="myds-nav-link myds-nav-link--toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navWarehousesMenu" aria-label="Gudang menu">
-            Gudang
+          <button id="navWarehouses" class="myds-nav-link myds-nav-link--toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navWarehousesMenu" aria-label="{{ __('nav.warehouses') }} menu">
+            {{ __('nav.warehouses') }}
           </button>
           <div id="navWarehousesMenu" class="myds-dropdown" aria-labelledby="navWarehouses" role="menu" hidden>
-            <div class="px-3 py-2 myds-text--muted small">Gudang & Rak</div>
+            <div class="px-3 py-2 myds-text--muted small">{{ __('nav.warehouses') }} & Rak</div>
             <div id="warehouses-list" class="px-2" role="presentation" data-fetch-url="{{ url('/api/warehouses') }}">
-              <div class="myds-text--muted small px-2">Memuatkan...</div>
+              <div class="myds-text--muted small px-2">...</div>
             </div>
             <div class="myds-dropdown-divider"></div>
             @if(Route::has('warehouses.index'))
-              <a class="myds-dropdown-item" href="{{ route('warehouses.index') }}">Senarai Gudang</a>
+              <a class="myds-dropdown-item" href="{{ route('warehouses.index') }}">{{ __('nav.warehouses_list') }}</a>
             @endif
             @if(Route::has('warehouses.shelves'))
-              <a class="myds-dropdown-item" href="#">Lihat Rak (Dinamik)</a>
+              <a class="myds-dropdown-item" href="#">{{ __('nav.shelves_view') }}</a>
             @endif
             @if(Route::has('inventories.create'))
-              <a class="myds-dropdown-item" href="{{ route('inventories.create') }}">Cipta Inventori</a>
+              <a class="myds-dropdown-item" href="{{ route('inventories.create') }}">{{ __('nav.inventory_create') }}</a>
             @endif
           </div>
         </li>
@@ -209,20 +209,20 @@
         @else
           {{-- Search form (MYDS) - accessible, preserves current URL query when submitting --}}
           <li class="myds-nav-item me-2" role="none">
-            <form role="search" method="GET" action="{{ url()->current() }}" class="myds-search-form d-flex align-items-center" aria-label="Carian laman">
-              <label for="navbar-search" class="sr-only">Cari laman</label>
-              <input id="navbar-search" name="search" type="search" class="myds-input" placeholder="Cari..." value="{{ request('search') }}" aria-describedby="navbar-search-help" />
-              <button type="submit" class="myds-btn myds-btn--secondary ms-2" aria-label="Cari">
+            <form role="search" method="GET" action="{{ url()->current() }}" class="myds-search-form d-flex align-items-center" aria-label="{{ __('nav.search') }}">
+              <label for="navbar-search" class="sr-only">{{ __('nav.search') }}</label>
+              <input id="navbar-search" name="search" type="search" class="myds-input" placeholder="{{ __('nav.search_placeholder') }}" value="{{ request('search') }}" aria-describedby="navbar-search-help" />
+              <button type="submit" class="myds-btn myds-btn--secondary ms-2" aria-label="{{ __('nav.search') }}">
                 <i class="bi bi-search" aria-hidden="true"></i>
               </button>
             </form>
           </li>
 
-          {{-- Language toggle (simple) - preserves current URL and adds lang param --}}
+      {{-- Language toggle (route-based) --}}
           <li class="myds-nav-item me-2" role="none">
             <div class="myds-btn-group" role="group" aria-label="Pilih bahasa">
-              <a href="{{ request()->fullUrlWithQuery(['lang' => 'ms']) }}" class="myds-btn @if(app()->getLocale() === 'ms') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'ms' ? 'true' : 'false' }}">MS</a>
-              <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" class="myds-btn @if(app()->getLocale() === 'en') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'en' ? 'true' : 'false' }}">EN</a>
+        <a href="{{ route('language.switch', 'ms') }}" class="myds-btn @if(app()->getLocale() === 'ms') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'ms' ? 'true' : 'false' }}">{{ __('nav.lang_ms') }}</a>
+        <a href="{{ route('language.switch', 'en') }}" class="myds-btn @if(app()->getLocale() === 'en') myds-btn--primary @else myds-btn--tertiary @endif" aria-pressed="{{ app()->getLocale() === 'en' ? 'true' : 'false' }}">{{ __('nav.lang_en') }}</a>
             </div>
           </li>
 

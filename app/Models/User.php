@@ -17,12 +17,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class User extends Authenticatable
+class User extends Authenticatable implements AuditableContract
 {
+    use AuditableTrait;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
-
     use Notifiable;
     use SoftDeletes;
 
@@ -36,6 +39,18 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+    ];
+
+    /**
+     * Which events should be audited for this model.
+     * Only record create/update/delete events.
+     *
+     * @var array<int,string>
+     */
+    protected $auditableEvents = [
+        'created',
+        'updated',
+        'deleted',
     ];
 
     /**
