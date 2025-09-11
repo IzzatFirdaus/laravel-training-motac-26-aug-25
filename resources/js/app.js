@@ -82,9 +82,17 @@ window.MYDS.handleDestroy = function (btn, options = {}) {
 };
 
 /**
- * Apply theme globally
+ * Apply theme globally - DEPRECATED: Use site-init.js implementation
+ * This is kept for backward compatibility but site-init.js handles theme logic
  */
 function applyTheme(theme) {
+  // Delegate to site-init.js implementation if available
+  if (window.MYDS && window.MYDS.setTheme) {
+    window.MYDS.setTheme(theme);
+    return;
+  }
+
+  // Fallback implementation
   const btn = document.getElementById('theme-toggle');
   if (theme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -143,23 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Theme init: prefer stored, then system preference
-  let stored = null;
-  try { stored = localStorage.getItem('myds-theme'); } catch (e) { /* ignore */ }
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = stored || (prefersDark ? 'dark' : 'light');
-  applyTheme(theme === 'dark' ? 'dark' : 'light');
+  // Theme init: handled by site-init.js to avoid conflicts
+  // The site-init.js module properly handles theme initialization and persistence
 
-  // Toggle button
-  const toggleBtn = document.getElementById('theme-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const next = isDark ? 'light' : 'dark';
-      try { localStorage.setItem('myds-theme', next); } catch (err) { /* ignore */ }
-      applyTheme(next);
-    });
-  }
+  // Toggle button: handled by site-init.js
+  // Remove duplicate event listener to avoid conflicts
 
   wireLogout();
   wireSkipLink();

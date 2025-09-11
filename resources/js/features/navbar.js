@@ -1,154 +1,75 @@
 /**
  * navbar.js
  *
- * Navbar behaviour:
- * - Toggle mobile nav visibility
- * - Accessible dropdown/menu toggles with keyboard support
- * - Theme toggle wiring (if theme toggle element exists)
+ * Initializes navbar behaviors, relying on Bootstrap for core functionality.
+ * Ensures accessibility and MYDS compliance.
  *
  * Idempotent and defensive.
  */
-
 (function () {
   'use strict';
 
-  function isMenuButton(el) {
-    return el && el.classList && el.classList.contains('myds-nav-link--toggle');
-  }
-
-  function getMenuForButton(btn) {
-    const controls = btn.getAttribute('aria-controls');
-    return controls ? document.getElementById(controls) : null;
-  }
-
-  function closeMenu(btn) {
-    if (!btn) return;
-    const menu = getMenuForButton(btn);
-    btn.setAttribute('aria-expanded', 'false');
-    if (menu) menu.setAttribute('hidden', '');
-  }
-
-  function openMenu(btn) {
-    if (!btn) return;
-    // close other menus
-    document.querySelectorAll('.myds-nav-link--toggle[aria-expanded="true"]').forEach((other) => {
-      if (other !== btn) closeMenu(other);
-    });
-    const menu = getMenuForButton(btn);
-    btn.setAttribute('aria-expanded', 'true');
-    if (menu) menu.removeAttribute('hidden');
-  }
-
-  // Attach menu button behaviours
-  function attachMenuButtons() {
-    document.querySelectorAll('.myds-nav-link--toggle').forEach((btn) => {
-      if (!btn || btn._navAttached) return;
-      btn._navAttached = true;
-
-      btn.addEventListener('click', function () {
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        if (expanded) closeMenu(this); else openMenu(this);
-      });
-
-      btn.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          this.click();
-          return;
-        }
-        if (e.key === 'Escape') {
-          closeMenu(this);
-          this.focus();
-        }
-      });
+  /**
+   * Closes all open dropdown menus in the navbar, except for an optional element to ignore.
+   * @param {Element} [ignoreEl=null] - The dropdown element to ignore, if any.
+   */
+  function closeAllDropdowns(ignoreEl = null) {
+    const openDropdowns = document.querySelectorAll('.navbar .dropdown-menu.show');
+    openDropdowns.forEach(dropdown => {
+      const toggle = document.querySelector(`[aria-controls="${dropdown.id}"], [data-bs-target="#${dropdown.id}"]`);
+      if (toggle && toggle !== ignoreEl && bootstrap.Dropdown.getInstance(toggle)) {
+        bootstrap.Dropdown.getInstance(toggle).hide();
+      }
     });
   }
 
-  // Mobile nav toggle
-  function initNavToggle() {
-    const navToggle = document.getElementById('navToggle');
-    const navMain = document.getElementById('navMain');
-    if (navToggle && navMain && !navToggle._navToggleAttached) {
-      navToggle._navToggleAttached = true;
-      navToggle.addEventListener('click', () => {
-        const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-        navToggle.setAttribute('aria-expanded', String(!expanded));
-        navMain.hidden = expanded;
-      });
-    }
-  }
-
+  /**
+   * Attaches event listeners for enhanced navbar behavior.
+   */
   function attachEventListeners() {
-    if (attachEventListeners._attached) return;
-    attachEventListeners._attached = true;
+    // Use a flag to prevent attaching listeners multiple times
+    if (document.body.dataset.navbarListenersAttached === 'true') return;
+    document.body.dataset.navbarListenersAttached = 'true';
 
-    // close menus on outside click
-    document.addEventListener('click', (e) => {
-      const target = e.target;
-      if (target.closest && (target.closest('.myds-dropdown') || isMenuButton(target) || target.closest('.myds-nav-link--toggle'))) {
-        return; // clicked inside a menu area: ignore
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.navbar')) {
+        closeAllDropdowns();
       }
-      document.querySelectorAll('.myds-nav-link--toggle[aria-expanded="true"]').forEach((btn) => closeMenu(btn));
     });
 
-    // Escape key closes menus and mobile nav
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Escape') return;
-      document.querySelectorAll('.myds-nav-link--toggle[aria-expanded="true"]').forEach((btn) => closeMenu(btn));
-      const navToggle = document.getElementById('navToggle');
-      const navMain = document.getElementById('navMain');
-      if (navToggle && navToggle.getAttribute('aria-expanded') === 'true') {
-        navToggle.setAttribute('aria-expanded', 'false');
-        if (navMain) navMain.hidden = true;
+    // Close dropdowns with the Escape key
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeAllDropdowns();
+        // Also ensure the main nav collapse is closable with Escape
+        const navMain = document.getElementById('navMain');
+        const navToggle = document.getElementById('navToggle');
+        if (navMain && navMain.classList.contains('show') && bootstrap.Collapse.getInstance(navMain)) {
+          bootstrap.Collapse.getInstance(navMain).hide();
+          navToggle?.focus();
+        }
       }
     });
   }
 
-  function initThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-toggle-icon');
-    if (!themeToggle || themeToggle._themeAttached) return;
-    themeToggle._themeAttached = true;
-
-    function applyTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      try { document.documentElement.dataset.theme = theme; } catch (e) { /* ignore */ }
-      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-      if (themeIcon) themeIcon.className = 'bi ' + (theme === 'dark' ? 'bi-moon-fill' : 'bi-sun-fill');
-      try { localStorage.setItem('myds-theme', theme); } catch (e) { /* ignore */ }
-    }
-
-    // init theme
-    try {
-      const stored = localStorage.getItem('myds-theme');
-      const pref = stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      applyTheme(pref);
-    } catch (e) {
-      applyTheme('light');
-    }
-
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-      applyTheme(current === 'dark' ? 'light' : 'dark');
-    });
-  }
-
+  /**
+   * Initializes all navbar functionalities.
+   */
   function init() {
-    if (init._attached) return;
-    init._attached = true;
-    initNavToggle();
-    attachMenuButtons();
+    // This function can be expanded if more navbar-specific JS is needed later.
     attachEventListeners();
-    initThemeToggle();
   }
 
-  // Expose for manual calls
+  // Expose for manual calls if needed, following the project's pattern
   window.MYDS = window.MYDS || {};
   window.MYDS.initNavbar = init;
 
+  // Run initialization on DOMContentLoaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
+    // DOM is already ready
     init();
   }
 })();

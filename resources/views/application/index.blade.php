@@ -12,17 +12,36 @@
             </div>
             <div class="text-end">
                 @if($canCreateApplication)
-                    <a href="{{ route('applications.create') }}" class="myds-btn myds-btn--primary">Cipta Permohonan</a>
+                    <a href="{{ route('applications.create') }}"
+                       class="myds-btn myds-btn--primary myds-tap-target"
+                       data-action="create" data-item-type="application"
+                       aria-label="Cipta permohonan baharu">
+                        <i class="bi bi-plus me-1" aria-hidden="true"></i>
+                        Cipta Permohonan
+                    </a>
                 @endif
             </div>
         </header>
 
         {{-- Search --}}
         <div class="mb-3">
-            <form method="GET" action="{{ route('applications.index') }}" class="d-flex gap-2 align-items-center" role="search" aria-label="Carian permohonan">
+            <form method="GET" action="{{ route('applications.index') }}"
+                  class="d-flex gap-2 align-items-center"
+                  role="search" aria-label="Carian permohonan"
+                  data-search-type="application" data-search-url="{{ route('applications.index') }}">
                 <label for="q" class="sr-only">Cari permohonan</label>
-                <input id="q" name="q" class="myds-input" placeholder="{{ __('placeholders.application_search') }}" value="{{ old('q', $q ?? '') }}" aria-label="{{ __('placeholders.application_search') }}">
-                <button class="myds-btn myds-btn--secondary" type="submit" aria-label="Cari">Cari</button>
+                <input id="q" name="q"
+                       class="myds-input"
+                       placeholder="{{ __('placeholders.application_search') }}"
+                       value="{{ old('q', $q ?? '') }}"
+                       aria-label="{{ __('placeholders.application_search') }}">
+                <button class="myds-btn myds-btn--secondary myds-tap-target"
+                        type="submit"
+                        data-action="search" data-search-type="application"
+                        aria-label="Cari permohonan">
+                    <i class="bi bi-search me-1" aria-hidden="true"></i>
+                    Cari
+                </button>
             </form>
         </div>
 
@@ -64,6 +83,8 @@
                                                 :destroyRoute="route('applications.destroy', $application->id)"
                                                 :label="$application->name ?? 'Permohonan'"
                                                 :id="$application->id"
+                                                data-item-type="application"
+                                                data-item-id="{{ $application->id }}"
                                                 :extraItems="[
                                                     ['label' => 'Cari Inventori untuk aplikasi', 'route' => route('inventories.index', ['q' => $application->name])]
                                                 ]"
@@ -76,7 +97,13 @@
                                             <div role="status" class="p-3 text-center">
                                                 <p class="mb-2">Tiada permohonan dijumpai.</p>
                                                 @if($canCreateApplication)
-                                                    <a href="{{ route('applications.create') }}" class="myds-btn myds-btn--primary">Cipta permohonan pertama</a>
+                                                    <a href="{{ route('applications.create') }}"
+                                                       class="myds-btn myds-btn--primary myds-tap-target"
+                                                       data-action="create" data-item-type="application"
+                                                       aria-label="Cipta permohonan pertama">
+                                                        <i class="bi bi-plus me-1" aria-hidden="true"></i>
+                                                        Cipta permohonan pertama
+                                                    </a>
                                                 @endif
                                             </div>
                                         </td>

@@ -53,9 +53,21 @@
                 </div>
 
                 <div class="myds-card__footer d-flex gap-2">
-                    <a href="{{ route('inventories.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat senarai inventori">Lihat Senarai</a>
+                    <a href="{{ route('inventories.index') }}"
+                       class="myds-btn myds-btn--primary myds-btn--sm myds-tap-target"
+                       data-action="navigate" data-feature="inventory-list"
+                       aria-label="Lihat senarai inventori">
+                        <i class="bi bi-list me-1" aria-hidden="true"></i>
+                        Lihat Senarai
+                    </a>
                         @if($canCreateInventory)
-                        <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Cipta inventori baru">Cipta Baharu</a>
+                        <a href="{{ route('inventories.create') }}"
+                           class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                           data-action="create" data-feature="inventory-create"
+                           aria-label="Cipta inventori baharu">
+                            <i class="bi bi-plus me-1" aria-hidden="true"></i>
+                            Cipta Baharu
+                        </a>
                         @endif
                 </div>
             </article>
@@ -81,9 +93,21 @@
                 </div>
 
                 <div class="myds-card__footer d-flex gap-2">
-                    <a href="{{ route('vehicles.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat senarai kenderaan">Lihat Senarai</a>
+                    <a href="{{ route('vehicles.index') }}"
+                       class="myds-btn myds-btn--primary myds-btn--sm myds-tap-target"
+                       data-action="navigate" data-feature="vehicle-list"
+                       aria-label="Lihat senarai kenderaan">
+                        <i class="bi bi-list me-1" aria-hidden="true"></i>
+                        Lihat Senarai
+                    </a>
                         @if($canCreateVehicle)
-                        <a href="{{ route('vehicles.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Daftar kenderaan baru">Daftar Baharu</a>
+                        <a href="{{ route('vehicles.create') }}"
+                           class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                           data-action="create" data-feature="vehicle-create"
+                           aria-label="Daftar kenderaan baharu">
+                            <i class="bi bi-plus me-1" aria-hidden="true"></i>
+                            Daftar Baharu
+                        </a>
                         @endif
                 </div>
             </article>
@@ -109,9 +133,21 @@
                 </div>
 
                 <div class="myds-card__footer d-flex gap-2">
-                    <a href="{{ route('users.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat pengguna">Lihat Pengguna</a>
+                    <a href="{{ route('users.index') }}"
+                       class="myds-btn myds-btn--primary myds-btn--sm myds-tap-target"
+                       data-action="navigate" data-feature="user-list"
+                       aria-label="Lihat senarai pengguna">
+                        <i class="bi bi-list me-1" aria-hidden="true"></i>
+                        Lihat Pengguna
+                    </a>
                         @if($canCreateUser)
-                        <a href="{{ route('users.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Daftar pengguna baru">Daftar Baharu</a>
+                        <a href="{{ route('users.create') }}"
+                           class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                           data-action="create" data-feature="user-create"
+                           aria-label="Daftar pengguna baharu">
+                            <i class="bi bi-plus me-1" aria-hidden="true"></i>
+                            Daftar Baharu
+                        </a>
                         @endif
                 </div>
             </article>
@@ -137,9 +173,21 @@
                 </div>
 
                 <div class="myds-card__footer d-flex gap-2">
-                    <a href="{{ route('applications.index') }}" class="myds-btn myds-btn--primary myds-btn--sm" aria-label="Lihat permohonan">Lihat Permohonan</a>
+                    <a href="{{ route('applications.index') }}"
+                       class="myds-btn myds-btn--primary myds-btn--sm myds-tap-target"
+                       data-action="navigate" data-feature="application-list"
+                       aria-label="Lihat senarai permohonan">
+                        <i class="bi bi-list me-1" aria-hidden="true"></i>
+                        Lihat Permohonan
+                    </a>
                         @if($canCreateApplication)
-                        <a href="{{ route('applications.create') }}" class="myds-btn myds-btn--secondary myds-btn--sm" aria-label="Cipta permohonan baru">Cipta Baharu</a>
+                        <a href="{{ route('applications.create') }}"
+                           class="myds-btn myds-btn--secondary myds-btn--sm myds-tap-target"
+                           data-action="create" data-feature="application-create"
+                           aria-label="Cipta permohonan baharu">
+                            <i class="bi bi-plus me-1" aria-hidden="true"></i>
+                            Cipta Baharu
+                        </a>
                         @endif
                 </div>
             </article>

@@ -44,9 +44,13 @@
         @endif
 
         {{-- Main Form Card --}}
-                <div class="myds-card">
-                    <div class="myds-card__body p-4 shadow-sm">
-            <form method="POST" action="{{ route('inventories.store') }}" novalidate aria-labelledby="form-title">
+        <div class="myds-card">
+            <div class="myds-card__body p-4 shadow-sm">
+            <form method="POST" action="{{ route('inventories.store') }}" novalidate aria-labelledby="form-title"
+                data-test="inventory-create-form" data-form-type="inventory-create" data-form-validation="enhanced"
+                      data-localization="{{ app()->getLocale() }}"
+                      data-submit-text="{{ __('forms.submit') }}"
+                      data-submit-processing="{{ __('forms.processing') }}">
                 @csrf
 
                 <h2 id="form-title" class="sr-only">Borang Cipta Inventori Baharu</h2>
@@ -92,7 +96,7 @@
 
                     {{-- Users autocomplete (owner suggestions) - progressive enhancement hooks used by JS --}}
                     <div id="users-autocomplete" class="position-relative mt-2 autocomplete-wrapper" data-search-url="{{ route('users.search') }}">
-                        <ul id="users-list" class="autocomplete-list autocomplete-list--hidden bg-surface border rounded p-0 m-0" role="listbox" aria-label="Cadangan pengguna"></ul>
+                        <ul id="users-list" class="autocomplete-list visually-hidden bg-surface border rounded p-0 m-0" role="listbox" aria-label="Cadangan pengguna" aria-hidden="true"></ul>
                         <div id="users-list-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
                     </div>
                 </div>
@@ -169,11 +173,14 @@
                 {{-- Form Actions --}}
                 <div class="d-flex gap-2 justify-content-end">
                     <a href="{{ route('inventories.index') }}"
-                       class="myds-btn myds-btn--secondary"
+                       class="myds-btn myds-btn--secondary myds-tap-target"
+                       data-action="cancel" data-redirect="{{ route('inventories.index') }}"
                        aria-label="Batal dan kembali ke senarai inventori">
                         Batal
                     </a>
-                    <button type="submit" class="myds-btn myds-btn--primary" aria-label="Simpan inventori baharu">
+            <button data-test="inventory-create-submit" type="submit" class="myds-btn myds-btn--primary myds-tap-target"
+                data-action="submit" data-form-submit="inventory-create"
+                aria-label="Simpan inventori baharu">
                         <i class="bi bi-save me-1" aria-hidden="true"></i>
                         Simpan Inventori
                     </button>

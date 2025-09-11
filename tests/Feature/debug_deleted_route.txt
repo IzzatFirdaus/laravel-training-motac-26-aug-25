@@ -1,4 +1,4 @@
-status=404
+status=200
 <!--
   MYDS & MyGOVEA compliant layout shell
   - Ensures grid, typography, ARIA, skip links, theme toggle, semantic tokens, accessibility
@@ -8,14 +8,14 @@ status=404
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="OinNwEciH7jg5mFPhHxY2FR3Vq2InWUGgY1psZTr">
+    <meta name="csrf-token" content="U0RverPE9FvzWefCfVetebYbro96RqFR4WC7gEnx">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <link rel="icon" href="http://127.0.0.1:8000/images/gov-logo.png" type="image/png">
-    <title>Halaman Tidak Dijumpai (404) — second-crud</title>
+    <title>Inventori Dipadam — second-crud</title>
 
     
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Poppins:400,500,600|Inter:400,500" rel="stylesheet">
-    <script type="module" src="http://[::1]:5174/@vite/client"></script><link rel="stylesheet" href="http://[::1]:517
+    <script type="module" src="http://[::1]:5173/@vite/client"></script><link rel="stylesheet" href="http://[::1]:5173/resources

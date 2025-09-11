@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Facades\Auth;
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Inventori — ' . config('app.name', 'Sistem Kerajaan'))
@@ -12,18 +16,18 @@
 
     <div class="d-flex gap-2">
       @if($canCreateInventory)
-        <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary" aria-label="Cipta inventori baru">
+        <a href="{{ route('inventories.create') }}" class="myds-btn myds-btn--primary myds-tap-target" aria-label="Cipta inventori baru" data-action="create">
           <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Cipta Inventori
         </a>
       @endif
 
       @if($canViewAnyInventory)
-        <a href="{{ route('excel.inventory.form') }}" class="myds-btn myds-btn--secondary" aria-label="Import atau eksport inventori">Import/Export</a>
+        <a href="{{ route('excel.inventory.form') }}" class="myds-btn myds-btn--secondary myds-tap-target" aria-label="Import atau eksport inventori" data-action="import-export">Import/Export</a>
       @endif
 
       @auth
-        @if(auth()->user()->hasRole('admin'))
-          <a href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--tertiary" aria-label="Inventori dipadam">Inventori Dipadam</a>
+        @if(Auth::user()->hasRole('admin'))
+          <button data-test="page-inventories-deleted" type="button" data-href="{{ route('inventories.deleted.index') }}" class="myds-btn myds-btn--tertiary myds-tap-target" aria-label="Inventori dipadam" data-action="deleted" onclick="window.location.href=this.dataset.href">Inventori Dipadam</button>
         @endif
       @endauth
     </div>

@@ -9,15 +9,8 @@
  * This file is safe to import multiple times and avoids throwing when optional libs are absent.
  */
 
-try {
-	// Import Bootstrap's JS bundle; will be tree-shaken by bundlers if unused.
-	// Ensure bootstrap is installed in your dependencies.
-	// eslint-disable-next-line import/no-extraneous-dependencies
-	import('bootstrap').catch(() => { /* bootstrap not available; continue gracefully */ });
-} catch (e) {
-	// Older bundlers may not support dynamic import in this context; fall back to static import if needed.
-	// import 'bootstrap';
-}
+// Import Bootstrap's JS bundle
+import 'bootstrap';
 
 /* Axios setup */
 import axios from 'axios';

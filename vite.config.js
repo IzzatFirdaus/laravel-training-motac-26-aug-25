@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/js/pages/welcome.js',
                 'resources/js/pages/home.js',
                 'resources/js/pages/users-redirect.js',
+                'resources/js/pages/users-index.js',
                 'resources/js/pages/inventories-index.js',
                 'resources/js/pages/inventories-create.js',
                 'resources/js/pages/inventories-edit.js',

@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Facades\Auth;
+@endphp
+
 @extends('layouts.app')
 
 @section('title', __('ui.vehicles.create_title', ['app' => config('app.name', 'Sistem Kerajaan')]))
@@ -34,14 +38,14 @@
         @endif
 
         {{-- Main Form Card --}}
-        <div class="bg-surface border rounded-m p-4 shadow-sm">
-            <form method="POST" action="{{ route('vehicles.store') }}" novalidate aria-labelledby="form-title" data-myds-form>
+        <div class="bg-surface border rounded-m p-4 shadow-sm" data-myds-card="vehicle-form">
+            <form method="POST" action="{{ route('vehicles.store') }}" novalidate aria-labelledby="form-title" data-myds-form="vehicle-create">
                 @csrf
 
                 <h2 id="form-title" class="sr-only">{{ __('ui.vehicles.form_title') }}</h2>
 
                 {{-- Required Fields Notice --}}
-                <div class="bg-muted border-l-4 border-primary p-3 mb-4">
+                <div class="bg-muted border-l-4 border-primary p-3 mb-4" data-myds-notice="required-fields">
                     <div class="d-flex align-items-start">
                         <i class="bi bi-info-circle me-2 mt-0.5 text-primary flex-shrink-0" aria-hidden="true"></i>
                         <div>
@@ -52,8 +56,8 @@
                 </div>
 
                 {{-- Name Field (MYDS Input Component) --}}
-                <div class="mb-4">
-                    <label for="name" class="myds-label myds-body-sm font-medium d-block mb-2">
+                <div class="mb-4" data-field="name">
+                    <label for="name" class="myds-label myds-body-sm font-medium d-block mb-2" data-field-label="{{ __('ui.vehicles.name_label') }}">
                         {{ __('ui.vehicles.name_label') }}
                         <span class="myds-text--danger ms-1" aria-hidden="true">*</span>
                         <span class="sr-only"> medan wajib</span>
@@ -61,15 +65,17 @@
                     <input type="text"
                            id="name"
                            name="name"
-                           class="myds-input @error('name') is-invalid @enderror"
+                           class="myds-input myds-tap-target @error('name') is-invalid @enderror"
                            value="{{ old('name') }}"
                            aria-describedby="name-help @error('name') name-error @enderror"
                            aria-required="true"
                            maxlength="255"
+                           data-myds-input="text"
+                           data-required="true"
                            required>
-                    <div id="name-help" class="myds-body-xs myds-text--muted mt-1">{{ __('ui.vehicles.name_help') }}</div>
+                    <div id="name-help" class="myds-body-xs myds-text--muted mt-1" data-field-help="{{ __('ui.vehicles.name_help') }}">{{ __('ui.vehicles.name_help') }}</div>
                     @error('name')
-                        <div id="name-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert">
+                        <div id="name-error" class="d-flex align-items-start myds-text--danger myds-body-xs mt-2" role="alert" data-field-error="{{ $message }}">
                             <i class="bi bi-x-circle me-1 mt-0.5 flex-shrink-0" aria-hidden="true"></i>
                             <span>{{ $message }}</span>
                         </div>
@@ -79,11 +85,12 @@
                 {{-- Owner Field --}}
                 <div class="mb-4">
                     <label for="user_id" class="myds-label myds-body-sm font-medium d-block mb-2">{{ __('ui.vehicles.owner_label') }}</label>
-                    @if(auth()->check() && auth()->user()->hasRole('admin'))
+                    @if(Auth::check() && Auth::user()->hasRole('admin'))
                         <select id="user_id"
                                 name="user_id"
                                 class="myds-input @error('user_id') is-invalid @enderror"
-                                aria-describedby="user_id-help @error('user_id') user_id-error @enderror">
+                                aria-describedby="user_id-help @error('user_id') user_id-error @enderror"
+                                data-myds-select="owner">
                             <option value="">{{ __('ui.vehicles.none_owner') }}</option>
                             @foreach(($users ?? collect()) as $user)
                                 <option value="{{ $user->id }}" {{ (string) old('user_id') === (string) $user->id ? 'selected' : '' }}>
@@ -93,9 +100,9 @@
                         </select>
                         <div id="user_id-help" class="myds-body-xs myds-text--muted mt-1">{{ __('ui.vehicles.owner_help') }}</div>
                     @else
-                        <input type="hidden" name="user_id" value="{{ auth()->id() ?? '' }}">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() ?? '' }}">
                         <div class="myds-input bg-muted cursor-not-allowed" role="textbox" aria-readonly="true" tabindex="-1">
-                            {{ auth()->user()->name ?? __('ui.vehicles.current_user') }}
+                            {{ Auth::user()->name ?? __('ui.vehicles.current_user') }}
                         </div>
                         <div id="user_id-help" class="myds-body-xs myds-text--muted mt-1">{{ __('ui.vehicles.owner_help') }}</div>
                     @endif

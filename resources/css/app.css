@@ -95,6 +95,16 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Smooth theme transitions */
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *:before,
+  .theme-transition *:after {
+    transition: background-color var(--motion-short) ease-in-out,
+                border-color var(--motion-short) ease-in-out,
+                color var(--motion-short) ease-in-out !important;
+  }
+
   /* Container */
   .myds-container {
     width: 100%;
@@ -276,6 +286,12 @@
     box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
   }
 
+  /* Dark mode validation adjustments */
+  [data-theme="dark"] .myds-input.is-invalid,
+  [data-theme="dark"] .myds-form__input.is-invalid {
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1) !important;
+  }
+
   /* Alias for legacy form input class used in auth views */
   .myds-form__input,
   .myds-form__textarea {
@@ -399,6 +415,62 @@
     color: var(--primary);
   }
 
+  /* Navbar specific styles */
+  .myds-nav-link {
+    color: var(--txt-primary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    border: 0;
+    background: transparent;
+  }
+  .myds-nav-link:hover,
+  .myds-nav-link:focus {
+    color: var(--primary);
+  }
+
+  .myds-nav-link--toggle {
+    cursor: pointer;
+  }
+
+  .myds-search-form .form-control,
+  .myds-search-form .myds-input {
+    min-width: 160px;
+  }
+
+  .myds-btn-group .myds-btn {
+    position: relative;
+  }
+  .myds-btn-group .myds-btn:not(:first-child) {
+    border-left: 0;
+  }
+  .myds-btn-group .myds-btn:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .myds-btn-group .myds-btn:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Skip link MYDS version */
+  .myds-skip-link {
+    position: absolute;
+    top: -48px;
+    left: 8px;
+    background: var(--primary);
+    color: var(--txt-on-primary);
+    padding: 8px 10px;
+    text-decoration: none;
+    z-index: 1200;
+    border-radius: var(--radius-s);
+    transition: top var(--motion-short);
+  }
+  .myds-skip-link:focus {
+    top: 8px;
+  }
+
   /* Buttons */
   .myds-btn {
     display: inline-flex;
@@ -419,21 +491,47 @@
     color: var(--txt-on-primary);
     border-color: var(--otl-default);
   }
+
+  .myds-btn--primary:hover {
+    background-color: var(--primary);
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
   .myds-btn--secondary {
     background-color: var(--bg-muted);
     color: var(--txt-primary);
     border-color: var(--otl-default);
   }
+
+  .myds-btn--secondary:hover {
+    background-color: var(--bg-subtle);
+    border-color: var(--primary);
+  }
+
   .myds-btn--danger {
     background-color: var(--danger);
     color: var(--txt-on-primary);
     border-color: var(--otl-default);
   }
+
+  .myds-btn--danger:hover {
+    background-color: var(--danger);
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
   .myds-btn--outline {
     background: transparent;
     color: var(--primary);
     border-color: var(--primary);
   }
+
+  .myds-btn--outline:hover {
+    background-color: var(--primary);
+    color: var(--txt-on-primary);
+  }
+
   .myds-btn--link {
     background: transparent;
     color: var(--primary);
@@ -441,12 +539,21 @@
     padding-left: 0;
     padding-right: 0;
   }
+
+  .myds-btn--link:hover {
+    text-decoration: underline;
+  }
+
   .myds-btn--sm { padding: 0.25rem 0.5rem; font-size: 0.8125rem; }
   .myds-btn--full-width { width: 100%; }
 
   .myds-btn--tertiary {
     background: transparent;
     color: var(--txt-primary);
+  }
+
+  .myds-btn--tertiary:hover {
+    background-color: var(--bg-muted);
   }
 
   /* Focus ring */
@@ -463,8 +570,43 @@
   }
 
   /* Dropdown */
-  .myds-dropdown { border: 1px solid var(--otl-default); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-  .myds-dropdown .dropdown-item.active { background-color: var(--bg-muted); }
+  .myds-dropdown {
+    border: 1px solid var(--otl-default);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    background-color: var(--bg-surface);
+  }
+
+  /* Dark mode dropdown shadow */
+  [data-theme="dark"] .myds-dropdown {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .myds-dropdown .dropdown-item.active {
+    background-color: var(--bg-muted);
+  }
+
+  .myds-dropdown-item {
+    padding: 0.5rem 1rem;
+    color: var(--txt-primary);
+    text-decoration: none;
+    border: 0;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+
+  .myds-dropdown-item:hover,
+  .myds-dropdown-item:focus {
+    background-color: var(--bg-muted);
+    color: var(--txt-primary);
+  }
+
+  .myds-dropdown-divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--otl-default);
+  }
 
   /* Sidebar */
   .myds-sidebar .nav-link.active {

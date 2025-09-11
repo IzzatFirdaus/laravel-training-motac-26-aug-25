@@ -18,8 +18,25 @@
     if (!theme) return;
     root.setAttribute('data-theme', theme);
     try { root.dataset.theme = theme; } catch (e) { /* ignore */ }
-    if (toggleBtn) toggleBtn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-    if (toggleIcon) toggleIcon.className = 'bi ' + (theme === 'dark' ? 'bi-moon-fill' : 'bi-sun-fill');
+
+    if (toggleBtn) {
+      toggleBtn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      // Update aria-label for better accessibility
+      const isDark = theme === 'dark';
+      toggleBtn.setAttribute('aria-label', isDark ? 'Tukar kepada tema terang' : 'Tukar kepada tema gelap');
+    }
+
+    if (toggleIcon) {
+      // Safely replace icon classes without affecting other classes
+      toggleIcon.className = '';
+      toggleIcon.classList.add('bi', theme === 'dark' ? 'bi-moon-fill' : 'bi-sun-fill');
+    }
+
+    // Update the theme toggle label text
+    const toggleLabel = document.getElementById('theme-toggle-label');
+    if (toggleLabel) {
+      toggleLabel.textContent = theme === 'dark' ? 'Tukar kepada tema terang' : 'Tukar kepada tema gelap';
+    }
   }
 
   function getPreferredTheme() {
@@ -90,9 +107,10 @@
     wireSkipLink();
   }
 
-  // Expose for programmatic init
+  // Expose for programmatic init and theme setting
   window.MYDS = window.MYDS || {};
   window.MYDS.initSite = init;
+  window.MYDS.setTheme = setTheme;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { init(document); });
